@@ -1,5 +1,6 @@
 .footer {
-  height: 100%;
+  box-shadow: 12px 12px 12px 9px rgba(0, 0, 0, 0.2);
+  height: 200px;
   width: 100%;
   display: flex;
 
@@ -58,5 +59,8 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    img {
+      height: 180px;
+    }
   }
 }
