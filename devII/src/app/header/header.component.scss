@@ -1,0 +1,84 @@
+.navbar {
+  background-color: #0b6b1d;
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  height: 109px;
+
+  &-inicio {
+    width: 50%;
+    display: flex;
+    padding-left: 50px;
+
+    &-link {
+      text-decoration: none;
+
+      .titulo {
+        margin-top: 19px;
+        color: #ffff;
+        font-size: 12px;
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+          sans-serif;
+      }
+
+      .campus {
+        margin-left: 25px;
+        color: #ffff;
+        font-size: 30px;
+        font-weight: bold;
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+          sans-serif;
+      }
+    }
+  }
+
+  &-itens{
+    padding-right: 50px;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+
+    &-menu {
+      width: 100%;
+      display: flex;
+      text-decoration: none;
+      justify-content: space-between;
+  
+      .oportunidade {
+        margin-left: 25px;
+        color: #ffff;
+        font-size: 20px;
+        font-weight: bold;
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+          sans-serif;
+      }
+  
+      .enviarDocs {
+        margin-left: 25px;
+        color: #ffff;
+        font-size: 20px;
+        font-weight: bold;
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+          sans-serif;
+      }
+      .contato {
+        margin-left: 25px;
+        color: #ffff;
+        font-size: 20px;
+        font-weight: bold;
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+          sans-serif;
+      }
+      .login {
+        margin-left: 25px;
+        color: #ffff;
+        font-size: 20px;
+        font-weight: bold;
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+          sans-serif;
+      }
+    }
+  }
+
+}
