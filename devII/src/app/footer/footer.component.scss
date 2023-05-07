@@ -1,0 +1,175 @@
+.footer {
+  background-color: #f8f9fa;
+  height: 200px;
+  width: 100%;
+  display: flex;
+
+  &-logo {
+    display: flex;
+    align-items: center;
+    padding-left: 50px;
+    width: 25%;
+  }
+
+  &-infos {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .geral {
+      .nome-campus {
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      .endereco,
+      .cep {
+        font-size: 16px;
+      }
+      .endereco {
+        margin-left: 55px;
+      }
+
+      .cep {
+        margin-left: 115px;
+      }
+    }
+
+    .redes {
+      img {
+        width: 30px;
+        height: 30px;
+      }
+
+      img:not(:first-child) {
+        margin-left: 23px;
+      }
+    }
+  }
+
+  &-mec {
+    width: 25%;
+    padding-right: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    img {
+      height: 180px;
+    }
+  }
+
+  @media screen and (max-width: 1120px) {
+    &-logo {
+      padding-left: 10px;
+      width: 25%;
+
+      img {
+        width: 250px;
+      }
+    }
+
+    &-infos {
+      .geral {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        .nome-campus {
+          font-size: 16px;
+        }
+
+        .endereco,
+        .cep {
+          margin-left: 0px;
+          font-size: 12px;
+        }
+
+        .endereco {
+          font-size: 12px;
+        }
+
+        .cep {
+          font-size: 12px;
+        }
+      }
+
+      .redes {
+        img {
+          width: 20px;
+          height: 20px;
+        }
+
+        img:not(:first-child) {
+          margin-left: 23px;
+        }
+      }
+    }
+
+    &-mec {
+      width: 18%;
+
+      img {
+        height: 160px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 840px) {
+  .footer {
+    margin: 0;
+    height: 150px;
+    width: 100%;
+
+    &-logo {
+      padding-left: 10px;
+      width: 25%;
+
+      img {
+        width: 155px;
+      }
+    }
+
+    &-infos {
+      .geral {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        .nome-campus {
+          font-size: 14px;
+        }
+
+        .endereco,
+        .cep {
+          margin-left: 0px;
+          font-size: 11px;
+        }
+      }
+
+      .redes {
+        img {
+          width: 20px;
+          height: 20px;
+        }
+
+        img:not(:first-child) {
+          margin-left: 23px;
+        }
+      }
+    }
+
+    &-mec {
+      width: 18%;
+      padding-right: 20px;
+
+      img {
+        height: 120px;
+      }
+    }
+  }
+}
