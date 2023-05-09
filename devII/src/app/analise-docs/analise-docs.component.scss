@@ -1,0 +1,18 @@
+.corpo {
+  padding: 30px;
+  &-titulo {
+    width: 370px;
+
+    p {
+      padding-bottom: 8px;
+      font-size: 30px;
+      border-bottom: 4px solid #2b923c;
+    }
+  }
+  &-tipo-curso{
+    display: flex;
+    p:not(:first-child) {
+        margin-left: 23px;
+      }
+  }
+}
