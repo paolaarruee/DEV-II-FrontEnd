@@ -1,0 +1,54 @@
+<div class="titulo">
+  <p>Cadastro</p>
+</div>
+
+<div class="formulario">
+  <form (ngSubmit)="enviarFormulario()" class="formulario--centro">
+      <div class="formularioBox">
+      <label class="nome-campo">Nome Completo</label>
+      <input class="nome" type="text" id="fname" name="fname" [(ngModel)]="aluno.nomeCompleto" placeholder="Nome Completo">
+
+      <label class="nome-campo">Email institucional</label>
+      <input class="email" type="text" id="fname" name="fname" [(ngModel)]="aluno.usuarioSistema.email" placeholder="aluno@restinga.ifrs.edu.br">
+
+      <label for="turno">Turno</label>
+      <select id="turno" name="turno" type="text" [(ngModel)]="aluno.turno" required>
+        <option value="">Selecione o turno</option>
+        <option value="Manhã">Manhã</option>
+        <option value="Tarde">Tarde</option>
+        <option value="Noite">Noite</option>
+      </select>
+
+
+      <label for="matricula">Matrícula</label>
+      <input type="text" id="matricula" name="matricula" [(ngModel)]="aluno.matricula" placeholder="Matrícula" required>
+
+      <label for="ingresso">Ingresso</label>
+      <input type="text" id="ingresso" name="ingresso" [(ngModel)]="aluno.ingresso" placeholder="1/2023" required>
+
+      <label for="curso">Curso</label>
+      <input type="text" id="curso" name="curso" [(ngModel)]="aluno
+      .curso" placeholder="Curso" required>
+
+      <div class="senhadiv">
+      <label class="nome-campo">Digite uma senha</label>
+
+      <input class="senha" type="text" id="lname" name="lname" value="Digite uma senha" [(ngModel)]="aluno.usuarioSistema.senha" placeholder="Senha" required>
+
+
+      <label class="nome-campo">Confirmar senha</label>
+
+      <input class="senha" type="text" id="lname" name="lname" value="Confirmar senha" placeholder="Confirmar Senha" required>
+      </div>
+
+      <input class="botao" type="submit" value="Cadastrar">
+    </div>
+  </form>
+</div>
+
+<!-- <form (ngSubmit)="enviarFormulario()">
+
+
+
+  <button type="submit">Enviar</button>
+</form> -->
