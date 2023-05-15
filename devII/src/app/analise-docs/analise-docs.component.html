@@ -1,18 +1,55 @@
 <div class="corpo">
   <div class="corpo-titulo">
-    <p>Análise de Documentos</p>
-  </div>
-  <div class="corpo-tipo-curso">
-    <p class="dados">Dados do Aluno</p>
-    <p class="curso">Tipo de Estágio</p>
+    <span>Análise de Documentos</span>
   </div>
   <div class="corpo-dados">
-    <p>Nome:</p>
-    <p>Matricula:</p>
-    <p>Ano:</p>
-    <p>Turno:</p>
-    <p>Tipo de Curso:</p>
-    <p>Curso:</p>
-    <p>Semestre:</p>
+    <div class="subtitulo">
+      <span class="dados">Dados do Aluno</span>
+    </div>
+    <div class="nome-aluno">
+      <span>Nome: João Silva</span>
+      <span class="curso">Tipo de Estágio: Não Obrigatório</span>
+    </div>
+
+    <div class="infos-aluno">
+      <span>Matricula: 20210001</span>
+      <span>Ano: 2021</span>
+      <span>Turno: Noturno</span>
+    </div>
+    <div class="curso-aluno">
+      <span>Tipo de Curso: Superior</span>
+      <span>Curso: Engenharia de Software</span>
+      <span>Semestre: 2</span>
+    </div>
+  </div>
+  <div class="corpo-passos">
+    <mat-stepper>
+      <mat-step label="Download" state="phone">
+        <p class="titulo">Download de Documentos</p>
+        <div class="historico" *ngFor="let file of filesMock">
+          <p class="arquivo">{{ file.name }}</p>
+          <button mat-icon-button color="primary" (click)="download(file)">
+            <mat-icon class="salvar">save_alt</mat-icon>
+          </button>
+        </div>
+        <div class="proximo">
+          <button mat-button matStepperNext>Proximo</button>
+        </div>
+      </mat-step>
+      <mat-step label="Upload" state="chat">
+        <p class='titulo'>Upload de Documentos</p>
+        <div class="arquivos-up">
+          <input type="file" id="avatar" name="avatar" multiple #fileInput>
+          <button mat-raised-button (click)="upload()">Upload</button>
+        </div>
+        <div class="proximo">
+          <button mat-button matStepperPrevious>Voltar</button>
+        </div>
+        <div class="finalizar">
+          <button mat-raised-button style="background-color: #2b923c; color: #ffffff">Deferir</button>
+          <button mat-raised-button color="warn">Indeferir</button>
+        </div>
+      </mat-step>
+    </mat-stepper>
   </div>
 </div>
