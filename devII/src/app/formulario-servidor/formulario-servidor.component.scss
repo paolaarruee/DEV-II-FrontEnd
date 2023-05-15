@@ -1,0 +1,47 @@
+.titulo {
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+
+    p {
+        font-weight: 700;
+        font-size: 30px;
+        border-bottom: 4px solid #2b923c;
+        padding-bottom: 8px;
+    }
+}
+
+.formulario {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.formulario--gp {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cargo {
+    width: 170px;
+}
+
+.formulario--centro {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 30px;
+    gap: 16px;
+    width: 100%;
+    align-items: center;
+}
+
+.nome-campo {
+    font-size: 16px;
+}
+
+.email {
+
+}

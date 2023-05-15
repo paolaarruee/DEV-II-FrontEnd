@@ -1,0 +1,28 @@
+<div class="titulo">
+    <p>Cadastro</p>
+</div>
+
+<div class="formulario">
+    <form class="formulario--centro">
+        <div class="formulario--gp">
+            <label class="nome-campo">Cargo:</label>
+            <select id="cargo" required name="cargo" class="cargo">
+                <option value=""></option>
+                <option value="1">Coordenador</option>
+                <option value="2">Setor de Estágio</option>
+                <option value="3">Diretor</option>
+            </select>
+        </div>
+        <label class="nome-campo">Nome Completo:</label>
+        <input required class="nome" type="text" id="nome" name="nome" placeholder="Digite o seu nome">
+        <label class="nome-campo">Email institucional:</label>
+        <input required class="email" type="email" id="email" name="email" value="" placeholder="@restinga.ifrs.edu.br">
+        <label class="nome-campo">Digite uma senha:</label>
+        <input required class="senha" type="password" id="password" name="password" value=""
+            placeholder="Digite a senha">
+        <label class="nome-campo">Confirmar senha:</label>
+        <input required class="senha" type="password" id="Confirm_password" name="Confirm_password" value=""
+            placeholder="Digite novamente a Senha">
+        <input class="botao" type="submit" value="Cadastrar">
+    </form>
+</div>
