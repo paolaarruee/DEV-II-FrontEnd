@@ -5,12 +5,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const MATERIAL_MODULES = [
   MatToolbarModule,
   MatStepperModule,
   MatIconModule,
-  MatButtonModule
+  MatButtonModule,
+  MatSnackBarModule
 ];
 
 @NgModule({

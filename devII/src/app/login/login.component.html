@@ -1,0 +1,15 @@
+<div class="wrapper">
+  <div class="corpo">
+    <form >
+      <div class="image-container">
+        <img src="assets/img/imgLogin.png" alt="imagem login">
+      </div>
+      <input type="email" id="email" [(ngModel)]="email"  placeholder="email" name="email" required >
+      <input type="password" id="senha" [(ngModel)]="password" required placeholder="senha" name="senha" required>
+      <div class="buttons">
+        <button type="submit" (click)="login()">Acessar</button>
+        <button type="button" (click)="cadatrar()">Cadastrar</button>
+      </div>
+    </form>
+  </div>
+</div>

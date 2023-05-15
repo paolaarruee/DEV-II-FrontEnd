@@ -26,9 +26,9 @@
     <mat-stepper>
       <mat-step label="Download" state="phone">
         <p class="titulo">Download de Documentos</p>
-        <div class="historico" *ngFor="let file of filesMock">
-          <p class="arquivo">{{ file.name }}</p>
-          <button mat-icon-button color="primary" (click)="download(file)">
+        <div class="historico" *ngFor="let doc of documentList$ | async">
+          <p class="arquivo">{{ doc.nome }}</p>
+          <button mat-icon-button color="primary" (click)="download(doc)">
             <mat-icon class="salvar">save_alt</mat-icon>
           </button>
         </div>

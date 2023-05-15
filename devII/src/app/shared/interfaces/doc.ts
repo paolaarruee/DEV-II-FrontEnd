@@ -1,4 +1,5 @@
 export interface DocFile {
-    name: string;
-    binary: Blob;
+    id: number;
+    nome: string;
+    documento?: Blob;
 }

@@ -8,17 +8,25 @@ import { AnaliseDocsComponent } from './analise-docs/analise-docs.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './login/login.component';
+import { FormsModule } from '@angular/forms';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 const ANGULAR_MODULES = [
   BrowserModule,
   AppRoutingModule,
-  BrowserAnimationsModule, 
-  HttpClientModule
+  BrowserAnimationsModule,
+  HttpClientModule,
+  MatToolbarModule,
+  FormsModule
 ];
 
 @NgModule({
-  declarations: [AppComponent, AnaliseDocsComponent],
+  declarations: [AppComponent, AnaliseDocsComponent, LoginComponent],
   imports: [...ANGULAR_MODULES, CoreModule, SharedModule],
+
+  providers: [],
+
   bootstrap: [AppComponent],
 })
 export class AppModule { }
