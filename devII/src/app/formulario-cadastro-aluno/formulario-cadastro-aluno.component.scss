@@ -44,6 +44,18 @@ input {
 
 }
 
+#turno{
+  box-sizing: border-box;
+
+  padding: 7px;
+  font-size: 18px;
+
+  background: #FFFFFF;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
 div .formularioBox{
   display: grid;
 }
@@ -58,6 +70,16 @@ div .formularioBox{
 //   width: 530px;
 //   height: 28px;
 // }
+
+ul{
+  display: flex;
+  padding-left: 0px;
+}
+
+li{
+  display: flex;
+  flex-direction: column;
+}
 
 .botao{
   border: 0px solid #000000;
