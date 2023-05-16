@@ -22,6 +22,8 @@ const routes: Routes = [
     component: FormularioCadastroAlunoComponent,
   },
 
+ 
+
   {
     path: '**',
     redirectTo: 'analisedocs',
