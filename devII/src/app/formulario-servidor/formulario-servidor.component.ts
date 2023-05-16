@@ -1,3 +1,4 @@
+import { ToastService } from './../core/services/toast/toast.service';
 import { Component } from '@angular/core';
 import { Servidor } from '../shared/interfaces/servidor';
 import { FormularioServidorService } from './formulario-servidor.service';
@@ -20,24 +21,51 @@ export class FormularioServidorComponent {
     }
   };
 
+  confirmarSenha: string = '';
+
   // constructor(private formularioCadastroservidorService: FormularioCadastroservidorService){}
-  constructor(private service: FormularioServidorService){}
+  constructor(private service: FormularioServidorService, private toastService: ToastService){}
 
   enviarFormulario(){
-    alert("Formulario enviado")
     console.log(this.servidor.nome)
     console.log(this.servidor.cargo)
     console.log(this.servidor.curso)
     console.log(this.servidor.usuarioSistema.email)
     console.log(this.servidor.usuarioSistema.senha)
+    console.log(this.confirmarSenha)
+
+    let camposObrigatorios = [
+      { nome: 'Nome Completo', valor: this.servidor.nome },
+      { nome: 'Cargo', valor: this.servidor.cargo },
+      { nome: 'Curso', valor: this.servidor.curso },
+      { nome: 'Email institucional', valor: this.servidor.usuarioSistema.email },
+      { nome: 'Senha', valor: this.servidor.usuarioSistema.senha }
+    ];
+
+    let camposVazios = camposObrigatorios.filter(campo => !campo.valor);
+
+    if (camposVazios.length > 0) {
+      let mensagem = `Preencha o(s) campo(s) obrigatório(s): ${camposVazios.map(campo => campo.nome).join(', ')}`;
+      this.toastService.showMessage(mensagem, 'error');
+      return;
+    }
+
+    if(this.servidor.usuarioSistema.senha != this.confirmarSenha){
+      let mensagem = `As senhas não são iguais. Tente novamente.`;
+      this.toastService.showMessage(mensagem, 'error');
+      return;
+    }
 
     this.service.enviarDados(this.servidor).subscribe(
       response => {
+        console.log('Servidor cadastrado com sucesso!');
         console.log('Resposta da API:', response);
+        this.toastService.showMessage('Servidor Cadastrado.')
         // Lógica adicional após o envio bem-sucedido do formulário
       },
       error => {
         console.error('Erro ao enviar o formulário:', error);
+        this.toastService.showMessage('Não foi possivel cadastrar. Verifique os campos!')
         // Lógica adicional em caso de erro ao enviar o formulário
       }
     );
