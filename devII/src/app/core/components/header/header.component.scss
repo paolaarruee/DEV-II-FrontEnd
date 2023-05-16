@@ -36,18 +36,20 @@
 
     &-menu {
       width: 100%;
+      padding-bottom: 12px;
       display: flex;
       text-decoration: none;
       justify-content: space-between;
 
-      .oportunidade,
-      .enviarDocs,
-      .contato,
-      .login {
+      > a {
         margin-left: 25px;
         color: #ffff;
         font-size: 20px;
         font-weight: bold;
+        
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
   }

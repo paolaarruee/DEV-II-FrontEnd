@@ -3,7 +3,7 @@
     <a routerLink="">
       <img src="/assets/img/logo-if-branco.png" />
     </a>
-    <a class="navbar-inicio-link" routerLink="">
+    <a class="navbar-inicio-link" routerLink="home">
       <p class="titulo">
         Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Sul
       </p>
@@ -13,10 +13,11 @@
  
   <div class="navbar-itens">
     <a class="navbar-itens-menu" routerLink="">
-      <p class="oportunidade">Oportunidades</p>
-      <p class="enviarDocs">Enviar documentos</p>
-      <p class="contato">Contato</p>
-      <p class="login">Login</p>
+      <a>Oportunidades</a>
+      <a routerLink="/cadastro">Cadastrar servidor</a>
+      <a routerLink="/analisedocs">Analise Documentos</a>
+      <a routerLink="/login" *ngIf="!isAuthenticated">Login</a>
+      <a (click)="logout()" *ngIf="isAuthenticated">Logout</a>
     </a>
   </div>
 </nav>
