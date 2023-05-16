@@ -9,7 +9,7 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 const ANGULAR_MODULES = [
@@ -18,11 +18,14 @@ const ANGULAR_MODULES = [
   BrowserAnimationsModule,
   HttpClientModule,
   MatToolbarModule,
-  FormsModule
+  ReactiveFormsModule,
+  FormsModule,
 ];
 
+const COMPONENTS = [AppComponent, AnaliseDocsComponent, LoginComponent];
+
 @NgModule({
-  declarations: [AppComponent, AnaliseDocsComponent, LoginComponent],
+  declarations: [...COMPONENTS],
   imports: [...ANGULAR_MODULES, CoreModule, SharedModule],
 
   providers: [],

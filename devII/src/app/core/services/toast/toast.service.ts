@@ -8,6 +8,6 @@ export class ToastService {
   constructor(private snackBar: MatSnackBar) { }
 
   public showMessage(message:string, action: string = 'Fechar'): void {
-    this.snackBar.open(message, action)
+    this.snackBar.open(message, action, { duration: 1500 })
   }
 }

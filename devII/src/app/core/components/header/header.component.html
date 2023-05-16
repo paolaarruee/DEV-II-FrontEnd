@@ -13,10 +13,11 @@
  
   <div class="navbar-itens">
     <a class="navbar-itens-menu" routerLink="">
-      <a href="/"><p class="contato">Oportunidades</p></a>
-      <a href="/login"><p class="contato">Enviar documentos</p></a>
-      <a href="/analisedocs"><p class="contato">Analise Documentos</p></a>
-      <a href="/login"><p class="contato">Login</p></a>
+      <a>Oportunidades</a>
+      <a>Enviar documentos</a>
+      <a routerLink="/analisedocs">Analise Documentos</a>
+      <a routerLink="/login" *ngIf="!isAuthenticated">Login</a>
+      <a (click)="logout()" *ngIf="isAuthenticated">Logout</a>
     </a>
   </div>
 </nav>

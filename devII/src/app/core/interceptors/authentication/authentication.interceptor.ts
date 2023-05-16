@@ -8,10 +8,14 @@ import {
 
 import { Observable } from 'rxjs';
 
+import { AuthenticationService } from '../../services/authentication/authentication.service';
+
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
+  public constructor(private authService: AuthenticationService) {}
+
   public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const token: string | null = localStorage.getItem('token');
+    const token: string | null = this.authService.token;
 
     if (!token) {
       return next.handle(request);

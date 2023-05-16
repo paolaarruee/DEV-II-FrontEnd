@@ -1,29 +1,50 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
-import { AuthenticationServiceService } from '../core/services/authentication/authentication.service';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { AuthenticationService } from '../core/services/authentication/authentication.service';
 import { Usuario } from '../shared/interfaces/usuario';
-
-
+import { ToastService } from '../core/services/toast/toast.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements  OnInit{
+export class LoginComponent implements OnInit {
+  public loginForm!: FormGroup;
 
-  constructor(private loginService: AuthenticationServiceService,private router: Router) {}
-  email?: string;
-  password?: string;
+  public constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthenticationService,
+    private toastService: ToastService
+  ) {}
 
-  public login(){
-     this.loginService.login(new Usuario(this.email,this.password));
+  public ngOnInit(): void {
+    this.setLoginForm();
   }
 
-  public cadatrar(){
-    alert("em contrução")
+  public login(userData: Usuario) {
+    this.authService.login(userData).subscribe(
+      {
+        next: (authToken: string) => {
+          this.authService.token = authToken;
+          this.router.navigateByUrl('/analisedocs');
+        },
+        error: () => this.toastService.showMessage('Erro ao autenticar usuário.'),
+      }
+    );
   }
 
-  ngOnInit():void {
+  public cadatrar() {
+    alert('em contrução');
+  }
+
+  private setLoginForm(): void {
+    this.loginForm = this.fb.group({
+      email: this.fb.control('', Validators.required),
+      senha: this.fb.control('', Validators.required),
+    });
   }
 }
