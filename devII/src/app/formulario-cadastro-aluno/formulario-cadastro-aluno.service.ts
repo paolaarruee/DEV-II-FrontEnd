@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Aluno } from './aluno';
+import { Aluno } from '../shared/interfaces/aluno';
 
 @Injectable({
   providedIn: 'root'

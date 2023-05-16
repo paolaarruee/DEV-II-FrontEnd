@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { AnaliseDocsComponent } from './analise-docs/analise-docs.component';
 import { AuthGuard } from './core/guards/auth/auth.guard';
 import { FormularioCadastroAlunoComponent } from './formulario-cadastro-aluno/formulario-cadastro-aluno.component';
+import { FormularioServidorComponent } from './formulario-servidor/formulario-servidor.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,11 @@ const routes: Routes = [
     component: FormularioCadastroAlunoComponent,
   },
 
- 
+  {
+    path: 'cadastrarServidor',
+    component: FormularioServidorComponent,
+    canActivate: [AuthGuard],
+  },
 
   {
     path: '**',

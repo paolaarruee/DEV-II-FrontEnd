@@ -1,4 +1,4 @@
-import { Aluno } from './aluno';
+import { Aluno } from '../shared/interfaces/aluno';
 import { FormularioCadastroAlunoService } from './formulario-cadastro-aluno.service';
 import { Component} from '@angular/core';
 
