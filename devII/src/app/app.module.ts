@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { FormularioCadastroAlunoComponent } from './formulario-cadastro-aluno/formulario-cadastro-aluno.component';
 
 const ANGULAR_MODULES = [
   BrowserModule,
@@ -22,7 +23,12 @@ const ANGULAR_MODULES = [
   FormsModule,
 ];
 
-const COMPONENTS = [AppComponent, AnaliseDocsComponent, LoginComponent];
+const COMPONENTS = [
+  AppComponent,
+  AnaliseDocsComponent,
+  LoginComponent,
+  FormularioCadastroAlunoComponent,
+];
 
 @NgModule({
   declarations: [...COMPONENTS],
@@ -32,4 +38,4 @@ const COMPONENTS = [AppComponent, AnaliseDocsComponent, LoginComponent];
 
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
