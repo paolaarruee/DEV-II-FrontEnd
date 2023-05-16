@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { FormularioCadastroAlunoComponent } from './formulario-cadastro-aluno/formulario-cadastro-aluno.component';
 
 const ANGULAR_MODULES = [
   BrowserModule,
@@ -18,15 +19,20 @@ const ANGULAR_MODULES = [
   BrowserAnimationsModule,
   HttpClientModule,
   MatToolbarModule,
-  FormsModule
+  FormsModule,
 ];
 
 @NgModule({
-  declarations: [AppComponent, AnaliseDocsComponent, LoginComponent],
+  declarations: [
+    AppComponent,
+    AnaliseDocsComponent,
+    LoginComponent,
+    FormularioCadastroAlunoComponent,
+  ],
   imports: [...ANGULAR_MODULES, CoreModule, SharedModule],
 
   providers: [],
 
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
