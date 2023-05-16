@@ -58,7 +58,7 @@
 
   &-passos {
     width: 85%;
-    
+
 
     .titulo {
       font-size: 20px;
@@ -84,11 +84,17 @@
       }
     }
 
-    .arquivos-up{
+    .arquivos-up {
       margin-top: 20px;
+
+      button {
+        margin-left: 50px;
+      }
     }
 
     .proximo {
+      display: flex;
+      justify-content: flex-end;
       padding: 20px 0;
 
     }

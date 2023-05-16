@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -18,7 +19,7 @@ const COMPONENTS = [FooterComponent, HeaderComponent];
     }
   ],
   imports: [
-    CommonModule
+    CommonModule, RouterModule
   ],
   exports: [...COMPONENTS]
 })

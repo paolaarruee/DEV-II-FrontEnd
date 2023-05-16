@@ -10,11 +10,11 @@
       <p class="campus">Campus Restinga</p>
     </a>
   </div>
- 
+
   <div class="navbar-itens">
-    <a class="navbar-itens-menu" routerLink="">
-      <a>Oportunidades</a>
-      <a routerLink="/cadastro">Cadastrar servidor</a>
+    <a class="navbar-itens-menu">
+      <a>Oportunidades </a>
+      <a routerLink="/cadastrarServidor">Cadastrar servidor</a>
       <a routerLink="/analisedocs">Analise Documentos</a>
       <a routerLink="/login" *ngIf="!isAuthenticated">Login</a>
       <a (click)="logout()" *ngIf="isAuthenticated">Logout</a>
