@@ -12,20 +12,9 @@
 }
 
 .formulario {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.formulario--gp {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.cargo {
-    width: 170px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .formulario--centro {
@@ -38,10 +27,76 @@
     align-items: center;
 }
 
-.nome-campo {
-    font-size: 16px;
+label{
+  font-size: 20px;
+  font-style: normal;
+  width: 530px;
+  height: 28px;
 }
 
-.email {
+input {
+  background: #FFFFFF;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  padding: 7px;
+  font-size: 18px;
 
+}
+
+#cargo{
+  box-sizing: border-box;
+
+  padding: 7px;
+  font-size: 18px;
+
+  background: #FFFFFF;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.formularioBox{
+  display: flex;
+  flex-direction: column;
+}
+
+.divcargo{
+  display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.nome,.email{
+  display: grid;
+}
+
+
+// .senhadiv{
+//   display: flex;
+// }
+
+// .nome-campo {
+//   font-size: 18px;
+//   font-style: normal;
+//   width: 530px;
+//   height: 28px;
+// }
+
+ul{
+  display: flex;
+  padding-left: 0px;
+}
+
+li{
+  display: flex;
+  flex-direction: column;
+}
+
+.botao{
+  border: 0px solid #000000;
+  background: #2F9E41;
+  font-style: normal;
+  font-size: 25px;
+  color: #FFFFFF;
 }

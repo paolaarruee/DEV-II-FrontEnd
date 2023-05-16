@@ -8,6 +8,8 @@ import { HeaderComponent } from './header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormularioServidorComponent } from './formulario-servidor/formulario-servidor.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, FooterComponent, HeaderComponent, FormularioServidorComponent],
@@ -16,6 +18,8 @@ import { FormularioServidorComponent } from './formulario-servidor/formulario-se
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],
