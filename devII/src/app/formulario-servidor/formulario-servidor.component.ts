@@ -22,8 +22,8 @@ export class FormularioServidorComponent {
   };
 
   confirmarSenha: string = '';
+  emailPattern: RegExp = /^[\w-]+(\.[\w-]+)*@restinga\.ifrs\.edu\.br$/;
 
-  // constructor(private formularioCadastroservidorService: FormularioCadastroservidorService){}
   constructor(private service: FormularioServidorService, private toastService: ToastService){}
 
   enviarFormulario(){
@@ -56,6 +56,12 @@ export class FormularioServidorComponent {
       return;
     }
 
+    if (!/^[\w-]+(\.[\w-]+)*@restinga\.ifrs\.edu\.br$/.test(this.servidor.usuarioSistema.email)) {
+      let mensagem = `O email deve ter o final @restinga.ifrs.edu.br`;
+      this.toastService.showMessage(mensagem, 'error');
+      return;
+    }
+
     this.service.enviarDados(this.servidor).subscribe(
       response => {
         console.log('Servidor cadastrado com sucesso!');
@@ -64,9 +70,13 @@ export class FormularioServidorComponent {
         // Lógica adicional após o envio bem-sucedido do formulário
       },
       error => {
-        console.error('Erro ao enviar o formulário:', error);
-        this.toastService.showMessage('Não foi possivel cadastrar. Verifique os campos!')
-        // Lógica adicional em caso de erro ao enviar o formulário
+        if (error.status === 409) {
+          this.toastService.showMessage('Email já está em uso. Por favor, escolha outro email.', 'error');
+        } else {
+          console.error('Erro ao enviar o formulário:', error);
+          this.toastService.showMessage('Não foi possivel cadastrar. Verifique os campos!')
+        }
+          // Lógica adicional em caso de erro ao enviar o formulário
       }
     );
 

@@ -1,11 +1,11 @@
 export interface Aluno{
-  nomeCompleto : String
+  nomeCompleto : string
   usuarioSistema: {
-        email: String,
-        senha: String
+        email: string,
+        senha: string
         },
-  turno : String
-  matricula : String
-  ingresso : String
-  curso : String
+  turno : string
+  matricula : string
+  ingresso : string
+  curso : string
 }

@@ -1,9 +1,9 @@
 export interface Servidor{
-  nome: String
-  cargo: String
-  curso: String
+  nome: string
+  cargo: string
+  curso: string
   usuarioSistema: {
-    email: String,
-    senha: String
+    email: string,
+    senha: string
     }
 }
