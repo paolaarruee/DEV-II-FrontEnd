@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormularioCadastroAlunoComponent } from './formulario-cadastro-aluno/formulario-cadastro-aluno.component';
 import { FormularioServidorComponent } from './formulario-servidor/formulario-servidor.component';
+import { ListaSolicitacoesAlunoComponent } from './lista-solicitacoes-aluno/lista-solicitacoes-aluno.component';
 
 const ANGULAR_MODULES = [
   BrowserModule,
@@ -33,7 +34,7 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS, ListaSolicitacoesAlunoComponent],
   imports: [...ANGULAR_MODULES, CoreModule, SharedModule],
 
 

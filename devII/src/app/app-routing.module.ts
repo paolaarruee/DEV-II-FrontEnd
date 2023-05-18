@@ -6,6 +6,7 @@ import { AnaliseDocsComponent } from './analise-docs/analise-docs.component';
 import { AuthGuard } from './core/guards/auth/auth.guard';
 import { FormularioCadastroAlunoComponent } from './formulario-cadastro-aluno/formulario-cadastro-aluno.component';
 import { FormularioServidorComponent } from './formulario-servidor/formulario-servidor.component';
+import { ListaSolicitacoesAlunoComponent } from './lista-solicitacoes-aluno/lista-solicitacoes-aluno.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,11 @@ const routes: Routes = [
     path: '**',
     redirectTo: 'analisedocs',
   },
+
+  {
+    path: 'listaSolicitacoesAluno',
+    component: ListaSolicitacoesAlunoComponent,
+  }
 ];
 
 @NgModule({
