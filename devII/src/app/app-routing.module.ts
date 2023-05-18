@@ -31,14 +31,16 @@ const routes: Routes = [
   },
 
   {
+    path: 'listaSolicitacoesAluno',
+    component: ListaSolicitacoesAlunoComponent,
+  },
+
+  {
     path: '**',
     redirectTo: 'analisedocs',
   },
 
-  {
-    path: 'listaSolicitacoesAluno',
-    component: ListaSolicitacoesAlunoComponent,
-  }
+  
 ];
 
 @NgModule({
