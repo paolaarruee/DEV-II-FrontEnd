@@ -14,6 +14,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormularioCadastroAlunoComponent } from './formulario-cadastro-aluno/formulario-cadastro-aluno.component';
 import { FormularioServidorComponent } from './formulario-servidor/formulario-servidor.component';
 import { ListaSolicitacoesAlunoComponent } from './lista-solicitacoes-aluno/lista-solicitacoes-aluno.component';
+import { SolicitacaoComponent } from './solicitacao/solicitacao.component';
+import { DetalhesSolicitacaoComponent } from './detalhes-solicitacao/detalhes-solicitacao.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const ANGULAR_MODULES = [
   BrowserModule,
@@ -23,6 +26,7 @@ const ANGULAR_MODULES = [
   MatToolbarModule,
   ReactiveFormsModule,
   FormsModule,
+  MatDialogModule
 ];
 
 const COMPONENTS = [
@@ -34,7 +38,7 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  declarations: [...COMPONENTS, ListaSolicitacoesAlunoComponent],
+  declarations: [...COMPONENTS, ListaSolicitacoesAlunoComponent, SolicitacaoComponent, DetalhesSolicitacaoComponent],
   imports: [...ANGULAR_MODULES, CoreModule, SharedModule],
 
 

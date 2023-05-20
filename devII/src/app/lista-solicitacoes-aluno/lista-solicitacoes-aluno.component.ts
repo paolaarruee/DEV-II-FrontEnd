@@ -7,4 +7,25 @@ import { Component } from '@angular/core';
 })
 export class ListaSolicitacoesAlunoComponent {
 
+  listaSolicitacoes = [
+    {
+      titulo: 'Solicitação xxxxx',
+      conteudo:'teste conteudo 1',
+      status:'em andamento'
+    },
+
+    {
+      titulo: 'teste2',
+      conteudo:'teste conteudo 2',
+      status:'aprovado'
+    },
+    {
+      titulo: 'teste 3',
+      conteudo:'testando conteudo',
+      status:'negado'
+    },
+
+  ]
+
+
 }

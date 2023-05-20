@@ -1,3 +1,4 @@
+import { SolicitacaoComponent } from './solicitacao/solicitacao.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -36,11 +37,16 @@ const routes: Routes = [
   },
 
   {
+    path: 'solicitacao',
+    component: SolicitacaoComponent,
+  },
+
+  {
     path: '**',
     redirectTo: 'analisedocs',
   },
 
-  
+
 ];
 
 @NgModule({
