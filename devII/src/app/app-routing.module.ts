@@ -11,10 +11,17 @@ import { ListaSolicitacoesAlunoComponent } from './lista-solicitacoes-aluno/list
 import { ListaSolicitacoesServidorComponent } from './lista-solicitacoes-servidor/lista-solicitacoes-servidor.component';
 
 const routes: Routes = [
+
+  {
+    path: 'listarSoliciServidores',
+    component: ListaSolicitacoesServidorComponent,
+  },
+
   {
     path: 'login',
     component: LoginComponent,
   },
+
   {
     path: 'analisedocs',
     component: AnaliseDocsComponent,
@@ -47,10 +54,7 @@ const routes: Routes = [
     redirectTo: 'analisedocs',
   },
 
-  {
-    path: 'listaSolicitacoesServidor',
-    component: ListaSolicitacoesServidorComponent,
-  },
+
 
 
 ];
