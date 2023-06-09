@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DadosBackendService } from './dados-backend.service';
 
 @Component({
   selector: 'app-lista-solicitacoes-aluno',
@@ -7,25 +8,36 @@ import { Component } from '@angular/core';
 })
 export class ListaSolicitacoesAlunoComponent {
 
-  listaSolicitacoes = [
-    {
-      titulo: 'Solicitação xxxxx',
-      conteudo:'teste conteudo 1',
-      status:'em andamento'
-    },
+  // constructor(private service: DadosBackendService){}
 
-    {
-      titulo: 'teste2',
-      conteudo:'teste conteudo 2',
-      status:'aprovado'
-    },
-    {
-      titulo: 'teste 3',
-      conteudo:'testando conteudo',
-      status:'negado'
-    },
+  // listaSolicitacoes = [
+  //   {
+  //     titulo: 'Solicitação xxxxx',
+  //     conteudo:'teste conteudo 1 teste conteudo 1teste conteudo 1teste conteudo 1teste conteudo 1teste conteudo 1teste conteudo 1teste conteudo 1teste conteudo 1teste conteudo 1teste conteudo 1teste conteudo 1',
+  //     status:'em andamento',
+  //     etapa:'4',
+  //     observacao: 'aqui esta uma observacao aqui esta uma observacao aqui esta uma observacao aqui esta uma observacao aqui esta uma observacao aqui esta uma observacao aqui esta uma observacao aqui esta uma observacao aqui esta uma observacao aqui esta uma observacao '
+  //   },
+  // ]
 
-  ]
+  listaSolicitacoes: any[] = [];
+
+  constructor(private service: DadosBackendService) {}
+
+  ngOnInit() {
+    this.service.obterSolicitacoes().subscribe(
+      solicitacoes => {
+        console.log("Está chegando");
+        console.log(solicitacoes);
+        console.log(this.listaSolicitacoes);
+        this.listaSolicitacoes = solicitacoes;
+        console.log(this.listaSolicitacoes);
+      },
+      error => {
+        console.error('Erro ao obter as solicitações:', error);
+      }
+    );
+  }
 
 
 }

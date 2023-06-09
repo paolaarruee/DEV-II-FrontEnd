@@ -1,4 +1,4 @@
-import { SolicitacaoComponent } from './solicitacao/solicitacao.component';
+import { SolicitacaoComponent } from './lista-solicitacoes-aluno/solicitacao/solicitacao.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 

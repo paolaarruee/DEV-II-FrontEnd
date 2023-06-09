@@ -14,8 +14,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormularioCadastroAlunoComponent } from './formulario-cadastro-aluno/formulario-cadastro-aluno.component';
 import { FormularioServidorComponent } from './formulario-servidor/formulario-servidor.component';
 import { ListaSolicitacoesAlunoComponent } from './lista-solicitacoes-aluno/lista-solicitacoes-aluno.component';
-import { SolicitacaoComponent } from './solicitacao/solicitacao.component';
-import { DetalhesSolicitacaoComponent } from './detalhes-solicitacao/detalhes-solicitacao.component';
+import { SolicitacaoComponent } from './lista-solicitacoes-aluno/solicitacao/solicitacao.component';
+import { DetalhesSolicitacaoComponent } from './lista-solicitacoes-aluno/solicitacao/detalhes-solicitacao/detalhes-solicitacao.component';
 import { MatDialogModule } from '@angular/material/dialog';
 
 const ANGULAR_MODULES = [

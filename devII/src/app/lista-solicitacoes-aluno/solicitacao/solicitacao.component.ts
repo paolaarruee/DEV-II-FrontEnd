@@ -1,4 +1,5 @@
-import { DetalhesSolicitacaoComponent } from './../detalhes-solicitacao/detalhes-solicitacao.component';
+
+import { DetalhesSolicitacaoComponent } from './detalhes-solicitacao/detalhes-solicitacao.component';
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -9,19 +10,12 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class SolicitacaoComponent {
 
-  @Input() solicitacao = {
-    titulo: 'teste',
-    conteudo:'teste conteudo',
-    status:'negado'
-  }
-
   constructor(private dialog: MatDialog) { }
 
   openDialog() {
     const dialogRef = this.dialog.open(DetalhesSolicitacaoComponent, {
-      // width: '80%',
+      // width: '70%',
       // height: '80%',
-
       data: this.solicitacao // Passa os dados da solicitação para o modal
     });
 
@@ -30,7 +24,13 @@ export class SolicitacaoComponent {
     });
   }
 
-
+  @Input() solicitacao = {
+    titulo: '',
+    conteudo: '',
+    status: '',
+    etapa: '',
+    observacao: ''
+  };
 
   statusSolicitacao(): string{
     if(this.solicitacao.status == 'aprovado'){

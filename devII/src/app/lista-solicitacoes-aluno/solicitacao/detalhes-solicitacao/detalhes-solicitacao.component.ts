@@ -28,4 +28,23 @@ export class DetalhesSolicitacaoComponent {
     return 'statusColor1'
   }
 
+  progressoFluxo(etapa: number): string {
+    if (this.solicitacao.etapa >= etapa) {
+      return 'progressoEtapa';
+    } else if (this.solicitacao.etapa >= etapa) {
+      return 'progressoEtapa';
+    } else if (this.solicitacao.etapa >= etapa) {
+      return 'progressoEtapa';
+    } else if (this.solicitacao.etapa >= etapa) {
+      return 'progressoEtapa';
+    } else if (this.solicitacao.etapa >= etapa) {
+      return 'progressoEtapa';
+    }
+    return '';
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
+  }
+
 }
