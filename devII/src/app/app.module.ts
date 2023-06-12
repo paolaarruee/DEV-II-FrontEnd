@@ -17,6 +17,7 @@ import { ListaSolicitacoesAlunoComponent } from './lista-solicitacoes-aluno/list
 import { SolicitacaoComponent } from './lista-solicitacoes-aluno/solicitacao/solicitacao.component';
 import { DetalhesSolicitacaoComponent } from './lista-solicitacoes-aluno/solicitacao/detalhes-solicitacao/detalhes-solicitacao.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { TelaSolicitacaoComponent } from './tela-solicitacao/tela-solicitacao.component';
 
 const ANGULAR_MODULES = [
   BrowserModule,
@@ -38,7 +39,7 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  declarations: [...COMPONENTS, ListaSolicitacoesAlunoComponent, SolicitacaoComponent, DetalhesSolicitacaoComponent],
+  declarations: [...COMPONENTS, ListaSolicitacoesAlunoComponent, SolicitacaoComponent, DetalhesSolicitacaoComponent, TelaSolicitacaoComponent],
   imports: [...ANGULAR_MODULES, CoreModule, SharedModule],
 
 
