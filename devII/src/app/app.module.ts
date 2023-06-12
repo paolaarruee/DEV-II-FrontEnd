@@ -14,9 +14,16 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormularioCadastroAlunoComponent } from './formulario-cadastro-aluno/formulario-cadastro-aluno.component';
 import { FormularioServidorComponent } from './formulario-servidor/formulario-servidor.component';
 import { ListaSolicitacoesAlunoComponent } from './lista-solicitacoes-aluno/lista-solicitacoes-aluno.component';
+
+import { SolicitacaoServidorComponent } from './lista-solicitacoes-servidor/solicitacao/solicitacao.component';
+import { DetalhesSolicitacaoServidorComponent } from './lista-solicitacoes-servidor/solicitacao/detalhes-solicitacao/detalhes-solicitacao.component';
+
 import { SolicitacaoComponent } from './lista-solicitacoes-aluno/solicitacao/solicitacao.component';
 import { DetalhesSolicitacaoComponent } from './lista-solicitacoes-aluno/solicitacao/detalhes-solicitacao/detalhes-solicitacao.component';
+
+
 import { MatDialogModule } from '@angular/material/dialog';
+import { ListaSolicitacoesServidorComponent } from './lista-solicitacoes-servidor/lista-solicitacoes-servidor.component';
 
 const ANGULAR_MODULES = [
   BrowserModule,
@@ -38,7 +45,7 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  declarations: [...COMPONENTS, ListaSolicitacoesAlunoComponent, SolicitacaoComponent, DetalhesSolicitacaoComponent],
+  declarations: [...COMPONENTS, SolicitacaoServidorComponent, DetalhesSolicitacaoServidorComponent, ListaSolicitacoesServidorComponent, ListaSolicitacoesAlunoComponent, SolicitacaoComponent, DetalhesSolicitacaoComponent],
   imports: [...ANGULAR_MODULES, CoreModule, SharedModule],
 
 
