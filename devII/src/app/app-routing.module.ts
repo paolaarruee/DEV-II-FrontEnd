@@ -20,6 +20,12 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
   },
+
+  {
+    path: 'listaSolicitacaoServidor',
+    component: ListaSolicitacoesServidorComponent,
+    
+  },
   {
 
     path: "solicitacaoEstagio",
@@ -34,9 +40,7 @@ const routes: Routes = [
   {
     path: 'cadastrarAluno',
     component: FormularioCadastroAlunoComponent,
-  },
-
- 
+  }, 
 
   {
     path: 'cadastrarServidor',
@@ -60,11 +64,7 @@ const routes: Routes = [
   },
 
 
-  {
-    path: 'listaServ',
-    component: ListaSolicitacoesServidorComponent,
-    
-  },
+
  
 
 

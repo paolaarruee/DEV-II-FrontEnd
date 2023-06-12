@@ -1,5 +1,6 @@
 import { Component,  Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-detalhes-solicitacao',
@@ -9,6 +10,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class DetalhesSolicitacaoServidorComponent {
 
   constructor(
+    private router: Router,
     public dialogRef: MatDialogRef<DetalhesSolicitacaoServidorComponent>,
     @Inject (MAT_DIALOG_DATA) public solicitacao: any
   ) {}
@@ -45,6 +47,11 @@ export class DetalhesSolicitacaoServidorComponent {
 
   closeDialog() {
     this.dialogRef.close();
+  }
+
+  AnaliseDoc() {
+    this.router.navigate(['./analise-docs/analise-docs.component'], { state: { solicitacao: this.solicitacao } });
+    this.closeDialog();
   }
 
 }
