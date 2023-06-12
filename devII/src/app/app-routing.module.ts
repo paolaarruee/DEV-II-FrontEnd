@@ -9,6 +9,7 @@ import { AuthGuard } from './core/guards/auth/auth.guard';
 import { FormularioCadastroAlunoComponent } from './formulario-cadastro-aluno/formulario-cadastro-aluno.component';
 import { FormularioServidorComponent } from './formulario-servidor/formulario-servidor.component';
 import { ListaSolicitacoesAlunoComponent } from './lista-solicitacoes-aluno/lista-solicitacoes-aluno.component';
+import { TelaSolicitacaoComponent } from './tela-solicitacao/tela-solicitacao.component';
 import { ListaSolicitacoesServidorComponent } from './lista-solicitacoes-servidor/lista-solicitacoes-servidor.component';
 
 const routes: Routes = [
@@ -20,9 +21,14 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
+
+    path: "solicitacaoEstagio",
+    component: TelaSolicitacaoComponent,
+  },
+  {
     path: 'analisedocs',
     component: AnaliseDocsComponent,
-    canActivate: [AuthGuard],
+    //canActivate: [AuthGuard],
   },
 
   {
@@ -35,7 +41,7 @@ const routes: Routes = [
   {
     path: 'cadastrarServidor',
     component: FormularioServidorComponent,
-    canActivate: [AuthGuard],
+    //ncanActivate: [AuthGuard],
   },
 
   {
