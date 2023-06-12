@@ -32,6 +32,14 @@ export class ListaSolicitacoesAlunoComponent {
         console.log(this.listaSolicitacoes);
         this.listaSolicitacoes = solicitacoes;
         console.log(this.listaSolicitacoes);
+
+        // Ordena a lista de solicitações com base na data de criação em ordem decrescente
+        this.listaSolicitacoes.sort((a, b) => {
+          const dataA = new Date(a.dataSolicitacao).getTime();
+          const dataB = new Date(b.dataSolicitacao).getTime();
+          return dataB - dataA;
+        });
+
       },
       error => {
         console.error('Erro ao obter as solicitações:', error);
