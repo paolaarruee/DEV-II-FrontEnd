@@ -6,6 +6,8 @@ import { DocsService } from '../core/services/docs/docs.service';
 import { DocFile } from '../shared/interfaces/doc';
 import { ToastService } from '../core/services/toast/toast.service';
 import { Observable } from 'rxjs';
+import { ServidorService } from '../core/services/servidor/servidor.service';
+import { Servidor } from '../shared/interfaces/servidor';
 
 @Component({
   selector: 'app-analise-docs',
@@ -16,11 +18,18 @@ export class AnaliseDocsComponent implements OnInit {
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
 
   public documentList$!: Observable<DocFile[]>;
+  public servidore!: Servidor;
 
-  public constructor(private docsService: DocsService, private toastService: ToastService) { }
+  public constructor(
+    private docsService: DocsService,
+    private toastService: ToastService,
+    private servidorService: ServidorService
+  ) {}
 
   public ngOnInit(): void {
     this.setDocumentList();
+    this.setRecuperarServidor(1);
+    console.log(this.setRecuperarServidor(1));
   }
 
   public download({ id, nome }: DocFile): void {
@@ -45,7 +54,7 @@ export class AnaliseDocsComponent implements OnInit {
     const formData: FormData = new FormData();
 
     for (let i = 0; i < fileList.length; i++) {
-      formData.append("documentos", fileList[i]);
+      formData.append('documentos', fileList[i]);
     }
 
     this.docsService.uploadDocs(formData).subscribe({
@@ -60,4 +69,6 @@ export class AnaliseDocsComponent implements OnInit {
   private setDocumentList(): void {
     this.documentList$ = this.docsService.getDocList();
   }
+
+  private setRecuperarServidor(id: number): void {}
 }

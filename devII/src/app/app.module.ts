@@ -10,7 +10,6 @@ import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormularioCadastroAlunoComponent } from './formulario-cadastro-aluno/formulario-cadastro-aluno.component';
 import { FormularioServidorComponent } from './formulario-servidor/formulario-servidor.component';
 
@@ -19,7 +18,6 @@ const ANGULAR_MODULES = [
   AppRoutingModule,
   BrowserAnimationsModule,
   HttpClientModule,
-  MatToolbarModule,
   ReactiveFormsModule,
   FormsModule,
 ];
@@ -29,13 +27,12 @@ const COMPONENTS = [
   AnaliseDocsComponent,
   LoginComponent,
   FormularioCadastroAlunoComponent,
-  FormularioServidorComponent
+  FormularioServidorComponent,
 ];
 
 @NgModule({
   declarations: [...COMPONENTS],
   imports: [...ANGULAR_MODULES, CoreModule, SharedModule],
-
 
   providers: [],
 

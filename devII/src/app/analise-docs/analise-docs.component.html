@@ -22,6 +22,24 @@
       <span>Semestre: 2</span>
     </div>
   </div>
+  <div></div>
+  <div class="corpo-setor-estagio" *ngIf="">
+    <div class="download">
+      <p>Download dos Arquivos</p>
+      <div class="historico" *ngFor="let doc of documentList$ | async">
+        <p class="arquivo">{{ doc.nome }}</p>
+        <button mat-icon-button color="primary" (click)="download(doc)">
+          <mat-icon class="salvar">save_alt</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="botoes">
+      <button class="deferir" mat-raised-button color="primary">Deferir</button>
+      <button class="indeferir" mat-raised-button color="warn">
+        Indeferir
+      </button>
+    </div>
+  </div>
   <div class="corpo-passos">
     <mat-stepper>
       <mat-step label="Download" state="phone">
@@ -37,10 +55,10 @@
         </div>
       </mat-step>
       <mat-step label="Upload" state="chat">
-        <p class='titulo'>Upload de Documentos</p>
+        <p class="titulo">Upload de Documentos</p>
         <div class="arquivos-up">
-          <input type="file" id="avatar" name="avatar" multiple #fileInput>
-          <button  mat-raised-button (click)="upload()">Salvar</button>
+          <input type="file" id="avatar" name="avatar" multiple #fileInput />
+          <button mat-raised-button (click)="upload()">Salvar</button>
         </div>
         <div class="proximo">
           <button mat-button matStepperPrevious>Voltar</button>

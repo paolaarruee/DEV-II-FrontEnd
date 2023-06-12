@@ -15,7 +15,6 @@ const routes: Routes = [
   {
     path: 'analisedocs',
     component: AnaliseDocsComponent,
-    canActivate: [AuthGuard],
   },
 
   {
