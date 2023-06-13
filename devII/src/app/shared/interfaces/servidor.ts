@@ -1,9 +1,8 @@
-export interface Servidor{
-  nome: string
-  cargo: string
-  curso: string
-  usuarioSistema: {
-    email: string,
-    senha: string
-    }
+import { Usuario } from './usuario';
+
+export interface Servidor {
+  nome: string;
+  cargo: string;
+  curso: string;
+  usuarioSistema: Usuario;
 }

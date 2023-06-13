@@ -1,11 +1,10 @@
-export interface Aluno{
-  nomeCompleto : string
-  usuarioSistema: {
-        email: string,
-        senha: string
-        },
-  turno : string
-  matricula : string
-  ingresso : string
-  curso : string
+import { Usuario } from './usuario';
+
+export interface Aluno {
+  nomeCompleto: string;
+  usuarioSistema: Usuario;
+  turno: string;
+  matricula: string;
+  ingresso: string;
+  curso: string;
 }

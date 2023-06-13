@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormularioCadastroAlunoComponent } from './formulario-cadastro-aluno/formulario-cadastro-aluno.component';
 import { FormularioServidorComponent } from './formulario-servidor/formulario-servidor.component';
+import { ModalAnaliseComponent } from './modal-analise/modal-analise.component';
 
 const ANGULAR_MODULES = [
   BrowserModule,
@@ -28,6 +29,7 @@ const COMPONENTS = [
   LoginComponent,
   FormularioCadastroAlunoComponent,
   FormularioServidorComponent,
+  ModalAnaliseComponent,
 ];
 
 @NgModule({

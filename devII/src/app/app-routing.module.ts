@@ -25,7 +25,7 @@ const routes: Routes = [
   {
     path: 'cadastrarServidor',
     component: FormularioServidorComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
 
   {
