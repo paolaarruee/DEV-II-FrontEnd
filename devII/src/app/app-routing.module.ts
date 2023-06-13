@@ -22,7 +22,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'listaSolicitacaoServidor',
+    path: 'listaSolicitacoesServidor',
     component: ListaSolicitacoesServidorComponent,
     
   },
