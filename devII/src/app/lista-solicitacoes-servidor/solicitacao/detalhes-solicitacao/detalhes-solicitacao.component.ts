@@ -1,6 +1,7 @@
-import { Component,  Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { SolicitacaoService } from './solicitacao.service';
 
 @Component({
   selector: 'app-detalhes-solicitacao',
@@ -12,34 +13,27 @@ export class DetalhesSolicitacaoServidorComponent {
   constructor(
     private router: Router,
     public dialogRef: MatDialogRef<DetalhesSolicitacaoServidorComponent>,
-    @Inject (MAT_DIALOG_DATA) public solicitacao: any
+    @Inject(MAT_DIALOG_DATA) public solicitacao: any,
+    private dadosSolicitacao: SolicitacaoService
   ) {}
 
-  statusSolicitacao(): string{
-    if(this.solicitacao.status == 'aprovado'){
-      return 'statusColor1'
+  statusSolicitacao(): string {
+    if (this.solicitacao.status == 'Aprovado') {
+      return 'statusColor1';
     }
 
-    if(this.solicitacao.status == 'em andamento'){
-      return 'statusColor2'
+    if (this.solicitacao.status == 'Em andamento') {
+      return 'statusColor2';
     }
 
-    if(this.solicitacao.status == 'negado'){
-      return 'statusColor3'
+    if (this.solicitacao.status == 'Negado') {
+      return 'statusColor3';
     }
-    return 'statusColor1'
+    return 'statusColor1';
   }
 
   progressoFluxo(etapa: number): string {
     if (this.solicitacao.etapa >= etapa) {
-      return 'progressoEtapa';
-    } else if (this.solicitacao.etapa >= etapa) {
-      return 'progressoEtapa';
-    } else if (this.solicitacao.etapa >= etapa) {
-      return 'progressoEtapa';
-    } else if (this.solicitacao.etapa >= etapa) {
-      return 'progressoEtapa';
-    } else if (this.solicitacao.etapa >= etapa) {
       return 'progressoEtapa';
     }
     return '';
@@ -50,8 +44,10 @@ export class DetalhesSolicitacaoServidorComponent {
   }
 
   AnaliseDoc() {
-    this.router.navigate(['./analise-docs/analise-docs.component'], { state: { solicitacao: this.solicitacao } });
+    this.dadosSolicitacao.setSolicitacao(this.solicitacao); // Define os dados da solicitação no serviço
+    this.router.navigate(['/analise-docs'], { state: { solicitacao: this.solicitacao } });
     this.closeDialog();
   }
+  
 
 }

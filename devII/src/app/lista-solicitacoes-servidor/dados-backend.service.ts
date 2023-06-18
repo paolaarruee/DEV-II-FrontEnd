@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class DadosBackendService {
 
-  private readonly urlAPI = 'http://localhost:8088/assinaturaapi/dadosSolicitacaoAluno';
+  private readonly urlAPI = 'http://localhost:8088/assinaturaapi/listarSolicitacoesPorEmailServidor';
+  
 
   constructor(private http: HttpClient) { }
 

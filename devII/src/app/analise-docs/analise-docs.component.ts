@@ -1,7 +1,5 @@
-
-import { Aluno } from './aluno.model';
-import { AlunoService } from './aluno.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { saveAs } from 'file-saver';
 
@@ -9,9 +7,8 @@ import { DocsService } from '../core/services/docs/docs.service';
 import { DocFile } from '../shared/interfaces/doc';
 import { ToastService } from '../core/services/toast/toast.service';
 import { Observable } from 'rxjs';
-
-import { Router } from '@angular/router';
-
+import { DadosBackendService } from '../lista-solicitacoes-aluno/dados-backend.service';
+import { SolicitacaoService } from '../lista-solicitacoes-servidor/solicitacao/detalhes-solicitacao/solicitacao.service';
 
 @Component({
   selector: 'app-analise-docs',
@@ -22,65 +19,57 @@ export class AnaliseDocsComponent implements OnInit {
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
 
   public documentList$!: Observable<DocFile[]>;
-  public constructor(private router: Router, private alunoService: AlunoService, private docsService: DocsService, private toastService: ToastService) { }
-
   public solicitacao: any;
-  public aluno: Aluno | undefined;
 
-  
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private docsService: DocsService,
+    private toastService: ToastService,
+    private dadosSolicitacao: SolicitacaoService
+  ) {}
 
-  public ngOnInit(): void {
-    this.alunoService.getAlunoById(this.solicitacao.alunoId).subscribe((aluno: Aluno) => {
-      this.aluno = aluno;
+  ngOnInit(): void {
+    this.solicitacao = this.dadosSolicitacao.getSolicitacao(); // Recupera os dados da solicitação do serviço
 
-      this.solicitacao = {
-        tipo: 'estagio',
-        alunoId: aluno.id,
-        servidorId: '1',
-      };
-
-      this.setDocumentList();
-    });
+    // Defina a lista de documentos
+    this.setDocumentList();
   }
 
-  public download({ id, nome }: DocFile): void {
+  download({ id, nome }: DocFile): void {
     this.docsService.downloadDoc(id).subscribe({
       next: (blob: Blob) => {
         saveAs(new Blob([blob]), nome);
         this.toastService.showMessage('Arquivo salvo com sucesso!');
-        this.AnaliseDoc(); // Redirecionamento para a página de solicitação
       },
       error: () => {
         this.toastService.showMessage('Erro ao salvar o arquivo.');
       },
     });
   }
-  
-  public upload(): void {
+
+  upload(): void {
     const fileList: FileList | null = this.fileInputRef.nativeElement?.files;
-  
+
     if (!(fileList && fileList.length)) {
       return;
     }
-  
+
     const formData: FormData = new FormData();
-  
+
     for (let i = 0; i < fileList.length; i++) {
-      formData.append("documentos", fileList[i]);
+      formData.append('documentos', fileList[i]);
     }
-  
+
     this.docsService.uploadDocs(formData).subscribe({
       next: () => {
         this.toastService.showMessage('Upload efetuado com sucesso!');
         this.setDocumentList();
-        this.AnaliseDoc(); // Redirecionamento para a página de solicitação
       },
-      error: () => this.toastService.showMessage('Erro ao efetuar o upload.'),
+      error: () => {
+        this.toastService.showMessage('Erro ao efetuar o upload.');
+      },
     });
-  }
-  
-  AnaliseDoc() {
-    this.router.navigate(['/lista-solicitacoes-servidor/solicitacao/detalhes-solicitacao/detalhes-solicitacao.component'], { queryParams: { solicitacao: JSON.stringify(this.solicitacao) } });
   }
 
   private setDocumentList(): void {
