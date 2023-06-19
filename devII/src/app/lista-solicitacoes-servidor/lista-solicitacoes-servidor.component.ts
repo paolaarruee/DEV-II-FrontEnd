@@ -1,43 +1,40 @@
-import { Component } from '@angular/core';
-import { DadosBackendService } from './dados-backend.service';
-
+import { Component, OnInit } from '@angular/core';
+import { SolicitacaoService } from './solicitacao/detalhes-solicitacao/solicitacao.service';
 
 @Component({
   selector: 'app-lista-solicitacoes-servidor',
   templateUrl: './lista-solicitacoes-servidor.component.html',
   styleUrls: ['./lista-solicitacoes-servidor.component.scss']
 })
-export class ListaSolicitacoesServidorComponent {
+export class ListaSolicitacoesServidorComponent implements OnInit {
 
-  /* //solicitações para receber do backend 
-   
-    listaSolicitacoes: any[] = [];
-  
-    constructor(private service: DadosBackendService) {}
-  
-    ngOnInit() {
-      this.service.obterSolicitacoes().subscribe(
-        solicitacoes => {
-          console.log("Está chegando");
-          console.log(solicitacoes);
-          console.log(this.listaSolicitacoes);
-          this.listaSolicitacoes = solicitacoes;
-          console.log(this.listaSolicitacoes);
-  
-          // Ordena a lista de solicitações com base na data de criação em ordem decrescente
-          this.listaSolicitacoes.sort((a, b) => {
-            const dataA = new Date(a.dataSolicitacao).getTime();
-            const dataB = new Date(b.dataSolicitacao).getTime();
-            return dataB - dataA;
-          });
-  
-        },
-        error => {
-          console.error('Erro ao obter as solicitações:', error);
-        }
-      );
-    }
-  */
+  listaSolicitacoes: any[] = [];
+
+  constructor(private service: SolicitacaoService) {}
+
+  ngOnInit() {
+    this.service.listarSolicitacoesPorEmailServidor().subscribe(
+      solicitacoes => {
+        console.log("Está chegando");
+        console.log(solicitacoes);
+        this.listaSolicitacoes = solicitacoes;
+        console.log(this.listaSolicitacoes);
+
+        // Ordena a lista de solicitações com base na data de criação em ordem decrescente
+        this.listaSolicitacoes.sort((a, b) => {
+          const dataA = new Date(a.dataSolicitacao).getTime();
+          const dataB = new Date(b.dataSolicitacao).getTime();
+          return dataB - dataA;
+        });
+      },
+      error => {
+        console.error('Erro ao obter as solicitações:', error);
+      }
+    );
+  }
+
+
+ /*
 
     //lista de Solicitações para teste
     listaSolicitacoes: any[] = [];
@@ -82,5 +79,6 @@ export class ListaSolicitacoesServidorComponent {
       this.listaSolicitacoes.push(solicitacao2);
       this.listaSolicitacoes.push(solicitacao3);
     }
+    */
 
 }

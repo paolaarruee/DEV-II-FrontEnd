@@ -7,18 +7,18 @@
       <span class="dados">Dados do Aluno</span>
     </div>
     <div class="nome-aluno">
-      <span>Nome:{{ solicitacao?.titulo }} </span>
+      <span>Nome: {{solicitacao?.aluno?.nomeCompleto}}</span>
       <span class="curso">Tipo de Estágio: Não Obrigatório</span>
     </div>
 
     <div class="infos-aluno">
-      <span>Matricula: 20210001</span>
-      <span>Ano: 2021</span>
-      <span>Turno: Noturno</span>
+      <span>Matricula: {{solicitacao?.aluno?.matricula}}</span>
+      <span>Ano: {{solicitacao?.aluno?.ingresso}}</span>
+      <span>Turno: {{solicitacao?.aluno?.turno}}</span>
     </div>
     <div class="curso-aluno">
       <span>Tipo de Curso: Superior</span>
-      <span>Curso: Engenharia de Software</span>
+      <span>Curso: {{solicitacao?.aluno?.curso}}</span>
       <span>Semestre: 2</span>
     </div>
   </div>
@@ -27,7 +27,7 @@
       <mat-step label="Download" state="phone">
         <p class="titulo">Download de Documentos</p>
         <div class="historico" *ngFor="let doc of documentList$ | async">
-          <p class="arquivo">{{ doc.nome }}</p>
+          <p class="arquivo">{{doc.nome}}</p>
           <button mat-icon-button color="primary" (click)="download(doc)">
             <mat-icon class="salvar">save_alt</mat-icon>
           </button>
@@ -40,7 +40,7 @@
         <p class='titulo'>Upload de Documentos</p>
         <div class="arquivos-up">
           <input type="file" id="avatar" name="avatar" multiple #fileInput>
-          <button  mat-raised-button (click)="upload()">Salvar</button>
+          <button mat-raised-button (click)="upload()">Salvar</button>
         </div>
         <div class="proximo">
           <button mat-button matStepperPrevious>Voltar</button>

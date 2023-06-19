@@ -29,8 +29,24 @@ export class SolicitacaoServidorComponent {
     conteudo: '',
     status: '',
     etapa: '',
-    observacao: ''
-  };
+    observacao: '',
+    aluno: {
+      id: null,
+      nomeCompleto: '',
+      usuarioSistema: {
+        id: null,        
+        roles: {
+          id: null,
+          name: ''
+        }
+      },
+      turno: '',
+      matricula: '',
+      ingresso: '',
+    }
+  };   
+      
+
 
   statusSolicitacao(): string{
     if(this.solicitacao.status == 'aprovado'){
