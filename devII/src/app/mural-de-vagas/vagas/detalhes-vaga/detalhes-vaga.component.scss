@@ -1,0 +1,76 @@
+.espacamento{
+    // margin-bottom: 25px;
+    width: 613px;
+    // height: 100%;
+  }
+  
+  .header{
+    display: flex;
+    justify-content: space-between;
+    padding: 32px 32px 0px;
+    font-weight: bold;
+    font-size: 18px;
+    align-items: center;
+  }
+  
+  .titulo{
+    display: flex;
+    flex-direction: column;
+    // padding-left: 16px;
+    font-size: 34px;
+    font-weight: bold;
+    align-items: center;
+  }
+  
+  .cardDecoracao{
+    width: 550px;
+    height: 1px;
+    border: 1px solid #2B923C;
+    margin-top: 10px;
+  }
+  
+  .conteudo{
+    margin: 21px 30px 0px 33px;
+  }
+  
+  .empresa{
+    margin-bottom: 15px;
+  }
+  
+  .agencia{
+    margin-bottom: 15px;
+  }
+  
+  .descricao{
+    margin-bottom: 15px;
+  }
+  
+  .local{
+    margin-bottom: 15px;
+  }
+  
+  .valor{
+    margin-bottom: 15px;
+  }
+  
+  .turno{
+    margin-bottom: 15px;
+  }
+  
+  .buttonFechar{
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 16px;
+  }
+  
+  button{
+    padding-left: 2%;
+    padding-right: 2%;
+    background: #2B923C;
+    font-style: normal;
+    font-size: 20px;
+    color: #FFFFFF;
+    border: 0px;
+    cursor: pointer;
+  }
+  

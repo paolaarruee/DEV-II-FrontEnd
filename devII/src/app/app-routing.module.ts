@@ -6,6 +6,7 @@ import { AnaliseDocsComponent } from './analise-docs/analise-docs.component';
 import { AuthGuard } from './core/guards/auth/auth.guard';
 import { FormularioCadastroAlunoComponent } from './formulario-cadastro-aluno/formulario-cadastro-aluno.component';
 import { FormularioServidorComponent } from './formulario-servidor/formulario-servidor.component';
+import { MuralDeVagasComponent } from './mural-de-vagas/mural-de-vagas.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,11 @@ const routes: Routes = [
     path: 'cadastrarServidor',
     component: FormularioServidorComponent,
     canActivate: [AuthGuard],
+  },
+
+  {
+    path: 'muralVagas',
+    component: MuralDeVagasComponent,
   },
 
   {

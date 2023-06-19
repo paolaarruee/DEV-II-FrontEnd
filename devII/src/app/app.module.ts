@@ -13,6 +13,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormularioCadastroAlunoComponent } from './formulario-cadastro-aluno/formulario-cadastro-aluno.component';
 import { FormularioServidorComponent } from './formulario-servidor/formulario-servidor.component';
+import { MuralDeVagasComponent } from './mural-de-vagas/mural-de-vagas.component';
+import { VagasComponent } from './mural-de-vagas/vagas/vagas.component';
+import { DetalhesVagaComponent } from './mural-de-vagas/vagas/detalhes-vaga/detalhes-vaga.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const ANGULAR_MODULES = [
   BrowserModule,
@@ -22,6 +26,7 @@ const ANGULAR_MODULES = [
   MatToolbarModule,
   ReactiveFormsModule,
   FormsModule,
+  MatDialogModule,
 ];
 
 const COMPONENTS = [
@@ -29,7 +34,10 @@ const COMPONENTS = [
   AnaliseDocsComponent,
   LoginComponent,
   FormularioCadastroAlunoComponent,
-  FormularioServidorComponent
+  FormularioServidorComponent,
+  MuralDeVagasComponent, 
+  VagasComponent, 
+  DetalhesVagaComponent
 ];
 
 @NgModule({
