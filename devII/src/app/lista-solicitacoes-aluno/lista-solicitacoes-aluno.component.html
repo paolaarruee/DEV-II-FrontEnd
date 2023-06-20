@@ -2,6 +2,10 @@
   <span>Lista de Solicitações</span>
   <span class="cardDecoracao1"></span>
 
+  <div class="buttonDetalhes">
+    <button button [routerLink]="'/solicitacaoEstagio'">Solicitação <b>+</b></button>
+   </div>
+
   <div class="solicitacao" *ngIf="listaSolicitacoes.length > 0, else semSolicitacoes">
     <div *ngFor="let solicitacao of listaSolicitacoes">
       <app-solicitacao [solicitacao]="solicitacao"></app-solicitacao>

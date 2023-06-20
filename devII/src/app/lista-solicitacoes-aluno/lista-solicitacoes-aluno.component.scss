@@ -23,6 +23,22 @@
   margin-top: 6px;
 }
 
+.buttonDetalhes{
+  display: flex;
+  padding: 35px 0px 0px 5px;
+}
+
+button{
+  padding-left: 2%;
+  padding-right: 2%;
+  background: #2B923C;
+  font-style: normal;
+  font-size: 20px;
+  color: #FFFFFF;
+  border: 0px;
+  cursor: pointer;
+}
+
 .semSolicitacoes{
   display: flex;
   flex-direction: column;

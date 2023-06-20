@@ -10,7 +10,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getUserData() {
-    return this.http.get(`${environment.API_URL}/getAluno?id=1`);
+    return this.http.get(`${environment.API_URL}/getAluno`);
   }
 
   enviarSolicitacao(solicitacao: Solicitacao, file: File[]) {
