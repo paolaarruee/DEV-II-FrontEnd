@@ -1,0 +1,50 @@
+<div class="espacamento">
+  <div class="tituloprincipal">
+    <span>Lista de Solicitações</span>
+    <span class="cardDecoracao1"></span>
+  </div>
+
+  <div>
+    <form class="formulario" (ngSubmit)="enviarFormulario()">
+
+      <div class="divtitulo">
+        <label>Titulo</label>
+        <input class="titulo" [(ngModel)]="vaga.titulo" type="text" id="titulo" name="titulo" placeholder="Titulo" required>
+      </div>
+
+      <div class="divtitulo">
+        <label>Empresa</label>
+        <input class="titulo" [(ngModel)]="vaga.empresa" type="text" id="empresa" name="empresa" placeholder="Empresa" required>
+      </div>
+
+      <div class="divtitulo">
+        <label>Agencia</label>
+        <input class="titulo" [(ngModel)]="vaga.agencia" type="text" id="agencia" name="agencia" placeholder="Agencia" required>
+      </div>
+
+      <div class="divtitulo">
+        <label>Descrição</label>
+        <input class="titulo" [(ngModel)]="vaga.descricao" type="text" id="descricao" name="descricao" placeholder="Descrição" required>
+      </div>
+
+      <div class="divtitulo">
+        <label>Local</label>
+        <input class="titulo" [(ngModel)]="vaga.local" type="text" id="local" name="local" placeholder="Local" required>
+      </div>
+
+      <div class="divtitulo">
+        <label>Valor</label>
+        <input class="titulo" [(ngModel)]="vaga.valor" type="text" id="valor" name="valor" placeholder="Valor" required>
+      </div>
+
+      <div class="divtitulo">
+        <label>Turno</label>
+        <input class="titulo" [(ngModel)]="vaga.turno" type="text" id="turno" name="turno" placeholder="Turno" required>
+      </div>
+
+      <div class="botao">
+        <input class="botao" type="submit" value="Cadastrar">
+      </div>
+    </form>
+
+</div>

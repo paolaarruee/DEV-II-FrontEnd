@@ -17,6 +17,7 @@ import { MuralDeVagasComponent } from './mural-de-vagas/mural-de-vagas.component
 import { VagasComponent } from './mural-de-vagas/vagas/vagas.component';
 import { DetalhesVagaComponent } from './mural-de-vagas/vagas/detalhes-vaga/detalhes-vaga.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { CadastrarVagasComponent } from './cadastrar-vagas/cadastrar-vagas.component';
 
 const ANGULAR_MODULES = [
   BrowserModule,
@@ -41,7 +42,7 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS, CadastrarVagasComponent],
   imports: [...ANGULAR_MODULES, CoreModule, SharedModule],
 
 
