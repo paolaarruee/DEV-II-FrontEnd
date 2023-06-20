@@ -13,8 +13,8 @@ import { Usuario, Authorization, Role } from 'src/app/shared/interfaces/usuario'
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private readonly TOKEN_KEY: string = 'token';
-  private readonly ROLE_KEY: string = 'role';
+  private readonly TOKEN_KEY: string = 'Authorization';
+  private readonly ROLE_KEY: string = 'Roles';
 
   public constructor(private http: HttpClient, private router: Router) {}
 
@@ -49,7 +49,7 @@ export class AuthenticationService {
     if (!roleAsString) {
       return null;
     }
-    
+
     return JSON.parse(roleAsString);
   }
 
@@ -59,17 +59,17 @@ export class AuthenticationService {
   }
 
   public getUsuarioPorEmail(email: string): Observable<any> {
-    const url = `http://localhost:8088/buscarServidoresPorEmail/${email}`; 
+    const url = `http://localhost:8088/buscarServidoresPorEmail/${email}`;
     return this.http.get(url).pipe(
       map((response: any) => {
         const servidorEncontrado = response;
-        
+
         if (servidorEncontrado) {
           const userId = servidorEncontrado.usuarioSistema.id;
           // Faça o que você precisa com o ID do usuário...
           // ...
         }
-        
+
         return servidorEncontrado;
       }),
       catchError((error: any) => {
@@ -80,5 +80,5 @@ export class AuthenticationService {
       })
     );
   }
-  
+
 }
