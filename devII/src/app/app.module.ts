@@ -12,6 +12,11 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormularioCadastroAlunoComponent } from './formulario-cadastro-aluno/formulario-cadastro-aluno.component';
 import { FormularioServidorComponent } from './formulario-servidor/formulario-servidor.component';
+import { MuralDeVagasComponent } from './mural-de-vagas/mural-de-vagas.component';
+import { VagasComponent } from './mural-de-vagas/vagas/vagas.component';
+import { DetalhesVagaComponent } from './mural-de-vagas/vagas/detalhes-vaga/detalhes-vaga.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CadastrarVagasComponent } from './cadastrar-vagas/cadastrar-vagas.component';
 
 import { ModalAnaliseComponent } from './modal-analise/modal-analise.component';
 
@@ -37,6 +42,7 @@ const ANGULAR_MODULES = [
   ReactiveFormsModule,
   FormsModule,
   MatDialogModule
+
 ];
 
 const COMPONENTS = [
@@ -45,11 +51,15 @@ const COMPONENTS = [
   LoginComponent,
   FormularioCadastroAlunoComponent,
   FormularioServidorComponent,
-  ModalAnaliseComponent,
+  MuralDeVagasComponent, 
+  VagasComponent, 
+  DetalhesVagaComponent
 ];
+
 
 @NgModule({
   declarations: [...COMPONENTS, SolicitacaoServidorComponent, DetalhesSolicitacaoServidorComponent, ListaSolicitacoesServidorComponent, ListaSolicitacoesAlunoComponent, SolicitacaoComponent, DetalhesSolicitacaoComponent, TelaSolicitacaoComponent],
+
   imports: [...ANGULAR_MODULES, CoreModule, SharedModule],
 
   providers: [],

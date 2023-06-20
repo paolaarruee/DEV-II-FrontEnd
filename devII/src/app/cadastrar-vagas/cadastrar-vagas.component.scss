@@ -1,0 +1,60 @@
+body{font-size: 25px;}
+
+.espacamento{
+  padding: 1% 20% 0px 20%;
+}
+
+
+.tituloprincipal{
+  font-size: 28px;
+  font-weight: bold;
+  color: #000000;
+  display: grid;
+  padding: 2%;
+}
+
+.cardDecoracao1{
+  width: 264px;
+  height: 3px;
+  left: 123px;
+  top: 314px;
+  background-color: #2B923C;
+  border: 1px solid #2B923C;
+  margin-top: 6px;
+}
+
+.formulario{
+  font-size: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.divtitulo{
+  display: flex;
+  flex-direction: column;
+  margin: 12px;
+}
+
+.titulo{
+  background: #FFFFFF;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  width: 530px;
+  height: 28px;
+  padding: 10px;
+  margin: 6px 0px 0px 0px;
+}
+
+.botao{
+  border: 0px solid #000000;
+  background: #2F9E41;
+  font-style: normal;
+  font-size: 25px;
+  color: #FFFFFF;
+  margin: 7px;
+  cursor: pointer;
+}
+
+
+

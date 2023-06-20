@@ -1,0 +1,11 @@
+<div class="vagas" *ngIf="listaVagas.length > 0, else semVagas">
+    <div *ngFor="let vagas of listaVagas">
+      <app-vagas [cardVagas]="vagas" class="mural"></app-vagas>
+    </div>
+  </div>
+  
+  <ng-template #semVagas>
+    <div class="semVagas">
+      <p>Não Temos Vagas de Estágio</p>
+    </div>
+  </ng-template>
