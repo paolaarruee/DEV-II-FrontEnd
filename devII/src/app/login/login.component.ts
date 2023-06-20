@@ -30,7 +30,15 @@ export class LoginComponent implements OnInit {
       {
         next: (authData: Authorization) => {
           this.authService.setAuthData(authData);
-          this.router.navigateByUrl('/listaSolicitacoesServidor');
+          if (authData.Roles.toLocaleString() === 'ROLE_SERVIDOR') {
+            this.router.navigateByUrl('/listaSolicitacoesServidor').then(() => {
+              window.location.reload();
+            });
+          } else {
+            this.router.navigateByUrl('/listaSolicitacoesAluno').then(() => {
+              window.location.reload();
+            });
+        }
         },
         error: () => this.toastService.showMessage('Erro ao autenticar usuário.'),
       }

@@ -29,7 +29,6 @@ import { SolicitacaoComponent } from './lista-solicitacoes-aluno/solicitacao/sol
 import { DetalhesSolicitacaoComponent } from './lista-solicitacoes-aluno/solicitacao/detalhes-solicitacao/detalhes-solicitacao.component';
 
 
-import { MatDialogModule } from '@angular/material/dialog';
 import { TelaSolicitacaoComponent } from './tela-solicitacao/tela-solicitacao.component';
 import { ListaSolicitacoesServidorComponent } from './lista-solicitacoes-servidor/lista-solicitacoes-servidor.component';
 
@@ -51,9 +50,11 @@ const COMPONENTS = [
   LoginComponent,
   FormularioCadastroAlunoComponent,
   FormularioServidorComponent,
-  MuralDeVagasComponent, 
-  VagasComponent, 
-  DetalhesVagaComponent
+  MuralDeVagasComponent,
+  CadastrarVagasComponent,
+  VagasComponent,
+  DetalhesVagaComponent,
+  ModalAnaliseComponent
 ];
 
 
