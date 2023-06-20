@@ -1,0 +1,65 @@
+<div class="espacamento">
+  <div class="card">
+   <div class="header">
+    <div class="titulo">
+      <span>{{solicitacao.titulo}}</span>
+      <span class="cardDecoracao"></span>
+     </div>
+
+      <div>
+        <span>Status</span>
+        <span class="retanguloStatus" [ngClass]="statusSolicitacao()">{{solicitacao.status}}</span>
+      </div>
+   </div>
+
+   <div class="fluxo">
+
+      <div class="step">
+        <div class="circle" [ngClass]="progressoFluxo(1)">1</div>
+        <span>Envio de documentos</span>
+   </div>
+
+      <span class="retanguloFluxo"></span>
+
+      <div class="step">
+        <div class="circle" [ngClass]="progressoFluxo(2)">2</div>
+        <span>Análise setor de estágio</span>
+      </div>
+
+      <span class="retanguloFluxo"></span>
+
+      <div class="step">
+        <div class="circle" [ngClass]="progressoFluxo(3)">3</div>
+        <span>Assinatura Coordenador de curso</span>
+      </div>
+
+      <span class="retanguloFluxo"></span>
+
+      <div class="step">
+        <div class="circle" [ngClass]="progressoFluxo(4)">4</div>
+        <span>Assinatura reitor</span>
+      </div>
+
+      <span class="retanguloFluxo"></span>
+
+      <div class="step">
+        <div class="circle" [ngClass]="progressoFluxo(5)">5</div>
+        <span>Processo de assinatura Finalizado</span>
+      </div>
+
+   </div>
+
+   <div class="cardConteudo">
+    <span>{{solicitacao.conteudo}}</span>
+   </div>
+
+   <div class="observacao">
+    <p><b>Observação:</b> {{solicitacao.observacao}}</p>
+   </div>
+
+   <div class="buttonFechar">
+    <button (click)="closeDialog()">Fechar</button>
+   </div>
+
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="tituloprincipal">
+    <span>Lista de Solicitações</span>
+    <span class="cardDecoracao1"></span>
+  
+    <div class="solicitacao" *ngIf="listaSolicitacoes.length > 0, else semSolicitacoes">
+      <div *ngFor="let solicitacao of listaSolicitacoes">
+        <app-solicitacao-servidor [solicitacao]="solicitacao"></app-solicitacao-servidor>
+      </div>
+    </div>
+  </div>
+  <ng-template #semSolicitacoes>
+    <div class="semSolicitacoes">
+      <p>Você nao tem solicitações</p>
+    </div>
+  </ng-template>
+  

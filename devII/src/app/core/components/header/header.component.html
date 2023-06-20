@@ -16,6 +16,18 @@
       <a routerLink="/muralVagas">Oportunidades </a>
       <a routerLink="/cadastrarServidor">Cadastrar servidor</a>
       <a routerLink="/analisedocs">Analise Documentos</a>
+      <a>Oportunidades </a>
+      <a routerLink="/cadastrarServidor" *permission="Roles.ROLE_SERVIDOR"
+        >Cadastrar servidor</a
+      >
+      <a
+        routerLink="/listaSolicitacoesServidor"
+        *permission="Roles.ROLE_SERVIDOR"
+        >Lista Solicitações</a
+      >
+      <a routerLink="/listaSolicitacoesAluno" *permission="Roles.ROLE_ALUNO"
+        >Solicitações</a
+      >
       <a routerLink="/login" *ngIf="!isAuthenticated">Login</a>
       <a (click)="logout()" *ngIf="isAuthenticated">Logout</a>
     </a>

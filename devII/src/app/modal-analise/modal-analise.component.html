@@ -1,0 +1,21 @@
+<div class="body">
+  <h2 mat-dialog-title class="title">Atenção</h2>
+  <mat-dialog-content class="content">
+    <p>{{ data.conteudo }}</p>
+    <mat-form-field *ngIf="data.mostrarCampoMotivo">
+      <textarea
+        matInput
+        [formControl]="motivoIndeferimento"
+        placeholder="Motivo do indeferimento"
+        #motivoInput
+      ></textarea>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="buttons">
+    <button mat-raised-button color="warn" mat-dialog-close class="close">
+      Fechar
+    </button>
+    <button mat-raised-button color="primary" (click)="enviar()">Enviar</button>
+  </mat-dialog-actions>
+</div>

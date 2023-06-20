@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { AuthenticationService } from '../../services/authentication/authentication.service';
+import { Role } from 'src/app/shared/interfaces/usuario';
 
 @Component({
   selector: 'app-header',
@@ -8,6 +9,8 @@ import { AuthenticationService } from '../../services/authentication/authenticat
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+  public readonly Roles: typeof Role = Role;
+
   public constructor(private authService: AuthenticationService) {}
 
   public logout(): void {
