@@ -20,6 +20,7 @@ export class ModalAnaliseComponent {
     this.dialogRef.close();
   }
   public enviar(): void {
-    this.data.enviarCallback();
+    this.data.enviarCallback(this.motivoIndeferimento.value);
+    this.dialogRef.close();
   }
 }

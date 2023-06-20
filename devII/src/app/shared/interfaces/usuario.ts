@@ -10,5 +10,6 @@ export interface Authorization {
 }
 
 export enum Role {
-  ROLE_ALUNO, ROLE_SERVIDOR
+  ROLE_ALUNO = 1,
+  ROLE_SERVIDOR = 2,
 }

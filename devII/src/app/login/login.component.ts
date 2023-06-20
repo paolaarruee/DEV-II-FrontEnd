@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
       {
         next: (authData: Authorization) => {
           this.authService.setAuthData(authData);
-          this.router.navigateByUrl('/analisedocs');
+          this.router.navigateByUrl('/listaSolicitacoesServidor');
         },
         error: () => this.toastService.showMessage('Erro ao autenticar usuário.'),
       }

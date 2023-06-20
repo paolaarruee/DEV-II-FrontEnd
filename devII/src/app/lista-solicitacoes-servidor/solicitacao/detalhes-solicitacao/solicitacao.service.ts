@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { AuthenticationService } from 'src/app/core/services/authentication/authentication.service';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SolicitacaoService {
   private solicitacao: any;
@@ -13,7 +13,7 @@ export class SolicitacaoService {
   constructor(
     private http: HttpClient,
     @Inject(AuthenticationService) private authService: AuthenticationService
-  ) { }
+  ) {}
 
   getSolicitacao(): any {
     return this.solicitacao;
@@ -27,6 +27,17 @@ export class SolicitacaoService {
     const token = this.authService.token;
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    return this.http.get<any>(`${environment.API_URL}/listarSolicitacoesPorEmailServidor`, { headers });
+    return this.http
+      .get<any>(`${environment.API_URL}/listarSolicitacoesPorEmailServidor`, {
+        headers,
+      })
+      .pipe(
+        map((solicitacoes) =>
+          solicitacoes.map((solicitacao: any, i: number) => ({
+            id: i + 1,
+            ...solicitacao,
+          }))
+        )
+      );
   }
 }

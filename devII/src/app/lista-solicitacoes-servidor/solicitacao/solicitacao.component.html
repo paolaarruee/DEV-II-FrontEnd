@@ -9,7 +9,7 @@
    </div>
 
    <div class="titulo">
-    <span>Solicitação de: {{solicitacao.aluno.nomeCompleto}}</span>
+    <span>Solicitação de: {{solicitacao?.aluno?.nomeCompleto}}</span>
     <span class="cardDecoracao2"></span>
    </div>
 
@@ -18,7 +18,8 @@
    </div>
 
    <div class="buttonDetalhes">
-    <button (click)="openDialog()">Detalhes</button>
+    <button [routerLink]="['/analisedocs', solicitacao.id]">Detalhes</button>
+    <!-- <button (click)="openDialog()">Detalhes</button> -->
    </div>
 
   </div>

@@ -17,6 +17,8 @@ import { AnaliseDocumentosService } from '../core/analiseDocs/analise-documentos
 
 import { DadosBackendService } from '../lista-solicitacoes-aluno/dados-backend.service';
 import { SolicitacaoService } from '../lista-solicitacoes-servidor/solicitacao/detalhes-solicitacao/solicitacao.service';
+import { SolicitacoesService } from '../core/services/solicitacoesEstagio/solicitacoes.service';
+import { Status } from '../shared/interfaces/solicitacoes';
 
 @Component({
   selector: 'app-analise-docs',
@@ -27,6 +29,7 @@ export class AnaliseDocsComponent implements OnInit {
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
 
   public documentList$!: Observable<DocFile[]>;
+  public alumniData$!: Observable<any>;
 
   public servidore!: Servidor;
   motivoIndeferimento = new FormControl('');
@@ -38,14 +41,15 @@ export class AnaliseDocsComponent implements OnInit {
     public dialog: MatDialog,
     private analiseDocsService: AnaliseDocumentosService,
     private dadosSolicitacao: SolicitacaoService,
+    private solicitacoes: SolicitacoesService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.solicitacao = this.dadosSolicitacao.getSolicitacao(); // Recupera os dados da solicitação do serviço
-
-    // Defina a lista de documentos
-    this.setDocumentList();
+    // this.setDocumentList();
+    this.setAlumniData();
+    this.setDocumentListId();
   }
 
   download({ id, nome }: DocFile): void {
@@ -60,35 +64,27 @@ export class AnaliseDocsComponent implements OnInit {
     });
   }
 
-  upload(): void {
-    const fileList: FileList | null = this.fileInputRef.nativeElement?.files;
+  // private setDocumentList(): void {
+  //   this.documentList$ = this.docsService.getDocList();
+  // }
 
-    if (!(fileList && fileList.length)) {
-      return;
-    }
-
-    const formData: FormData = new FormData();
-
-    for (let i = 0; i < fileList.length; i++) {
-      formData.append('documentos', fileList[i]);
-    }
-
-    this.docsService.uploadDocs(formData).subscribe({
-      next: () => {
-        this.toastService.showMessage('Upload efetuado com sucesso!');
-        this.setDocumentList();
-      },
-      error: () => {
-        this.toastService.showMessage('Erro ao efetuar o upload.');
-      },
-    });
+  private setDocumentListId(): void {
+    const { id } = this.activatedRoute.snapshot.params;
+    this.documentList$ = this.solicitacoes.getlistDocsPorEstagioId(id);
   }
 
-  private setDocumentList(): void {
-    this.documentList$ = this.docsService.getDocList();
+  private setAlumniData() {
+    const { id } = this.activatedRoute.snapshot.params;
+    this.alumniData$ = this.solicitacoes.getAlumniData(id);
   }
 
   public abrirDialogDeferir() {
+    if (!this.fileInputRef.nativeElement.files?.length) {
+      this.toastService.showMessage(
+        'Você precisa anexar pelo menos um documento'
+      );
+      return;
+    }
     const dialogRef = this.dialog.open(ModalAnaliseComponent, {
       width: '600px',
       data: {
@@ -106,20 +102,28 @@ export class AnaliseDocsComponent implements OnInit {
       data: {
         conteudo: 'Você tem certeza que deseja indeferir o estágio do aluno',
         mostrarCampoMotivo: true,
-        enviarCallback: () => {
-          const motivoIndeferimento = this.motivoIndeferimento.value ?? '';
-          this.enviarIndeferimento(motivoIndeferimento);
-          console.log(motivoIndeferimento);
-        },
+        enviarCallback: (motivoIndeferimento: string) =>
+          this.enviarIndeferimento(motivoIndeferimento),
       },
     });
   }
 
   public enviarDeferimento(): void {
-    const flagDeferida: FormData = new FormData();
-    flagDeferida.append('flag', 'deferida');
+    const { id } = this.activatedRoute.snapshot.params;
+    const data = { status: Status.DEFERIDO, etapa: 2 };
+    const fileList: FileList = this.fileInputRef.nativeElement?.files!;
+    const formData: FormData = new FormData();
 
-    this.analiseDocsService.enviarDeferimento(flagDeferida).subscribe({
+    formData.append(
+      'dados',
+      new Blob([JSON.stringify(data)], { type: 'application/json' })
+    );
+
+    for (let i = 0; i < fileList.length; i++) {
+      formData.append('file', fileList[i]);
+    }
+
+    this.solicitacoes.deferirSolicitacao(id, formData).subscribe({
       next: () => {
         this.toastService.showMessage('Deferimento enviado com sucesso!');
       },
@@ -130,15 +134,15 @@ export class AnaliseDocsComponent implements OnInit {
   }
 
   public enviarIndeferimento(motivo: string): void {
-    const flagIndeferida: FormData = new FormData();
-    flagIndeferida.append('flag', 'indeferida');
-    flagIndeferida.append('texto', motivo);
+    const { id } = this.activatedRoute.snapshot.params;
+    const data = { status: Status.INDEFERIDO, etapa: 5, resposta: motivo };
 
-    this.analiseDocsService.enviarIndeferimento(flagIndeferida).subscribe({
+    this.solicitacoes.indeferirSolicitacao(id, data).subscribe({
       next: () => {
         this.toastService.showMessage('Indeferimento enviado com sucesso!');
       },
       error: () => {
+        console.log(this.solicitacoes);
         this.toastService.showMessage('Erro ao enviar o indeferimento.');
       },
     });

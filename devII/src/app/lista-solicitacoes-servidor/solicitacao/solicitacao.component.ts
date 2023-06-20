@@ -43,7 +43,8 @@ export class SolicitacaoServidorComponent {
       turno: '',
       matricula: '',
       ingresso: '',
-    }
+    },
+    id: ''
   };   
       
 
