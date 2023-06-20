@@ -1,0 +1,25 @@
+<div class="espacamento">
+  <div class="card">
+   <div class="header">
+      <span>Estágio</span>
+      <div>
+        <span>Status</span>
+        <span class="retangulo" [ngClass]="statusSolicitacao()">{{solicitacao.status}}</span>
+      </div>
+   </div>
+
+   <div class="titulo">
+    <span>{{solicitacao.titulo}}</span>
+    <span class="cardDecoracao2"></span>
+   </div>
+
+   <div class="cardConteudo">
+    <span>{{solicitacao.conteudo}} </span>
+   </div>
+
+   <div class="buttonDetalhes">
+    <button (click)="openDialog()">Detalhes</button>
+   </div>
+
+  </div>
+</div>

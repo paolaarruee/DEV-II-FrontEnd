@@ -14,8 +14,11 @@
   <div class="navbar-itens">
     <a class="navbar-itens-menu">
       <a>Oportunidades </a>
-      <a routerLink="/cadastrarServidor" *permission="Roles.ROLE_SERVIDOR">Cadastrar servidor</a>
-      <a routerLink="/analisedocs" *permission="Roles.ROLE_SERVIDOR">Analise Documentos</a>
+      <a routerLink="/cadastrarServidor" *permission="Roles.ROLE_SERVIDOR"
+        >Cadastrar servidor</a
+      >
+      <a routerLink="/analisedocs">Analise Documentos</a>
+      <a routerLink="/listaSolicitacoesAluno">Solicitações</a>
       <a routerLink="/login" *ngIf="!isAuthenticated">Login</a>
       <a (click)="logout()" *ngIf="isAuthenticated">Logout</a>
     </a>

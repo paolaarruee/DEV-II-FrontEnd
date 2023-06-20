@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-import { Observable } from 'rxjs';
+
+import { Observable, catchError, map } from 'rxjs';
+
 
 import { environment } from 'src/environments/environment.development';
 import { Usuario, Authorization, Role } from 'src/app/shared/interfaces/usuario';
@@ -55,4 +57,28 @@ export class AuthenticationService {
     localStorage.removeItem(this.TOKEN_KEY);
     localStorage.removeItem(this.ROLE_KEY);
   }
+
+  public getUsuarioPorEmail(email: string): Observable<any> {
+    const url = `http://localhost:8088/buscarServidoresPorEmail/${email}`; 
+    return this.http.get(url).pipe(
+      map((response: any) => {
+        const servidorEncontrado = response;
+        
+        if (servidorEncontrado) {
+          const userId = servidorEncontrado.usuarioSistema.id;
+          // Faça o que você precisa com o ID do usuário...
+          // ...
+        }
+        
+        return servidorEncontrado;
+      }),
+      catchError((error: any) => {
+        console.error('Erro ao obter o tipo de usuário:', error);
+        // Tratar o erro, se necessário...
+        // ...
+        throw error; // Lançar o erro novamente para que seja tratado na chamada original
+      })
+    );
+  }
+  
 }
