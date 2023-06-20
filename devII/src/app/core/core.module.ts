@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { AuthenticationInterceptor } from './interceptors/authentication/authentication.interceptor';
+import { SharedModule } from '../shared/shared.module';
 
 const COMPONENTS = [FooterComponent, HeaderComponent];
 
@@ -19,7 +20,7 @@ const COMPONENTS = [FooterComponent, HeaderComponent];
     }
   ],
   imports: [
-    CommonModule, RouterModule
+    CommonModule, SharedModule, RouterModule
   ],
   exports: [...COMPONENTS]
 })

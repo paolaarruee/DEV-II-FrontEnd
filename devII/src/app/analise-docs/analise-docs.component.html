@@ -2,32 +2,62 @@
   <div class="corpo-titulo">
     <span>Análise de Documentos</span>
   </div>
-  <div class="corpo-dados">
+  <div class="corpo-dados" *ngIf="alumniData$ | async as alumniData">
     <div class="subtitulo">
       <span class="dados">Dados do Aluno</span>
     </div>
     <div class="nome-aluno">
-      <span>Nome: João Silva</span>
+      <span>Nome: {{alumniData.nomeCompleto}}</span>
       <span class="curso">Tipo de Estágio: Não Obrigatório</span>
     </div>
 
     <div class="infos-aluno">
-      <span>Matricula: 20210001</span>
-      <span>Ano: 2021</span>
-      <span>Turno: Noturno</span>
+      <span>Matricula: {{alumniData.matricula}}</span>
+      <span>Ano: {{alumniData.ingresso | date : 'dd/MM/YYYY' }}</span>
+      <span>Turno: {{alumniData.turno}}</span>
     </div>
     <div class="curso-aluno">
       <span>Tipo de Curso: Superior</span>
-      <span>Curso: Engenharia de Software</span>
+      <span>Curso: {{alumniData.curso.nomeCurso}}</span>
       <span>Semestre: 2</span>
+    </div>
+  </div>
+  <div></div>
+  <div class="corpo-setor-estagio" *ngIf="false">
+    <div class="download">
+      <p>Download dos Arquivos</p>
+      <div class="historico" *ngFor="let doc of documentList$ | async">
+        <p class="arquivo">{{ doc.nome }}</p>
+        <button mat-icon-button color="primary" (click)="download(doc)">
+          <mat-icon class="salvar">save_alt</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="botoes">
+      <button
+        class="deferir"
+        mat-raised-button
+        color="primary"
+        (click)="abrirDialogDeferir()"
+      >
+        Deferir
+      </button>
+      <button
+        class="indeferir"
+        mat-raised-button
+        color="warn"
+        (click)="abrirDialogIndeferir()"
+      >
+        Indeferir
+      </button>
     </div>
   </div>
   <div class="corpo-passos">
     <mat-stepper>
       <mat-step label="Download" state="phone">
-        <p class="titulo">Download de Documentos</p>
+        <p class="titulo" *ngIf="documentList$ | async as docsData" >Download de Documentos</p>
         <div class="historico" *ngFor="let doc of documentList$ | async">
-          <p class="arquivo">{{ doc.nome }}</p>
+          <p class="arquivo">{{doc.nome}}</p>
           <button mat-icon-button color="primary" (click)="download(doc)">
             <mat-icon class="salvar">save_alt</mat-icon>
           </button>
@@ -37,15 +67,32 @@
         </div>
       </mat-step>
       <mat-step label="Upload" state="chat">
-        <p class='titulo'>Upload de Documentos</p>
+        <p class="titulo">Upload de Documentos</p>
         <div class="arquivos-up">
-          <input type="file" id="avatar" name="avatar" multiple #fileInput>
-          <button  mat-raised-button (click)="upload()">Salvar</button>
+          <input type="file" id="avatar" name="avatar" multiple #fileInput />
         </div>
         <div class="proximo">
           <button mat-button matStepperPrevious>Voltar</button>
         </div>
       </mat-step>
     </mat-stepper>
+    <div class="botoes">
+      <button
+        class="deferir"
+        mat-raised-button
+        color="primary"
+        (click)="abrirDialogDeferir()"
+      >
+        Deferir
+      </button>
+      <button
+        class="indeferir"
+        mat-raised-button
+        color="warn"
+        (click)="abrirDialogIndeferir()"
+      >
+        Indeferir
+      </button>
+    </div>
   </div>
 </div>
