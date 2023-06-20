@@ -47,6 +47,33 @@ export class AnaliseDocsComponent implements OnInit {
       },
     });
   }
+
+  public upload(): void {
+    const fileList: FileList | null = this.fileInputRef.nativeElement?.files;
+
+    if (!(fileList && fileList.length)) {
+      return;
+    }
+
+    const formData: FormData = new FormData();
+
+    for (let i = 0; i < fileList.length; i++) {
+      formData.append('documentos', fileList[i]);
+    }
+
+    this.docsService.uploadDocs(formData).subscribe({
+      next: () => {
+        this.toastService.showMessage('Upload efetuado com sucesso!');
+        this.setDocumentList();
+      },
+      error: () => this.toastService.showMessage('Erro ao efetuar o upload.'),
+    });
+  }
+
+  private setDocumentList(): void {
+    this.documentList$ = this.docsService.getDocList();
+  }
+  
   public abrirDialogDeferir() {
     const dialogRef = this.dialog.open(ModalAnaliseComponent, {
       width: '600px',
@@ -74,32 +101,6 @@ export class AnaliseDocsComponent implements OnInit {
     });
   }
 
-  public upload(): void {
-    const fileList: FileList | null = this.fileInputRef.nativeElement?.files;
-
-    if (!(fileList && fileList.length)) {
-      return;
-    }
-
-    const formData: FormData = new FormData();
-
-    for (let i = 0; i < fileList.length; i++) {
-      formData.append('documentos', fileList[i]);
-    }
-
-    this.docsService.uploadDocs(formData).subscribe({
-      next: () => {
-        this.toastService.showMessage('Upload efetuado com sucesso!');
-        this.setDocumentList();
-      },
-      error: () => this.toastService.showMessage('Erro ao efetuar o upload.'),
-    });
-  }
-
-  private setDocumentList(): void {
-    this.documentList$ = this.docsService.getDocList();
-  }
-
   public enviarDeferimento(): void {
     const flagDeferida: FormData = new FormData();
     flagDeferida.append('flag', 'deferida');
@@ -107,7 +108,6 @@ export class AnaliseDocsComponent implements OnInit {
     this.analiseDocsService.enviarDeferimento(flagDeferida).subscribe({
       next: () => {
         this.toastService.showMessage('Deferimento enviado com sucesso!');
-        // Realize qualquer outra ação necessária após o deferimento
       },
       error: () => {
         this.toastService.showMessage('Erro ao enviar o deferimento.');

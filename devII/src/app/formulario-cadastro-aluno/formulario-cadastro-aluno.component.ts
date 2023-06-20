@@ -16,7 +16,8 @@ export class FormularioCadastroAlunoComponent {
     nomeCompleto: '',
     usuarioSistema: {
       email: '',
-      senha: ''
+      senha: '',
+      roles: '',
       },
     turno: '',
     matricula: '',

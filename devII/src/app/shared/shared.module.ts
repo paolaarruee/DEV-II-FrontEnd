@@ -9,6 +9,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { PermissionDirective } from './directives/permission/permission.directive';
 
 const MATERIAL_MODULES = [
   MatToolbarModule,
@@ -18,11 +19,14 @@ const MATERIAL_MODULES = [
   MatSnackBarModule,
   MatDialogModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
 ];
+
+const DIRECTIVES = [PermissionDirective];
 
 @NgModule({
   imports: [CommonModule, ...MATERIAL_MODULES],
-  exports: [...MATERIAL_MODULES],
+  exports: [...MATERIAL_MODULES, ...DIRECTIVES],
+  declarations: [...DIRECTIVES],
 })
 export class SharedModule {}

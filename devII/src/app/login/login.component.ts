@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthenticationService } from '../core/services/authentication/authentication.service';
-import { Usuario } from '../shared/interfaces/usuario';
+import { Authorization, Usuario } from '../shared/interfaces/usuario';
 import { ToastService } from '../core/services/toast/toast.service';
 
 @Component({
@@ -28,8 +28,8 @@ export class LoginComponent implements OnInit {
   public login(userData: Usuario) {
     this.authService.login(userData).subscribe(
       {
-        next: (authToken: string) => {
-          this.authService.token = authToken;
+        next: (authData: Authorization) => {
+          this.authService.setAuthData(authData);
           this.router.navigateByUrl('/analisedocs');
         },
         error: () => this.toastService.showMessage('Erro ao autenticar usuário.'),
