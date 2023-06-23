@@ -1,37 +1,30 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { AnaliseDocsComponent } from './analise-docs/analise-docs.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { HttpClientModule } from '@angular/common/http';
-import { LoginComponent } from './login/login.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormularioCadastroAlunoComponent } from './formulario-cadastro-aluno/formulario-cadastro-aluno.component';
-import { FormularioServidorComponent } from './formulario-servidor/formulario-servidor.component';
-import { MuralDeVagasComponent } from './mural-de-vagas/mural-de-vagas.component';
-import { VagasComponent } from './mural-de-vagas/vagas/vagas.component';
-import { DetalhesVagaComponent } from './mural-de-vagas/vagas/detalhes-vaga/detalhes-vaga.component';
-import { MatDialogModule } from '@angular/material/dialog';
-import { CadastrarVagasComponent } from './cadastrar-vagas/cadastrar-vagas.component';
-
-import { ModalAnaliseComponent } from './modal-analise/modal-analise.component';
-
-import { ListaSolicitacoesAlunoComponent } from './lista-solicitacoes-aluno/lista-solicitacoes-aluno.component';
-
-import { SolicitacaoServidorComponent } from './lista-solicitacoes-servidor/solicitacao/solicitacao.component';
-import { DetalhesSolicitacaoServidorComponent } from './lista-solicitacoes-servidor/solicitacao/detalhes-solicitacao/detalhes-solicitacao.component';
-
-import { SolicitacaoComponent } from './lista-solicitacoes-aluno/solicitacao/solicitacao.component';
-import { DetalhesSolicitacaoComponent } from './lista-solicitacoes-aluno/solicitacao/detalhes-solicitacao/detalhes-solicitacao.component';
-
-
-import { TelaSolicitacaoComponent } from './tela-solicitacao/tela-solicitacao.component';
-import { ListaSolicitacoesServidorComponent } from './lista-solicitacoes-servidor/lista-solicitacoes-servidor.component';
-
+import { AppComponent } from './app.component';
+import { LoginComponent } from './modules/login/login.component';
+import { FormularioCadastroAlunoComponent } from './modules/aluno/formulario-cadastro-aluno/formulario-cadastro-aluno.component';
+import { DetalhesSolicitacaoComponent } from './modules/aluno/solicitacoes-aluno/detalhes-solicitacao/detalhes-solicitacao.component';
+import { ListaSolicitacoesAlunoComponent } from './modules/aluno/solicitacoes-aluno/lista-solicitacoes-aluno/lista-solicitacoes-aluno.component';
+import { SolicitacaoComponent } from './modules/aluno/solicitacoes-aluno/solicitacao/solicitacao.component';
+import { TelaSolicitacaoComponent } from './modules/aluno/solicitacoes-aluno/tela-solicitacao/tela-solicitacao.component';
+import { AnaliseDocsComponent } from './modules/servidor/detalhes-solicitacao-estagio/analise-docs/analise-docs.component';
+import { DetalhesSolicitacaoServidorComponent } from './modules/servidor/detalhes-solicitacao-estagio/detalhes-solicitacao/detalhes-solicitacao.component';
+import { ListaSolicitacoesServidorComponent } from './modules/servidor/detalhes-solicitacao-estagio/lista-solicitacoes-servidor/lista-solicitacoes-servidor.component';
+import { ModalAnaliseComponent } from './modules/servidor/detalhes-solicitacao-estagio/modal-analise/modal-analise.component';
+import { SolicitacaoServidorComponent } from './modules/servidor/detalhes-solicitacao-estagio/solicitacao/solicitacao.component';
+import { FormularioServidorComponent } from './modules/servidor/formulario-servidor/formulario-servidor.component';
+import { CadastrarVagasComponent } from './modules/vagas-estagio/cadastrar-vagas/cadastrar-vagas.component';
+import { DetalhesVagaComponent } from './modules/vagas-estagio/detalhes-vaga/detalhes-vaga.component';
+import { MuralDeVagasComponent } from './modules/vagas-estagio/mural-de-vagas/mural-de-vagas.component';
+import { VagasComponent } from './modules/vagas-estagio/vagas/vagas.component';
 
 const ANGULAR_MODULES = [
   BrowserModule,
@@ -40,13 +33,13 @@ const ANGULAR_MODULES = [
   HttpClientModule,
   ReactiveFormsModule,
   FormsModule,
-  MatDialogModule
-
+  MatDialogModule,
+  CoreModule,
+  SharedModule,
 ];
 
 const COMPONENTS = [
   AppComponent,
-  AnaliseDocsComponent,
   LoginComponent,
   FormularioCadastroAlunoComponent,
   FormularioServidorComponent,
@@ -54,14 +47,21 @@ const COMPONENTS = [
   CadastrarVagasComponent,
   VagasComponent,
   DetalhesVagaComponent,
-  ModalAnaliseComponent
+  ModalAnaliseComponent,
+  SolicitacaoServidorComponent,
+  DetalhesSolicitacaoServidorComponent,
+  ListaSolicitacoesServidorComponent,
+  ListaSolicitacoesAlunoComponent,
+  SolicitacaoComponent,
+  DetalhesSolicitacaoComponent,
+  TelaSolicitacaoComponent,
+  AnaliseDocsComponent,
 ];
 
-
 @NgModule({
-  declarations: [...COMPONENTS, SolicitacaoServidorComponent, DetalhesSolicitacaoServidorComponent, ListaSolicitacoesServidorComponent, ListaSolicitacoesAlunoComponent, SolicitacaoComponent, DetalhesSolicitacaoComponent, TelaSolicitacaoComponent],
+  declarations: [...COMPONENTS],
 
-  imports: [...ANGULAR_MODULES, CoreModule, SharedModule],
+  imports: [...ANGULAR_MODULES],
 
   providers: [],
 
