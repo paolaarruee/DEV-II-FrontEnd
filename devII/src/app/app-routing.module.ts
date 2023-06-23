@@ -1,20 +1,20 @@
-import { SolicitacaoComponent } from './lista-solicitacoes-aluno/solicitacao/solicitacao.component';
-import { SolicitacaoServidorComponent } from './lista-solicitacoes-servidor/solicitacao/solicitacao.component';
+
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { LoginComponent } from './login/login.component';
-import { AnaliseDocsComponent } from './analise-docs/analise-docs.component';
-import { AuthGuard } from './core/guards/auth/auth.guard';
-import { FormularioCadastroAlunoComponent } from './formulario-cadastro-aluno/formulario-cadastro-aluno.component';
-import { FormularioServidorComponent } from './formulario-servidor/formulario-servidor.component';
+import { LoginComponent } from './modules/login/login.component';
+import { FormularioCadastroAlunoComponent } from './modules/aluno/formulario-cadastro-aluno/formulario-cadastro-aluno.component';
+import { ListaSolicitacoesAlunoComponent } from './modules/aluno/solicitacoes-aluno/lista-solicitacoes-aluno/lista-solicitacoes-aluno.component';
+import { SolicitacaoComponent } from './modules/aluno/solicitacoes-aluno/solicitacao/solicitacao.component';
+import { TelaSolicitacaoComponent } from './modules/aluno/solicitacoes-aluno/tela-solicitacao/tela-solicitacao.component';
+import { AnaliseDocsComponent } from './modules/servidor/detalhes-solicitacao-estagio/analise-docs/analise-docs.component';
+import { ListaSolicitacoesServidorComponent } from './modules/servidor/detalhes-solicitacao-estagio/lista-solicitacoes-servidor/lista-solicitacoes-servidor.component';
+import { FormularioServidorComponent } from './modules/servidor/formulario-servidor/formulario-servidor.component';
+import { CadastrarVagasComponent } from './modules/vagas-estagio/cadastrar-vagas/cadastrar-vagas.component';
+import { MuralDeVagasComponent } from './modules/vagas-estagio/mural-de-vagas/mural-de-vagas.component';
 
- import { MuralDeVagasComponent } from './mural-de-vagas/mural-de-vagas.component';
-import { CadastrarVagasComponent } from './cadastrar-vagas/cadastrar-vagas.component';
-import { ListaSolicitacoesAlunoComponent } from './lista-solicitacoes-aluno/lista-solicitacoes-aluno.component';
-import { TelaSolicitacaoComponent } from './tela-solicitacao/tela-solicitacao.component';
-import { ListaSolicitacoesServidorComponent } from './lista-solicitacoes-servidor/lista-solicitacoes-servidor.component';
 
+ 
 
 const routes: Routes = [
 

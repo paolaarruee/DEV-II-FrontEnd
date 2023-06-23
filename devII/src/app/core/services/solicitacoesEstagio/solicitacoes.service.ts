@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { DocFile } from 'src/app/shared/interfaces/doc';
 import { Solicitacoes } from 'src/app/shared/interfaces/solicitacoes';
 import { environment } from 'src/environments/environment.development';
@@ -9,6 +9,9 @@ import { environment } from 'src/environments/environment.development';
   providedIn: 'root',
 })
 export class SolicitacoesService {
+  setSolicitacao(solicitacao: any) {
+    throw new Error('Method not implemented.');
+  }
   public constructor(private httpClient: HttpClient) {}
 
   deferirSolicitacao(id: number, formData: FormData): Observable<any> {
@@ -38,6 +41,25 @@ export class SolicitacoesService {
   getlistDocsPorEstagioId(id: number): Observable<DocFile[]> {
     return this.httpClient.get<DocFile[]>(
       `${environment.API_URL}/listarDocumento/${id}`
+    );
+  }
+
+  listarSolicitacoesPorEmailServidor(): Observable<any> {
+    return this.httpClient
+      .get<any>(`${environment.API_URL}/listarSolicitacoesPorEmailServidor`, {})
+      .pipe(
+        map((solicitacoes: any[]) =>
+          solicitacoes.map((solicitacao: any, i: number) => ({
+            id: i + 1,
+            ...solicitacao,
+          }))
+        )
+      );
+  }
+
+  obterSolicitacoes(): Observable<any> {
+    return this.httpClient.get<any>(
+      `${environment.API_URL}/listarSolicitacoesPorEmailServidor`
     );
   }
 }
