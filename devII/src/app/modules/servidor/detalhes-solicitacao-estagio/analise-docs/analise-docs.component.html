@@ -1,4 +1,14 @@
 <div class="corpo">
+  <div class="corpo-back">
+    <button
+      mat-icon-button
+      color="primary"
+      aria-label="Voltar"
+      routerLink="/listaSolicitacoesServidor"
+    >
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
   <div class="corpo-titulo">
     <span>Análise de Documentos</span>
   </div>
@@ -7,18 +17,18 @@
       <span class="dados">Dados do Aluno</span>
     </div>
     <div class="nome-aluno">
-      <span>Nome: {{alumniData.nomeCompleto}}</span>
+      <span>Nome: {{ alumniData.nomeCompleto }}</span>
       <span class="curso">Tipo de Estágio: Não Obrigatório</span>
     </div>
 
     <div class="infos-aluno">
-      <span>Matricula: {{alumniData.matricula}}</span>
-      <span>Ano: {{alumniData.ingresso | date : 'dd/MM/YYYY' }}</span>
-      <span>Turno: {{alumniData.turno}}</span>
+      <span>Matricula: {{ alumniData.matricula }}</span>
+      <span>Ano: {{ alumniData.ingresso | date : "dd/MM/YYYY" }}</span>
+      <span>Turno: {{ alumniData.turno }}</span>
     </div>
     <div class="curso-aluno">
       <span>Tipo de Curso: Superior</span>
-      <span>Curso: {{alumniData.curso.nomeCurso}}</span>
+      <span>Curso: {{ alumniData.curso.nomeCurso }}</span>
       <span>Semestre: 2</span>
     </div>
   </div>
@@ -55,9 +65,11 @@
   <div class="corpo-passos">
     <mat-stepper>
       <mat-step label="Download" state="phone">
-        <p class="titulo" *ngIf="documentList$ | async as docsData" >Download de Documentos</p>
+        <p class="titulo" *ngIf="documentList$ | async as docsData">
+          Download de Documentos
+        </p>
         <div class="historico" *ngFor="let doc of documentList$ | async">
-          <p class="arquivo">{{doc.nome}}</p>
+          <p class="arquivo">{{ doc.nome }}</p>
           <button mat-icon-button color="primary" (click)="download(doc)">
             <mat-icon class="salvar">save_alt</mat-icon>
           </button>
