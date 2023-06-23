@@ -75,7 +75,7 @@ const routes: Routes = [
 
   {
     path: '**',
-    redirectTo: 'analisedocs',
+    redirectTo: 'muralVagas',
   },
 
 
