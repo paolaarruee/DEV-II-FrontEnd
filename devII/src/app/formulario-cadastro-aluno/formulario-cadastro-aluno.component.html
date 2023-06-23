@@ -32,8 +32,14 @@
       </ul>
 
       <label for="curso">Curso</label>
-      <input type="text" id="curso" name="curso" [(ngModel)]="aluno
-      .curso" placeholder="Curso" required>
+      <select name="curso" id="curso" type="text" [(ngModel)]="aluno.curso" required>
+        <option value="" disabled>Escolha um Curso</option>
+        <option value="10">Análise e Desenvolvimento de Sistemas</option>
+        <option value="11">Letras Português e Espanhol</option>
+        <option value="12">Eletrônica Industrial</option>
+        <option value="13">Gestão Desportiva e de Lazer</option>
+        <option value="14">Processos Gerenciais</option>
+      </select>
 
       <div class="senhadiv">
         <ul>

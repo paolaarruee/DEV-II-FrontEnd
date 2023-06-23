@@ -1,6 +1,7 @@
 import { Component , OnInit} from '@angular/core';
 import { UserService } from '../core/services/user/user.service';
 import { Solicitacao } from '../shared/interfaces/SolicitarEstagio';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './tela-solicitacao.component.html',
@@ -18,7 +19,7 @@ export class TelaSolicitacaoComponent {
     cursoId: ''
   }
 
-  constructor(private userService : UserService) {}
+  constructor(private userService : UserService, private router : Router) {}
 
   ngOnInit() {
     this.userService.getUserData().subscribe((data: any) => {
@@ -37,7 +38,7 @@ export class TelaSolicitacaoComponent {
       alert('arquivo muito grande!');
       return;
     }
-    if(this.files.length <3){
+    if(this.files.length <6){
     this.files.push(event.target.files[0]);
     const file = event.target.files[0];
     console.log('tamanho do arquivo', file.size);
@@ -75,6 +76,7 @@ export class TelaSolicitacaoComponent {
         console.log('Solicitação cadastrada com sucesso!');
         console.log('Resposta da API:', response);
         alert("Solicitação efetuada!!")
+        this.router.navigate(['/listaSolicitacoesAluno']);
         this.exibir = false;
       },
       error => {

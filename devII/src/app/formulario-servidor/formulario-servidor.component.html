@@ -22,8 +22,15 @@
         <label class="nome-campo">Email institucional</label>
         <input class="email" type="email" id="email" name="email" [(ngModel)]="servidor.usuarioSistema.email" placeholder="servidor@restinga.ifrs.edu.br" required>
 
-        <label class="nome-campo">curso</label>
-        <input class="curso" type="text" id="curso" name="curso" [(ngModel)]="servidor.curso" placeholder="Digite o seu curso" required>
+        <label for="curso">Curso</label>
+        <select name="curso" id="curso" type="text" [(ngModel)]="servidor.curso" required>
+          <option value="" disabled>Escolha um Curso</option>
+          <option value="10">Análise e Desenvolvimento de Sistemas</option>
+          <option value="11">Letras Português e Espanhol</option>
+          <option value="12">Eletrônica Industrial</option>
+          <option value="13">Gestão Desportiva e de Lazer</option>
+          <option value="14">Processos Gerenciais</option>
+        </select>
 
         <div class="senhadiv">
           <ul>

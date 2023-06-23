@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class FormularioServidorService {
   private readonly urlAPI =
-    'http://localhost:8088/assinaturaapi/cadastroServidor';
+    'http://localhost:8088/assinaturaapi/cadastrarServidor';
 
   constructor(private http: HttpClient) {}
 

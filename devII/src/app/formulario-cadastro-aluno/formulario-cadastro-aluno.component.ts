@@ -2,6 +2,7 @@ import { ToastService } from './../core/services/toast/toast.service';
 import { Aluno } from '../shared/interfaces/aluno';
 import { FormularioCadastroAlunoService } from './formulario-cadastro-aluno.service';
 import { Component} from '@angular/core';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class FormularioCadastroAlunoComponent {
   confirmarSenha: string = '';
   emailPattern: RegExp = /^[\w-]+(\.[\w-]+)*@restinga\.ifrs\.edu\.br$/;
 
-  constructor(private service: FormularioCadastroAlunoService, private toastService: ToastService){}
+  constructor(private service: FormularioCadastroAlunoService, private toastService: ToastService, private router: Router){}
 
   enviarFormulario(){
     console.log(this.aluno.nomeCompleto)
@@ -75,6 +76,7 @@ export class FormularioCadastroAlunoComponent {
         console.log('Aluno cadastrado com sucesso!');
         console.log('Resposta da API:', response);
         this.toastService.showMessage('Aluno Cadastrado.')
+        this.router.navigate(['/login']);
         // Lógica adicional após o envio bem-sucedido do formulário
       },
       error => {

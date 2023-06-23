@@ -25,7 +25,9 @@
 
 .buttonDetalhes{
   display: flex;
+  height: 3em;
   padding: 35px 0px 0px 5px;
+  justify-content: flex-end;
 }
 
 button{
