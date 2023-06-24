@@ -1,0 +1,49 @@
+.solicitacao{
+  display: grid;
+  // place-items: center;
+  // height: 35vh;
+  margin-top: 20px;
+}
+
+.tituloprincipal{
+  font-size: 28px;
+  font-weight: bold;
+  color: #000000;
+  display: grid;
+  padding: 2%;
+}
+
+.cardDecoracao1{
+  width: 264px;
+  height: 3px;
+  left: 123px;
+  top: 314px;
+  background-color: #2B923C;
+  border: 1px solid #2B923C;
+  margin-top: 6px;
+}
+
+.buttonDetalhes{
+  display: flex;
+  height: 3em;
+  padding: 35px 0px 0px 5px;
+  justify-content: flex-end;
+}
+
+button{
+  padding-left: 2%;
+  padding-right: 2%;
+  background: #2B923C;
+  font-style: normal;
+  font-size: 20px;
+  color: #FFFFFF;
+  border: 0px;
+  cursor: pointer;
+}
+
+.semSolicitacoes{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3%;
+}

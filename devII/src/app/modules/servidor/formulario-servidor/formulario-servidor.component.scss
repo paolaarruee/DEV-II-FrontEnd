@@ -1,0 +1,114 @@
+.titulo {
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+
+    p {
+        font-weight: 700;
+        font-size: 30px;
+        border-bottom: 4px solid #2b923c;
+        padding-bottom: 8px;
+    }
+}
+
+
+#curso{
+  box-sizing: border-box;
+  padding: 7px;
+  font-size: 18px;
+  background: #FFFFFF;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.formulario {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.formulario--centro {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 30px;
+    gap: 16px;
+    width: 100%;
+    align-items: center;
+}
+
+label{
+  font-size: 20px;
+  font-style: normal;
+  width: 530px;
+  height: 28px;
+}
+
+input {
+  background: #FFFFFF;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  padding: 7px;
+  font-size: 18px;
+
+}
+
+#cargo{
+  box-sizing: border-box;
+
+  padding: 7px;
+  font-size: 18px;
+
+  background: #FFFFFF;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.formularioBox{
+  display: flex;
+  flex-direction: column;
+}
+
+.divcargo{
+  display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.nome,.email{
+  display: grid;
+}
+
+
+// .senhadiv{
+//   display: flex;
+// }
+
+// .nome-campo {
+//   font-size: 18px;
+//   font-style: normal;
+//   width: 530px;
+//   height: 28px;
+// }
+
+ul{
+  display: flex;
+  padding-left: 0px;
+}
+
+li{
+  display: flex;
+  flex-direction: column;
+}
+
+.botao{
+  border: 0px solid #000000;
+  background: #2F9E41;
+  font-style: normal;
+  font-size: 25px;
+  color: #FFFFFF;
+  cursor: pointer;
+}
