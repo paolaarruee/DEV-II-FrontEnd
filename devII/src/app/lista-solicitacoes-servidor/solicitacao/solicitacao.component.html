@@ -17,10 +17,19 @@
     <span>{{solicitacao.conteudo}} </span>
    </div>
 
-   <div class="buttonDetalhes">
-    <button [routerLink]="['/analisedocs', solicitacao.id]">Detalhes</button>
-    <!-- <button (click)="openDialog()">Detalhes</button> -->
+  <div class="buttonContainer">
+
+   <div class="buttonGerenciar">
+    <button [routerLink]="['/analisedocs', solicitacao.id]">Gerenciar</button>
+    
    </div>
+
+  <div class="buttonDetalhes">
+   <button (click)="openDialog()">Detalhes</button> 
+  </div>
+
+  </div>
+
 
   </div>
 </div>
