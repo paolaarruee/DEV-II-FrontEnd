@@ -1,143 +1,123 @@
 .corpo {
-  padding: 30px 100px 0 200px;
+  padding: 16px;
+  background-color: #f2f2f2;
+}
 
-  &-titulo {
-    width: 370px;
+.corpo-titulo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
 
-    span {
-      padding-bottom: 8px;
-      font-size: 30px;
-      border-bottom: 4px solid #2b923c;
-    }
-  }
+.corpo-dados {
+  font-size: 18px;
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
 
-  &-dados {
-    padding-top: 40px;
+.subtitulo {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
 
-    .subtitulo {
-      .dados {
-        width: 60%;
-        font-size: 23px;
-        font-weight: 500;
-      }
-    }
+.nome-aluno {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
 
-    .nome-aluno {
-      padding: 30px 0px 20px;
-      width: 80%;
-      display: flex;
-      justify-content: space-between;
+.corpo-dados-etapas {
+  font-size: 18px;
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
 
-      span {
-        font-size: 18px;
-      }
-    }
+.etapa {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
 
-    .infos-aluno {
-      width: 80%;
-      padding: 20px 0px 20px;
-      display: flex;
-      justify-content: space-between;
+.etapa span {
+  flex: 1;
+}
 
-      span {
-        font-size: 18px;
-      }
-    }
+.etapa .email, .etapa .data {
+  margin-left: 16px;
+}
 
-    .curso-aluno {
-      width: 80%;
-      padding: 20px 0px 20px;
-      display: flex;
-      justify-content: space-between;
+.infos-aluno {
+  display: flex;
+  width: auto;
+  text-align: right;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
 
-      span {
-        font-size: 18px;
-      }
-    }
-  }
-  &-setor-estagio {
-    padding-top: 30px;
-    width: 100%;
-    height: 100%;
+.curso-aluno {
+  display: flex;
+  justify-content: space-between;
+}
 
-    .download {
-      display: flex;
-      align-items: center;
+.corpo-setor-estagio {
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
 
-      p {
-        font-size: 20px;
-      }
-      .button {
-        margin-left: 15px;
-      }
-    }
-    .botoes {
-      margin-top: 20px;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-around;
-    }
-  }
+.download {
+  margin-bottom: 16px;
+}
 
-  &-passos {
-    width: 85%;
+.historico {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
 
-    .titulo {
-      font-size: 20px;
-    }
+.arquivo {
+  font-weight: bold;
+}
 
-    .historico {
-      display: flex;
-      align-items: center;
+.botoes {
 
-      .salvar {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 25px;
-      }
+  margin-top: 20px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+}
 
-      .arquivo {
-        margin: 0;
-        margin: 0 10px 0 0;
-        font-size: 16px;
-      }
-    }
+.proximo {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
 
-    .arquivos-up {
-      margin-top: 20px;
+.corpo-passos {
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+}
 
-      button {
-        margin-left: 50px;
-      }
-    }
+.titulo {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
 
-    .proximo {
-      display: flex;
-      justify-content: flex-end;
-      padding: 20px 0;
-    }
-
-    .finalizar {
-      display: flex;
-      justify-content: center;
-
-      button:not(:first-child) {
-        margin-left: 200px;
-      }
-    }
-
-    .botoes {
-      margin-top: 20px;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-around;
-    }
-  }
+.arquivos-up {
+  margin-bottom: 16px;
 }
