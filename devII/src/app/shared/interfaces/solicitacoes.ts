@@ -16,9 +16,21 @@ export interface Solicitacoes {
     matricula: string;
     ingresso: string;
   };
-  servidor: Servidor;
+  servidor: {
+    id: null;
+    nome: string;
+    cargo: string;
+    usuarioSistema: {
+      id: null;
+      roles: {
+        id: null;
+        name: string;
+      };
+    };
+
+  };
   tipo: string;
-  data: string;
+  data_solicitacao: string ;
   status: string | Status;
   titulo: string;
   conteudo: string;
@@ -30,5 +42,6 @@ export interface Solicitacoes {
 export enum Status {
   DEFERIDO = 'DEFERIDO',
   INDEFERIDO = 'INDEFERIDO',
+  EM_ANDAMENTO ='EM_ANDAMENTO'
 }
 
