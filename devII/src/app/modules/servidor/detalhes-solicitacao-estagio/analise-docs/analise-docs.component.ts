@@ -11,6 +11,8 @@ import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { DocFile } from 'src/app/shared/interfaces/doc';
 import { Servidor } from 'src/app/shared/interfaces/servidor';
 import { Status } from 'src/app/shared/interfaces/solicitacoes';
+import { Role } from 'src/app/shared/interfaces/usuario';
+import { AuthenticationService } from 'src/app/core/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-analise-docs',
@@ -21,7 +23,8 @@ export class AnaliseDocsComponent implements OnInit {
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
 
   public documentList$!: Observable<DocFile[]>;
-  public alumniData$!: Observable<any>;
+  public studentData$!: Observable<any>;
+  public readonly Roles: typeof Role = Role;
 
   public servidore!: Servidor;
   motivoIndeferimento = new FormControl('');
@@ -31,11 +34,12 @@ export class AnaliseDocsComponent implements OnInit {
     private docsService: DocsService,
     private toastService: ToastService,
     public dialog: MatDialog,
-    private solicitacoes: SolicitacoesService
+    private solicitacoes: SolicitacoesService,
+    private authenticationService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
-    this.setAlumniData();
+    this.setStudentData();
     this.setDocumentListId();
   }
 
@@ -56,13 +60,14 @@ export class AnaliseDocsComponent implements OnInit {
     this.documentList$ = this.solicitacoes.getlistDocsPorEstagioId(id);
   }
 
-  private setAlumniData() {
+  private setStudentData() {
     const { id } = this.activatedRoute.snapshot.params;
-    this.alumniData$ = this.solicitacoes.getAlumniData(id);
+    this.studentData$ = this.solicitacoes.getStudentData(id);
   }
 
   public abrirDialogDeferir() {
-    if (!this.fileInputRef.nativeElement.files?.length) {
+    const servidor = this.authenticationService.role === Role.ROLE_SERVIDOR;
+    if (!this.fileInputRef.nativeElement.files?.length && servidor) {
       this.toastService.showMessage(
         'Você precisa anexar pelo menos um documento'
       );
@@ -73,7 +78,9 @@ export class AnaliseDocsComponent implements OnInit {
       data: {
         conteudo: 'Você tem certeza que deseja deferir o estágio do aluno',
         enviarCallback: () => {
-          this.enviarDeferimento();
+          this.authenticationService.role === Role.ROLE_SESTAGIO
+            ? this.enviarDeferimento()
+            : this.enviarDeferimentoSetorEstagio();
         },
       },
     });
@@ -93,7 +100,7 @@ export class AnaliseDocsComponent implements OnInit {
 
   public enviarDeferimento(): void {
     const { id } = this.activatedRoute.snapshot.params;
-    const data = { status: Status.DEFERIDO, etapa: 2 };
+    const data = { status: Status.DEFERIDO };
     const fileList: FileList = this.fileInputRef.nativeElement?.files!;
     const formData: FormData = new FormData();
 
@@ -116,11 +123,36 @@ export class AnaliseDocsComponent implements OnInit {
     });
   }
 
+  public enviarDeferimentoSetorEstagio(): void {
+    const { id } = this.activatedRoute.snapshot.params;
+    const data = { status: Status.DEFERIDO };
+    const formData: FormData = new FormData();
+
+    formData.append(
+      'dados',
+      new Blob([JSON.stringify(data)], { type: 'application/json' })
+    );
+
+    this.solicitacoes.deferirSolicitacaoSetorEstagio(id, formData).subscribe({
+      next: () => {
+        this.toastService.showMessage('Deferimento enviado com sucesso!');
+      },
+      error: () => {
+        this.toastService.showMessage('Erro ao enviar o deferimento.');
+      },
+    });
+  }
+
   public enviarIndeferimento(motivo: string): void {
     const { id } = this.activatedRoute.snapshot.params;
-    const data = { status: Status.INDEFERIDO, etapa: 5, resposta: motivo };
-
-    this.solicitacoes.indeferirSolicitacao(id, data).subscribe({
+    const data = { status: Status.INDEFERIDO, observacao: motivo };
+    const formData: FormData = new FormData();
+    console.log(data);
+    formData.append(
+      'dados',
+      new Blob([JSON.stringify(data)], { type: 'application/json' })
+    );
+    this.solicitacoes.indeferirSolicitacao(id, formData).subscribe({
       next: () => {
         this.toastService.showMessage('Indeferimento enviado com sucesso!');
       },

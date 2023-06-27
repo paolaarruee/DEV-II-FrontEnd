@@ -1,10 +1,9 @@
-.espacamento{
-    // margin-bottom: 25px;
-    width: 613px;
-    // height: 100%;
-  }
-  
-  .header{
+.espacamento {
+  // margin-bottom: 25px;
+  width: 613px;
+  // height: 100%;
+
+  .header {
     display: flex;
     justify-content: space-between;
     padding: 32px 32px 0px;
@@ -12,80 +11,82 @@
     font-size: 18px;
     align-items: center;
   }
-  
-  .titulo{
+
+  .titulo {
+    word-break: break-all;
     display: flex;
     flex-direction: column;
     // padding-left: 16px;
+    line-height: 30px;
     font-size: 34px;
     font-weight: bold;
     align-items: center;
   }
-  
-  .cardDecoracao{
+
+  .cardDecoracao {
     width: 550px;
     height: 1px;
-    border: 1px solid #2B923C;
+    border: 1px solid #2b923c;
     margin-top: 10px;
   }
-  
-  .conteudo{
+
+  .conteudo {
     margin: 21px 30px 0px 33px;
   }
-  
-  .empresa{
-    font-weight: 500;
-    margin-bottom: 15px;
-  }
-  
-  .agencia{
-    font-weight: 500;
-    margin-bottom: 15px;
-  }
-  
-  
-  .descricao {
-    padding: 5px 20px 5px 10px;
-    white-space: pre-wrap;
-    outline: none;
-    border-color: #2B923C;
-    box-shadow: 0 0 5px #2B923C;
-  }
-  
-  
-  .local{
+
+  .empresa {
     font-weight: 500;
     margin-bottom: 15px;
   }
 
-   h3{
-    font-weight: 500;
-  }
-  
-  .valor{
+  .agencia {
     font-weight: 500;
     margin-bottom: 15px;
   }
-  
-  .turno{
+
+  .descricao {
+    padding: 5px 20px 5px 10px;
+    white-space: pre-wrap;
+    outline: none;
+    border-color: #2b923c;
+    box-shadow: 0 0 5px #2b923c;
+  }
+
+  .local {
     font-weight: 500;
     margin-bottom: 15px;
   }
-  
-  .buttonFechar{
+
+  h3 {
+    font-weight: 500;
+  }
+
+  .valor {
+    font-weight: 500;
+    margin-bottom: 15px;
+  }
+
+  .turno {
+    font-weight: 500;
+    margin-bottom: 15px;
+  }
+
+  .buttonFechar {
     display: flex;
     flex-direction: row-reverse;
     padding: 16px;
   }
-  
-  button{
+
+  button {
+    width: 100px;
+    height: 30px;
     padding-left: 2%;
     padding-right: 2%;
-    background: #2B923C;
+    background: #2b923c;
     font-style: normal;
     font-size: 20px;
-    color: #FFFFFF;
+    color: #ffffff;
     border: 0px;
     cursor: pointer;
   }
-  
+}

@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -13,13 +12,7 @@ import { FormularioServidorComponent } from './modules/servidor/formulario-servi
 import { CadastrarVagasComponent } from './modules/vagas-estagio/cadastrar-vagas/cadastrar-vagas.component';
 import { MuralDeVagasComponent } from './modules/vagas-estagio/mural-de-vagas/mural-de-vagas.component';
 
-
- 
-
 const routes: Routes = [
-
- 
-
   {
     path: 'login',
     component: LoginComponent,
@@ -28,11 +21,9 @@ const routes: Routes = [
   {
     path: 'listaSolicitacoesServidor',
     component: ListaSolicitacoesServidorComponent,
-    
   },
   {
-
-    path: "solicitacaoEstagio",
+    path: 'solicitacaoEstagio',
     component: TelaSolicitacaoComponent,
   },
   {
@@ -45,7 +36,7 @@ const routes: Routes = [
   {
     path: 'cadastrarAluno',
     component: FormularioCadastroAlunoComponent,
-  }, 
+  },
 
   {
     path: 'cadastrarServidor',
@@ -75,14 +66,8 @@ const routes: Routes = [
 
   {
     path: '**',
-    redirectTo: 'analisedocs',
+    redirectTo: 'muralVagas',
   },
-
-
-
- 
-
-
 ];
 
 @NgModule({

@@ -1,55 +1,169 @@
 <div class="titulo">
-    <p>Cadastro</p>
+  <p>Cadastro</p>
 </div>
 
 <div class="formulario">
-    <form class="formulario--centro" (ngSubmit)="enviarFormulario()">
-      <div class="formularioBox">
-
-        <div class="divcargo">
-          <label for="cargo">Cargo</label>
-          <select id="cargo" name="cargo" (change)="exibirCursos($event)" [(ngModel)]="servidor.cargo" class="text" required>
-              <option value="">Selecione o Cargo</option>
-              <option value="Coordenador" >Coordenador</option>
-              <option value="Setor de Estágio">Setor de Estágio</option>
-              <option value="Diretor">Diretor</option>
-          </select>
-        </div>
-
-        <label class="nome-campo">Nome Completo</label>
-        <input class="nome" type="text" id="nome" name="nome" [(ngModel)]="servidor.nome" placeholder="Digite o seu nome" required>
-
-        <label class="nome-campo">Email institucional</label>
-        <input class="email" type="email" id="email" name="email" [(ngModel)]="servidor.usuarioSistema.email" placeholder="servidor@restinga.ifrs.edu.br" required>
-
-    
-        <label  *ngIf="exibirCurso" for="curso">Curso</label>
-        <select *ngIf="exibirCurso" name="curso" id="curso" type="text" [(ngModel)]="servidor.curso" required>
-          <option value="" disabled>Escolha um Curso</option>
-          <option value="10">Análise e Desenvolvimento de Sistemas</option>
-          <option value="11">Letras Português e Espanhol</option>
-          <option value="12">Eletrônica Industrial</option>
-          <option value="13">Gestão Desportiva e de Lazer</option>
-          <option value="14">Processos Gerenciais</option>
-          <option value="15">Setor de Estágio</option>
+  <form class="formulario--centro" (ngSubmit)="enviarFormulario()">
+    <div class="formularioBox">
+      <div class="divcargo">
+        <label for="cargo">Cargo</label>
+        <select
+          id="cargo"
+          name="cargo"
+          (change)="exibirCursos($event)"
+          [(ngModel)]="servidor.cargo"
+          class="text"
+          required
+        >
+          <option value="">Selecione o Cargo</option>
+          <option value="Coordenador">Coordenador</option>
+          <option value="Setor de Estágio">Setor de Estágio</option>
+          <option value="Diretor">Diretor</option>
         </select>
-     
-
-        <div class="senhadiv">
-          <ul>
-            <li style="padding-right: 39px;">
-              <label class="nome-campo">Digite uma senha</label>
-              <input class="senha" type="password" id="password" name="password" [(ngModel)]="servidor.usuarioSistema.senha" placeholder="Digite a senha" required>
-            </li>
-
-            <li>
-              <label class="nome-campo">Confirmar senha</label>
-              <input  class="senha" type="password" id="Confirm_password" name="Confirm_password" [(ngModel)]="confirmarSenha" placeholder="Digite novamente a Senha" required>
-            </li>
-          </ul>
-        </div>
-
-        <input class="botao" type="submit" value="Cadastrar">
       </div>
-    </form>
+
+      <label class="nome-campo">Nome Completo</label>
+      <input
+        class="nome"
+        type="text"
+        id="nome"
+        name="nome"
+        [(ngModel)]="servidor.nome"
+        placeholder="Digite o seu nome"
+        required
+      />
+
+      <label class="nome-campo">Email institucional</label>
+      <input
+        class="email"
+        type="email"
+        id="email"
+        name="email"
+        [(ngModel)]="servidor.usuarioSistema.email"
+        placeholder="servidor@restinga.ifrs.edu.br"
+        required
+      />
+
+      <label *ngIf="exibirCurso" for="curso">Curso</label>
+      <select
+        *ngIf="exibirCurso"
+        name="curso"
+        id="curso"
+        type="text"
+        [(ngModel)]="servidor.curso"
+        required
+      >
+        <option value="" disabled>Escolha um Curso</option>
+        <option value="10">Análise e Desenvolvimento de Sistemas</option>
+        <option value="11">Letras Português e Espanhol</option>
+        <option value="12">Eletrônica Industrial</option>
+        <option value="13">Gestão Desportiva e de Lazer</option>
+        <option value="14">Processos Gerenciais</option>
+        <option value="15">Setor de Estágio</option>
+      </select>
+
+      <div class="senhadiv">
+        <ul>
+          <li style="padding-right: 39px">
+            <label class="nome-campo">Digite uma senha</label>
+            <input
+              class="senha"
+              type="password"
+              id="password"
+              name="password"
+              [(ngModel)]="servidor.usuarioSistema.senha"
+              placeholder="Digite a senha"
+              required
+            />
+          </li>
+
+          <li>
+            <label class="nome-campo">Confirmar senha</label>
+            <input
+              class="senha"
+              type="password"
+              id="Confirm_password"
+              name="Confirm_password"
+              [(ngModel)]="confirmarSenha"
+              placeholder="Digite novamente a Senha"
+              required
+            />
+          </li>
+        </ul>
+      </div>
+
+      <input class="botao" type="submit" value="Cadastrar" />
+    </div>
+
+    <label class="nome-campo">Nome Completo</label>
+    <input
+      class="nome"
+      type="text"
+      id="nome"
+      name="nome"
+      [(ngModel)]="servidor.nome"
+      placeholder="Digite o seu nome"
+      required
+    />
+
+    <label class="nome-campo">Email institucional</label>
+    <input
+      class="email"
+      type="email"
+      id="email"
+      name="email"
+      [(ngModel)]="servidor.usuarioSistema.email"
+      placeholder="servidor@restinga.ifrs.edu.br"
+      required
+    />
+
+    <label for="curso">Curso</label>
+    <select
+      name="curso"
+      id="curso"
+      type="text"
+      [(ngModel)]="servidor.curso"
+      required
+    >
+      <option value="" disabled>Escolha um Curso</option>
+      <option value="10">Análise e Desenvolvimento de Sistemas</option>
+      <option value="11">Letras Português e Espanhol</option>
+      <option value="12">Eletrônica Industrial</option>
+      <option value="13">Gestão Desportiva e de Lazer</option>
+      <option value="14">Processos Gerenciais</option>
+      <option value="15">Setor de Estágio</option>
+    </select>
+
+    <div class="senhadiv">
+      <ul>
+        <li style="padding-right: 39px">
+          <label class="nome-campo">Digite uma senha</label>
+          <input
+            class="senha"
+            type="password"
+            id="password"
+            name="password"
+            [(ngModel)]="servidor.usuarioSistema.senha"
+            placeholder="Digite a senha"
+            required
+          />
+        </li>
+
+        <li>
+          <label class="nome-campo">Confirmar senha</label>
+          <input
+            class="senha"
+            type="password"
+            id="Confirm_password"
+            name="Confirm_password"
+            [(ngModel)]="confirmarSenha"
+            placeholder="Digite novamente a Senha"
+            required
+          />
+        </li>
+      </ul>
+    </div>
+
+    <input class="botao" type="submit" value="Cadastrar" />
+  </form>
 </div>
