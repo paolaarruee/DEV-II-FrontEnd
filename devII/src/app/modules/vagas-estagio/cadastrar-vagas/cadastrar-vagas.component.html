@@ -1,50 +1,50 @@
-<div class="espacamento">
-  <div class="tituloprincipal">
-    <span>Lista de Solicitações</span>
-    <span class="cardDecoracao1"></span>
-  </div>
+<div class="tituloprincipal1">
+  <span>Lista de Solicitações</span>
+  <span class="cardDecoracao1"></span>
+</div>
 
-  <div>
-    <form class="formulario" (ngSubmit)="enviarFormulario()">
+<div class="formulario">
+  <form (ngSubmit)="enviarFormulario()">
 
-      <div class="divtitulo">
-        <label>Titulo</label>
-        <input class="titulo" [(ngModel)]="vaga.titulo" type="text" id="titulo" name="titulo" placeholder="Titulo" required>
+    <div class="campo">
+      <label for="titulo">Título</label>
+      <input class="inputText" [(ngModel)]="vaga.titulo" type="text" id="titulo" name="titulo" placeholder="Título" required>
+    </div>
+
+    <div class="campoDuplo">
+      <div class="campo">
+        <label for="empresa">Empresa</label>
+        <input class="inputText" [(ngModel)]="vaga.empresa" type="text" id="empresa" name="empresa" placeholder="Empresa" required>
       </div>
 
-      <div class="divtitulo">
-        <label>Empresa</label>
-        <input class="titulo" [(ngModel)]="vaga.empresa" type="text" id="empresa" name="empresa" placeholder="Empresa" required>
+      <div class="campo">
+        <label for="agencia">Agência</label>
+        <input class="inputText" [(ngModel)]="vaga.agencia" type="text" id="agencia" name="agencia" placeholder="Agência" required>
+      </div>
+    </div>
+
+    <div class="campo">
+      <label for="descricao">Descrição</label>
+      <textarea class="inputTextarea" [(ngModel)]="vaga.descricao" id="descricao" name="descricao" placeholder="Descrição" required maxlength="500"></textarea>
+    </div>
+
+    <div class="campo">
+      <label for="local">Local</label>
+      <input class="inputText" [(ngModel)]="vaga.local" type="text" id="local" name="local" placeholder="Local" required>
+    </div>
+    <div class="campoDuplo">
+      <div class="campo">
+        <label for="valor">Valor</label>
+        <input class="inputText" [(ngModel)]="vaga.valor" type="text" id="valor" name="valor" placeholder="Valor" required>
       </div>
 
-      <div class="divtitulo">
-        <label>Agencia</label>
-        <input class="titulo" [(ngModel)]="vaga.agencia" type="text" id="agencia" name="agencia" placeholder="Agencia" required>
+      <div class="campo">
+        <label for="turno">Turno</label>
+        <input class="inputText" [(ngModel)]="vaga.turno" type="text" id="turno" name="turno" placeholder="Turno" required>
       </div>
-
-      <div class="divtitulo">
-        <label>Descrição</label>
-        <input class="titulo" [(ngModel)]="vaga.descricao" type="text" id="descricao" name="descricao" placeholder="Descrição" required>
-      </div>
-
-      <div class="divtitulo">
-        <label>Local</label>
-        <input class="titulo" [(ngModel)]="vaga.local" type="text" id="local" name="local" placeholder="Local" required>
-      </div>
-
-      <div class="divtitulo">
-        <label>Valor</label>
-        <input class="titulo" [(ngModel)]="vaga.valor" type="text" id="valor" name="valor" placeholder="Valor" required>
-      </div>
-
-      <div class="divtitulo">
-        <label>Turno</label>
-        <input class="titulo" [(ngModel)]="vaga.turno" type="text" id="turno" name="turno" placeholder="Turno" required>
-      </div>
-
-      <div class="botao">
-        <input class="botao" type="submit" value="Cadastrar">
-      </div>
-    </form>
-
+    </div>
+    <div class="botao">
+      <input class="botaoCadastrar" type="submit" value="Cadastrar">
+    </div>
+  </form>
 </div>

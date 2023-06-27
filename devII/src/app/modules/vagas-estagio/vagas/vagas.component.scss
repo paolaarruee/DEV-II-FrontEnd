@@ -32,6 +32,9 @@
   }
   
   .descricao {
+    white-space: pre-wrap;
+    max-height: 80px;
+    overflow:hidden;
     // text-align: center; /* Centralizar o texto horizontalmente */
     margin-bottom: 10px; /* Adicionar espaço abaixo do conteúdo */
   }
