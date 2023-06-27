@@ -53,15 +53,17 @@
     <span>{{ solicitacao.data_solicitacao.toLocaleDateString() }} </span>
    </div>
 
-   <div class="observacao">
-    <p><b>Observação:</b> {{solicitacao.observacao}}</p>
+   <div *ngIf="solicitacao.observacao !== undefined && solicitacao.observacao !== null">
+    <div class="observacao">
+        <p><b>Observação:</b> {{solicitacao.observacao}}</p>
+    </div>
    </div>
 
    <div class="buttonFechar">
     <button (click)="closeDialog()">Fechar</button>
    </div>
 
-   
+
 
   </div>
 </div>

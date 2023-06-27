@@ -11,10 +11,10 @@ import { Servidor } from 'src/app/shared/interfaces/servidor';
 export class ListaSolicitacoesServidorComponent implements OnInit {
   listaSolicitacoes: Solicitacoes[] = [];
   filtroNome: string = '';
-  filtroDataInicial: Date = new Date(); 
+  filtroDataInicial: Date = new Date();
   filtroDataFinal: Date = new Date();
   filtroStatus: string = 'todas';
-  data_solicitacao: Date = new Date();
+  dataSolicitacao: Date = new Date();
 
   constructor(private service: SolicitacoesService) {}
 
@@ -47,7 +47,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   filtrarPorData() {
     this.service.listarSolicitacoesPorEmailServidor().toPromise().then((solicitacoes) => {
       this.listaSolicitacoes = solicitacoes.filter((solicitacao: Solicitacoes) => {
-        const dataSolicitacao = new Date(solicitacao.data_solicitacao);
+        const dataSolicitacao = new Date(solicitacao.dataSolicitacao);
         return (
           dataSolicitacao >= this.filtroDataInicial && dataSolicitacao <= this.filtroDataFinal
         );
@@ -56,7 +56,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
     });
   }
 
-  
+
 
   filtrarPorStatus() {
     if (this.filtroStatus === 'todas') {
@@ -64,7 +64,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
     } else {
       this.service.listarSolicitacoesPorEmailServidor().toPromise().then((solicitacoes) => {
         const listaOriginal = [...solicitacoes];
-        
+
         this.listaSolicitacoes = listaOriginal.filter((solicitacao: Solicitacoes) => {
           if (this.filtroStatus === 'setor_estagios') {
             return solicitacao.servidor.cargo === 'setor';
@@ -76,16 +76,16 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
             return solicitacao.status === this.filtroStatus;
           }
         });
-  
+
         this.ordenarSolicitacoes();
       });
     }
   }
-  
+
   ordenarSolicitacoes() {
     this.listaSolicitacoes.sort((a, b) => {
-      const dataA = new Date(a.data_solicitacao).getTime();
-      const dataB = new Date(b.data_solicitacao).getTime();
+      const dataA = new Date(a.dataSolicitacao).getTime();
+      const dataB = new Date(b.dataSolicitacao).getTime();
       return dataB - dataA;
     });
   }
@@ -95,8 +95,8 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
     location.reload();
   }
 
-  
-  
+
+
 
 
 
