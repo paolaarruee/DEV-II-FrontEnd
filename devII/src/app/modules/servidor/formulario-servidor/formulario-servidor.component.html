@@ -8,9 +8,9 @@
 
         <div class="divcargo">
           <label for="cargo">Cargo</label>
-          <select id="cargo" name="cargo" [(ngModel)]="servidor.cargo" class="text" required>
+          <select id="cargo" name="cargo" (change)="exibirCursos($event)" [(ngModel)]="servidor.cargo" class="text" required>
               <option value="">Selecione o Cargo</option>
-              <option value="Coordenador">Coordenador</option>
+              <option value="Coordenador" >Coordenador</option>
               <option value="Setor de Estágio">Setor de Estágio</option>
               <option value="Diretor">Diretor</option>
           </select>
@@ -22,8 +22,9 @@
         <label class="nome-campo">Email institucional</label>
         <input class="email" type="email" id="email" name="email" [(ngModel)]="servidor.usuarioSistema.email" placeholder="servidor@restinga.ifrs.edu.br" required>
 
-        <label for="curso">Curso</label>
-        <select name="curso" id="curso" type="text" [(ngModel)]="servidor.curso" required>
+    
+        <label  *ngIf="exibirCurso" for="curso">Curso</label>
+        <select *ngIf="exibirCurso" name="curso" id="curso" type="text" [(ngModel)]="servidor.curso" required>
           <option value="" disabled>Escolha um Curso</option>
           <option value="10">Análise e Desenvolvimento de Sistemas</option>
           <option value="11">Letras Português e Espanhol</option>
@@ -32,6 +33,7 @@
           <option value="14">Processos Gerenciais</option>
           <option value="15">Setor de Estágio</option>
         </select>
+     
 
         <div class="senhadiv">
           <ul>

@@ -1,7 +1,7 @@
 import { DetalhesSolicitacaoServidorComponent } from '../detalhes-solicitacao/detalhes-solicitacao.component';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 @Component({
   selector: 'app-solicitacao-servidor',
@@ -26,7 +26,7 @@ export class SolicitacaoServidorComponent implements OnInit {
     });
   }
 
-  data_solicitacao: string | null = '2023-06-25 10:30:00'
+  dataSolicitacao: string | null = '2023-06-25 10:30:00'
 
   @Input() solicitacao = {
     titulo: '',
@@ -59,24 +59,28 @@ export class SolicitacaoServidorComponent implements OnInit {
         }
       },
       cargo: ''
-    }, 
+    },
     tipo: '',
-    data_solicitacao:'' , 
+    dataSolicitacao:'' ,
     id: '',
     resposta: ''
   };
 
   ngOnInit() {
-    this.formatarDataSolicitacao();
+    this.solicitacao.dataSolicitacao = this.formatarDataSolicitacao(this.solicitacao.dataSolicitacao);
+    console.log(this.solicitacao)
   }
 
-formatarDataSolicitacao() {
-  if (this.solicitacao.data_solicitacao) {
-    this.dataFormatada = format(new Date(this.solicitacao.data_solicitacao), 'dd-MM-yyyy HH:mm:ss');
-  } else {
-    this.dataFormatada = 'Data inválida';
+  formatarDataSolicitacao(dataSolicitacao: string): string {
+    const formattedDateFormat = 'HH:mm:ss dd-MM-yyyy'; // Formato desejado para exibição
+
+    if (dataSolicitacao) {
+      const parsedDate = parseISO(dataSolicitacao);
+      return format(parsedDate, formattedDateFormat);
+    } else {
+      return 'Data inválida';
+    }
   }
-}
 
 
   statusSolicitacao(): string {
