@@ -24,11 +24,23 @@ export class FormularioServidorComponent {
 
   confirmarSenha: string = '';
   emailPattern: RegExp = /^[\w-]+(\.[\w-]+)*@restinga\.ifrs\.edu\.br$/;
+  exibirCurso: boolean = true;
 
   constructor(
     private service: FormularioServidorService,
     private toastService: ToastService
   ) {}
+
+  exibirCursos(event : any){
+    const valorSelecionado = event.target.value;
+    if(valorSelecionado != "Coordenador"){
+      this.exibirCurso = false;
+    }
+    else{
+      this.exibirCurso = true;
+    }
+
+  }
 
   enviarFormulario() {
     console.log(this.servidor.nome);
@@ -51,7 +63,7 @@ export class FormularioServidorComponent {
 
     let camposVazios = camposObrigatorios.filter((campo) => !campo.valor);
 
-    if (camposVazios.length > 0) {
+    if (camposVazios.length > 1) {
       let mensagem = `Preencha o(s) campo(s) obrigatório(s): ${camposVazios
         .map((campo) => campo.nome)
         .join(', ')}`;
