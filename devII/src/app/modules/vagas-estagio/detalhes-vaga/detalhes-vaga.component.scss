@@ -1,10 +1,9 @@
-.espacamento{
-    // margin-bottom: 25px;
-    width: 613px;
-    // height: 100%;
-  }
-  
-  .header{
+.espacamento {
+  // margin-bottom: 25px;
+  width: 613px;
+  // height: 100%;
+
+  .header {
     display: flex;
     justify-content: space-between;
     padding: 32px 32px 0px;
@@ -12,65 +11,69 @@
     font-size: 18px;
     align-items: center;
   }
-  
-  .titulo{
+
+  .titulo {
+    word-break: break-all;
     display: flex;
     flex-direction: column;
     // padding-left: 16px;
+    line-height: 30px;
     font-size: 34px;
     font-weight: bold;
     align-items: center;
   }
-  
-  .cardDecoracao{
+
+  .cardDecoracao {
     width: 550px;
     height: 1px;
-    border: 1px solid #2B923C;
+    border: 1px solid #2b923c;
     margin-top: 10px;
   }
-  
-  .conteudo{
+
+  .conteudo {
     margin: 21px 30px 0px 33px;
   }
-  
-  .empresa{
+
+  .empresa {
     margin-bottom: 15px;
   }
-  
-  .agencia{
+
+  .agencia {
     margin-bottom: 15px;
   }
-  
-  .descricao{
+
+  .descricao {
     margin-bottom: 15px;
   }
-  
-  .local{
+
+  .local {
     margin-bottom: 15px;
   }
-  
-  .valor{
+
+  .valor {
     margin-bottom: 15px;
   }
-  
-  .turno{
+
+  .turno {
     margin-bottom: 15px;
   }
-  
-  .buttonFechar{
+
+  .buttonFechar {
     display: flex;
     flex-direction: row-reverse;
     padding: 16px;
   }
-  
-  button{
+
+  button {
+    width: 100px;
+    height: 30px;
     padding-left: 2%;
     padding-right: 2%;
-    background: #2B923C;
+    background: #2b923c;
     font-style: normal;
     font-size: 20px;
-    color: #FFFFFF;
+    color: #ffffff;
     border: 0px;
     cursor: pointer;
   }
-  
+}

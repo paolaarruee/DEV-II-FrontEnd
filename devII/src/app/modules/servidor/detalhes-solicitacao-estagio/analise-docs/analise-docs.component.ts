@@ -12,6 +12,7 @@ import { DocFile } from 'src/app/shared/interfaces/doc';
 import { Servidor } from 'src/app/shared/interfaces/servidor';
 import { Status } from 'src/app/shared/interfaces/solicitacoes';
 import { Role } from 'src/app/shared/interfaces/usuario';
+import { AuthenticationService } from 'src/app/core/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-analise-docs',
@@ -33,7 +34,8 @@ export class AnaliseDocsComponent implements OnInit {
     private docsService: DocsService,
     private toastService: ToastService,
     public dialog: MatDialog,
-    private solicitacoes: SolicitacoesService
+    private solicitacoes: SolicitacoesService,
+    private authenticationService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
@@ -64,10 +66,8 @@ export class AnaliseDocsComponent implements OnInit {
   }
 
   public abrirDialogDeferir() {
-    if (
-      !this.fileInputRef.nativeElement.files?.length &&
-      this.Roles.ROLE_SERVIDOR
-    ) {
+    const servidor = this.authenticationService.role === Role.ROLE_SERVIDOR;
+    if (!this.fileInputRef.nativeElement.files?.length && servidor) {
       this.toastService.showMessage(
         'Você precisa anexar pelo menos um documento'
       );
@@ -78,7 +78,9 @@ export class AnaliseDocsComponent implements OnInit {
       data: {
         conteudo: 'Você tem certeza que deseja deferir o estágio do aluno',
         enviarCallback: () => {
-          this.Roles.ROLE_SERVIDOR ?  this.enviarDeferimento() : this.enviarDeferimentoSetorEstagio;
+          this.authenticationService.role === Role.ROLE_SESTAGIO
+            ? this.enviarDeferimento()
+            : this.enviarDeferimentoSetorEstagio();
         },
       },
     });
@@ -131,7 +133,7 @@ export class AnaliseDocsComponent implements OnInit {
       new Blob([JSON.stringify(data)], { type: 'application/json' })
     );
 
-    this.solicitacoes.deferirSolicitacao(id, formData).subscribe({
+    this.solicitacoes.deferirSolicitacaoSetorEstagio(id, formData).subscribe({
       next: () => {
         this.toastService.showMessage('Deferimento enviado com sucesso!');
       },
