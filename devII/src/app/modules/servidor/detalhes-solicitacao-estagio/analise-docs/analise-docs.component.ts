@@ -78,7 +78,7 @@ export class AnaliseDocsComponent implements OnInit {
       data: {
         conteudo: 'Você tem certeza que deseja deferir o estágio do aluno',
         enviarCallback: () => {
-          this.enviarDeferimento(), this.enviarDeferimentoSetorEstagio;
+          this.Roles.ROLE_SERVIDOR ?  this.enviarDeferimento() : this.enviarDeferimentoSetorEstagio;
         },
       },
     });
