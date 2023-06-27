@@ -1,7 +1,7 @@
 .card {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   padding: 20px;
   width: 410px;
   height: 250px;
@@ -34,6 +34,12 @@
   .descricao {
     height: 120px;
     margin-bottom: 10px;
+    word-break: break-all;
+    white-space: pre-wrap;
+    max-height: 80px;
+    overflow: hidden;
+    // text-align: center; /* Centralizar o texto horizontalmente */
+    margin-bottom: 10px; /* Adicionar espaço abaixo do conteúdo */
   }
 
   .buttonDetalhes {
@@ -41,7 +47,7 @@
     height: 100%;
     display: flex;
     align-items: flex-end;
-    justify-content: flex-end;
+    justify-content: flex-start;
 
     button {
       width: 88px;

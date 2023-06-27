@@ -25,6 +25,26 @@ export class CadastrarVagasComponent {
   ) {}
 
   enviarFormulario() {
+
+    let camposObrigatorios = [
+      { nome: 'titulo', valor: this.vaga.titulo },
+      { nome: 'empresa', valor: this.vaga.empresa },
+      { nome: 'agencia', valor: this.vaga.agencia },
+      { nome: 'descricao', valor: this.vaga.descricao.replace(/[\r\n]+/g, ' ') },
+      { nome: 'local', valor: this.vaga.local },
+      { nome: 'valor', valor: this.vaga.valor },
+      { nome: 'turno', valor: this.vaga.turno }
+    ];
+
+    let camposVazios = camposObrigatorios.filter(campo => !campo.valor);
+
+    if (camposVazios.length > 0) {
+      let mensagem = `Preencha o(s) campo(s) obrigatório(s): ${camposVazios.map(campo => campo.nome).join(', ')}`;
+      this.toastService.showMessage(mensagem, 'error');
+      return;
+    }
+
+    console.log(this.vaga);
     this.service.enviarDados(this.vaga).subscribe(
       (response) => {
         this.toastService.showMessage('vaga Cadastrado.');

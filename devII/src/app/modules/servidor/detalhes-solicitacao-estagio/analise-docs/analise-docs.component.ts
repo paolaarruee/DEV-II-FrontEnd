@@ -100,7 +100,7 @@ export class AnaliseDocsComponent implements OnInit {
 
   public enviarDeferimento(): void {
     const { id } = this.activatedRoute.snapshot.params;
-    const data = { status: Status.DEFERIDO, etapa: '3' };
+    const data = { status: Status.DEFERIDO };
     const fileList: FileList = this.fileInputRef.nativeElement?.files!;
     const formData: FormData = new FormData();
 
@@ -125,7 +125,7 @@ export class AnaliseDocsComponent implements OnInit {
 
   public enviarDeferimentoSetorEstagio(): void {
     const { id } = this.activatedRoute.snapshot.params;
-    const data = { status: Status.DEFERIDO, etapa: '2' };
+    const data = { status: Status.DEFERIDO };
     const formData: FormData = new FormData();
 
     formData.append(
@@ -145,9 +145,14 @@ export class AnaliseDocsComponent implements OnInit {
 
   public enviarIndeferimento(motivo: string): void {
     const { id } = this.activatedRoute.snapshot.params;
-    const data = { status: Status.INDEFERIDO, etapa: '6', observacao: motivo };
-
-    this.solicitacoes.indeferirSolicitacao(id, data).subscribe({
+    const data = { status: Status.INDEFERIDO, observacao: motivo };
+    const formData: FormData = new FormData();
+    console.log(data);
+    formData.append(
+      'dados',
+      new Blob([JSON.stringify(data)], { type: 'application/json' })
+    );
+    this.solicitacoes.indeferirSolicitacao(id, formData).subscribe({
       next: () => {
         this.toastService.showMessage('Indeferimento enviado com sucesso!');
       },

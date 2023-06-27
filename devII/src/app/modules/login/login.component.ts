@@ -26,23 +26,24 @@ export class LoginComponent implements OnInit {
   }
 
   public login(userData: Usuario) {
-    this.authService.login(userData).subscribe(
-      {
-        next: (authData: Authorization) => {
-          this.authService.setAuthData(authData);
-          if (authData.Roles.toLocaleString() === 'ROLE_SERVIDOR') {
-            this.router.navigateByUrl('/listaSolicitacoesServidor').then(() => {
-              window.location.reload();
-            });
-          } else {
-            this.router.navigateByUrl('/listaSolicitacoesAluno').then(() => {
-              window.location.reload();
-            });
+    this.authService.login(userData).subscribe({
+      next: (authData: Authorization) => {
+        this.authService.setAuthData(authData);
+        if (
+          authData.Roles.toLocaleString() === 'ROLE_SERVIDOR' ||
+          'ROLE_SESTAGIO'
+        ) {
+          this.router.navigateByUrl('/listaSolicitacoesServidor').then(() => {
+            window.location.reload();
+          });
+        } else {
+          this.router.navigateByUrl('/oportunidades').then(() => {
+            window.location.reload();
+          });
         }
-        },
-        error: () => this.toastService.showMessage('Erro ao autenticar usuário.'),
-      }
-    );
+      },
+      error: () => this.toastService.showMessage('Erro ao autenticar usuário.'),
+    });
   }
 
   public cadatrar() {

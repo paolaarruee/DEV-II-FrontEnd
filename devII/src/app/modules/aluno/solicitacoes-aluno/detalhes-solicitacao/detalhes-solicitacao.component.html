@@ -17,7 +17,7 @@
       <div class="step">
         <div class="circle" [ngClass]="progressoFluxo(1)">1</div>
         <span>Envio de documentos</span>
-   </div>
+      </div>
 
       <span class="retanguloFluxo"></span>
 
@@ -53,8 +53,10 @@
     <span>{{solicitacao.conteudo}}</span>
    </div>
 
-   <div class="observacao">
-    <p><b>Observação:</b> {{solicitacao.observacao}}</p>
+   <div *ngIf="solicitacao.observacao !== undefined && solicitacao.observacao !== null">
+    <div class="observacao">
+        <p><b>Observação:</b> {{solicitacao.observacao}}</p>
+    </div>
    </div>
 
    <div class="buttonFechar">

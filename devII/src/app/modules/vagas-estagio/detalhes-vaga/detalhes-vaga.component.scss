@@ -35,26 +35,39 @@
   }
 
   .empresa {
+    font-weight: 500;
     margin-bottom: 15px;
   }
 
   .agencia {
+    font-weight: 500;
     margin-bottom: 15px;
   }
 
   .descricao {
-    margin-bottom: 15px;
+    padding: 5px 20px 5px 10px;
+    white-space: pre-wrap;
+    outline: none;
+    border-color: #2b923c;
+    box-shadow: 0 0 5px #2b923c;
   }
 
   .local {
+    font-weight: 500;
     margin-bottom: 15px;
   }
 
+  h3 {
+    font-weight: 500;
+  }
+
   .valor {
+    font-weight: 500;
     margin-bottom: 15px;
   }
 
   .turno {
+    font-weight: 500;
     margin-bottom: 15px;
   }
 

@@ -30,7 +30,7 @@ export interface Solicitacoes {
 
   };
   tipo: string;
-  data_solicitacao: string ;
+  dataSolicitacao: string ;
   status: string | Status;
   titulo: string;
   conteudo: string;

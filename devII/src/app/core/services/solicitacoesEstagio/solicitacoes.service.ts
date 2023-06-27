@@ -21,17 +21,27 @@ export class SolicitacoesService {
     );
   }
 
-  deferirSolicitacaoSetorEstagio(id: number, formData: FormData): Observable<any> {
+  indeferir2(id: number, formData: FormData): Observable<any> {
+    return this.httpClient.put<any>(
+      `${environment.API_URL}/indeferirSolicitacao/${id}`,
+      formData
+    );
+  }
+
+  deferirSolicitacaoSetorEstagio(
+    id: number,
+    formData: FormData
+  ): Observable<any> {
     return this.httpClient.put<any>(
       `${environment.API_URL}/deferirSolicitacaoSetorEstagio/${id}`,
       formData
     );
   }
 
-  indeferirSolicitacao(id: number, dados: any): Observable<any> {
+  indeferirSolicitacao(id: number, formData: FormData): Observable<any> {
     return this.httpClient.put<any>(
       `${environment.API_URL}/indeferirSolicitacao/${id}`,
-      { dados }
+      { formData }
     );
   }
 
