@@ -7,11 +7,12 @@
   font-size: 28px;
   font-weight: bold;
   color: #000000;
-  display: grid;
+  display: flex;
   padding: 2%;
-  align-items: center;
+  align-items: flex-start;
   grid-template-columns: auto 1fr auto;
   grid-gap: 10px;
+  flex-direction: column;
 }
 
 .cardDecoracao1 {
@@ -51,6 +52,7 @@
 .filtro-container {
   display: flex;
   flex-direction: column;
+  padding: 25px;
 }
 
 
