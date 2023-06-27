@@ -1,16 +1,44 @@
 <div class="tituloprincipal">
-    <span>Lista de Solicitações</span>
-    <span class="cardDecoracao1"></span>
-  
-    <div class="solicitacao" *ngIf="listaSolicitacoes.length > 0, else semSolicitacoes">
-      <div *ngFor="let solicitacao of listaSolicitacoes">
-        <app-solicitacao-servidor [solicitacao]="solicitacao"></app-solicitacao-servidor>
-      </div>
+  <span>Lista de Solicitações</span>
+  <span class="cardDecoracao1"></span>
+</div>
+
+<div class="filtro-container">
+  <div class="filtro-row">
+    <form (ngSubmit)="filtrarPorNome()">
+      <input type="text" [(ngModel)]="filtroNome" name="filtroNome" placeholder="Filtrar por nome">
+      <button type="submit">Filtrar</button>
+    </form>
+
+    <form (ngSubmit)="filtrarPorData()">
+      <input type="date" [(ngModel)]="filtroDataInicial" name="filtroDataInicial">
+      <input type="date" [(ngModel)]="filtroDataFinal" name="filtroDataFinal">
+      <button type="submit">Filtrar</button>
+    </form>
+
+    <form (ngSubmit)="filtrarPorStatus()">
+      <select [(ngModel)]="filtroStatus" name="filtroStatus">
+        <option value="todas">Todas</option>
+        <option value="aprovado">Deferidas</option>
+        <option value="negado">Indeferidas</option>
+        <option value="em andamento">Em andamento</option>
+        <option value="setor_estagios">Setor de Estágios</option>
+        <option value="coordenador">Coordenador</option>
+        <option value="diretoria">Diretoria</option>
+      </select>
+      <button type="submit">Filtrar</button>
+    </form>
+  </div>
+
+  <div class="solicitacao" *ngIf="listaSolicitacoes.length > 0; else semSolicitacoes">
+    <div *ngFor="let solicitacao of listaSolicitacoes">
+      <app-solicitacao-servidor [solicitacao]="solicitacao"></app-solicitacao-servidor>
     </div>
   </div>
+
   <ng-template #semSolicitacoes>
     <div class="semSolicitacoes">
-      <p>Você nao tem solicitações</p>
+      <p>Você não tem solicitações</p>
     </div>
   </ng-template>
-  
+</div>

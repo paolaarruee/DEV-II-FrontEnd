@@ -53,7 +53,16 @@
   margin-right: 10%;
 }
 
+
+
+
 .buttonDetalhes{
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 16px;
+
+}
+.buttonGerenciar{
   display: flex;
   flex-direction: row-reverse;
   padding: 16px;

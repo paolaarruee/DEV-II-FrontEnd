@@ -1,19 +1,20 @@
-.solicitacao{
+.solicitacao {
   display: grid;
-  // place-items: center;
-  // height: 35vh;
   margin-top: 20px;
 }
 
-.tituloprincipal{
+.tituloprincipal {
   font-size: 28px;
   font-weight: bold;
   color: #000000;
   display: grid;
   padding: 2%;
+  align-items: center;
+  grid-template-columns: auto 1fr auto;
+  grid-gap: 10px;
 }
 
-.cardDecoracao1{
+.cardDecoracao1 {
   width: 264px;
   height: 3px;
   left: 123px;
@@ -23,9 +24,34 @@
   margin-top: 6px;
 }
 
-.semSolicitacoes{
+.form-control {
+  width: 130%; /* Aumentar o tamanho em 30% */
+  border-radius: 10px; /* Adicionar bordas arredondadas */
+}
+
+.filtro-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+
+.filtro-row form {
+  margin-right: 10px; /* Ajuste de espaçamento entre os forms */
+}
+
+.semSolicitacoes {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 3%;
+  margin-top: 20px; /* Ajuste de espaçamento */
 }
+
+.filtro-container {
+  display: flex;
+  flex-direction: column;
+}
+
+
+

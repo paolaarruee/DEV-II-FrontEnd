@@ -1,11 +1,36 @@
-import { Aluno } from './aluno';
-import { Servidor } from './servidor';
+import { Servidor } from "./servidor";
 
 export interface Solicitacoes {
-  aluno: Aluno;
-  servidor: Servidor;
+  id: string;
+  aluno: {
+    id: null;
+    nomeCompleto: string;
+    usuarioSistema: {
+      id: null;
+      roles: {
+        id: null;
+        name: string;
+      };
+    };
+    turno: string;
+    matricula: string;
+    ingresso: string;
+  };
+  servidor: {
+    id: null;
+    nome: string;
+    cargo: string;
+    usuarioSistema: {
+      id: null;
+      roles: {
+        id: null;
+        name: string;
+      };
+    };
+
+  };
   tipo: string;
-  data: string;
+  data_solicitacao: string ;
   status: string | Status;
   titulo: string;
   conteudo: string;
@@ -17,4 +42,6 @@ export interface Solicitacoes {
 export enum Status {
   DEFERIDO = 'DEFERIDO',
   INDEFERIDO = 'INDEFERIDO',
+  EM_ANDAMENTO ='EM_ANDAMENTO'
 }
+

@@ -1,26 +1,30 @@
 <div class="espacamento">
   <div class="card">
-   <div class="header">
+    <div class="header">
       <span>Estágio</span>
       <div>
         <span>Status</span>
-        <span class="retangulo" [ngClass]="statusSolicitacao()">{{solicitacao.status}}</span>
+        <span class="retangulo" [ngClass]="statusSolicitacao()">{{ solicitacao.status }}</span>
       </div>
-   </div>
+    </div>
 
-   <div class="titulo">
-    <span>Solicitação de: {{solicitacao?.aluno?.nomeCompleto}}</span>
-    <span class="cardDecoracao2"></span>
-   </div>
+    <div class="titulo">
+      <span>Solicitação de: {{ solicitacao?.aluno?.nomeCompleto }}</span>
+      <span class="cardDecoracao2"></span>
+    </div>
 
-   <div class="cardConteudo">
-    <span>{{solicitacao.conteudo}} </span>
-   </div>
+    <div class="cardConteudo">
+      <span><p>Data da solicitação: {{ formatarDataSolicitacao() }}</p></span>
+    </div>
 
-   <div class="buttonDetalhes">
-    <button [routerLink]="['/analisedocs', solicitacao.id]">Detalhes</button>
-    <!-- <button (click)="openDialog()">Detalhes</button> -->
-   </div>
+    <div class="buttonContainer">
+      <div class="buttonDetalhes">
+        <button (click)="openDialog()">Detalhes</button>
+      </div>
 
+      <div class="buttonGerenciar">
+        <button [routerLink]="['/analisedocs', solicitacao.id]">Gerenciar</button>
+      </div>
+    </div>
   </div>
 </div>

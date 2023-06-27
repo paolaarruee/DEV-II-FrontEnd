@@ -1,14 +1,16 @@
-
 import { DetalhesSolicitacaoServidorComponent } from '../detalhes-solicitacao/detalhes-solicitacao.component';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-solicitacao-servidor',
   templateUrl: './solicitacao.component.html',
   styleUrls: ['./solicitacao.component.scss']
 })
-export class SolicitacaoServidorComponent {
+export class SolicitacaoServidorComponent implements OnInit {
+
+  dataFormatada!: string;
 
   constructor(private dialog: MatDialog) { }
 
@@ -24,6 +26,8 @@ export class SolicitacaoServidorComponent {
     });
   }
 
+  data_solicitacao: string | null = '2023-06-25 10:30:00'
+
   @Input() solicitacao = {
     titulo: '',
     conteudo: '',
@@ -34,7 +38,7 @@ export class SolicitacaoServidorComponent {
       id: null,
       nomeCompleto: '',
       usuarioSistema: {
-        id: null,        
+        id: null,
         roles: {
           id: null,
           name: ''
@@ -42,26 +46,48 @@ export class SolicitacaoServidorComponent {
       },
       turno: '',
       matricula: '',
-      ingresso: '',
+      ingresso: ''
     },
-    id: ''
-  };   
-      
+    servidor: {
+      id: null,
+      nome: '',
+      usuarioSistema: {
+        id: null,
+        roles: {
+          id: null,
+          name: ''
+        }
+      },
+      cargo: ''
+    }, 
+    tipo: '',
+    data_solicitacao:'' , 
+    id: '',
+    resposta: ''
+  };
+
+  ngOnInit() {
+    this.formatarDataSolicitacao();
+  }
+
+formatarDataSolicitacao() {
+  if (this.solicitacao.data_solicitacao) {
+    this.dataFormatada = format(new Date(this.solicitacao.data_solicitacao), 'dd-MM-yyyy HH:mm:ss');
+  } else {
+    this.dataFormatada = 'Data inválida';
+  }
+}
 
 
-  statusSolicitacao(): string{
-    if(this.solicitacao.status == 'aprovado'){
-      return 'statusColor1'
+  statusSolicitacao(): string {
+    if (this.solicitacao.status === 'aprovado') {
+      return 'statusColor1';
+    } else if (this.solicitacao.status === 'em andamento') {
+      return 'statusColor2';
+    } else if (this.solicitacao.status === 'negado') {
+      return 'statusColor3';
     }
-
-    if(this.solicitacao.status == 'em andamento'){
-      return 'statusColor2'
-    }
-
-    if(this.solicitacao.status == 'negado'){
-      return 'statusColor3'
-    }
-    return 'statusColor1'
+    return 'statusColor1';
   }
 
 }
