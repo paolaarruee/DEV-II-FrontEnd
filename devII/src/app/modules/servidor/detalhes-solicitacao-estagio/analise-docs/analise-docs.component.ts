@@ -64,7 +64,10 @@ export class AnaliseDocsComponent implements OnInit {
   }
 
   public abrirDialogDeferir() {
-    if (!this.fileInputRef.nativeElement.files?.length) {
+    if (
+      !this.fileInputRef.nativeElement.files?.length &&
+      this.Roles.ROLE_SERVIDOR
+    ) {
       this.toastService.showMessage(
         'Você precisa anexar pelo menos um documento'
       );
@@ -75,7 +78,7 @@ export class AnaliseDocsComponent implements OnInit {
       data: {
         conteudo: 'Você tem certeza que deseja deferir o estágio do aluno',
         enviarCallback: () => {
-          this.enviarDeferimento();
+          this.enviarDeferimento(), this.enviarDeferimentoSetorEstagio;
         },
       },
     });
@@ -107,6 +110,26 @@ export class AnaliseDocsComponent implements OnInit {
     for (let i = 0; i < fileList.length; i++) {
       formData.append('file', fileList[i]);
     }
+
+    this.solicitacoes.deferirSolicitacao(id, formData).subscribe({
+      next: () => {
+        this.toastService.showMessage('Deferimento enviado com sucesso!');
+      },
+      error: () => {
+        this.toastService.showMessage('Erro ao enviar o deferimento.');
+      },
+    });
+  }
+
+  public enviarDeferimentoSetorEstagio(): void {
+    const { id } = this.activatedRoute.snapshot.params;
+    const data = { status: Status.DEFERIDO, etapa: 2 };
+    const formData: FormData = new FormData();
+
+    formData.append(
+      'dados',
+      new Blob([JSON.stringify(data)], { type: 'application/json' })
+    );
 
     this.solicitacoes.deferirSolicitacao(id, formData).subscribe({
       next: () => {
