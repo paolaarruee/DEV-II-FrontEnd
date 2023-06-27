@@ -36,7 +36,7 @@ const routes: Routes = [
     component: TelaSolicitacaoComponent,
   },
   {
-    path: 'analisedocs/:id',
+    path: 'analisedocs',
     component: AnaliseDocsComponent,
 
     //canActivate: [AuthGuard],

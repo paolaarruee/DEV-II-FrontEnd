@@ -12,28 +12,28 @@
   <div class="corpo-titulo">
     <span>Análise de Documentos</span>
   </div>
-  <div class="corpo-dados" *ngIf="alumniData$ | async as alumniData">
+  <div class="corpo-dados" *ngIf="studentData$ | async as studentData">
     <div class="subtitulo">
       <span class="dados">Dados do Aluno</span>
     </div>
     <div class="nome-aluno">
-      <span>Nome: {{ alumniData.nomeCompleto }}</span>
+      <span>Nome: {{ studentData.nomeCompleto }}</span>
       <span class="curso">Tipo de Estágio: Não Obrigatório</span>
     </div>
 
     <div class="infos-aluno">
-      <span>Matricula: {{ alumniData.matricula }}</span>
-      <span>Ano: {{ alumniData.ingresso | date : "dd/MM/YYYY" }}</span>
-      <span>Turno: {{ alumniData.turno }}</span>
+      <span>Matricula: {{ studentData.matricula }}</span>
+      <span>Ano: {{ studentData.ingresso | date : "dd/MM/YYYY" }}</span>
+      <span>Turno: {{ studentData.turno }}</span>
     </div>
     <div class="curso-aluno">
       <span>Tipo de Curso: Superior</span>
-      <span>Curso: {{ alumniData.curso.nomeCurso }}</span>
+      <span>Curso: {{ studentData.curso.nomeCurso }}</span>
       <span>Semestre: 2</span>
     </div>
   </div>
   <div></div>
-  <div class="corpo-setor-estagio" *ngIf="false">
+  <div class="corpo-setor-estagio" *permission="Roles.ROLE_SESTAGIO">
     <div class="download">
       <p>Download dos Arquivos</p>
       <div class="historico" *ngFor="let doc of documentList$ | async">

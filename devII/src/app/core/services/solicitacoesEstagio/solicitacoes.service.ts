@@ -33,7 +33,7 @@ export class SolicitacoesService {
     return this.httpClient.get<Solicitacoes[]>(url);
   }
 
-  getAlumniData(id: number): Observable<any> {
+  getStudentData(id: number): Observable<any> {
     const url = `${environment.API_URL}/alunoSolicitacao/${id}`;
     return this.httpClient.get<any>(url);
   }

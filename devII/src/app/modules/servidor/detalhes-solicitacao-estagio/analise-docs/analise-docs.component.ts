@@ -11,6 +11,7 @@ import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { DocFile } from 'src/app/shared/interfaces/doc';
 import { Servidor } from 'src/app/shared/interfaces/servidor';
 import { Status } from 'src/app/shared/interfaces/solicitacoes';
+import { Role } from 'src/app/shared/interfaces/usuario';
 
 @Component({
   selector: 'app-analise-docs',
@@ -21,7 +22,8 @@ export class AnaliseDocsComponent implements OnInit {
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
 
   public documentList$!: Observable<DocFile[]>;
-  public alumniData$!: Observable<any>;
+  public studentData$!: Observable<any>;
+  public readonly Roles: typeof Role = Role;
 
   public servidore!: Servidor;
   motivoIndeferimento = new FormControl('');
@@ -35,7 +37,7 @@ export class AnaliseDocsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.setAlumniData();
+    this.setStudentData();
     this.setDocumentListId();
   }
 
@@ -56,9 +58,9 @@ export class AnaliseDocsComponent implements OnInit {
     this.documentList$ = this.solicitacoes.getlistDocsPorEstagioId(id);
   }
 
-  private setAlumniData() {
+  private setStudentData() {
     const { id } = this.activatedRoute.snapshot.params;
-    this.alumniData$ = this.solicitacoes.getAlumniData(id);
+    this.studentData$ = this.solicitacoes.getStudentData(id);
   }
 
   public abrirDialogDeferir() {
