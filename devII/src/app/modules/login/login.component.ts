@@ -30,8 +30,7 @@ export class LoginComponent implements OnInit {
       next: (authData: Authorization) => {
         this.authService.setAuthData(authData);
         if (
-          authData.Roles.toLocaleString() === 'ROLE_SERVIDOR' ||
-          'ROLE_SESTAGIO'
+          authData.Roles.toLocaleString() === 'ROLE_SERVIDOR' || authData.Roles.toLocaleString() === 'ROLE_SESTAGIO'
         ) {
           this.router.navigateByUrl('/listaSolicitacoesServidor').then(() => {
             window.location.reload();

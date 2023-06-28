@@ -52,6 +52,7 @@
         type="text"
         [(ngModel)]="servidor.curso"
         required
+        [disabled]="habilitarCurso"
       >
         <option value="" disabled>Escolha um Curso</option>
         <option value="10">Análise e Desenvolvimento de Sistemas</option>

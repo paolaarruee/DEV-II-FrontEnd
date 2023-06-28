@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { FormularioServidorService } from '../../../core/services/formulario-servidor/formulario-servidor.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { Servidor } from 'src/app/shared/interfaces/servidor';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-formulario-servidor',
@@ -25,6 +26,7 @@ export class FormularioServidorComponent {
   confirmarSenha: string = '';
   emailPattern: RegExp = /^[\w-]+(\.[\w-]+)*@restinga\.ifrs\.edu\.br$/;
   exibirCurso: boolean = true;
+  habilitarCurso: boolean = true;
 
   constructor(
     private service: FormularioServidorService,
@@ -38,6 +40,7 @@ export class FormularioServidorComponent {
     }
     else{
       this.exibirCurso = true;
+      this.habilitarCurso = false;
     }
 
   }
@@ -94,11 +97,11 @@ export class FormularioServidorComponent {
         this.toastService.showMessage('Servidor Cadastrado.');
         // Lógica adicional após o envio bem-sucedido do formulário
       },
-      (error) => {
+      (error: HttpErrorResponse) => {
         if (error.status === 409) {
           this.toastService.showMessage(
-            'Email já está em uso. Por favor, escolha outro email.',
-            'error'
+            "erro: ",
+            error.error
           );
         } else {
           console.error('Erro ao enviar o formulário:', error);

@@ -16,7 +16,7 @@
       <a routerLink="/muralVagas">Oportunidades </a>
       <a
         routerLink="/cadastroVagas"
-        *permission="Roles.ROLE_SERVIDOR || Roles.ROLE_SESTAGIO"
+        *ngIf="exibirLink"
         >Cadastrar Vagas</a
       >
       <a routerLink="/cadastrarServidor" *permission="Roles.ROLE_SESTAGIO"
@@ -24,7 +24,7 @@
       >
       <a
         routerLink="/listaSolicitacoesServidor"
-        *permission="Roles.ROLE_SERVIDOR || Roles.ROLE_SESTAGIO"
+        *ngIf="exibirLink"
         >Lista Solicitações</a
       >
       <a routerLink="/listaSolicitacoesAluno" *permission="Roles.ROLE_ALUNO"

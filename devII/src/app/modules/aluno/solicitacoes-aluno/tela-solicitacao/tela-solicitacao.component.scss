@@ -5,7 +5,7 @@
 
   p {
       font-weight: 700;
-      font-size: 30px;
+      font-size: 3px;
       border-bottom: 4px solid #2b923c;
       padding-bottom: 8px;
   }
@@ -35,6 +35,7 @@ flex-direction: column;
   -webkit-box-shadow: 10px 10px 24px -8px rgba(0,0,0,0.75);
   -moz-box-shadow: 10px 10px 24px -8px rgba(0,0,0,0.75);
   box-shadow: 10px 10px 24px -8px rgba(0,0,0,0.75);
+  overflow: scroll;
 }
 
 .avisoFundo{
