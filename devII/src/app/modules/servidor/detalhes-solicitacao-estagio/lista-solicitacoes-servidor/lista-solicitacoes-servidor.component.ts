@@ -13,23 +13,41 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   filtroNome: string = '';
   filtroDataInicial: Date = new Date();
   filtroDataFinal: Date = new Date();
-  filtroStatus: string = 'todas';
+  filtroStatus: string = 'em andamento';
   dataSolicitacao: Date = new Date();
+  solicitacao: Solicitacoes | undefined; // Adicione a propriedade solicitacao
+
+  
 
   constructor(private service: SolicitacoesService) {}
 
   ngOnInit() {
+    this.filtroStatus = 'em andamento'; 
     this.obterSolicitacoes();
   }
 
   async obterSolicitacoes() {
     try {
       this.listaSolicitacoes = await this.service.listarSolicitacoesPorEmailServidor().toPromise();
+  
+      // Filtrar as solicitações pelo status padrão
+      this.filtrarPorStatus();
+  
       this.ordenarSolicitacoes();
     } catch (error) {
       console.error('Erro ao obter as solicitações:', error);
     }
   }
+
+  isCargoInvalido(): boolean {
+    return (
+      this.listaSolicitacoes[1]?.servidor?.cargo === 'setor de estágio' ||
+      this.listaSolicitacoes[1]?.servidor?.cargo === 'diretoria'
+    );
+  }
+
+
+
 
   filtrarPorNome() {
     if (this.filtroNome.trim() === '') {
@@ -63,24 +81,15 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
       this.obterSolicitacoes();
     } else {
       this.service.listarSolicitacoesPorEmailServidor().toPromise().then((solicitacoes) => {
-        const listaOriginal = [...solicitacoes];
-
-        this.listaSolicitacoes = listaOriginal.filter((solicitacao: Solicitacoes) => {
-          if (this.filtroStatus === 'setor_estagios') {
-            return solicitacao.servidor.cargo === 'setor';
-          } else if (this.filtroStatus === 'coordenador') {
-            return solicitacao.servidor.cargo === 'coordenador';
-          } else if (this.filtroStatus === 'diretoria') {
-            return solicitacao.servidor.cargo === 'diretoria';
-          } else {
-            return solicitacao.status === this.filtroStatus;
-          }
+        this.listaSolicitacoes = solicitacoes.filter((solicitacao: Solicitacoes) => {
+          return solicitacao.status === this.filtroStatus;
         });
-
+  
         this.ordenarSolicitacoes();
       });
     }
   }
+  
 
   ordenarSolicitacoes() {
     this.listaSolicitacoes.sort((a, b) => {

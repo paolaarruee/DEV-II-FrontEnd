@@ -18,17 +18,19 @@
 
     <form (ngSubmit)="filtrarPorStatus()">
       <select [(ngModel)]="filtroStatus" name="filtroStatus">
+        <option value="em andamento">Em andamento</option>
         <option value="todas">Todas</option>
         <option value="aprovado">Deferidas</option>
         <option value="negado">Indeferidas</option>
-        <option value="em andamento">Em andamento</option>
+        <!-- Ajustar para que apareça somente para setor de estágio essas opções:
         <option value="setor_estagios">Setor de Estágios</option>
         <option value="coordenador">Coordenador</option>
-        <option value="diretoria">Diretoria</option>
+        <option value="diretoria">Diretoria</option>-->
       </select>
       <button type="submit">Filtrar</button>
     </form>
-  </div>
+    </div>
+    
 
   <div class="solicitacao" *ngIf="listaSolicitacoes.length > 0; else semSolicitacoes">
     <div *ngFor="let solicitacao of listaSolicitacoes">
