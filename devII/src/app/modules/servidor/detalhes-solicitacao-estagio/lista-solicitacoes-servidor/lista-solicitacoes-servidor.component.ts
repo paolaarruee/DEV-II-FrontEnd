@@ -63,16 +63,24 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   }
 
   filtrarPorData() {
+    // Convertemos as datas de string para objetos Date
+    const filtroDataInicial = new Date(this.filtroDataInicial);
+    const filtroDataFinal = new Date(this.filtroDataFinal);
+  
     this.service.listarSolicitacoesPorEmailServidor().toPromise().then((solicitacoes) => {
       this.listaSolicitacoes = solicitacoes.filter((solicitacao: Solicitacoes) => {
+        // Convertemos a data da solicitação para um objeto Date
         const dataSolicitacao = new Date(solicitacao.dataSolicitacao);
+  
+        // Comparamos as datas
         return (
-          dataSolicitacao >= this.filtroDataInicial && dataSolicitacao <= this.filtroDataFinal
+          dataSolicitacao >= filtroDataInicial && dataSolicitacao <= filtroDataFinal
         );
       });
       this.ordenarSolicitacoes();
     });
   }
+  
 
 
 

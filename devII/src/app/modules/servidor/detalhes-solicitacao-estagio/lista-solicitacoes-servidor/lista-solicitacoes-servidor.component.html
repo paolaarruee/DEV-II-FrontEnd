@@ -19,9 +19,9 @@
     <form (ngSubmit)="filtrarPorStatus()">
       <select [(ngModel)]="filtroStatus" name="filtroStatus">
         <option value="em andamento">Em andamento</option>
-        <option value="todas">Todas</option>
-        <option value="deferidas">Deferidas</option>
-        <option value="indeferidas">Indeferidas</option>
+       
+        <option value="aprovado">Deferidas</option>
+        <option value="negado">Indeferidas</option>
         <!-- Ajustar para que apareça somente para setor de estágio essas opções:
         <option value="setor_estagios">Setor de Estágios</option>
         <option value="coordenador">Coordenador</option>

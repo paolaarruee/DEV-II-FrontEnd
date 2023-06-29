@@ -82,7 +82,7 @@ export class SolicitacaoServidorComponent implements OnInit {
 
 
   statusSolicitacao(): string{
-    if(this.solicitacao.status == 'deferido' || this.solicitacao.status === 'Deferido'){
+    if(this.solicitacao.status == 'deferido' || this.solicitacao.status === 'Deferido' || this.solicitacao.status === 'aprovado'){
       return 'statusColor1'
     }
 
@@ -90,7 +90,7 @@ export class SolicitacaoServidorComponent implements OnInit {
       return 'statusColor2'
     }
 
-    if(this.solicitacao.status == 'indeferido' || this.solicitacao.status === 'Indeferido'){
+    if(this.solicitacao.status == 'indeferido' || this.solicitacao.status === 'Indeferido' || this.solicitacao.status === 'negado'){
       return 'statusColor3'
     }
     return 'statusColor1'
