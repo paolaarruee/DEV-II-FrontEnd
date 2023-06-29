@@ -14,15 +14,15 @@ export class DetalhesSolicitacaoComponent {
   ) {}
 
   statusSolicitacao(): string{
-    if(this.solicitacao.status == 'aprovado'){
+    if(this.solicitacao.status == 'deferido' || this.solicitacao.status === 'Deferido'){
       return 'statusColor1'
     }
 
-    if(this.solicitacao.status == 'em andamento'){
+    if(this.solicitacao.status == 'em andamento' || this.solicitacao.status === 'Em Andamento'){
       return 'statusColor2'
     }
 
-    if(this.solicitacao.status == 'negado'){
+    if(this.solicitacao.status == 'indeferido' || this.solicitacao.status === 'Indeferido'){
       return 'statusColor3'
     }
     return 'statusColor1'

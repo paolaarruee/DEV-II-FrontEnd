@@ -1,7 +1,16 @@
 <div class="espacamento">
   <div class="card">
     <div class="header">
-      <span>Estágio</span>
+      <div class="tituloTipo" *ngIf="solicitacao.tipo === 'bolsa'; else estagio">
+        <span>{{ solicitacao.tipo }}</span>
+      </div>
+
+      <ng-template #estagio>
+        <div class="estagio">
+          <span>Tipo de Estágio: {{ solicitacao.tipo }}</span>
+        </div>
+      </ng-template>
+
       <div>
         <span>Status</span>
         <span class="retangulo" [ngClass]="statusSolicitacao()">{{ solicitacao.status }}</span>
@@ -9,12 +18,13 @@
     </div>
 
     <div class="titulo">
-      <span>Solicitação de: {{ solicitacao?.aluno?.nomeCompleto }}</span>
+      <span>Solicitação de: {{ solicitacao.aluno.nomeCompleto }}</span>
       <span class="cardDecoracao2"></span>
     </div>
 
     <div class="cardConteudo">
-      <span><p>Data da solicitação: {{ solicitacao.dataSolicitacao }}</p></span>
+      <span>Curso: {{ solicitacao.aluno.curso.nomeCurso }}</span>
+      <span>Data da solicitação: {{ solicitacao.dataSolicitacao }}</span>
     </div>
 
     <div class="buttonContainer">

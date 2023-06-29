@@ -1,7 +1,5 @@
 .solicitacao{
   display: grid;
-  // place-items: center;
-  // height: 35vh;
   margin-top: 20px;
 }
 
@@ -9,8 +7,12 @@
   font-size: 28px;
   font-weight: bold;
   color: #000000;
-  display: grid;
-  padding: 2%;
+  display: flex;
+  padding: 2% 2% 0% 5%;
+  align-items: flex-start;
+  grid-template-columns: auto 1fr auto;
+  grid-gap: 10px;
+  flex-direction: column;
 }
 
 .cardDecoracao1{
@@ -23,11 +25,17 @@
   margin-top: 6px;
 }
 
-.buttonDetalhes{
+.espacamento{
+  display: flex;
+  flex-direction: column;
+  // padding: 0px 25px 0px 25px;
+}
+
+.buttonSolicitacao{
   display: flex;
   height: 3em;
-  padding: 35px 0px 0px 5px;
   justify-content: flex-end;
+  margin-right: 10%;
 }
 
 button{
@@ -45,5 +53,5 @@ button{
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 3%;
+  margin-top: 20px;
 }

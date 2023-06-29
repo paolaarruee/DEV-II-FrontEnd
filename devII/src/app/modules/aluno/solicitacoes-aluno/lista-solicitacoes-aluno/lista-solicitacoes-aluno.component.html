@@ -1,19 +1,22 @@
 <div class="tituloprincipal">
   <span>Lista de Solicitações</span>
   <span class="cardDecoracao1"></span>
+</div>
 
-  <div class="buttonDetalhes">
+<div class="espacamento">
+  <div class="buttonSolicitacao">
     <button button [routerLink]="'/solicitacaoEstagio'">Solicitação <b>+</b></button>
-   </div>
+  </div>
 
   <div class="solicitacao" *ngIf="listaSolicitacoes.length > 0, else semSolicitacoes">
     <div *ngFor="let solicitacao of listaSolicitacoes">
       <app-solicitacao [solicitacao]="solicitacao"></app-solicitacao>
     </div>
   </div>
+
+  <ng-template #semSolicitacoes>
+    <div class="semSolicitacoes">
+      <p>Você nao tem solicitações</p>
+    </div>
+  </ng-template>
 </div>
-<ng-template #semSolicitacoes>
-  <div class="semSolicitacoes">
-    <p>Você nao tem solicitações</p>
-  </div>
-</ng-template>

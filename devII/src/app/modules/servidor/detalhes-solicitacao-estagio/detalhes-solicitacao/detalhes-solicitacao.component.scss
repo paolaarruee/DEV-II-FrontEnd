@@ -4,11 +4,18 @@
   height: 100%;
 }
 
+.titulo{
+  display: grid;
+  padding: 0px 45px 0px 27px;
+  font-size: 34px;
+  font-weight: bold;
+}
+
 .cardDecoracao{
   width: 200px;
-  height: 1px;
+  height: 2px;
+  background-color: #2B923C;
   border: 1px solid #2B923C;
-  margin-top: 31px;
 }
 
 .header{
@@ -39,13 +46,6 @@
 
 .statusColor3{
   background-color: #CB0606;
-}
-
-.titulo{
-  display: grid;
-  padding-left: 16px;
-  font-size: 34px;
-  font-weight: bold;
 }
 
 .fluxo{

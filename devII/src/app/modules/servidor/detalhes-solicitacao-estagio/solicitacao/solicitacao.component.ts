@@ -29,42 +29,40 @@ export class SolicitacaoServidorComponent implements OnInit {
   dataSolicitacao: string | null = '2023-06-25 10:30:00'
 
   @Input() solicitacao = {
+    id:'',
     titulo: '',
     conteudo: '',
     status: '',
+    tipo: '',
     etapa: '',
     observacao: '',
+    dataSolicitacao: '',
     aluno: {
-      id: null,
-      nomeCompleto: '',
-      usuarioSistema: {
-        id: null,
-        roles: {
-          id: null,
-          name: ''
-        }
-      },
-      turno: '',
-      matricula: '',
-      ingresso: ''
-    },
-    servidor: {
-      id: null,
-      nome: '',
-      usuarioSistema: {
-        id: null,
-        roles: {
-          id: null,
-          name: ''
-        }
-      },
-      cargo: ''
-    },
-    tipo: '',
-    dataSolicitacao:'' ,
-    id: '',
-    resposta: ''
-  };
+        id: '',
+        nomeCompleto: '',
+        usuarioSistema: {
+            id: '',
+            email: '',
+            senha: '',
+            roles: {
+                id: '',
+                name: ''
+            }
+        },
+        turno: '',
+        matricula: '',
+        ingresso: '',
+        role: {
+            id: '',
+            name: ''
+        },
+        curso: {
+            id: '',
+            nomeCurso: ''
+        },
+        ativo: ''
+    }
+};
 
   ngOnInit() {
     this.solicitacao.dataSolicitacao = this.formatarDataSolicitacao(this.solicitacao.dataSolicitacao);
@@ -72,7 +70,7 @@ export class SolicitacaoServidorComponent implements OnInit {
   }
 
   formatarDataSolicitacao(dataSolicitacao: string): string {
-    const formattedDateFormat = 'HH:mm:ss dd-MM-yyyy'; // Formato desejado para exibição
+    const formattedDateFormat = 'dd/MM/yyyy'; // Formato desejado para exibição
 
     if (dataSolicitacao) {
       const parsedDate = parseISO(dataSolicitacao);
@@ -83,15 +81,19 @@ export class SolicitacaoServidorComponent implements OnInit {
   }
 
 
-  statusSolicitacao(): string {
-    if (this.solicitacao.status === 'aprovado') {
-      return 'statusColor1';
-    } else if (this.solicitacao.status === 'em andamento') {
-      return 'statusColor2';
-    } else if (this.solicitacao.status === 'negado') {
-      return 'statusColor3';
+  statusSolicitacao(): string{
+    if(this.solicitacao.status == 'deferido' || this.solicitacao.status === 'Deferido'){
+      return 'statusColor1'
     }
-    return 'statusColor1';
+
+    if(this.solicitacao.status == 'em andamento' || this.solicitacao.status === 'Em Andamento'){
+      return 'statusColor2'
+    }
+
+    if(this.solicitacao.status == 'indeferido' || this.solicitacao.status === 'Indeferido'){
+      return 'statusColor3'
+    }
+    return 'statusColor1'
   }
 
 }

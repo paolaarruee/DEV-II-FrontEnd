@@ -13,19 +13,19 @@ export class DetalhesSolicitacaoServidorComponent {
     public dialogRef: MatDialogRef<DetalhesSolicitacaoServidorComponent>,
     @Inject(MAT_DIALOG_DATA) public solicitacao: any  ) {}
 
-  statusSolicitacao(): string {
-    if (this.solicitacao.status == 'Aprovado') {
-      return 'statusColor1';
+  statusSolicitacao(): string{
+    if(this.solicitacao.status == 'deferido' || this.solicitacao.status === 'Deferido'){
+      return 'statusColor1'
     }
 
-    if (this.solicitacao.status == 'Em andamento') {
-      return 'statusColor2';
+    if(this.solicitacao.status == 'em andamento' || this.solicitacao.status === 'Em Andamento'){
+      return 'statusColor2'
     }
 
-    if (this.solicitacao.status == 'Negado') {
-      return 'statusColor3';
+    if(this.solicitacao.status == 'indeferido' || this.solicitacao.status === 'Indeferido'){
+      return 'statusColor3'
     }
-    return 'statusColor1';
+    return 'statusColor1'
   }
 
   progressoFluxo(etapa: number): string {
@@ -51,15 +51,15 @@ export class DetalhesSolicitacaoServidorComponent {
     if (!data) {
       return '';
     }
-    
+
     // Converte a string da data para um objeto Date
     const dataObj = new Date(data);
-  
+
     // Formata a data no formato desejado (exemplo: DD/MM/YYYY)
     const dia = dataObj.getDate().toString().padStart(2, '0');
     const mes = (dataObj.getMonth() + 1).toString().padStart(2, '0'); // Janeiro é o mês 0
     const ano = dataObj.getFullYear().toString();
-  
+
     return `${dia}/${mes}/${ano}`;
   }
 

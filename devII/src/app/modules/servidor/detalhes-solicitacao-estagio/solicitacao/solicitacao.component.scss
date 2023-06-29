@@ -3,10 +3,9 @@
 }
 
 .card {
-  height: 100%;
-  left: 110px;
-  top: 421px;
-  padding: 10px;
+  padding: 2px 20px 0px 20px;
+  font-weight: 500;
+  margin: 0% 10% 0% 10%;
   background: #FFFFFF;
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -16,7 +15,6 @@
   display: flex;
   justify-content: space-between;
   padding: 16px;
-  font-weight: bold;
   font-size: 18px;
 }
 
@@ -33,11 +31,10 @@
   display: grid;
   padding-left: 16px;
   font-size: 20px;
-  font-weight: bold;
 }
 
 .cardDecoracao2 {
-  width: 99px;
+  width: 130px;
   height: 1px;
   left: 123px;
   top: 314px;
@@ -45,33 +42,38 @@
 }
 
 .cardConteudo {
+  display: flex;
   margin-top: 15px;
   margin-left: 16px;
-  font-size: 21px;
+  font-size: 20px;
   margin-right: 10%;
+  flex-direction: column;
+}
+
+.cardConteudo span {
+  margin-bottom: 10px;
 }
 
 .buttonContainer {
   display: flex;
-  padding: 16px;
+  // padding: 16px;
   justify-content: flex-end;
 }
 
-.buttonDetalhes {
+.buttonDetalhes{
   display: flex;
-  padding-right: 8px;
+  flex-direction: row-reverse;
+  padding: 0px 16px 16px 0px;
 }
 
-.buttonGerenciar {
+.buttonGerenciar{
   display: flex;
-  padding-left: 8px;
+  flex-direction: row-reverse;
+  padding: 0px 16px 16px 0px;
 }
 
 button {
-  padding-left: 2%;
-  padding-right: 2%;
   background: #2B923C;
-  font-style: normal;
   font-size: 20px;
   color: #FFFFFF;
   border: 0px;
@@ -80,12 +82,15 @@ button {
 
 .statusColor1 {
   background-color: #2B923C;
+  font-size: 22px;
 }
 
 .statusColor2 {
   background-color: #5699ea;
+  font-size: 22px;
 }
 
 .statusColor3 {
   background-color: #CB0606;
+  font-size: 22px;
 }
