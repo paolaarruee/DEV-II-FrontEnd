@@ -26,6 +26,7 @@ import { DetalhesVagaComponent } from './modules/vagas-estagio/detalhes-vaga/det
 import { MuralDeVagasComponent } from './modules/vagas-estagio/mural-de-vagas/mural-de-vagas.component';
 import { VagasComponent } from './modules/vagas-estagio/vagas/vagas.component';
 
+
 const ANGULAR_MODULES = [
   BrowserModule,
   AppRoutingModule,

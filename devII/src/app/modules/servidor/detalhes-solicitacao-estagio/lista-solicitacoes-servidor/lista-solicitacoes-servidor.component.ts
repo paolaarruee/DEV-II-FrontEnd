@@ -17,22 +17,22 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   dataSolicitacao: Date = new Date();
   solicitacao: Solicitacoes | undefined; // Adicione a propriedade solicitacao
 
-  
+
 
   constructor(private service: SolicitacoesService) {}
 
   ngOnInit() {
-    this.filtroStatus = 'em andamento'; 
+    this.filtroStatus = 'em andamento';
     this.obterSolicitacoes();
   }
 
   async obterSolicitacoes() {
     try {
       this.listaSolicitacoes = await this.service.listarSolicitacoesPorEmailServidor().toPromise();
-  
+
       // Filtrar as solicitações pelo status padrão
       this.filtrarPorStatus();
-  
+
       this.ordenarSolicitacoes();
     } catch (error) {
       console.error('Erro ao obter as solicitações:', error);
@@ -66,12 +66,12 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
     // Convertemos as datas de string para objetos Date
     const filtroDataInicial = new Date(this.filtroDataInicial);
     const filtroDataFinal = new Date(this.filtroDataFinal);
-  
+
     this.service.listarSolicitacoesPorEmailServidor().toPromise().then((solicitacoes) => {
       this.listaSolicitacoes = solicitacoes.filter((solicitacao: Solicitacoes) => {
         // Convertemos a data da solicitação para um objeto Date
         const dataSolicitacao = new Date(solicitacao.dataSolicitacao);
-  
+
         // Comparamos as datas
         return (
           dataSolicitacao >= filtroDataInicial && dataSolicitacao <= filtroDataFinal
@@ -80,7 +80,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
       this.ordenarSolicitacoes();
     });
   }
-  
+
 
 
 
@@ -92,12 +92,12 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
         this.listaSolicitacoes = solicitacoes.filter((solicitacao: Solicitacoes) => {
           return solicitacao.status === this.filtroStatus;
         });
-  
+
         this.ordenarSolicitacoes();
       });
     }
   }
-  
+
 
   ordenarSolicitacoes() {
     this.listaSolicitacoes.sort((a, b) => {

@@ -44,11 +44,15 @@
 
 
   <div class="aviso" *ngIf="exibir">
-    <h1 class="tAviso">Atenção</h1>
-    <h1 class="titulo">O seu contrato de estágio deve estar com as vias assinadas pelo estudante e pela empresa contratante.</h1>
-    <input class="botao" type="submit"  value="Enviar solicitação">
-    <input class="botaov" type="button" (click)="exibirDiv()" value="Cancelar">
+    <h1 class="tAviso" *ngIf="!sucesso">Atenção</h1>
+    <h1 class="tAviso" *ngIf="sucesso">Sucesso</h1>
+    <h1 class="titulo">{{ textoEnvio }}</h1>
+    <input class="botao" type="submit"  *ngIf="!sucesso" value="Enviar solicitação">
+    <input class="botaov" type="button" *ngIf="!sucesso" (click)="exibirDiv()" value="Cancelar">
+    <input class="botaov" type="button" *ngIf="sucesso" (click)="retornar()" value="Voltar">
   </div>
+
+
 
 </form>
 </div>

@@ -37,6 +37,11 @@ export class FormularioServidorComponent {
     const valorSelecionado = event.target.value;
     if(valorSelecionado != "Coordenador"){
       this.exibirCurso = false;
+      if(valorSelecionado === "Setor de Estágio"){
+        this.servidor.curso = '15';
+      }else{
+        this.servidor.curso = '';
+      }
     }
     else{
       this.exibirCurso = true;

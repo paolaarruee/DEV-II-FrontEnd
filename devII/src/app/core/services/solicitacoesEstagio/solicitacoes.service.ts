@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { DocFile } from 'src/app/shared/interfaces/doc';
+import { SolicitacaoIndeferir } from 'src/app/shared/interfaces/solicitacao-indeferir';
 import { Solicitacoes } from 'src/app/shared/interfaces/solicitacoes';
 import { environment } from 'src/environments/environment.development';
 
@@ -38,11 +39,10 @@ export class SolicitacoesService {
     );
   }
 
-  indeferirSolicitacao(id: number, formData: FormData): Observable<any> {
-    return this.httpClient.put<any>(
-      `${environment.API_URL}/indeferirSolicitacao/${id}`,
-      { formData }
-    );
+  indeferirSolicitacao(dados: SolicitacaoIndeferir): Observable<any> {
+
+    return this.httpClient
+    .post<any>(`${environment.API_URL}/indeferirSolicitacao`,dados);
   }
 
   listarSolicitacoes(): Observable<Solicitacoes[]> {

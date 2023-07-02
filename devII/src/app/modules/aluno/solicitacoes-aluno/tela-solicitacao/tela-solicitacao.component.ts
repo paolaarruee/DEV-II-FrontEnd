@@ -11,6 +11,8 @@ import { Solicitacao } from 'src/app/shared/interfaces/SolicitarEstagio';
 export class TelaSolicitacaoComponent {
   userData: any;
   exibir: boolean = false;
+  sucesso: boolean = false;
+  textoEnvio: string = "O seu contrato de estágio deve estar com as vias assinadas pelo estudante e pela empresa contratante.";
 
 
   solicitacao : Solicitacao= {
@@ -65,6 +67,11 @@ export class TelaSolicitacaoComponent {
     }
   }
 
+  retornar(){
+        this.router.navigate(['/listaSolicitacoesAluno']);
+        this.exibir = false;
+  }
+
   enviarSolicitacao(){
     if(this.solicitacao.tipo.length <= 0){
       alert('Selecione o tipo!');
@@ -75,9 +82,8 @@ export class TelaSolicitacaoComponent {
       response => {
         console.log('Solicitação cadastrada com sucesso!');
         console.log('Resposta da API:', response);
-        alert("Solicitação efetuada!!")
-        this.router.navigate(['/listaSolicitacoesAluno']);
-        this.exibir = false;
+        this.textoEnvio = "Solicitação efetuada!!";
+        this.sucesso = true;
       },
       error => {
         if (error.status === 409) {

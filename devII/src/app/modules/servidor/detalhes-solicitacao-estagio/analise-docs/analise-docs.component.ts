@@ -13,6 +13,7 @@ import { Servidor } from 'src/app/shared/interfaces/servidor';
 import { Status } from 'src/app/shared/interfaces/solicitacoes';
 import { Role } from 'src/app/shared/interfaces/usuario';
 import { AuthenticationService } from 'src/app/core/services/authentication/authentication.service';
+import { SolicitacaoIndeferir } from 'src/app/shared/interfaces/solicitacao-indeferir';
 
 @Component({
   selector: 'app-analise-docs',
@@ -143,23 +144,29 @@ export class AnaliseDocsComponent implements OnInit {
     });
   }
 
+
+  dados : SolicitacaoIndeferir = {
+    id: '',
+    status: Status.INDEFERIDO,
+    etapa : '6',
+    observacao: '',
+
+  }
   public enviarIndeferimento(motivo: string): void {
     const { id } = this.activatedRoute.snapshot.params;
-    const data = { status: Status.INDEFERIDO, observacao: motivo };
-    const formData: FormData = new FormData();
-    console.log(data);
-    formData.append(
-      'dados',
-      new Blob([JSON.stringify(data)], { type: 'application/json' })
+    this.dados.id = id;
+    this.dados.observacao = motivo;
+
+    this.solicitacoes.indeferirSolicitacao(this.dados).subscribe(
+      (response) => {
+        this.toastService.showMessage('Solicitação Indeferida!');
+      },
+      (error) => {
+          this.toastService.showMessage(
+            'Erro ao enviar o indeferimento.!',
+            'ERRO'
+          );
+        }
     );
-    this.solicitacoes.indeferirSolicitacao(id, formData).subscribe({
-      next: () => {
-        this.toastService.showMessage('Indeferimento enviado com sucesso!');
-      },
-      error: () => {
-        console.log(this.solicitacoes);
-        this.toastService.showMessage('Erro ao enviar o indeferimento.');
-      },
-    });
   }
 }
