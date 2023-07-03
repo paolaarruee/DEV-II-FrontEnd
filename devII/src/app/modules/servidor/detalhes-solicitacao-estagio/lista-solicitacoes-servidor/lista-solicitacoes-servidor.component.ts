@@ -13,22 +13,22 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   filtroNome: string = '';
   filtroDataInicial: Date = new Date();
   filtroDataFinal: Date = new Date();
-  filtroStatus: string = 'em andamento';
+  filtroStatus: string = '';
   dataSolicitacao: Date = new Date();
   solicitacao: Solicitacoes | undefined; // Adicione a propriedade solicitacao
-
-
 
   constructor(private service: SolicitacoesService) {}
 
   ngOnInit() {
-    this.filtroStatus = 'em andamento';
+    this.filtroStatus = 'Em andamento' ;
     this.obterSolicitacoes();
   }
 
   async obterSolicitacoes() {
     try {
-      this.listaSolicitacoes = await this.service.listarSolicitacoesPorEmailServidor().toPromise();
+      this.listaSolicitacoes = await this.service
+        .listarSolicitacoesPorEmailServidor()
+        .toPromise();
 
       // Filtrar as solicitações pelo status padrão
       this.filtrarPorStatus();
@@ -46,19 +46,22 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
     );
   }
 
-
-
-
   filtrarPorNome() {
     if (this.filtroNome.trim() === '') {
       this.obterSolicitacoes();
     } else {
-      this.service.listarSolicitacoesPorEmailServidor().toPromise().then((solicitacoes) => {
-        this.listaSolicitacoes = solicitacoes.filter((solicitacao: Solicitacoes) =>
-          solicitacao.aluno.nomeCompleto.toLowerCase().includes(this.filtroNome.toLowerCase())
-        );
-        this.ordenarSolicitacoes();
-      });
+      this.service
+        .listarSolicitacoesPorEmailServidor()
+        .toPromise()
+        .then((solicitacoes) => {
+          this.listaSolicitacoes = solicitacoes.filter(
+            (solicitacao: Solicitacoes) =>
+              solicitacao.aluno.nomeCompleto
+                .toLowerCase()
+                .includes(this.filtroNome.toLowerCase())
+          );
+          this.ordenarSolicitacoes();
+        });
     }
   }
 
@@ -67,37 +70,44 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
     const filtroDataInicial = new Date(this.filtroDataInicial);
     const filtroDataFinal = new Date(this.filtroDataFinal);
 
-    this.service.listarSolicitacoesPorEmailServidor().toPromise().then((solicitacoes) => {
-      this.listaSolicitacoes = solicitacoes.filter((solicitacao: Solicitacoes) => {
-        // Convertemos a data da solicitação para um objeto Date
-        const dataSolicitacao = new Date(solicitacao.dataSolicitacao);
+    this.service
+      .listarSolicitacoesPorEmailServidor()
+      .toPromise()
+      .then((solicitacoes) => {
+        this.listaSolicitacoes = solicitacoes.filter(
+          (solicitacao: Solicitacoes) => {
+            // Convertemos a data da solicitação para um objeto Date
+            const dataSolicitacao = new Date(solicitacao.dataSolicitacao);
 
-        // Comparamos as datas
-        return (
-          dataSolicitacao >= filtroDataInicial && dataSolicitacao <= filtroDataFinal
+            // Comparamos as datas
+            return (
+              dataSolicitacao >= filtroDataInicial &&
+              dataSolicitacao <= filtroDataFinal
+            );
+          }
         );
+        this.ordenarSolicitacoes();
       });
-      this.ordenarSolicitacoes();
-    });
   }
-
-
-
 
   filtrarPorStatus() {
     if (this.filtroStatus === 'todas') {
       this.obterSolicitacoes();
     } else {
-      this.service.listarSolicitacoesPorEmailServidor().toPromise().then((solicitacoes) => {
-        this.listaSolicitacoes = solicitacoes.filter((solicitacao: Solicitacoes) => {
-          return solicitacao.status === this.filtroStatus;
-        });
+      this.service
+        .listarSolicitacoesPorEmailServidor()
+        .toPromise()
+        .then((solicitacoes) => {
+          this.listaSolicitacoes = solicitacoes.filter(
+            (solicitacao: Solicitacoes) => {
+              return solicitacao.status === this.filtroStatus;
+            }
+          );
 
-        this.ordenarSolicitacoes();
-      });
+          this.ordenarSolicitacoes();
+        });
     }
   }
-
 
   ordenarSolicitacoes() {
     this.listaSolicitacoes.sort((a, b) => {
@@ -111,10 +121,4 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
     // Recarrega a página para exibir os resultados filtrados
     location.reload();
   }
-
-
-
-
-
-
 }
