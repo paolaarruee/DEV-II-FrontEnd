@@ -20,7 +20,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   constructor(private service: SolicitacoesService) {}
 
   ngOnInit() {
-    this.filtroStatus = 'Em andamento' ;
+    this.filtroStatus = 'Em Andamento' ;
     this.obterSolicitacoes();
   }
 
