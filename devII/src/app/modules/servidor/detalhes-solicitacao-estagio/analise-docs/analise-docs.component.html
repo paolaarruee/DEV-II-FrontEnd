@@ -72,43 +72,6 @@
       </div>
     </div>
   </div>
-  <div class="corpo-setor-estagio" *ngIf="false">
-    >>>>>>> main
-    <div class="download">
-      <p>Download dos Arquivos</p>
-      <div class="historico" *ngFor="let doc of documentList$ | async">
-        <p class="arquivo">{{ doc.nome }}</p>
-        <label for="data">Data</label>
-        <input
-          type="text"
-          id="data"
-          [(ngModel)]="doc.data"
-          placeholder="Data"
-        />
-        <button mat-icon-button color="primary" (click)="download(doc)">
-          <mat-icon class="salvar">save_alt</mat-icon>
-        </button>
-      </div>
-    </div>
-    <div class="botoes">
-      <button
-        class="deferir"
-        mat-raised-button
-        color="primary"
-        (click)="abrirDialogDeferir()"
-      >
-        Deferir
-      </button>
-      <button
-        class="indeferir"
-        mat-raised-button
-        color="warn"
-        (click)="abrirDialogIndeferir()"
-      >
-        Indeferir
-      </button>
-    </div>
-  </div>
   <div class="corpo-passos">
     <mat-stepper>
       <mat-step label="Download" state="phone">
@@ -142,7 +105,7 @@
         color="primary"
         (click)="abrirDialogDeferir()"
       >
-        Deferir
+        > Deferir
       </button>
       <button
         class="indeferir"
@@ -150,7 +113,7 @@
         color="warn"
         (click)="abrirDialogIndeferir()"
       >
-        Indeferir
+        > Indeferir
       </button>
     </div>
   </div>

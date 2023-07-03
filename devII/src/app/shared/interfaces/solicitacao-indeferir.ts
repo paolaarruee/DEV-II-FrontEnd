@@ -1,7 +1,6 @@
 export interface SolicitacaoIndeferir {
-  id: string
-  status: string
-  etapa : string
-  observacao: string
-
+  id?: string;
+  status?: string;
+  etapa?: string;
+  observacao: string;
 }

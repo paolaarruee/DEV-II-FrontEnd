@@ -13,4 +13,5 @@ export enum Role {
   ROLE_ALUNO = 1,
   ROLE_SERVIDOR = 2,
   ROLE_SESTAGIO = 3,
+  ROLE_DIRETOR = 4,
 }
