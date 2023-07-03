@@ -99,15 +99,22 @@ export class AnaliseDocsComponent implements OnInit {
     });
   }
 
+  dados2 : SolicitacaoIndeferir = {
+    id: '',
+    status: Status.INDEFERIDO,
+    etapa : '6',
+    observacao: 'NAO',
+  }
+
   public enviarDeferimento(): void {
     const { id } = this.activatedRoute.snapshot.params;
-    const data = { status: Status.DEFERIDO };
+    const data = { status: Status.EM_ANDAMENTO };
     const fileList: FileList = this.fileInputRef.nativeElement?.files!;
     const formData: FormData = new FormData();
 
     formData.append(
       'dados',
-      new Blob([JSON.stringify(data)], { type: 'application/json' })
+      new Blob([JSON.stringify(this.dados2)], { type: 'application/json' })
     );
 
     for (let i = 0; i < fileList.length; i++) {
@@ -124,6 +131,7 @@ export class AnaliseDocsComponent implements OnInit {
     });
   }
 
+
   public enviarDeferimentoSetorEstagio(): void {
     const { id } = this.activatedRoute.snapshot.params;
     const data = { status: Status.DEFERIDO };
@@ -131,7 +139,7 @@ export class AnaliseDocsComponent implements OnInit {
 
     formData.append(
       'dados',
-      new Blob([JSON.stringify(data)], { type: 'application/json' })
+      new Blob([JSON.stringify(this.dados)], { type: 'application/json' })
     );
 
     this.solicitacoes.deferirSolicitacaoSetorEstagio(id, formData).subscribe({

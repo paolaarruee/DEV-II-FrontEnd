@@ -22,7 +22,7 @@ export class DetalhesSolicitacaoServidorComponent {
       return 'statusColor2'
     }
 
-    if(this.solicitacao.status == 'indeferido' || this.solicitacao.status === 'Indeferido'){
+    if(this.solicitacao.status.toLowerCase === 'indeferido' || this.solicitacao.status === 'Indeferido'){
       return 'statusColor3'
     }
     return 'statusColor1'

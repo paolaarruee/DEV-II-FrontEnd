@@ -13,40 +13,70 @@
    </div>
 
    <div class="fluxo">
-
       <div class="step">
         <div class="circle" [ngClass]="progressoFluxo(1)">1</div>
         <span>Envio de documentos</span>
-   </div>
+      </div>
 
       <span class="retanguloFluxo"></span>
-
       <div class="step">
         <div class="circle" [ngClass]="progressoFluxo(2)">2</div>
+        <div class="etapa">
+          <span *ngIf="solicitacao.etapa < 2"></span>
+
+          <span *ngIf="solicitacao.etapa == 2 && solicitacao.status === 'Em Andamento'">*Em Análise*</span>
+
+          <span *ngIf="solicitacao.etapa > 2">*Deferido*</span>
+
+          <span *ngIf="solicitacao.status === 'Indeferido'">*Indeferido*</span>
+        </div>
         <span>Análise setor de estágio</span>
       </div>
 
       <span class="retanguloFluxo"></span>
-
       <div class="step">
         <div class="circle" [ngClass]="progressoFluxo(3)">3</div>
+        <div class="etapa">
+          <span *ngIf="solicitacao.etapa < 3"></span>
+
+          <span *ngIf="solicitacao.etapa == 3 && solicitacao.status === 'Em Andamento'">*Em Análise*</span>
+
+          <span *ngIf="solicitacao.etapa > 3">*Deferido*</span>
+
+          <span *ngIf="solicitacao.status === 'Indeferido'">*Indeferido*</span>
+        </div>
         <span>Assinatura Coordenador de curso</span>
       </div>
 
       <span class="retanguloFluxo"></span>
-
       <div class="step">
         <div class="circle" [ngClass]="progressoFluxo(4)">4</div>
+        <div class="etapa">
+          <span *ngIf="solicitacao.etapa < 4"></span>
+
+          <span *ngIf="solicitacao.etapa == 4 && solicitacao.status === 'Em Andamento'">*Em Análise*</span>
+
+          <span *ngIf="solicitacao.etapa > 4">*Deferido*</span>
+
+          <span *ngIf="solicitacao.status === 'Indeferido'">*Indeferido*</span>
+        </div>
         <span>Assinatura reitor</span>
       </div>
 
       <span class="retanguloFluxo"></span>
-
       <div class="step">
         <div class="circle" [ngClass]="progressoFluxo(5)">5</div>
+        <div class="etapa">
+          <span *ngIf="solicitacao.etapa < 5"></span>
+
+          <span *ngIf="solicitacao.etapa == 5 && solicitacao.status === 'Em Andamento'">*Em Análise*</span>
+
+          <span *ngIf="solicitacao.etapa > 5">*Deferido*</span>
+
+          <span *ngIf="solicitacao.status === 'Indeferido'">*Indeferido*</span>
+        </div>
         <span>Processo de assinatura Finalizado</span>
       </div>
-
    </div>
 
    <div class="cardConteudo">

@@ -13,7 +13,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   filtroNome: string = '';
   filtroDataInicial: Date = new Date();
   filtroDataFinal: Date = new Date();
-  filtroStatus: string = 'em andamento';
+  filtroStatus: string = 'Em Andamento';
   dataSolicitacao: Date = new Date();
   solicitacao: Solicitacoes | undefined; // Adicione a propriedade solicitacao
 
@@ -22,7 +22,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   constructor(private service: SolicitacoesService) {}
 
   ngOnInit() {
-    this.filtroStatus = 'em andamento';
+    this.filtroStatus = 'Em Andamento';
     this.obterSolicitacoes();
   }
 

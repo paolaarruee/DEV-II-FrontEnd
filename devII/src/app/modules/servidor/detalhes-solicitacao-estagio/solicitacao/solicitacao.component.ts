@@ -61,8 +61,16 @@ export class SolicitacaoServidorComponent implements OnInit {
             nomeCurso: ''
         },
         ativo: ''
-    }
-};
+    },
+    historico: [
+      {
+        id: '',
+        data_solicitacao: '',
+        etapa: '',
+        status: ''
+      }
+    ]
+  };
 
   ngOnInit() {
     this.solicitacao.dataSolicitacao = this.formatarDataSolicitacao(this.solicitacao.dataSolicitacao);
