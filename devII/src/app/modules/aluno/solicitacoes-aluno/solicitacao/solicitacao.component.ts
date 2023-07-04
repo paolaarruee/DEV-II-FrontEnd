@@ -52,15 +52,15 @@ export class SolicitacaoComponent {
   }
 
   statusSolicitacao(): string{
-    if(this.solicitacao.status == 'deferido' || this.solicitacao.status === 'Deferido'){
+    if(this.solicitacao.status.toLowerCase() == 'deferido' || this.solicitacao.status === 'Deferido'){
       return 'statusColor1'
     }
 
-    if(this.solicitacao.status == 'em andamento' || this.solicitacao.status === 'Em Andamento'){
+    if(this.solicitacao.status.toLowerCase() == 'em andamento' || this.solicitacao.status === 'Em Andamento'){
       return 'statusColor2'
     }
 
-    if(this.solicitacao.status == 'indeferido' || this.solicitacao.status === 'Indeferido'){
+    if(this.solicitacao.status.toLowerCase() == 'indeferido' || this.solicitacao.status === 'Indeferido'){
       return 'statusColor3'
     }
     return 'statusColor1'

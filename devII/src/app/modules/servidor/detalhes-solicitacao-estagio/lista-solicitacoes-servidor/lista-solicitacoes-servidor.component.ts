@@ -23,7 +23,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   constructor(private service: SolicitacoesService) {}
 
   ngOnInit() {
-    this.filtroStatus = 'Em Andamento';
+    this.filtroStatus = 'Em andamento';
     this.obterSolicitacoes();
     this.filtrarPorStatus();
   }
@@ -61,7 +61,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
         .toPromise()
         .then((solicitacoes) => {
           this.listaSolicitacoes = solicitacoes.filter((solicitacao: Solicitacoes) =>
-          solicitacao.status === 'Em Andamento' &&
+          solicitacao.status === 'Em andamento' &&
           solicitacao.aluno.nomeCompleto
           .toLowerCase()
           .includes(this.filtroNome.toLowerCase())
@@ -86,7 +86,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
       .then((solicitacoes) => {
         this.listaSolicitacoes = solicitacoes.filter((solicitacao: Solicitacoes) => {
           // Verifica se a solicitação está em andamento
-          if (solicitacao.status === 'Em Andamento') {
+          if (solicitacao.status === 'Em andamento') {
             // Converte a data da solicitação para um objeto Date
             const dataSolicitacao = new Date(solicitacao.dataSolicitacao);
     

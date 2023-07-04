@@ -73,15 +73,15 @@ export class SolicitacaoServidorComponent implements OnInit {
 
 
   statusSolicitacao(): string{
-    if(this.solicitacao.status == 'deferido' || this.solicitacao.status === 'Deferido' || this.solicitacao.status === 'aprovado'){
+    if(this.solicitacao.status.toLowerCase() == 'deferido' || this.solicitacao.status === 'Deferido' || this.solicitacao.status === 'aprovado'){
       return 'statusColor1'
     }
 
-    if(this.solicitacao.status == 'em andamento' || this.solicitacao.status === 'Em Andamento'){
+    if(this.solicitacao.status.toLowerCase() == 'em andamento' || this.solicitacao.status === 'Em Andamento'){
       return 'statusColor2'
     }
 
-    if(this.solicitacao.status == 'indeferido' || this.solicitacao.status === 'Indeferido' || this.solicitacao.status === 'negado'){
+    if(this.solicitacao.status.toLowerCase() == 'indeferido' || this.solicitacao.status === 'Indeferido' || this.solicitacao.status === 'negado'){
       return 'statusColor3'
     }
     return 'statusColor1'

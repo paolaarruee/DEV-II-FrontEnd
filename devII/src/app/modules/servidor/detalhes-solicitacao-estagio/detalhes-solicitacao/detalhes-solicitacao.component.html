@@ -50,7 +50,7 @@
    </div>
 
    <div class="cardConteudo">
-    <span>{{ solicitacao.dataSolicitacao | date:'dd/MM/yyyy' }} </span>
+    <span>Data: {{ solicitacao.dataSolicitacao | date:'dd/MM/yyyy' }} </span>
    </div>
 
    <div *ngIf="solicitacao.observacao !== undefined && solicitacao.observacao !== null">
