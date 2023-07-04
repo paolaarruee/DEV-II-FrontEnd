@@ -29,6 +29,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   }
 
     async obterSolicitacoes() {
+    this.paginaAtual = 1; 
     try {
       this.listaSolicitacoes = await this.service
         .listarSolicitacoesPorEmailServidor()
@@ -51,6 +52,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   }
 
   filtrarPorNome() {
+    this.paginaAtual = 1; 
     if (this.filtroNome.trim() === '') {
       this.obterSolicitacoes();
     } else {
@@ -71,10 +73,14 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   }
 
   filtrarPorData() {
-    // Convertemos as datas de string para objetos Date
+    this.paginaAtual = 1; 
     const filtroDataInicial = new Date(this.filtroDataInicial);
     const filtroDataFinal = new Date(this.filtroDataFinal);
-
+  
+    
+    const dataFinal2 = new Date(); 
+    dataFinal2.setDate(filtroDataFinal.getDate() + 1);
+  
     this.service
       .listarSolicitacoesPorEmailServidor()
       .toPromise()
@@ -88,7 +94,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
             // Compara as datas
             return (
               dataSolicitacao >= filtroDataInicial &&
-              dataSolicitacao <= filtroDataFinal
+              dataSolicitacao <= dataFinal2
             );
           } else {
             return false; // Ignora as solicitações que não estão em andamento
@@ -98,11 +104,10 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
         this.ordenarSolicitacoes();
       });
   }
+  
 
-  filtrarPorStatus() {
-    if (this.filtroStatus === 'Deferido' || this.filtroStatus === 'Indeferido') {
-      this.paginaAtual = 1; 
-    }  
+  filtrarPorStatus() {    
+    this.paginaAtual = 1;          
     if (this.filtroStatus === 'todas') {
       this.obterSolicitacoes();
     } else {
