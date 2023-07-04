@@ -22,15 +22,7 @@ export class SolicitacoesService {
     );
   }
 
-  // deferirSolicitacaoSetorEstagio(
-  //   id: number,
-  //   formData: FormData
-  // ): Observable<any> {
-  //   return this.httpClient.put<any>(
-  //     `${environment.API_URL}/deferirSolicitacaoSetorEstagio/${id}`,
-  //     formData
-  //   );
-  // }
+ 
 
   indeferirSolicitacao(
     id: number,
@@ -49,6 +41,11 @@ export class SolicitacoesService {
 
   getStudentData(id: number): Observable<any> {
     const url = `${environment.API_URL}/alunoSolicitacao/${id}`;
+    return this.httpClient.get<any>(url);
+  }
+
+  getSolicitacoesData(id: number): Observable<any> {
+    const url = `${environment.API_URL}/solicitacao/${id}`;
     return this.httpClient.get<any>(url);
   }
 
