@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { saveAs } from 'file-saver';
-import { Observable } from 'rxjs';
+import { Observable, map, take, tap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalAnaliseComponent } from '../modal-analise/modal-analise.component';
 import { FormControl } from '@angular/forms';
@@ -14,6 +14,7 @@ import { Status } from 'src/app/shared/interfaces/solicitacoes';
 import { Role } from 'src/app/shared/interfaces/usuario';
 import { AuthenticationService } from 'src/app/core/services/authentication/authentication.service';
 import { SolicitacaoIndeferir } from 'src/app/shared/interfaces/solicitacao-indeferir';
+import { Solicitacao } from 'src/app/shared/interfaces/SolicitarEstagio';
 
 @Component({
   selector: 'app-analise-docs',
@@ -25,9 +26,11 @@ export class AnaliseDocsComponent implements OnInit {
 
   public documentList$!: Observable<DocFile[]>;
   public studentData$!: Observable<any>;
+  public solicitacaoData$!: Observable<any>;
   public readonly Roles: typeof Role = Role;
 
   public servidore!: Servidor;
+  public disableButton?: boolean;
   motivoIndeferimento = new FormControl('');
   public solicitacao: any;
   public constructor(
@@ -41,6 +44,7 @@ export class AnaliseDocsComponent implements OnInit {
 
   ngOnInit(): void {
     this.setStudentData();
+    this.setSolicitacaoData();
     this.setDocumentListId();
   }
 
@@ -66,22 +70,36 @@ export class AnaliseDocsComponent implements OnInit {
     this.studentData$ = this.solicitacoes.getStudentData(id);
   }
 
+  private setSolicitacaoData() {
+    const { id } = this.activatedRoute.snapshot.params;
+    this.solicitacaoData$ = this.solicitacoes.getSolicitacoesData(id).pipe(
+      tap((solicitacoes: any) => {
+        this.disableButton =
+          (this.authenticationService.role === Role.ROLE_SESTAGIO &&
+            solicitacoes.statusEtapaSetorEstagio === Status.DEFERIDO) ||
+          (this.authenticationService.role === Role.ROLE_SERVIDOR &&
+            solicitacoes.statusEtapaCoordenador === Status.DEFERIDO) ||
+          (this.authenticationService.role === Role.ROLE_SERVIDOR &&
+            solicitacoes.statusEtapaDiretor === Status.DEFERIDO) ||
+          solicitacoes.status === Status.INDEFERIDO;
+      })
+    );
+    console.log(this.disableButton);
+  }
+
   public abrirDialogDeferir() {
-    const servidor = this.authenticationService.role === Role.ROLE_SERVIDOR;
-    if (!this.fileInputRef.nativeElement.files?.length && servidor) {
-      this.toastService.showMessage(
-        'Você precisa anexar pelo menos um documento'
-      );
-      return;
-    }
     const dialogRef = this.dialog.open(ModalAnaliseComponent, {
       width: '600px',
       data: {
         conteudo: 'Você tem certeza que deseja deferir o estágio do aluno',
         enviarCallback: () => {
-          this.authenticationService.role === Role.ROLE_SESTAGIO
-            ? this.enviarDeferimento()
-            : this.enviarDeferimentoSetorEstagio();
+          if (this.authenticationService.role === Role.ROLE_SESTAGIO) {
+            return this.enviarDeferimentoSetorEstagio();
+          }
+          if (this.authenticationService.role === Role.ROLE_DIRETOR) {
+            return this.enviarDeferimentoDiretor();
+          }
+          return this.enviarDeferimento();
         },
       },
     });
@@ -99,22 +117,18 @@ export class AnaliseDocsComponent implements OnInit {
     });
   }
 
-  dados2 : SolicitacaoIndeferir = {
-    id: '',
-    status: Status.INDEFERIDO,
-    etapa : '6',
-    observacao: 'NAO',
-  }
-
-  public enviarDeferimento(): void {
+  public enviarDeferimentoDiretor(): void {
     const { id } = this.activatedRoute.snapshot.params;
-    const data = { status: Status.EM_ANDAMENTO };
+    const data = {
+      status: Status.DEFERIDO,
+      statusEtapaDiretor: Status.DEFERIDO,
+    };
     const fileList: FileList = this.fileInputRef.nativeElement?.files!;
     const formData: FormData = new FormData();
 
     formData.append(
       'dados',
-      new Blob([JSON.stringify(this.dados2)], { type: 'application/json' })
+      new Blob([JSON.stringify(this.dados)], { type: 'application/json' })
     );
 
     for (let i = 0; i < fileList.length; i++) {
@@ -131,10 +145,10 @@ export class AnaliseDocsComponent implements OnInit {
     });
   }
 
-
   public enviarDeferimentoSetorEstagio(): void {
     const { id } = this.activatedRoute.snapshot.params;
-    const data = { status: Status.DEFERIDO };
+    const data = { statusEtapaSetorEstagio: Status.DEFERIDO };
+    const fileList: FileList = this.fileInputRef.nativeElement?.files!;
     const formData: FormData = new FormData();
 
     formData.append(
@@ -142,7 +156,11 @@ export class AnaliseDocsComponent implements OnInit {
       new Blob([JSON.stringify(this.dados)], { type: 'application/json' })
     );
 
-    this.solicitacoes.deferirSolicitacaoSetorEstagio(id, formData).subscribe({
+    for (let i = 0; i < fileList.length; i++) {
+      formData.append('file', fileList[i]);
+    }
+
+    this.solicitacoes.deferirSolicitacao(id, formData).subscribe({
       next: () => {
         this.toastService.showMessage('Deferimento enviado com sucesso!');
       },
@@ -152,29 +170,48 @@ export class AnaliseDocsComponent implements OnInit {
     });
   }
 
+  public enviarDeferimento(): void {
+    const { id } = this.activatedRoute.snapshot.params;
+    const data = { statusEtapaCoordenador: Status.DEFERIDO };
+    const fileList: FileList = this.fileInputRef.nativeElement?.files!;
+    const formData: FormData = new FormData();
 
-  dados : SolicitacaoIndeferir = {
-    id: '',
-    status: Status.INDEFERIDO,
-    etapa : '6',
-    observacao: '',
+    formData.append(
+      'dados',
+      new Blob([JSON.stringify(data)], { type: 'application/json' })
+    );
 
+    for (let i = 0; i < fileList.length; i++) {
+      formData.append('file', fileList[i]);
+    }
+
+    this.solicitacoes.deferirSolicitacao(id, formData).subscribe({
+      next: () => {
+        this.toastService.showMessage('Deferimento enviado com sucesso!');
+      },
+      error: () => {
+        this.toastService.showMessage('Erro ao enviar o deferimento.');
+      },
+    });
   }
+
+  dados: SolicitacaoIndeferir = {
+    observacao: '',
+  };
   public enviarIndeferimento(motivo: string): void {
     const { id } = this.activatedRoute.snapshot.params;
-    this.dados.id = id;
     this.dados.observacao = motivo;
 
-    this.solicitacoes.indeferirSolicitacao(this.dados).subscribe(
+    this.solicitacoes.indeferirSolicitacao(id, this.dados).subscribe(
       (response) => {
         this.toastService.showMessage('Solicitação Indeferida!');
       },
       (error) => {
-          this.toastService.showMessage(
-            'Erro ao enviar o indeferimento.!',
-            'ERRO'
-          );
-        }
+        this.toastService.showMessage(
+          'Erro ao enviar o indeferimento!',
+          'ERRO'
+        );
+      }
     );
   }
 }

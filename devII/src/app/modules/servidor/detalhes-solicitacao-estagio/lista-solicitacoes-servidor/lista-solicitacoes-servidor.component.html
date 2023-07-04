@@ -6,22 +6,31 @@
 <div class="filtro-container">
   <div class="filtro-row">
     <form (ngSubmit)="filtrarPorNome()">
-      <input type="text" [(ngModel)]="filtroNome" name="filtroNome" placeholder="Filtrar por nome">
+      <input
+        type="text"
+        [(ngModel)]="filtroNome"
+        name="filtroNome"
+        placeholder="Filtrar por nome"
+      />
       <button type="submit">Filtrar</button>
     </form>
 
     <form (ngSubmit)="filtrarPorData()">
-      <input type="date" [(ngModel)]="filtroDataInicial" name="filtroDataInicial">
-      <input type="date" [(ngModel)]="filtroDataFinal" name="filtroDataFinal">
+      <input
+        type="date"
+        [(ngModel)]="filtroDataInicial"
+        name="filtroDataInicial"
+      />
+      <input type="date" [(ngModel)]="filtroDataFinal" name="filtroDataFinal" />
       <button type="submit">Filtrar</button>
     </form>
 
     <form (ngSubmit)="filtrarPorStatus()">
       <select [(ngModel)]="filtroStatus" name="filtroStatus">
-        <option value="Em Andamento">Em andamento</option>
-
+        <option value="Em andamento">Em andamento</option>
         <option value="Deferido">Deferidas</option>
         <option value="Indeferido">Indeferidas</option>
+
         <!-- Ajustar para que apareça somente para setor de estágio essas opções:
         <option value="setor_estagios">Setor de Estágios</option>
         <option value="coordenador">Coordenador</option>
@@ -29,12 +38,16 @@
       </select>
       <button type="submit">Filtrar</button>
     </form>
-    </div>
+  </div>
 
-
-  <div class="solicitacao" *ngIf="listaSolicitacoes.length > 0; else semSolicitacoes">
+  <div
+    class="solicitacao"
+    *ngIf="listaSolicitacoes.length > 0; else semSolicitacoes"
+  >
     <div *ngFor="let solicitacao of listaSolicitacoes">
-      <app-solicitacao-servidor [solicitacao]="solicitacao"></app-solicitacao-servidor>
+      <app-solicitacao-servidor
+        [solicitacao]="solicitacao"
+      ></app-solicitacao-servidor>
     </div>
   </div>
 
