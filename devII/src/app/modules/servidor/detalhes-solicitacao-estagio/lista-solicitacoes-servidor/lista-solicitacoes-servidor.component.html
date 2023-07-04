@@ -47,15 +47,17 @@
   </div>
 
 
-  <div class="pagination" style="display: flex; justify-content: center; align-items: center;">
-
-  <button class="previous" (click)="paginaAnterior()" [disabled]="paginaAtual === 1">
-    Anterior
-  </button>
-  <button class="next" (click)="proximaPagina()" [disabled]="paginaAtual === totalPaginas">
-    Próxima
-  </button>
-</div>
+  <div class="pagination">
+    <button class="previous" (click)="paginaAnterior()" [disabled]="isPaginaAnteriorDisabled()"
+      [ngClass]="{ 'disabled': isPaginaAnteriorDisabled() }">
+      Anterior
+    </button>
+    <button class="next" (click)="proximaPagina()" [disabled]="isProximaPaginaDisabled()"
+      [ngClass]="{ 'disabled': isProximaPaginaDisabled() }">
+      Próxima
+    </button>
+  </div>
+  
 
   
 

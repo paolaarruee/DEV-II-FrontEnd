@@ -28,7 +28,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
     this.filtrarPorStatus();
   }
 
-  async obterSolicitacoes() {
+    async obterSolicitacoes() {
     try {
       this.listaSolicitacoes = await this.service
         .listarSolicitacoesPorEmailServidor()
@@ -100,6 +100,9 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   }
 
   filtrarPorStatus() {
+    if (this.filtroStatus === 'Deferido' || this.filtroStatus === 'Indeferido') {
+      this.paginaAtual = 1; 
+    }  
     if (this.filtroStatus === 'todas') {
       this.obterSolicitacoes();
     } else {
@@ -155,6 +158,13 @@ proximaPagina() {
   this.irParaPagina(this.paginaAtual + 1);
 }
 
+isPaginaAnteriorDisabled(): boolean {
+  return this.paginaAtual === 1;
+}
+
+isProximaPaginaDisabled(): boolean {
+  return this.paginaAtual === this.totalPaginas;
+}
 
 
 

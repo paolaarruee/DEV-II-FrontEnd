@@ -50,7 +50,7 @@
    </div>
 
    <div class="cardConteudo">
-    <span>{{ solicitacao.data_solicitacao.toLocaleDateString() }} </span>
+    <span>{{ solicitacao.dataSolicitacao | date:'dd/MM/yyyy' }} </span>
    </div>
 
    <div *ngIf="solicitacao.observacao !== undefined && solicitacao.observacao !== null">
