@@ -1,5 +1,13 @@
 export interface Solicitacoes {
     id: string,
+    tipo: string,
+    dataSolicitacao: string,
+    status: string,
+    titulo: string,
+    conteudo: string,
+    etapa: string,
+    observacao: string,
+    resposta: string,
     aluno: {
       id: string,
       nomeCompleto: string,
@@ -37,14 +45,6 @@ export interface Solicitacoes {
         }
       }
     },
-    tipo: string,
-    dataSolicitacao: string,
-    status: string,
-    titulo: string,
-    conteudo: string,
-    etapa: string,
-    observacao: string,
-    resposta: string,
     historico: []
 }
   export interface Historico {

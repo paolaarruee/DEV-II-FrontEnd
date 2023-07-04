@@ -1,4 +1,4 @@
-import { DetalhesSolicitacaoServidorComponent } from '../detalhes-solicitacao/detalhes-solicitacao.component';
+import { DetalhesSolicitacaoServidorComponent } from '../detalhes-solicitacao-servidor/detalhes-solicitacao-servidor.component';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { format, parseISO } from 'date-fns';

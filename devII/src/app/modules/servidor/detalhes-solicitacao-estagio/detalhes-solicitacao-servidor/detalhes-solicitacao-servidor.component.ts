@@ -3,11 +3,14 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-detalhes-solicitacao',
-  templateUrl: './detalhes-solicitacao.component.html',
-  styleUrls: ['./detalhes-solicitacao.component.scss'],
+  selector: 'app-detalhes-solicitacao-servidor',
+  templateUrl: './detalhes-solicitacao-servidor.component.html',
+  styleUrls: ['./detalhes-solicitacao-servidor.component.scss'],
 })
 export class DetalhesSolicitacaoServidorComponent {
+
+  teste: string = "teste" + this.solicitacao.observacao;
+
   constructor(
     private router: Router,
     public dialogRef: MatDialogRef<DetalhesSolicitacaoServidorComponent>,
@@ -31,6 +34,14 @@ export class DetalhesSolicitacaoServidorComponent {
   progressoFluxo(etapa: number): string {
     if (this.solicitacao.etapa >= etapa) {
       return 'progressoEtapa';
+    } else if (this.solicitacao.etapa >= etapa) {
+      return 'progressoEtapa';
+    } else if (this.solicitacao.etapa >= etapa) {
+      return 'progressoEtapa';
+    } else if (this.solicitacao.etapa >= etapa) {
+      return 'progressoEtapa';
+    } else if (this.solicitacao.etapa >= etapa) {
+      return 'progressoEtapa';
     }
     return '';
   }
@@ -44,23 +55,6 @@ export class DetalhesSolicitacaoServidorComponent {
       state: { solicitacao: this.solicitacao },
     });
     this.closeDialog();
-  }
-
-  formatarData(data: string): string {
-    // Verifica se a data existe
-    if (!data) {
-      return '';
-    }
-
-    // Converte a string da data para um objeto Date
-    const dataObj = new Date(data);
-
-    // Formata a data no formato desejado (exemplo: DD/MM/YYYY)
-    const dia = dataObj.getDate().toString().padStart(2, '0');
-    const mes = (dataObj.getMonth() + 1).toString().padStart(2, '0'); // Janeiro é o mês 0
-    const ano = dataObj.getFullYear().toString();
-
-    return `${dia}/${mes}/${ano}`;
   }
 
 

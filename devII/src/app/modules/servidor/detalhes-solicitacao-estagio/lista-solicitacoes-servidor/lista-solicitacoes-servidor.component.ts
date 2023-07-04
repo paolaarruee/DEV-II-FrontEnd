@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SolicitacoesService } from 'src/app/core/services/solicitacoesEstagio/solicitacoes.service';
 import { Solicitacoes } from 'src/app/shared/interfaces/solicitacoes';
-import { Servidor } from 'src/app/shared/interfaces/servidor';
 
 @Component({
   selector: 'app-lista-solicitacoes-servidor',

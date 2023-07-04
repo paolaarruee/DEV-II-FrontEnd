@@ -16,7 +16,7 @@ import { ListaSolicitacoesAlunoComponent } from './modules/aluno/solicitacoes-al
 import { SolicitacaoComponent } from './modules/aluno/solicitacoes-aluno/solicitacao/solicitacao.component';
 import { TelaSolicitacaoComponent } from './modules/aluno/solicitacoes-aluno/tela-solicitacao/tela-solicitacao.component';
 import { AnaliseDocsComponent } from './modules/servidor/detalhes-solicitacao-estagio/analise-docs/analise-docs.component';
-import { DetalhesSolicitacaoServidorComponent } from './modules/servidor/detalhes-solicitacao-estagio/detalhes-solicitacao/detalhes-solicitacao.component';
+import { DetalhesSolicitacaoServidorComponent } from './modules/servidor/detalhes-solicitacao-estagio/detalhes-solicitacao-servidor/detalhes-solicitacao-servidor.component';
 import { ListaSolicitacoesServidorComponent } from './modules/servidor/detalhes-solicitacao-estagio/lista-solicitacoes-servidor/lista-solicitacoes-servidor.component';
 import { ModalAnaliseComponent } from './modules/servidor/detalhes-solicitacao-estagio/modal-analise/modal-analise.component';
 import { SolicitacaoServidorComponent } from './modules/servidor/detalhes-solicitacao-estagio/solicitacao/solicitacao.component';

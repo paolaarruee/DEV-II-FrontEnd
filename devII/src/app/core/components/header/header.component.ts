@@ -26,7 +26,7 @@ export class HeaderComponent {
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    if(this.authService.role === 3 || this.authService.role === 2 )
+    if(this.authService.role === 3 || this.authService.role === 2 || this.authService.role === 4)
       this.exibirLink = true;
     }
 

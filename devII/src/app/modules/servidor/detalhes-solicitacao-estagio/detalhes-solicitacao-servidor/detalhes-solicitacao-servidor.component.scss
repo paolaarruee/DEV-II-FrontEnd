@@ -80,8 +80,12 @@
   margin-top: 10px;
 }
 
+.emAndamento{
+  color: #5699ea;
+}
+
 .etapaDeferido{
-  color: #6de78154;
+  color: #2B923C;
 }
 
 .etapaIndeferido{
@@ -114,14 +118,6 @@ span {
 .buttonFechar{
   display: flex;
   flex-direction: row-reverse;
-  padding: 16px;
-
-}
-
-.buttonSolicitar{
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: flex-start;
   padding: 16px;
 
 }
