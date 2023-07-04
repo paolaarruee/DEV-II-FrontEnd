@@ -24,7 +24,9 @@
 
     <div class="cardConteudo">
       <span>Curso: {{ solicitacao.aluno.curso.nomeCurso }}</span>
-      <span>Data da solicitação: {{ solicitacao.dataSolicitacao }}</span>
+      <span>Data da solicitação: {{ solicitacao.dataSolicitacao | date:'dd/MM/yyyy' }}</span>
+
+    
     </div>
 
     <div class="buttonContainer">

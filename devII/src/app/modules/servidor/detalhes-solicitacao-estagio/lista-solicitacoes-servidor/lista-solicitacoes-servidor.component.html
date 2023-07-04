@@ -40,16 +40,24 @@
     </form>
   </div>
 
-  <div
-    class="solicitacao"
-    *ngIf="listaSolicitacoes.length > 0; else semSolicitacoes"
-  >
-    <div *ngFor="let solicitacao of listaSolicitacoes">
-      <app-solicitacao-servidor
-        [solicitacao]="solicitacao"
-      ></app-solicitacao-servidor>
+  <div class="solicitacao" *ngIf="solicitacoesPagina.length > 0; else semSolicitacoes">
+    <div *ngFor="let solicitacao of solicitacoesPagina">
+      <app-solicitacao-servidor [solicitacao]="solicitacao"></app-solicitacao-servidor>
     </div>
   </div>
+
+
+  <div class="pagination" style="display: flex; justify-content: center; align-items: center;">
+
+  <button class="previous" (click)="paginaAnterior()" [disabled]="paginaAtual === 1">
+    Anterior
+  </button>
+  <button class="next" (click)="proximaPagina()" [disabled]="paginaAtual === totalPaginas">
+    Próxima
+  </button>
+</div>
+
+  
 
   <ng-template #semSolicitacoes>
     <div class="semSolicitacoes">

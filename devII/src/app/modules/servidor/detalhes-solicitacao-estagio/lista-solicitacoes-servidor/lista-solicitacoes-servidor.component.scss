@@ -54,3 +54,34 @@
   align-items: center;
   margin-top: 20px; /* Ajuste de espaçamento */
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination button.previous,
+.pagination button.next {
+  display: block;
+  margin: 5px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #0b6a1d;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button.previous:hover,
+.pagination button.next:hover {
+  background-color: #095915;
+}
+
+.pagination button.previous:active,
+.pagination button.next:active {
+  background-color: #083a0e;
+}
+

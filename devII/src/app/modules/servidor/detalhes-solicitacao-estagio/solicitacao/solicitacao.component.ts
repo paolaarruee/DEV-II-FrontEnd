@@ -1,7 +1,8 @@
 import { DetalhesSolicitacaoServidorComponent } from '../detalhes-solicitacao/detalhes-solicitacao.component';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
+
 
 @Component({
   selector: 'app-solicitacao-servidor',
@@ -65,20 +66,10 @@ export class SolicitacaoServidorComponent implements OnInit {
 };
 
   ngOnInit() {
-    this.solicitacao.dataSolicitacao = this.formatarDataSolicitacao(this.solicitacao.dataSolicitacao);
     console.log(this.solicitacao)
   }
 
-  formatarDataSolicitacao(dataSolicitacao: string): string {
-    const formattedDateFormat = 'dd/MM/yyyy'; // Formato desejado para exibição
-
-    if (dataSolicitacao) {
-      const parsedDate = parseISO(dataSolicitacao);
-      return format(parsedDate, formattedDateFormat);
-    } else {
-      return 'Data inválida';
-    }
-  }
+ 
 
 
   statusSolicitacao(): string{

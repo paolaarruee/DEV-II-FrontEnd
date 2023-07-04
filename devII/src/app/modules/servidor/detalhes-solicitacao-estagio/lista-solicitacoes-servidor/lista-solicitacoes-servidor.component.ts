@@ -15,13 +15,17 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   filtroDataFinal: Date = new Date();
   filtroStatus: string = '';
   dataSolicitacao: Date = new Date();
-  solicitacao: Solicitacoes | undefined; // Adicione a propriedade solicitacao
+  solicitacao: Solicitacoes | undefined;
+  paginaAtual: number = 1;
+  solicitacoesPorPagina: number = 5;
+
 
   constructor(private service: SolicitacoesService) {}
 
   ngOnInit() {
-    this.filtroStatus = 'Em Andamento' ;
+    this.filtroStatus = 'Em Andamento';
     this.obterSolicitacoes();
+    this.filtrarPorStatus();
   }
 
   async obterSolicitacoes() {
@@ -54,12 +58,13 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
         .listarSolicitacoesPorEmailServidor()
         .toPromise()
         .then((solicitacoes) => {
-          this.listaSolicitacoes = solicitacoes.filter(
-            (solicitacao: Solicitacoes) =>
-              solicitacao.aluno.nomeCompleto
-                .toLowerCase()
-                .includes(this.filtroNome.toLowerCase())
-          );
+          this.listaSolicitacoes = solicitacoes.filter((solicitacao: Solicitacoes) =>
+          solicitacao.status === 'Em Andamento' &&
+          solicitacao.aluno.nomeCompleto
+          .toLowerCase()
+          .includes(this.filtroNome.toLowerCase())
+        );
+        
           this.ordenarSolicitacoes();
         });
     }
@@ -74,18 +79,22 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
       .listarSolicitacoesPorEmailServidor()
       .toPromise()
       .then((solicitacoes) => {
-        this.listaSolicitacoes = solicitacoes.filter(
-          (solicitacao: Solicitacoes) => {
-            // Convertemos a data da solicitação para um objeto Date
+        this.listaSolicitacoes = solicitacoes.filter((solicitacao: Solicitacoes) => {
+          // Verifica se a solicitação está em andamento
+          if (solicitacao.status === 'Em Andamento') {
+            // Converte a data da solicitação para um objeto Date
             const dataSolicitacao = new Date(solicitacao.dataSolicitacao);
-
-            // Comparamos as datas
+        
+            // Compara as datas
             return (
               dataSolicitacao >= filtroDataInicial &&
               dataSolicitacao <= filtroDataFinal
             );
+          } else {
+            return false; // Ignora as solicitações que não estão em andamento
           }
-        );
+        });
+        
         this.ordenarSolicitacoes();
       });
   }
@@ -121,4 +130,33 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
     // Recarrega a página para exibir os resultados filtrados
     location.reload();
   }
+
+  get solicitacoesPagina(): Solicitacoes[] {
+  const inicio = (this.paginaAtual - 1) * this.solicitacoesPorPagina;
+  const fim = inicio + this.solicitacoesPorPagina;
+  return this.listaSolicitacoes.slice(inicio, fim);
+}
+
+get totalPaginas(): number {
+  return Math.ceil(this.listaSolicitacoes.length / this.solicitacoesPorPagina);
+}
+
+irParaPagina(pagina: number) {
+  if (pagina >= 1 && pagina <= this.totalPaginas) {
+    this.paginaAtual = pagina;
+  }
+}
+
+paginaAnterior() {
+  this.irParaPagina(this.paginaAtual - 1);
+}
+
+proximaPagina() {
+  this.irParaPagina(this.paginaAtual + 1);
+}
+
+
+
+
+
 }
