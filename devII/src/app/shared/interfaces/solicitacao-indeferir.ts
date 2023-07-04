@@ -3,4 +3,7 @@ export interface SolicitacaoIndeferir {
   status?: string;
   etapa?: string;
   observacao: string;
+  statusEtapaSetorEstagio?: string;
+  statusEtapaCoordenador?: string;
+  statusEtapaDiretor?: string;
 }

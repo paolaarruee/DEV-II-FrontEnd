@@ -112,8 +112,9 @@ export class AnaliseDocsComponent implements OnInit {
       data: {
         conteudo: 'Você tem certeza que deseja indeferir o estágio do aluno',
         mostrarCampoMotivo: true,
-        enviarCallback: (motivoIndeferimento: string) =>
-          this.enviarIndeferimento(motivoIndeferimento),
+        enviarCallback: (motivoIndeferimento: string) => {
+          return this.enviarIndeferimento(motivoIndeferimento);
+        },
       },
     });
   }
@@ -202,6 +203,7 @@ export class AnaliseDocsComponent implements OnInit {
   public enviarIndeferimento(motivo: string): void {
     const { id } = this.activatedRoute.snapshot.params;
     this.dados.observacao = motivo;
+    this.dados.statusEtapaCoordenador = Status.INDEFERIDO;
 
     this.solicitacoes.indeferirSolicitacao(id, this.dados).subscribe(
       (response) => {
