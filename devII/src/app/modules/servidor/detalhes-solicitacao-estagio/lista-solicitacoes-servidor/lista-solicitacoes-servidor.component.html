@@ -1,44 +1,53 @@
-<div class="tituloprincipal">
-  <span>Lista de Solicitações</span>
-  <span class="cardDecoracao1"></span>
-</div>
-
-<div class="filtro-container">
+<div class="filtro-container" style="margin-top: 20px;">
   <div class="filtro-row">
-    <form (ngSubmit)="filtrarPorNome()">
-      <input
-        type="text"
-        [(ngModel)]="filtroNome"
-        name="filtroNome"
-        placeholder="Filtrar por nome"
-      />
-      <button type="submit">Filtrar</button>
+    <form class="filtro-form" (ngSubmit)="filtrarPorData()">
+      <div class="filtro-wrapper">
+        <input
+          type="date"
+          [(ngModel)]="filtroDataInicial"
+          name="filtroDataInicial"
+          class="filtro-input"
+        />
+        <input
+          type="date"
+          [(ngModel)]="filtroDataFinal"
+          name="filtroDataFinal"
+          class="filtro-input"
+        />
+      </div>
+      <button type="submit" class="filtro-button">Filtrar Por Data</button>
     </form>
 
-    <form (ngSubmit)="filtrarPorData()">
-      <input
-        type="date"
-        [(ngModel)]="filtroDataInicial"
-        name="filtroDataInicial"
-      />
-      <input type="date" [(ngModel)]="filtroDataFinal" name="filtroDataFinal" />
-      <button type="submit">Filtrar</button>
+    <form class="filtro-form" (ngSubmit)="filtrarPorNome()">
+      <div class="filtro-wrapper">
+        <input
+          type="text"
+          [(ngModel)]="filtroNome"
+          name="filtroNome"
+          placeholder="Filtrar por nome"
+          class="filtro-input"
+        />
+      </div>
+      <button type="submit" class="filtro-button">Filtrar</button>
     </form>
 
-    <form (ngSubmit)="filtrarPorStatus()">
-      <select [(ngModel)]="filtroStatus" name="filtroStatus">
-        <option value="Em Andamento">Em andamento</option>
-
-        <option value="Deferido">Deferidas</option>
-        <option value="Indeferido">Indeferidas</option>
-        <!-- Ajustar para que apareça somente para setor de estágio essas opções:
-        <option value="setor_estagios">Setor de Estágios</option>
-        <option value="coordenador">Coordenador</option>
-        <option value="diretoria">Diretoria</option>-->
-      </select>
-      <button type="submit">Filtrar</button>
+    <form class="filtro-form" (ngSubmit)="filtrarPorStatus()">
+      <div class="filtro-wrapper">
+        <select [(ngModel)]="filtroStatus" name="filtroStatus" class="filtro-input" (ngModelChange)="filtrarPorStatus()">
+          <option value="Em Andamento">Em andamento</option>
+          <option value="Deferido">Deferidas</option>
+          <option value="Indeferido">Indeferidas</option>
+          <!-- Ajustar para que apareça somente para setor de estágio essas opções:
+          <option value="setor_estagios">Setor de Estágios</option>
+          <option value="coordenador">Coordenador</option>
+          <option value="diretoria">Diretoria</option>-->
+        </select>
+      </div>
+      
     </form>
   </div>
+</div>
+
 
   <div class="solicitacao" *ngIf="solicitacoesPagina.length > 0; else semSolicitacoes">
     <div *ngFor="let solicitacao of solicitacoesPagina">
@@ -66,4 +75,4 @@
       <p>Você não tem solicitações</p>
     </div>
   </ng-template>
-</div>
+

@@ -73,14 +73,13 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   }
 
   filtrarPorData() {
-    this.paginaAtual = 1; 
+    this.paginaAtual = 1;
     const filtroDataInicial = new Date(this.filtroDataInicial);
     const filtroDataFinal = new Date(this.filtroDataFinal);
-  
     
-    const dataFinal2 = new Date(); 
-    dataFinal2.setDate(filtroDataFinal.getDate() + 1);
-  
+    // Define a data final para o próximo dia
+    const dataFinal2 = new Date(filtroDataFinal.getTime() + 86400000); // Adiciona 24 horas em milissegundos
+    
     this.service
       .listarSolicitacoesPorEmailServidor()
       .toPromise()
@@ -90,7 +89,10 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
           if (solicitacao.status === 'Em Andamento') {
             // Converte a data da solicitação para um objeto Date
             const dataSolicitacao = new Date(solicitacao.dataSolicitacao);
-        
+    
+            // Remove as informações de hora, minuto, segundo e milissegundo
+            dataSolicitacao.setHours(0, 0, 0, 0);
+    
             // Compara as datas
             return (
               dataSolicitacao >= filtroDataInicial &&
@@ -100,9 +102,10 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
             return false; // Ignora as solicitações que não estão em andamento
           }
         });
-        
+    
         this.ordenarSolicitacoes();
       });
+    
   }
   
 

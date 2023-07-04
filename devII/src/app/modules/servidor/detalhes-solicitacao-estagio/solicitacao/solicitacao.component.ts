@@ -11,7 +11,7 @@ import { format } from 'date-fns';
 })
 export class SolicitacaoServidorComponent implements OnInit {
 
-  dataFormatada!: string;
+  //dataFormatada!: string;
 
   constructor(private dialog: MatDialog) { }
 
@@ -27,7 +27,7 @@ export class SolicitacaoServidorComponent implements OnInit {
     });
   }
 
-  dataSolicitacao: string | null = '2023-06-25 10:30:00'
+  //dataSolicitacao: string | null = '2023-06-25 10:30:00'
 
   @Input() solicitacao = {
     id:'',

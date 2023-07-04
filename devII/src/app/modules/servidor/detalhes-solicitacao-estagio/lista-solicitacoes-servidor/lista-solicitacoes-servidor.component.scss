@@ -26,39 +26,22 @@
 }
 
 .form-control {
-  width: 130%; /* Aumentar o tamanho em 30% */
-  border-radius: 10px; /* Adicionar bordas arredondadas */
-}
-
-.filtro-row {
-  display: flex;
-  align-items: flex-end;
-  flex-direction: row;
-  justify-content: flex-end;
-  margin-right: 10%;
-}
-
-.filtro-row form {
-  margin-right: 10px; /* Ajuste de espaçamento entre os forms */
-}
-
-.filtro-container {
-  display: flex;
-  flex-direction: column;
-  // padding: 0px 25px 0px 25px;
+  width: 130%;
+  border-radius: 10px;
 }
 
 .semSolicitacoes {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px; /* Ajuste de espaçamento */
+  margin-top: 20px;
 }
 
 .pagination {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
 }
 
 .pagination button {
@@ -97,4 +80,68 @@
   background-color: #083a0e;
 }
 
+.filtro-container {
+  text-align: center;
+}
 
+
+
+.filtro-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  align-self: flex-start;
+  flex-wrap: wrap;
+}
+.filtro-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filtro-form {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filtro-input {
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  border-style: outset;
+  border-radius: 5px;
+  background-color: #f5f5f5;
+}
+
+.filtro-button {
+  padding: 5px 20px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  transition: background-color 0.3s ease;
+}
+
+.filtro-button:hover {
+  background-color: #e0e0e0;
+}
+
+.filtro-button:active {
+  background-color: #d3d3d3;
+}
+
+
+.previous,
+.next {
+  padding: 10px 20px;
+  margin: 0 5px;
+  border-radius: 5px;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
