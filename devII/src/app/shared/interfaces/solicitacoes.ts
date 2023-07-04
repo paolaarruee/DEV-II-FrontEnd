@@ -44,7 +44,10 @@ export interface Solicitacoes {
     conteudo: string,
     etapa: string,
     observacao: string,
-    resposta: string
+    resposta: string,
+    statusEtapaCoordenador: string,
+    statusSetorEstagio: string
+    statusEtapaDiretor: string,
   }
 
 export enum Status {

@@ -39,7 +39,7 @@
     <div>
       <div
         class="corpo-dados-etapas"
-        *ngIf="studentData$ | async as studentData"
+        *ngIf="solicitacaoData$ | async as solicitacaoData"
       >
         <div class="subtitulo">
           <span class="dados">Histórico de Etapas</span>
@@ -49,25 +49,25 @@
           <span class="dados"><b>Email</b></span>
           <span class="dados"><b>Data</b></span>
         </div>
-        <div class="etapa">
+        <div class="etapa" *ngIf="solicitacaoData.etapa.toString() === '2'">
           <span>Etapa 2:</span>
-          <span class="email">{{ studentData.email }}</span>
-          <span class="data">{{ studentData.data }}</span>
+          <span class="email">{{ solicitacaoData.email }}</span>
+          <span class="data">{{ solicitacaoData.data }}</span>
         </div>
-        <div class="etapa">
+        <div class="etapa" *ngIf="solicitacaoData.etapa.toString() === '3'">
           <span>Etapa 3:</span>
-          <span class="email">{{ studentData.email }}</span>
-          <span class="data">{{ studentData.data }}</span>
+          <span class="email">{{ solicitacaoData.email }}</span>
+          <span class="data">{{ solicitacaoData.data }}</span>
         </div>
-        <div class="etapa">
+        <div class="etapa" *ngIf="solicitacaoData.etapa.toString() === '4'">
           <span>Etapa 4:</span>
-          <span class="email">{{ studentData.email }}</span>
-          <span class="data">{{ studentData.data }}</span>
+          <span class="email">{{ solicitacaoData.email }}</span>
+          <span class="data">{{ solicitacaoData.data }}</span>
         </div>
-        <div class="etapa">
+        <div class="etapa" *ngIf="solicitacaoData.etapa.toString() === '5'">
           <span>Etapa 5:</span>
-          <span class="email">{{ studentData.email }}</span>
-          <span class="data">{{ studentData.data }}</span>
+          <span class="email">{{ solicitacaoData.email }}</span>
+          <span class="data">{{ solicitacaoData.data }}</span>
         </div>
       </div>
     </div>
@@ -104,6 +104,7 @@
         mat-raised-button
         color="primary"
         (click)="abrirDialogDeferir()"
+        [disabled]="disableButton"
       >
         > Deferir
       </button>
@@ -112,6 +113,7 @@
         mat-raised-button
         color="warn"
         (click)="abrirDialogIndeferir()"
+        [disabled]="disableButton"
       >
         > Indeferir
       </button>
