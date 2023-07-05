@@ -145,3 +145,9 @@
   opacity: 0.5;
   pointer-events: none;
 }
+
+.pagination button.next.disabled {
+  background-color: #ccc;
+  color: white;
+  cursor: not-allowed;
+}

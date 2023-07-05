@@ -34,9 +34,10 @@
     <form class="filtro-form" (ngSubmit)="filtrarPorStatus()">
       <div class="filtro-wrapper">
         <select [(ngModel)]="filtroStatus" name="filtroStatus" class="filtro-input" (ngModelChange)="filtrarPorStatus()">
-          <option value="Em andamento">Em andamento</option>
-          <option value="DEFERIDO">Deferidas</option>
-          <option value="INDEFERIDO">Indeferidas</option>
+          <option value="Em Andamento">Em andamento</option>
+          <option value="Deferido">Deferidas</option>
+          <option value="Indeferido">Indeferidas</option>
+          <option value="todas">Todas</option>
           <!-- Ajustar para que apareça somente para setor de estágio essas opções:
           <option value="setor_estagios">Setor de Estágios</option>
           <option value="coordenador">Coordenador</option>
@@ -61,10 +62,9 @@
       [ngClass]="{ 'disabled': isPaginaAnteriorDisabled() }">
       Anterior
     </button>
-    <button class="next" (click)="proximaPagina()" [disabled]="isProximaPaginaDisabled()"
-      [ngClass]="{ 'disabled': isProximaPaginaDisabled() }">
+    <button class="next" (click)="proximaPagina()" [disabled]="isProximaPaginaDisabled()" [ngClass]="{ 'disabled': isProximaPaginaDisabled() }">
       Próxima
-    </button>
+    </button>    
   </div>
   
 

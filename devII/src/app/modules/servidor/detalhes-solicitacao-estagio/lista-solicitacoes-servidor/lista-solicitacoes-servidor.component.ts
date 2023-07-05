@@ -10,6 +10,7 @@ import { Servidor } from 'src/app/shared/interfaces/servidor';
 })
 export class ListaSolicitacoesServidorComponent implements OnInit {
   listaSolicitacoes: Solicitacoes[] = [];
+  todasSolicitacoes: Solicitacoes[] = [];
   filtroNome: string = '';
   filtroDataInicial: Date = new Date();
   filtroDataFinal: Date = new Date();
@@ -19,56 +20,37 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   paginaAtual: number = 1;
   solicitacoesPorPagina: number = 5;
 
-
   constructor(private service: SolicitacoesService) {}
 
   ngOnInit() {
-    this.filtroStatus = 'Em andamento';
-    this.obterSolicitacoes();
+    this.filtroStatus = 'Em Andamento';
+    this.obterTodasSolicitacoes();
     this.filtrarPorStatus();
   }
 
-    async obterSolicitacoes() {
-    this.paginaAtual = 1; 
-    try {
-      this.listaSolicitacoes = await this.service
-        .listarSolicitacoesPorEmailServidor()
-        .toPromise();
-
-      // Filtrar as solicitações pelo status padrão
+  obterTodasSolicitacoes() {
+    this.service.listarSolicitacoesPorEmailServidor().toPromise().then((solicitacoes) => {
+      this.todasSolicitacoes = solicitacoes;
       this.filtrarPorStatus();
+      this.ordenarSolicitacoes();
+    }).catch((error) => {
+      console.error('Erro ao obter as solicitações:', error);
+    });
+  }
+
+  filtrarPorNome(): void {
+    this.paginaAtual = 1;
+    if (this.filtroNome.trim() === '') {
+      this.listaSolicitacoes = [...this.todasSolicitacoes];
+    } else {
+      this.listaSolicitacoes = this.todasSolicitacoes.filter((solicitacao: Solicitacoes) =>
+        solicitacao.status === 'Em Andamento' &&
+        solicitacao.aluno.nomeCompleto
+        .toLowerCase()
+        .includes(this.filtroNome.toLowerCase())
+      );
 
       this.ordenarSolicitacoes();
-    } catch (error) {
-      console.error('Erro ao obter as solicitações:', error);
-    }
-  }
-
-  isCargoInvalido(): boolean {
-    return (
-      this.listaSolicitacoes[1]?.servidor?.cargo === 'setor de estágio' ||
-      this.listaSolicitacoes[1]?.servidor?.cargo === 'diretoria'
-    );
-  }
-
-  filtrarPorNome() {
-    this.paginaAtual = 1; 
-    if (this.filtroNome.trim() === '') {
-      this.obterSolicitacoes();
-    } else {
-      this.service
-        .listarSolicitacoesPorEmailServidor()
-        .toPromise()
-        .then((solicitacoes) => {
-          this.listaSolicitacoes = solicitacoes.filter((solicitacao: Solicitacoes) =>
-          solicitacao.status === 'Em andamento' &&
-          solicitacao.aluno.nomeCompleto
-          .toLowerCase()
-          .includes(this.filtroNome.toLowerCase())
-        );
-        
-          this.ordenarSolicitacoes();
-        });
     }
   }
 
@@ -80,52 +62,40 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
     // Define a data final para o próximo dia
     const dataFinal2 = new Date(filtroDataFinal.getTime() + 86400000); // Adiciona 24 horas em milissegundos
     
-    this.service
-      .listarSolicitacoesPorEmailServidor()
-      .toPromise()
-      .then((solicitacoes) => {
-        this.listaSolicitacoes = solicitacoes.filter((solicitacao: Solicitacoes) => {
-          // Verifica se a solicitação está em andamento
-          if (solicitacao.status === 'Em andamento') {
-            // Converte a data da solicitação para um objeto Date
-            const dataSolicitacao = new Date(solicitacao.dataSolicitacao);
-    
-            // Remove as informações de hora, minuto, segundo e milissegundo
-            dataSolicitacao.setHours(0, 0, 0, 0);
-    
-            // Compara as datas
-            return (
-              dataSolicitacao >= filtroDataInicial &&
-              dataSolicitacao <= dataFinal2
-            );
-          } else {
-            return false; // Ignora as solicitações que não estão em andamento
-          }
-        });
-    
-        this.ordenarSolicitacoes();
-      });
-    
+    this.listaSolicitacoes = this.todasSolicitacoes.filter((solicitacao: Solicitacoes) => {
+      // Verifica se a solicitação está Em Andamento
+      if (solicitacao.status ==='Em Andamento') {
+        // Converte a data da solicitação para um objeto Date
+        const dataSolicitacao = new Date(solicitacao.dataSolicitacao);
+
+        // Remove as informações de hora, minuto, segundo e milissegundo
+        dataSolicitacao.setHours(0, 0, 0, 0);
+
+        // Compara as datas
+        return (
+          dataSolicitacao >= filtroDataInicial &&
+          dataSolicitacao <= dataFinal2
+        );
+      } else {
+        return false; // Ignora as solicitações que não estão Em Andamento
+      }
+    });
+
+    this.ordenarSolicitacoes();
   }
   
-
   filtrarPorStatus() {    
     this.paginaAtual = 1;          
     if (this.filtroStatus === 'todas') {
-      this.obterSolicitacoes();
+      this.listaSolicitacoes = [...this.todasSolicitacoes];
     } else {
-      this.service
-        .listarSolicitacoesPorEmailServidor()
-        .toPromise()
-        .then((solicitacoes) => {
-          this.listaSolicitacoes = solicitacoes.filter(
-            (solicitacao: Solicitacoes) => {
-              return solicitacao.status === this.filtroStatus;
-            }
-          );
+      this.listaSolicitacoes = this.todasSolicitacoes.filter(
+        (solicitacao: Solicitacoes) => {
+          return solicitacao.status === this.filtroStatus;
+        }
+      );
 
-          this.ordenarSolicitacoes();
-        });
+      this.ordenarSolicitacoes();
     }
   }
 
@@ -143,38 +113,34 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   }
 
   get solicitacoesPagina(): Solicitacoes[] {
-  const inicio = (this.paginaAtual - 1) * this.solicitacoesPorPagina;
-  const fim = inicio + this.solicitacoesPorPagina;
-  return this.listaSolicitacoes.slice(inicio, fim);
-}
-
-get totalPaginas(): number {
-  return Math.ceil(this.listaSolicitacoes.length / this.solicitacoesPorPagina);
-}
-
-irParaPagina(pagina: number) {
-  if (pagina >= 1 && pagina <= this.totalPaginas) {
-    this.paginaAtual = pagina;
+    const inicio = (this.paginaAtual - 1) * this.solicitacoesPorPagina;
+    const fim = inicio + this.solicitacoesPorPagina;
+    return this.listaSolicitacoes.slice(inicio, fim);
   }
-}
 
-paginaAnterior() {
-  this.irParaPagina(this.paginaAtual - 1);
-}
+  get totalPaginas(): number {
+    return Math.ceil(this.listaSolicitacoes.length / this.solicitacoesPorPagina);
+  }
 
-proximaPagina() {
-  this.irParaPagina(this.paginaAtual + 1);
-}
+  irParaPagina(pagina: number) {
+    if (pagina >= 1 && pagina <= this.totalPaginas) {
+      this.paginaAtual = pagina;
+    }
+  }
 
-isPaginaAnteriorDisabled(): boolean {
-  return this.paginaAtual === 1;
-}
+  paginaAnterior() {
+    this.irParaPagina(this.paginaAtual - 1);
+  }
 
-isProximaPaginaDisabled(): boolean {
-  return this.paginaAtual === this.totalPaginas;
-}
+  proximaPagina() {
+    this.irParaPagina(this.paginaAtual + 1);
+  }
 
+  isPaginaAnteriorDisabled(): boolean {
+    return this.paginaAtual === 1;
+  }
 
-
-
+  isProximaPaginaDisabled(): boolean {
+    return this.paginaAtual === this.totalPaginas;
+  }
 }
