@@ -1,58 +1,101 @@
-
-<div class="avisoFundo" *ngIf="exibir">
-</div>
-<div class="titulo">
-  <h1>Envio de solicitação</h1>
-</div>
-<div class="formulario" NGsUBT>
-
-
-  <form class="formulario" (ngSubmit)="enviarSolicitacao()">
-
-    <label for="tipo">Tipo:</label>
-    <select name="tipo" [(ngModel)]="solicitacao.tipo">
-      <option value="" disabled>Escolha um tipo</option>
-      <option value="obrigatório">Estágio obrigatório</option>
-      <option value="Não obrigatório">Estágio não obrigatório</option>
-    </select>
-
-  <label for="nome">Nome</label>
-  <input name="nome" type="text" id="nome" value=" {{ userData.nomeCompleto }}" [readOnly]="true" >
-
-  <div class="container">
-    <div class="row">
-      <label  for="matricula">Matricula</label>
-      <input class="matricula" name="matricula" type="text" id="matricula" value=" {{ userData.matricula }}">
-    </div>
-
-    <div class="row">
-      <label for="ano">Ano</label>
-      <input class="ano" type="text" name="ano" id="ano" value="{{userData.ingresso}}">
-    </div>
-
+<div class="avisoFundo" *ngIf="exibir"></div>
+<div class="corpo">
+  <div class="titulo">
+    <p>Envio de solicitação</p>
   </div>
+  <div class="formulario">
+    <form class="formulario" (ngSubmit)="enviarSolicitacao()">
+      <label for="tipo">Tipo:</label>
+      <select name="tipo" [(ngModel)]="solicitacao.tipo">
+        <option value="" disabled>Escolha um tipo</option>
+        <option value="obrigatório">Estágio obrigatório</option>
+        <option value="Não obrigatório">Estágio não obrigatório</option>
+      </select>
 
-  <label for="curso">Curso</label>
-  <input type="text" name="curso" id="curso" value="{{userData.curso.nomeCurso}}">
+      <label for="nome">Nome</label>
+      <input
+        name="nome"
+        type="text"
+        id="nome"
+        value=" {{ userData.nomeCompleto }}"
+        [readOnly]="true"
+      />
 
-  <input type="file" name="file" id="file" (change)="onFileSelected($event)" accept=".pdf,.doc,.docx" >
-  <ul>
-    <li *ngFor="let file of files">{{ file.name }}</li>
-  </ul>
+      <div class="container">
+        <div class="row">
+          <label for="matricula">Matricula</label>
+          <input
+            class="matricula"
+            name="matricula"
+            type="text"
+            id="matricula"
+            value=" {{ userData.matricula }}"
+          />
+        </div>
 
-  <input class="botao" type="button" (click)="exibirDiv()" value="Enviar solicitação">
+        <div class="row">
+          <label for="ano">Ano</label>
+          <input
+            class="ano"
+            type="text"
+            name="ano"
+            id="ano"
+            value="{{ userData.ingresso }}"
+          />
+        </div>
+      </div>
 
+      <label for="curso">Curso</label>
+      <input
+        type="text"
+        name="curso"
+        id="curso"
+        value="{{ userData.curso.nomeCurso }}"
+      />
 
-  <div class="aviso" *ngIf="exibir">
-    <h1 class="tAviso" *ngIf="!sucesso">Atenção</h1>
-    <h1 class="tAviso" *ngIf="sucesso">Sucesso</h1>
-    <h1 class="titulo">{{ textoEnvio }}</h1>
-    <input class="botao" type="submit"  *ngIf="!sucesso" value="Enviar solicitação">
-    <input class="botaov" type="button" *ngIf="!sucesso" (click)="exibirDiv()" value="Cancelar">
-    <input class="botaov" type="button" *ngIf="sucesso" (click)="retornar()" value="Voltar">
+      <input
+        type="file"
+        name="file"
+        id="file"
+        (change)="onFileSelected($event)"
+        accept=".pdf,.doc,.docx"
+      />
+      <ul>
+        <li *ngFor="let file of files">{{ file.name }}</li>
+      </ul>
+
+      <input
+        class="botao"
+        type="button"
+        (click)="exibirDiv()"
+        value="Enviar solicitação"
+      />
+
+      <div class="aviso" *ngIf="exibir">
+        <h1 class="tAviso" *ngIf="!sucesso">Atenção</h1>
+        <h1 class="tAviso" *ngIf="sucesso">Sucesso</h1>
+        <h1 class="titulo">{{ textoEnvio }}</h1>
+        <input
+          class="botao"
+          type="submit"
+          *ngIf="!sucesso"
+          value="Enviar solicitação"
+        />
+        <input
+          class="botaov"
+          type="button"
+          *ngIf="!sucesso"
+          (click)="exibirDiv()"
+          value="Cancelar"
+        />
+        <input
+          class="botaov"
+          type="button"
+          *ngIf="sucesso"
+          (click)="retornar()"
+          value="Voltar"
+        />
+      </div>
+    </form>
   </div>
-
-
-
-</form>
 </div>
