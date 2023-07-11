@@ -29,6 +29,7 @@ export class AnaliseDocsComponent implements OnInit {
   public solicitacaoData$!: Observable<any>;
   public readonly Roles: typeof Role = Role;
 
+  public dialogAberto: boolean = false;
   public servidore!: Servidor;
   public disableButton?: boolean;
   motivoIndeferimento = new FormControl('');
@@ -88,7 +89,12 @@ export class AnaliseDocsComponent implements OnInit {
     console.log(this.disableButton);
   }
 
-  public abrirDialogDeferir() {
+  public abrirDialogDeferir(): void {
+    if (this.dialogAberto) {
+      return;
+    }
+
+    this.dialogAberto = true;
     const dialogRef = this.dialog.open(ModalAnaliseComponent, {
       width: '600px',
       data: {
@@ -103,6 +109,10 @@ export class AnaliseDocsComponent implements OnInit {
           return this.enviarDeferimento();
         },
       },
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.dialogAberto = false;
     });
   }
 
@@ -140,9 +150,9 @@ export class AnaliseDocsComponent implements OnInit {
       next: () => {
         this.toastService.showMessage('Deferimento enviado com sucesso!');
       },
-      error: () => {
-        this.toastService.showMessage('Erro ao enviar o deferimento.');
-      },
+      // error: () => {
+      //   this.toastService.showMessage('Erro ao enviar o deferimento.');
+      // },
     });
   }
 
@@ -165,9 +175,9 @@ export class AnaliseDocsComponent implements OnInit {
       next: () => {
         this.toastService.showMessage('Deferimento enviado com sucesso!');
       },
-      error: () => {
-        this.toastService.showMessage('Erro ao enviar o deferimento.');
-      },
+      // error: () => {
+      //   this.toastService.showMessage('Erro ao enviar o deferimento.');
+      // },
     });
   }
 
@@ -190,9 +200,9 @@ export class AnaliseDocsComponent implements OnInit {
       next: () => {
         this.toastService.showMessage('Deferimento enviado com sucesso!');
       },
-      error: () => {
-        this.toastService.showMessage('Erro ao enviar o deferimento.');
-      },
+      // error: () => {
+      //   this.toastService.showMessage('Erro ao enviar o deferimento.');
+      // },
     });
   }
 
@@ -207,12 +217,12 @@ export class AnaliseDocsComponent implements OnInit {
       (response) => {
         this.toastService.showMessage('Solicitação Indeferida!');
       },
-      (error) => {
-        this.toastService.showMessage(
-          'Erro ao enviar o indeferimento!',
-          'ERRO'
-        );
-      }
+      // (error) => {
+      //   this.toastService.showMessage(
+      //     'Erro ao enviar o indeferimento!',
+      //     'ERRO'
+      //   );
+      // }
     );
   }
 }
