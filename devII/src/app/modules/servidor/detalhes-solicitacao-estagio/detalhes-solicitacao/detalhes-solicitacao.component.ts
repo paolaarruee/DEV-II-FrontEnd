@@ -18,7 +18,7 @@ export class DetalhesSolicitacaoServidorComponent {
       return 'statusColor1'
     }
 
-    if(this.solicitacao.status.toLowerCase()  == 'em andamento' || this.solicitacao.status === 'Em Andamento'){
+    if(this.solicitacao.status.toLowerCase()  == 'em andamento' || this.solicitacao.status.toLowerCase() === 'em_andamento'){
       return 'statusColor2'
     }
 
