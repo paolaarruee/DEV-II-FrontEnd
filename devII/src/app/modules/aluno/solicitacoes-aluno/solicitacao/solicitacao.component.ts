@@ -26,14 +26,40 @@ export class SolicitacaoComponent {
   }
 
   @Input() solicitacao = {
+    id:'',
     titulo: '',
     conteudo: '',
     status: '',
+    tipo: '',
     etapa: '',
     observacao: '',
-    dataSolicitacao:'',
-    tipo:''
-  };
+    dataSolicitacao: '',
+    aluno: {
+        id: '',
+        nomeCompleto: '',
+        usuarioSistema: {
+            id: '',
+            email: '',
+            senha: '',
+            roles: {
+                id: '',
+                name: ''
+            }
+        },
+        turno: '',
+        matricula: '',
+        ingresso: '',
+        role: {
+            id: '',
+            name: ''
+        },
+        curso: {
+            id: '',
+            nomeCurso: ''
+        },
+        ativo: ''
+    }
+};
 
   ngOnInit() {
     this.solicitacao.dataSolicitacao = this.formatarDataSolicitacao(this.solicitacao.dataSolicitacao);
@@ -52,7 +78,7 @@ export class SolicitacaoComponent {
   }
 
   statusSolicitacao(): string{
-    if(this.solicitacao.status.toLowerCase() == 'deferido' || this.solicitacao.status === 'Deferido'){
+    if(this.solicitacao.status.toLowerCase() == 'deferido' || this.solicitacao.status === 'Deferido' || this.solicitacao.status === 'aprovado'){
       return 'statusColor1'
     }
 
@@ -60,7 +86,7 @@ export class SolicitacaoComponent {
       return 'statusColor2'
     }
 
-    if(this.solicitacao.status.toLowerCase() == 'indeferido' || this.solicitacao.status === 'Indeferido'){
+    if(this.solicitacao.status.toLowerCase() == 'indeferido' || this.solicitacao.status === 'Indeferido' || this.solicitacao.status === 'negado'){
       return 'statusColor3'
     }
     return 'statusColor1'

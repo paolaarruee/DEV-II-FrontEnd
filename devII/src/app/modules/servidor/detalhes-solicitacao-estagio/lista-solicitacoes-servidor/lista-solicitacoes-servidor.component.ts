@@ -90,18 +90,18 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
     if (this.filtroStatus === 'todas') {
       this.listaSolicitacoes = [...this.todasSolicitacoes];
     } else {
-      const filtroStatusLowerCase = this.filtroStatus.toLowerCase();
+      const filtroStatusUpperCase = this.filtroStatus.toUpperCase();
       this.listaSolicitacoes = this.todasSolicitacoes.filter(
         (solicitacao: Solicitacoes) => {
-          const statusLowerCase = solicitacao.status.toLowerCase();
-          return statusLowerCase.includes(filtroStatusLowerCase);
+          const statusUpperCase = solicitacao.status.toUpperCase();
+          return statusUpperCase === filtroStatusUpperCase;
         }
       );
     }
   
     this.ordenarSolicitacoes();
-  }  
-
+  }
+  
   
 
   ordenarSolicitacoes() {

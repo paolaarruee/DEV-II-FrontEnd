@@ -13,20 +13,20 @@ export class DetalhesSolicitacaoServidorComponent {
     public dialogRef: MatDialogRef<DetalhesSolicitacaoServidorComponent>,
     @Inject(MAT_DIALOG_DATA) public solicitacao: any  ) {}
 
-  statusSolicitacao(): string{
-    if(this.solicitacao.status.toLowerCase()  == 'deferido' || this.solicitacao.status === 'Deferido'){
+    statusSolicitacao(): string{
+      if(this.solicitacao.status.toLowerCase() == 'deferido' || this.solicitacao.status === 'Deferido' || this.solicitacao.status === 'aprovado'){
+        return 'statusColor1'
+      }
+
+      if(this.solicitacao.status.toLowerCase()  == 'em andamento' || this.solicitacao.status.toLowerCase() === 'em_andamento'){
+        return 'statusColor2'
+      }
+
+      if(this.solicitacao.status.toLowerCase() == 'indeferido'){
+        return 'statusColor3'
+      }
       return 'statusColor1'
     }
-
-    if(this.solicitacao.status.toLowerCase()  == 'em andamento' || this.solicitacao.status.toLowerCase() === 'em_andamento'){
-      return 'statusColor2'
-    }
-
-    if(this.solicitacao.status.toLowerCase() == 'indeferido'){
-      return 'statusColor3'
-    }
-    return 'statusColor1'
-  }
 
   progressoFluxo(etapa: number): string {
     if (this.solicitacao.etapa >= etapa) {

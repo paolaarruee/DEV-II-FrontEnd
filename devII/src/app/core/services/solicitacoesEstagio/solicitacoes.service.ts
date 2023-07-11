@@ -59,7 +59,7 @@ export class SolicitacoesService {
       .pipe(
         map((solicitacoes: any[]) =>
           solicitacoes.map((solicitacao: any, i: number) => ({
-             //id: i + 1,
+            //id: i + 1,
             ...solicitacao,
           }))
         )

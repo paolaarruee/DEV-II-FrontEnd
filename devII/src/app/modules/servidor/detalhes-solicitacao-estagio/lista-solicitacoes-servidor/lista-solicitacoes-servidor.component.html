@@ -1,3 +1,8 @@
+<div class="tituloprincipal">
+  <span>Lista de Solicitações</span>
+  <span class="cardDecoracao1"></span>
+</div>
+
 <div class="filtro-container" style="margin-top: 20px;">
   <div class="filtro-row">
     <form class="filtro-form" (ngSubmit)="filtrarPorData()">
@@ -41,7 +46,7 @@
         </select>
       </div>
     </form>
-    
+
   </div>
 </div>
 
@@ -52,7 +57,8 @@
 </div>
 
 <div class="pagination">
-  <button class="previous" (click)="paginaAnterior()" [disabled]="isPaginaAnteriorDisabled()" [ngClass]="{ 'disabled': isPaginaAnteriorDisabled() }">
+  <button class="previous" (click)="paginaAnterior()" [disabled]="isPaginaAnteriorDisabled()"
+    [ngClass]="{ 'disabled': isPaginaAnteriorDisabled() }">
     Anterior
   </button>
   <button class="next" (click)="proximaPagina()" [disabled]="isProximaPaginaDisabled()" [ngClass]="{ 'disabled': isProximaPaginaDisabled() }">
@@ -65,3 +71,4 @@
     <p>Você não tem solicitações</p>
   </div>
 </ng-template>
+
