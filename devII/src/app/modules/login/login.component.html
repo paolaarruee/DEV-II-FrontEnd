@@ -4,8 +4,8 @@
       <div class="image-container">
         <img src="assets/img/imgLogin.png" alt="imagem login">
       </div>
-      <input type="email" id="email" formControlName="email" placeholder="email" name="email" required >
-      <input type="password" id="senha" formControlName="senha" placeholder="senha" name="senha" required>
+      <input class="campos" type="email" id="email" formControlName="email" placeholder="Email@restinga.ifrs.edu.br" name="email" required >
+      <input class="campos" type="password" id="senha" formControlName="senha" placeholder="Senha" name="senha" required>
       <div class="buttons">
         <button type="submit" [disabled]="loginForm.invalid">Acessar</button>
         <button type="button" routerLink="/cadastrarAluno">Cadastrar</button>
