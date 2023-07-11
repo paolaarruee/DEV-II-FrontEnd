@@ -48,11 +48,18 @@ export interface Solicitacoes {
     statusEtapaCoordenador: string,
     statusSetorEstagio: string
     statusEtapaDiretor: string,
+    historico: []
+  }
+  export interface Historico {
+    id: string;
+    data_solicitacao: string;
+    etapa: string;
+    status: string;
   }
 
 export enum Status {
-  DEFERIDO = 'DEFERIDO',
-  INDEFERIDO = 'INDEFERIDO',
-  EM_ANDAMENTO ='EM_ANDAMENTO'
+  DEFERIDO = 'Deferido',
+  INDEFERIDO = 'Indeferido',
+  EM_ANDAMENTO ='Em Andamento'
 }
 

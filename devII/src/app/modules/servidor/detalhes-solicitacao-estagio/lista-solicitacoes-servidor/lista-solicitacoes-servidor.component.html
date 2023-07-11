@@ -1,3 +1,8 @@
+<div class="tituloprincipal">
+  <span>Lista de Solicitações</span>
+  <span class="cardDecoracao1"></span>
+</div>
+
 <div class="filtro-container" style="margin-top: 20px;">
   <div class="filtro-row">
     <form class="filtro-form" (ngSubmit)="filtrarPorData()">
@@ -44,7 +49,7 @@
           <option value="diretoria">Diretoria</option>-->
         </select>
       </div>
-      
+
     </form>
   </div>
 </div>
@@ -64,11 +69,11 @@
     </button>
     <button class="next" (click)="proximaPagina()" [disabled]="isProximaPaginaDisabled()" [ngClass]="{ 'disabled': isProximaPaginaDisabled() }">
       Próxima
-    </button>    
+    </button>
   </div>
-  
 
-  
+
+
 
   <ng-template #semSolicitacoes>
     <div class="semSolicitacoes">
