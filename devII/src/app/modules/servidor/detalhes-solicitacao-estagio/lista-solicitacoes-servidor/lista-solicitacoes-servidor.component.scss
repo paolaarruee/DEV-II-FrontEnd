@@ -84,20 +84,20 @@
   text-align: center;
 }
 
-
-
 .filtro-row {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   gap: 10px;
   align-self: flex-start;
-  flex-wrap: wrap;
+  flex-direction: row;
+  margin: 0% 10% 0% 0%;
 }
 .filtro-wrapper {
   display: flex;
   align-items: center;
   gap: 10px;
+  color: #6a737b;
 }
 
 .filtro-form {
@@ -107,20 +107,38 @@
 }
 
 .filtro-input {
-  padding: 5px 10px;
-  margin-bottom: 10px;
-  border-style: outset;
-  border-radius: 5px;
-  background-color: #f5f5f5;
+  vertical-align: middle;
+  background-color: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 0.375rem 0.75rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: #6a737b;
+}
+
+.filtro-status {
+  vertical-align: middle;
+  background-color: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 0.375rem 0.75rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: #6a737b;
+}
+
+.filtro-status:hover {
+  color: #ffffff;
+  background-color: #6a737b;
 }
 
 .filtro-button {
-  padding: 5px 20px;
-  margin-bottom: 10px;
-  border-radius: 5px;
   background-color: #f5f5f5;
-  border: 1px solid #ccc;
-  transition: background-color 0.3s ease;
+  color: #6a737b;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  line-height: 1.5;
+  border-radius: 0.2rem;
+  margin-left: 3px;
+  padding: 0.375rem 0.75rem;
 }
 
 .filtro-button:hover {

@@ -5,25 +5,6 @@
 
 <div class="filtro-container" style="margin-top: 20px;">
   <div class="filtro-row">
-    <form class="filtro-form" (ngSubmit)="filtrarPorData()">
-      <div class="filtro-wrapper">
-        Data Inicial:
-        <input
-          type="date"
-          [(ngModel)]="filtroDataInicial"
-          name="filtroDataInicial"
-          class="filtro-input"
-        />
-        Data Final:
-        <input
-          type="date"
-          [(ngModel)]="filtroDataFinal"
-          name="filtroDataFinal"
-          class="filtro-input"
-        />
-      </div>
-      <button type="submit" class="filtro-button">Filtrar Por Data</button>
-    </form>
 
     <form class="filtro-form" (ngSubmit)="filtrarPorNome()">
       <div class="filtro-wrapper">
@@ -40,13 +21,33 @@
 
     <form class="filtro-form" (ngSubmit)="filtrarPorStatus()">
       <div class="filtro-wrapper">
-        <select [(ngModel)]="filtroStatus" name="filtroStatus" class="filtro-input" (ngModelChange)="filtrarPorStatus()">
-          <option value="EM ANDAMENTO">Em andamento</option>
+        <select [(ngModel)]="filtroStatus" name="filtroStatus" class="filtro-status" (ngModelChange)="filtrarPorStatus()">
+          <option value="EM ANDAMENTO">Em Andamento</option>
           <option value="Deferido">Deferidas</option>
           <option value="Indeferido">Indeferidas</option>
           <option value="todas">Todas</option>
         </select>
       </div>
+    </form>
+
+    <form class="filtro-form" (ngSubmit)="filtrarPorData()">
+      <div class="filtro-wrapper">
+        De:
+        <input
+          type="date"
+          [(ngModel)]="filtroDataInicial"
+          name="filtroDataInicial"
+          class="filtro-input"
+        />
+        Até
+        <input
+          type="date"
+          [(ngModel)]="filtroDataFinal"
+          name="filtroDataFinal"
+          class="filtro-input"
+        />
+      </div>
+      <button type="submit" class="filtro-button">Filtrar Por Data</button>
     </form>
 
   </div>
