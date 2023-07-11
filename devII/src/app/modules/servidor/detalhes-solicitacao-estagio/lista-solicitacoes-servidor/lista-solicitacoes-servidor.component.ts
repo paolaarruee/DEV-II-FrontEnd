@@ -44,7 +44,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
       this.listaSolicitacoes = [...this.todasSolicitacoes];
     } else {
       this.listaSolicitacoes = this.todasSolicitacoes.filter((solicitacao: Solicitacoes) =>
-        solicitacao.status.toLowerCase() === 'em andamento' &&
+       // solicitacao.status.toLowerCase() === 'em andamento' &&
         solicitacao.aluno.nomeCompleto
         .toLowerCase()
         .includes(this.filtroNome.toLowerCase())
@@ -63,8 +63,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
     const dataFinal2 = new Date(filtroDataFinal.getTime() + 86400000); // Adiciona 24 horas em milissegundos
     
     this.listaSolicitacoes = this.todasSolicitacoes.filter((solicitacao: Solicitacoes) => {
-      // Verifica se a solicitação está Em Andamento
-      if (solicitacao.status.toLowerCase() === 'em andamento') {
+          
         // Converte a data da solicitação para um objeto Date
         const dataSolicitacao = new Date(solicitacao.dataSolicitacao);
 
@@ -75,10 +74,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
         return (
           dataSolicitacao >= filtroDataInicial &&
           dataSolicitacao <= dataFinal2
-        );
-      } else {
-        return false; // Ignora as solicitações que não estão Em Andamento
-      }
+        );   
     });
 
     this.ordenarSolicitacoes();

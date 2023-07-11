@@ -7,12 +7,14 @@
   <div class="filtro-row">
     <form class="filtro-form" (ngSubmit)="filtrarPorData()">
       <div class="filtro-wrapper">
+        Data Inicial:
         <input
           type="date"
           [(ngModel)]="filtroDataInicial"
           name="filtroDataInicial"
           class="filtro-input"
         />
+        Data Final:
         <input
           type="date"
           [(ngModel)]="filtroDataFinal"
