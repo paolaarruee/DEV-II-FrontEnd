@@ -22,8 +22,6 @@ export class SolicitacoesService {
     );
   }
 
- 
-
   indeferirSolicitacao(
     id: number,
     dados: SolicitacaoIndeferir
