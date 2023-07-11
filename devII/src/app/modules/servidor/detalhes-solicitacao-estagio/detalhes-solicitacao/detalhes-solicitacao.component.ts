@@ -18,11 +18,11 @@ export class DetalhesSolicitacaoServidorComponent {
         return 'statusColor1'
       }
 
-      if(this.solicitacao.status.toLowerCase() == 'em andamento' || this.solicitacao.status === 'Em Andamento'){
+      if(this.solicitacao.status.toLowerCase()  == 'em andamento' || this.solicitacao.status.toLowerCase() === 'em_andamento'){
         return 'statusColor2'
       }
 
-      if(this.solicitacao.status.toLowerCase() == 'indeferido' || this.solicitacao.status === 'Indeferido' || this.solicitacao.status === 'negado'){
+      if(this.solicitacao.status.toLowerCase() == 'indeferido'){
         return 'statusColor3'
       }
       return 'statusColor1'

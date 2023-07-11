@@ -39,45 +39,36 @@
     <form class="filtro-form" (ngSubmit)="filtrarPorStatus()">
       <div class="filtro-wrapper">
         <select [(ngModel)]="filtroStatus" name="filtroStatus" class="filtro-input" (ngModelChange)="filtrarPorStatus()">
-          <option value="Em Andamento">Em andamento</option>
+          <option value="EM ANDAMENTO">Em andamento</option>
           <option value="Deferido">Deferidas</option>
           <option value="Indeferido">Indeferidas</option>
           <option value="todas">Todas</option>
-          <!-- Ajustar para que apareça somente para setor de estágio essas opções:
-          <option value="setor_estagios">Setor de Estágios</option>
-          <option value="coordenador">Coordenador</option>
-          <option value="diretoria">Diretoria</option>-->
         </select>
       </div>
-
     </form>
+
   </div>
 </div>
 
-
-  <div class="solicitacao" *ngIf="solicitacoesPagina.length > 0; else semSolicitacoes">
-    <div *ngFor="let solicitacao of solicitacoesPagina">
-      <app-solicitacao-servidor [solicitacao]="solicitacao"></app-solicitacao-servidor>
-    </div>
+<div class="solicitacao" *ngIf="solicitacoesPagina.length > 0; else semSolicitacoes">
+  <div *ngFor="let solicitacao of solicitacoesPagina">
+    <app-solicitacao-servidor [solicitacao]="solicitacao"></app-solicitacao-servidor>
   </div>
+</div>
 
+<div class="pagination">
+  <button class="previous" (click)="paginaAnterior()" [disabled]="isPaginaAnteriorDisabled()"
+    [ngClass]="{ 'disabled': isPaginaAnteriorDisabled() }">
+    Anterior
+  </button>
+  <button class="next" (click)="proximaPagina()" [disabled]="isProximaPaginaDisabled()" [ngClass]="{ 'disabled': isProximaPaginaDisabled() }">
+    Próxima
+  </button>
+</div>
 
-  <div class="pagination">
-    <button class="previous" (click)="paginaAnterior()" [disabled]="isPaginaAnteriorDisabled()"
-      [ngClass]="{ 'disabled': isPaginaAnteriorDisabled() }">
-      Anterior
-    </button>
-    <button class="next" (click)="proximaPagina()" [disabled]="isProximaPaginaDisabled()" [ngClass]="{ 'disabled': isProximaPaginaDisabled() }">
-      Próxima
-    </button>
+<ng-template #semSolicitacoes>
+  <div class="semSolicitacoes">
+    <p>Você não tem solicitações</p>
   </div>
-
-
-
-
-  <ng-template #semSolicitacoes>
-    <div class="semSolicitacoes">
-      <p>Você não tem solicitações</p>
-    </div>
-  </ng-template>
+</ng-template>
 

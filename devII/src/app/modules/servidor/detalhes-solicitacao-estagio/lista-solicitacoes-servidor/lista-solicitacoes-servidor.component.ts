@@ -23,7 +23,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   constructor(private service: SolicitacoesService) {}
 
   ngOnInit() {
-    this.filtroStatus = 'Em Andamento';
+    this.filtroStatus = 'EM ANDAMENTO';
     this.obterTodasSolicitacoes();
     this.filtrarPorStatus();
   }
@@ -44,7 +44,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
       this.listaSolicitacoes = [...this.todasSolicitacoes];
     } else {
       this.listaSolicitacoes = this.todasSolicitacoes.filter((solicitacao: Solicitacoes) =>
-        solicitacao.status === 'Em Andamento' &&
+        solicitacao.status.toLowerCase() === 'em andamento' &&
         solicitacao.aluno.nomeCompleto
         .toLowerCase()
         .includes(this.filtroNome.toLowerCase())
@@ -64,7 +64,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
     
     this.listaSolicitacoes = this.todasSolicitacoes.filter((solicitacao: Solicitacoes) => {
       // Verifica se a solicitação está Em Andamento
-      if (solicitacao.status ==='Em Andamento') {
+      if (solicitacao.status.toLowerCase() === 'em andamento') {
         // Converte a data da solicitação para um objeto Date
         const dataSolicitacao = new Date(solicitacao.dataSolicitacao);
 
@@ -84,20 +84,25 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
     this.ordenarSolicitacoes();
   }
   
-  filtrarPorStatus() {    
-    this.paginaAtual = 1;          
+  filtrarPorStatus() {
+    this.paginaAtual = 1;
+  
     if (this.filtroStatus === 'todas') {
       this.listaSolicitacoes = [...this.todasSolicitacoes];
     } else {
+      const filtroStatusLowerCase = this.filtroStatus.toLowerCase();
       this.listaSolicitacoes = this.todasSolicitacoes.filter(
         (solicitacao: Solicitacoes) => {
-          return solicitacao.status === this.filtroStatus;
+          const statusLowerCase = solicitacao.status.toLowerCase();
+          return statusLowerCase.includes(filtroStatusLowerCase);
         }
       );
-
-      this.ordenarSolicitacoes();
     }
-  }
+  
+    this.ordenarSolicitacoes();
+  }  
+
+  
 
   ordenarSolicitacoes() {
     this.listaSolicitacoes.sort((a, b) => {
@@ -107,10 +112,13 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
     });
   }
 
-  atualizarPagina() {
-    // Recarrega a página para exibir os resultados filtrados
-    location.reload();
+  atualizarPagina(): void {
+    setTimeout(() => {
+      // Recarrega a página para exibir os resultados filtrados
+      location.reload();
+    }, 100); // Aguarda 100ms antes de recarregar a página
   }
+  
 
   get solicitacoesPagina(): Solicitacoes[] {
     const inicio = (this.paginaAtual - 1) * this.solicitacoesPorPagina;
