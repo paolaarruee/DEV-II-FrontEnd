@@ -25,7 +25,7 @@
 
           <span class="etapaDeferido" *ngIf="solicitacao.historico[0].etapa == 2 && solicitacao.etapa > 2">*Deferido*</span>
 
-          <span class="etapaIndeferido" *ngIf="solicitacao.historico[0].etapa == 2 && solicitacao.etapa == 2 && solicitacao.status === 'Indeferido'">*Indeferido*</span>
+          <span class="etapaIndeferido" *ngIf="solicitacao.historico[0].etapa == 2 && solicitacao.etapa == 2 && solicitacao.status == 'Indeferido'">*Indeferido*</span>
       </div>
       <span>Análise setor de estágio</span>
     </div>
@@ -37,7 +37,7 @@
 
           <span class="etapaDeferido" *ngIf="solicitacao.historico[1].etapa == 3 && solicitacao.etapa > 3">*Deferido*</span>
 
-          <span class="etapaIndeferido" *ngIf="solicitacao.historico[1].etapa == 3 && solicitacao.etapa == 3 && solicitacao.historico[1].status === 'Indeferido'">*Indeferido*</span>
+          <span class="etapaIndeferido" *ngIf="solicitacao.historico[1].etapa == 3 && solicitacao.etapa == 3 && solicitacao.historico[1].status == 'Indeferido'">*Indeferido*</span>
       </div>
       <span>Assinatura Coordenador de curso</span>
     </div>
@@ -50,7 +50,7 @@
 
         <span class="etapaDeferido" *ngIf="solicitacao.historico[2].etapa == 4 && solicitacao.etapa > 4">*Deferido*</span>
 
-        <span class="etapaIndeferido" *ngIf="solicitacao.historico[2].etapa == 4 && solicitacao.etapa == 4 && solicitacao.historico[2].status === 'Indeferido'">*Indeferido*</span>
+        <span class="etapaIndeferido" *ngIf="solicitacao.historico[2].etapa == 4 && solicitacao.etapa == 4 && solicitacao.historico[2].status == 'Indeferido'">*Indeferido*</span>
       </div>
       <span>Assinatura reitor</span>
     </div>
@@ -59,11 +59,11 @@
     <div class="step">
       <div class="circle" [ngClass]="progressoFluxo(5)">5</div>
       <div class="etapa">
-        <span class="emAndamento" *ngIf="solicitacao.historico[3].etapa == 5 && solicitacao.etapa == 5 && solicitacao.status !== 'Indeferido'">*Em Análise*</span>
+        <!-- <span class="emAndamento" *ngIf="solicitacao.historico[3].etapa == 5 && solicitacao.etapa == 5 && solicitacao.status !== 'Indeferido'">*Em Análise*</span> -->
 
-          <span class="etapaDeferido" *ngIf="solicitacao.historico[3].etapa == 5 && solicitacao.etapa > 5">*Deferido*</span>
+          <span class="etapaDeferido" *ngIf="solicitacao.historico[3].etapa == 5 && solicitacao.etapa == 5 && solicitacao.status == 'Deferido'">*Deferido*</span>
 
-          <span class="etapaIndeferido" *ngIf="solicitacao.historico[3].etapa == 5 && solicitacao.etapa == 5 && solicitacao.historico[3].status === 'Indeferido'">*Indeferido*</span>
+          <span class="etapaIndeferido" *ngIf="solicitacao.historico[3].etapa == 5 && solicitacao.etapa == 5 && solicitacao.historico[3].status == 'Indeferido'">*Indeferido*</span>
       </div>
       <span>Processo de assinatura Finalizado</span>
     </div>
