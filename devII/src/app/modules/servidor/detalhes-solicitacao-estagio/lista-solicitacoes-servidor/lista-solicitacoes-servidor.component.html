@@ -32,25 +32,18 @@
 
     <form class="filtro-form" (ngSubmit)="filtrarPorData()">
       <div class="filtro-wrapper">
-        De:
-        <input
-          type="date"
-          [(ngModel)]="filtroDataInicial"
-          name="filtroDataInicial"
-          class="filtro-input"
-        />
+        De
+        <input type="date" [(ngModel)]="filtroDataInicial" name="filtroDataInicial" class="filtro-input"/>
         Até
-        <input
-          type="date"
-          [(ngModel)]="filtroDataFinal"
-          name="filtroDataFinal"
-          class="filtro-input"
-        />
+        <input type="date" [(ngModel)]="filtroDataFinal" name="filtroDataFinal" class="filtro-input"/>
       </div>
       <button type="submit" class="filtro-button">Filtrar Por Data</button>
     </form>
-
   </div>
+</div>
+
+<div *ngIf="dataInvalida" class="error-message">
+  * Data inválida! Por favor, insira uma data válida. *
 </div>
 
 <div class="solicitacao" *ngIf="solicitacoesPagina.length > 0; else semSolicitacoes">

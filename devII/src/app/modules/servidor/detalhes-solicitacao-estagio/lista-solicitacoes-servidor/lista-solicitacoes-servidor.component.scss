@@ -149,6 +149,13 @@
   background-color: #d3d3d3;
 }
 
+.error-message{
+  display: flex;
+  justify-content: flex-end;
+  align-self: flex-start;
+  color: #CB0606;
+  margin: 0% 14% 0% 0%;
+}
 
 .previous,
 .next {
