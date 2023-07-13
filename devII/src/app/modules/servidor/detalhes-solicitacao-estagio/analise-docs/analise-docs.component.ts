@@ -83,14 +83,17 @@ export class AnaliseDocsComponent implements OnInit {
         this.disableButton =
           (this.authenticationService.role === Role.ROLE_SESTAGIO &&
             solicitacoes.statusEtapaSetorEstagio === Status.DEFERIDO) ||
+
           (this.authenticationService.role === Role.ROLE_SERVIDOR &&
             solicitacoes.statusEtapaCoordenador === Status.DEFERIDO ||
-          solicitacoes.statusEtapaSetorEstagio === Status.EM_ANDAMENTO) ||
-          (this.authenticationService.role === Role.ROLE_SERVIDOR &&
-            solicitacoes.statusEtapaDiretor === Status.DEFERIDO &&
+            solicitacoes.statusEtapaSetorEstagio === Status.EM_ANDAMENTO) ||
+
+          (this.authenticationService.role === Role.ROLE_DIRETOR &&
+            solicitacoes.statusEtapaDiretor === Status.DEFERIDO ||
             solicitacoes.statusEtapaCoordenador === Status.EM_ANDAMENTO) ||
+
           solicitacoes.status === Status.INDEFERIDO;
-        solicitacoes.status === Status.DEFERIDO;
+          solicitacoes.status === Status.DEFERIDO;
       })
     );
     console.log(this.disableButton);
