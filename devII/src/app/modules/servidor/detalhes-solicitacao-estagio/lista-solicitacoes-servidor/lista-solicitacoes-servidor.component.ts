@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SolicitacoesService } from 'src/app/core/services/solicitacoesEstagio/solicitacoes.service';
 import { Solicitacoes } from 'src/app/shared/interfaces/solicitacoes';
 import { Servidor } from 'src/app/shared/interfaces/servidor';
+import { AuthenticationService } from 'src/app/core/services/authentication/authentication.service';
+import { Authorization, Role } from 'src/app/shared/interfaces/usuario';
 
 @Component({
   selector: 'app-lista-solicitacoes-servidor',
@@ -17,8 +19,9 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   solicitacao: Solicitacoes | undefined;
   paginaAtual: number = 1;
   solicitacoesPorPagina: number = 5;
+  public readonly Roles: typeof Role = Role;
 
-  constructor(private service: SolicitacoesService) {}
+  constructor(private service: SolicitacoesService, private authenticationService: AuthenticationService) {}
 
   ngOnInit() {
     this.filtroStatus = 'EM ANDAMENTO';
@@ -30,6 +33,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
     this.service.listarSolicitacoesPorEmailServidor().toPromise().then((solicitacoes) => {
       this.todasSolicitacoes = solicitacoes;
       this.filtrarPorStatus();
+      this.filtrarPorEtapa();
       this.ordenarSolicitacoes();
     }).catch((error) => {
       console.error('Erro ao obter as solicitações:', error);
@@ -140,6 +144,26 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
     }
 
     this.ordenarSolicitacoes();
+  }
+
+  filtrarPorEtapa() {
+    if (this.authenticationService.role === Role.ROLE_SESTAGIO) {
+      this.listaSolicitacoes = this.listaSolicitacoes.filter((solicitacao) => {
+        return solicitacao.etapa === '2';
+      });
+    }
+
+    if (this.authenticationService.role === Role.ROLE_SERVIDOR) {
+      this.listaSolicitacoes = this.listaSolicitacoes.filter((solicitacao) => {
+        return solicitacao.etapa === '3';
+      });
+    }
+
+    if (this.authenticationService.role === Role.ROLE_DIRETOR) {
+      this.listaSolicitacoes = this.listaSolicitacoes.filter((solicitacao) => {
+        return solicitacao.etapa === '4';
+      });
+    }
   }
 
   ordenarSolicitacoes() {
