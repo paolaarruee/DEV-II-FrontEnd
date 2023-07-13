@@ -73,7 +73,7 @@
     </div>
   </div>
   <div class="corpo-passos">
-    <mat-stepper>
+    <mat-stepper #stepper>
       <mat-step label="Download" state="phone">
         <p class="titulo" *ngIf="documentList$ | async as docsData">
           Download de Documentos
@@ -84,14 +84,23 @@
             <mat-icon class="salvar">save_alt</mat-icon>
           </button>
         </div>
-        <div class="proximo">
-          <button mat-button matStepperNext>Proximo</button>
+        <div class="proximo" *ngIf="!disableButton">
+          <button [disabled]="disableButton" mat-button matStepperNext>
+            Proximo
+          </button>
         </div>
       </mat-step>
-      <mat-step label="Upload" state="chat">
+      <mat-step label="Upload" state="chat" *ngIf="!disableButton">
         <p class="titulo">Upload de Documentos</p>
         <div class="arquivos-up">
-          <input type="file" id="avatar" name="avatar" multiple #fileInput />
+          <input
+            type="file"
+            id="avatar"
+            name="avatar"
+            multiple
+            #fileInput
+            [disabled]="disableButton"
+          />
         </div>
         <div class="proximo">
           <button mat-button matStepperPrevious>Voltar</button>

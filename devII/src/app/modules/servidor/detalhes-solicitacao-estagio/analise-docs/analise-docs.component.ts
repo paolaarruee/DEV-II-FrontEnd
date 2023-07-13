@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { saveAs } from 'file-saver';
 import { Observable, map, take, tap } from 'rxjs';
@@ -14,7 +20,6 @@ import { Status } from 'src/app/shared/interfaces/solicitacoes';
 import { Role } from 'src/app/shared/interfaces/usuario';
 import { AuthenticationService } from 'src/app/core/services/authentication/authentication.service';
 import { SolicitacaoIndeferir } from 'src/app/shared/interfaces/solicitacao-indeferir';
-import { Solicitacao } from 'src/app/shared/interfaces/SolicitarEstagio';
 
 @Component({
   selector: 'app-analise-docs',
@@ -79,9 +84,11 @@ export class AnaliseDocsComponent implements OnInit {
           (this.authenticationService.role === Role.ROLE_SESTAGIO &&
             solicitacoes.statusEtapaSetorEstagio === Status.DEFERIDO) ||
           (this.authenticationService.role === Role.ROLE_SERVIDOR &&
-            solicitacoes.statusEtapaCoordenador === Status.DEFERIDO) ||
+            solicitacoes.statusEtapaCoordenador === Status.DEFERIDO ||
+          solicitacoes.statusEtapaSetorEstagio === Status.EM_ANDAMENTO) ||
           (this.authenticationService.role === Role.ROLE_SERVIDOR &&
-            solicitacoes.statusEtapaDiretor === Status.DEFERIDO) ||
+            solicitacoes.statusEtapaDiretor === Status.DEFERIDO &&
+            solicitacoes.statusEtapaCoordenador === Status.EM_ANDAMENTO) ||
           solicitacoes.status === Status.INDEFERIDO;
         solicitacoes.status === Status.DEFERIDO;
       })
@@ -106,7 +113,9 @@ export class AnaliseDocsComponent implements OnInit {
           if (this.authenticationService.role === Role.ROLE_DIRETOR) {
             return this.enviarDeferimentoDiretor();
           }
-          return this.enviarDeferimento();
+          if (this.authenticationService.role === Role.ROLE_SERVIDOR) {
+            return this.enviarDeferimento();
+          }
         },
       },
     });
@@ -150,9 +159,9 @@ export class AnaliseDocsComponent implements OnInit {
       next: () => {
         this.toastService.showMessage('Deferimento enviado com sucesso!');
       },
-      // error: () => {
-      //   this.toastService.showMessage('Erro ao enviar o deferimento.');
-      // },
+      error: () => {
+        this.toastService.showMessage('Erro ao enviar o deferimento.');
+      },
     });
   }
 
@@ -175,9 +184,9 @@ export class AnaliseDocsComponent implements OnInit {
       next: () => {
         this.toastService.showMessage('Deferimento enviado com sucesso!');
       },
-      // error: () => {
-      //   this.toastService.showMessage('Erro ao enviar o deferimento.');
-      // },
+      error: () => {
+        this.toastService.showMessage('Erro ao enviar o deferimento.');
+      },
     });
   }
 
@@ -200,9 +209,9 @@ export class AnaliseDocsComponent implements OnInit {
       next: () => {
         this.toastService.showMessage('Deferimento enviado com sucesso!');
       },
-      // error: () => {
-      //   this.toastService.showMessage('Erro ao enviar o deferimento.');
-      // },
+      error: () => {
+        this.toastService.showMessage('Erro ao enviar o deferimento.');
+      },
     });
   }
 
@@ -217,12 +226,12 @@ export class AnaliseDocsComponent implements OnInit {
       (response) => {
         this.toastService.showMessage('Solicitação Indeferida!');
       },
-      // (error) => {
-      //   this.toastService.showMessage(
-      //     'Erro ao enviar o indeferimento!',
-      //     'ERRO'
-      //   );
-      // }
+      (error) => {
+        this.toastService.showMessage(
+          'Erro ao enviar o indeferimento!',
+          'ERRO'
+        );
+      }
     );
   }
 }
