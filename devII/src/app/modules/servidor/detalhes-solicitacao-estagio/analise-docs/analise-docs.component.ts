@@ -38,7 +38,9 @@ export class AnaliseDocsComponent implements OnInit {
   public servidore!: Servidor;
   public disableButton?: boolean;
   motivoIndeferimento = new FormControl('');
+  public isRequestSent: boolean = false;
   public solicitacao: any;
+
   public constructor(
     private activatedRoute: ActivatedRoute,
     private docsService: DocsService,
@@ -84,16 +86,15 @@ export class AnaliseDocsComponent implements OnInit {
           (this.authenticationService.role === Role.ROLE_SESTAGIO &&
             solicitacoes.statusEtapaSetorEstagio === Status.DEFERIDO) ||
           (this.authenticationService.role === Role.ROLE_SERVIDOR &&
-            solicitacoes.statusEtapaCoordenador === Status.DEFERIDO ||
-          solicitacoes.statusEtapaSetorEstagio === Status.EM_ANDAMENTO) ||
-
+            solicitacoes.statusEtapaCoordenador === Status.DEFERIDO) ||
+          //solicitacoes.statusEtapaSetorEstagio === Status.EM_ANDAMENTO) ||
           (this.authenticationService.role === Role.ROLE_DIRETOR &&
-            solicitacoes.statusEtapaDiretor === Status.DEFERIDO ||
-            solicitacoes.statusEtapaCoordenador === Status.EM_ANDAMENTO ||
-            solicitacoes.statusEtapaSetorEstagio === Status.EM_ANDAMENTO) ||
+            solicitacoes.statusEtapaDiretor === Status.DEFERIDO);
+        //   solicitacoes.statusEtapaCoordenador === Status.EM_ANDAMENTO ||
+        //   solicitacoes.statusEtapaSetorEstagio === Status.EM_ANDAMENTO) ||
 
-          solicitacoes.status === Status.INDEFERIDO;
-          solicitacoes.status === Status.DEFERIDO;
+        solicitacoes.status === Status.INDEFERIDO;
+        solicitacoes.status === Status.DEFERIDO;
       })
     );
     console.log(this.disableButton);
@@ -158,12 +159,20 @@ export class AnaliseDocsComponent implements OnInit {
       formData.append('file', fileList[i]);
     }
 
+    if (this.isRequestSent) {
+      return;
+    }
+
+    this.isRequestSent = true;
+
     this.solicitacoes.deferirSolicitacao(id, formData).subscribe({
       next: () => {
         this.toastService.showMessage('Deferimento enviado com sucesso!');
+        this.isRequestSent = false; // Redefinir a variável após o envio da requisição
       },
       error: () => {
         this.toastService.showMessage('Erro ao enviar o deferimento.');
+        this.isRequestSent = false; // Redefinir a variável em caso de erro
       },
     });
   }
@@ -183,19 +192,29 @@ export class AnaliseDocsComponent implements OnInit {
       formData.append('file', fileList[i]);
     }
 
+    if (this.isRequestSent) {
+      return;
+    }
+
+    this.isRequestSent = true;
+
     this.solicitacoes.deferirSolicitacao(id, formData).subscribe({
       next: () => {
         this.toastService.showMessage('Deferimento enviado com sucesso!');
+        this.isRequestSent = false;
       },
       error: () => {
         this.toastService.showMessage('Erro ao enviar o deferimento.');
+        this.isRequestSent = false;
       },
     });
   }
 
   public enviarDeferimento(): void {
     const { id } = this.activatedRoute.snapshot.params;
+
     const data = { statusEtapaCoordenador: Status.DEFERIDO };
+
     const fileList: FileList = this.fileInputRef.nativeElement?.files!;
     const formData: FormData = new FormData();
 
@@ -208,12 +227,20 @@ export class AnaliseDocsComponent implements OnInit {
       formData.append('file', fileList[i]);
     }
 
+    if (this.isRequestSent) {
+      return;
+    }
+
+    this.isRequestSent = true;
+
     this.solicitacoes.deferirSolicitacao(id, formData).subscribe({
       next: () => {
         this.toastService.showMessage('Deferimento enviado com sucesso!');
+        this.isRequestSent = false; // Redefinir a variável após o envio da requisição
       },
       error: () => {
         this.toastService.showMessage('Erro ao enviar o deferimento.');
+        this.isRequestSent = false; // Redefinir a variável em caso de erro
       },
     });
   }
