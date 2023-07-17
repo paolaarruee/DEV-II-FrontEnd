@@ -85,11 +85,17 @@ export class AnaliseDocsComponent implements OnInit {
         this.disableButton =
           (this.authenticationService.role === Role.ROLE_SESTAGIO &&
             solicitacoes.statusEtapaSetorEstagio === Status.DEFERIDO) ||
+          solicitacoes.statusEtapaSetorEstagio === Status.INDEFERIDO ||
           (this.authenticationService.role === Role.ROLE_SERVIDOR &&
             solicitacoes.statusEtapaCoordenador === Status.DEFERIDO) ||
+          solicitacoes.statusEtapaCoordenador === Status.INDEFERIDO ||
+          solicitacoes.statusEtapaSetorEstagio === Status.INDEFERIDO ||
           //solicitacoes.statusEtapaSetorEstagio === Status.EM_ANDAMENTO) ||
           (this.authenticationService.role === Role.ROLE_DIRETOR &&
-            solicitacoes.statusEtapaDiretor === Status.DEFERIDO);
+            solicitacoes.statusEtapaDiretor === Status.DEFERIDO) ||
+          solicitacoes.statusEtapaCoordenador === Status.INDEFERIDO ||
+          solicitacoes.statusEtapaSetorEstagio === Status.INDEFERIDO ||
+          solicitacoes.statusEtapaDiretor === Status.INDEFERIDO;
         //   solicitacoes.statusEtapaCoordenador === Status.EM_ANDAMENTO ||
         //   solicitacoes.statusEtapaSetorEstagio === Status.EM_ANDAMENTO) ||
 
@@ -168,11 +174,11 @@ export class AnaliseDocsComponent implements OnInit {
     this.solicitacoes.deferirSolicitacao(id, formData).subscribe({
       next: () => {
         this.toastService.showMessage('Deferimento enviado com sucesso!');
-        this.isRequestSent = false; // Redefinir a variável após o envio da requisição
+        this.isRequestSent = false;
       },
       error: () => {
         this.toastService.showMessage('Erro ao enviar o deferimento.');
-        this.isRequestSent = false; // Redefinir a variável em caso de erro
+        this.isRequestSent = false;
       },
     });
   }
@@ -236,11 +242,11 @@ export class AnaliseDocsComponent implements OnInit {
     this.solicitacoes.deferirSolicitacao(id, formData).subscribe({
       next: () => {
         this.toastService.showMessage('Deferimento enviado com sucesso!');
-        this.isRequestSent = false; // Redefinir a variável após o envio da requisição
+        this.isRequestSent = false;
       },
       error: () => {
         this.toastService.showMessage('Erro ao enviar o deferimento.');
-        this.isRequestSent = false; // Redefinir a variável em caso de erro
+        this.isRequestSent = false;
       },
     });
   }
@@ -250,17 +256,34 @@ export class AnaliseDocsComponent implements OnInit {
   };
   public enviarIndeferimento(motivo: string): void {
     const { id } = this.activatedRoute.snapshot.params;
+    console.log(this.activatedRoute.snapshot.params);
     this.dados.observacao = motivo;
+
+    if (!motivo) {
+      this.toastService.showMessage(
+        'O motivo do indeferimento é obrigatório!',
+        'ERRO'
+      );
+
+      return;
+    }
+    if (this.isRequestSent) {
+      return;
+    }
+
+    this.isRequestSent = true;
 
     this.solicitacoes.indeferirSolicitacao(id, this.dados).subscribe(
       (response) => {
         this.toastService.showMessage('Solicitação Indeferida!');
+        this.isRequestSent = false;
       },
       (error) => {
         this.toastService.showMessage(
           'Erro ao enviar o indeferimento!',
           'ERRO'
         );
+        this.isRequestSent = false;
       }
     );
   }

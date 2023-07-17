@@ -14,17 +14,11 @@
   <div class="navbar-itens">
     <a class="navbar-itens-menu">
       <a routerLink="/muralVagas">Oportunidades </a>
-      <a
-        routerLink="/cadastroVagas"
-        *ngIf="exibirLink"
-        >Cadastrar Vagas</a
-      >
+      <a routerLink="/cadastroVagas" *ngIf="exibirLink">Cadastrar Vagas</a>
       <a routerLink="/cadastrarServidor" *permission="Roles.ROLE_SESTAGIO"
         >Cadastrar servidor</a
       >
-      <a
-        routerLink="/listaSolicitacoesServidor"
-        *ngIf="exibirLink"
+      <a routerLink="/listaSolicitacoesServidor" *ngIf="exibirLink"
         >Lista Solicitações</a
       >
       <a routerLink="/listaSolicitacoesAluno" *permission="Roles.ROLE_ALUNO"

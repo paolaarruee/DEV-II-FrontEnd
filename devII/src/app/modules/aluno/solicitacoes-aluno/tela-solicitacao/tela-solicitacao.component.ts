@@ -24,7 +24,7 @@ export class TelaSolicitacaoComponent {
   constructor(
     private userService: UserService,
     private router: Router,
-    private toastService: ToastService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit() {
@@ -64,6 +64,7 @@ export class TelaSolicitacaoComponent {
       this.toastService.showMessage('Sem documentos anexados!!');
       return;
     }
+    
     if (this.solicitacao.tipo.length <= 0) {
       this.toastService.showMessage('Selecione o tipo!');
     } else {
