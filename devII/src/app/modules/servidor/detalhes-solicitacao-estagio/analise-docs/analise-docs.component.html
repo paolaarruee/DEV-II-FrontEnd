@@ -17,30 +17,25 @@
       <span class="dados">Dados do Aluno</span>
     </div>
     <div class="nome-aluno">
-      <span>Nome: {{ studentData.nomeCompleto }}</span>
-      <span class="curso">Tipo de Estágio: Não Obrigatório</span>
+      <span>Nome: {{ studentData.aluno.nomeCompleto }}</span>
+      <span class="curso">Tipo de Estágio: {{ studentData.tipo }}</span>
     </div>
 
     <div class="infos-aluno">
-      <span>Matricula: {{ studentData.matricula }}</span>
-      <span>Ano: {{ studentData.ingresso | date : "dd/MM/YYYY" }}</span>
-      <span>Turno: {{ studentData.turno }}</span>
+      <span>Matricula: {{ studentData.aluno.matricula }}</span>
+      <span>Ano: {{ studentData.aluno.ingresso }}</span>
+      <!-- <span>Ano: {{ studentData.aluno.ingresso | date : "dd/MM/YYYY" }}</span> -->
+      <span>Turno: {{ studentData.aluno.turno }}</span>
     </div>
     <div class="curso-aluno">
-      <span>Tipo de Curso: Superior</span>
-      <span
-        >Curso: <b>{{ studentData.curso.nomeCurso }}</b></span
-      >
-      <span>Semestre: 2</span>
+      <span>Curso: <b>{{ studentData.aluno.curso.nomeCurso }}</b></span>
+      <span>Semestre: </span>
     </div>
   </div>
 
   <div>
     <div>
-      <div
-        class="corpo-dados-etapas"
-        *ngIf="solicitacaoData$ | async as solicitacaoData"
-      >
+      <div class="corpo-dados-etapas" *ngIf="studentData$ | async as studentData">
         <div class="subtitulo">
           <span class="dados">Histórico de Etapas</span>
         </div>
@@ -49,27 +44,27 @@
           <span class="dados"><b>Email</b></span>
           <span class="dados"><b>Data</b></span>
         </div>
-        <div class="etapa" *ngIf="solicitacaoData.etapa.toString() === '2'">
+        <div class="etapa" *ngIf="studentData.historico[0]?.etapa == 2">
+          <span>Etapa 1:</span>
+          <span class="email">Solicitacao</span>
+          <span class="data">{{ studentData.historico[0]?.data_solicitacao | date : "dd/MM/YYYY" }}</span>
+        </div>
+        <div class="etapa" *ngIf="studentData.historico[1]?.etapa == 3">
           <span>Etapa 2:</span>
-          <span class="email">{{ solicitacaoData.email }}</span>
-          <span class="data">{{ solicitacaoData.data }}</span>
+          <span class="email">Setor Estagio</span>
+          <span class="data">{{ studentData.historico[1]?.data_solicitacao | date : "dd/MM/YYYY" }}</span>
         </div>
-        <div class="etapa" *ngIf="solicitacaoData.etapa.toString() === '3'">
+        <div class="etapa" *ngIf="studentData.historico[2]?.etapa == 4">
           <span>Etapa 3:</span>
-          <span class="email">{{ solicitacaoData.email }}</span>
-          <span class="data">{{ solicitacaoData.data }}</span>
+          <span class="email">Coordenador</span>
+          <span class="data">{{ studentData.historico[2]?.data_solicitacao | date : "dd/MM/YYYY" }}</span>
         </div>
-        <div class="etapa" *ngIf="solicitacaoData.etapa.toString() === '4'">
+        <div class="etapa" *ngIf="studentData.historico[3]?.etapa == 5">
           <span>Etapa 4:</span>
-          <span class="email">{{ solicitacaoData.email }}</span>
-          <span class="data">{{ solicitacaoData.data }}</span>
+          <span class="email">Diretor</span>
+          <span class="data">{{ studentData.historico[3]?.data_solicitacao | date : "dd/MM/YYYY" }}</span>
         </div>
-        <div class="etapa" *ngIf="solicitacaoData.etapa.toString() === '5'">
-          <span>Etapa 5:</span>
-          <span class="email">{{ solicitacaoData.email }}</span>
-          <span class="data">{{ solicitacaoData.data }}</span>
-        </div>
-      </div>
+
     </div>
   </div>
   <div class="corpo-passos">

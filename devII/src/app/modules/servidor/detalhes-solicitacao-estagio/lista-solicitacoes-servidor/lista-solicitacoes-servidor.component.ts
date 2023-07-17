@@ -18,13 +18,13 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   dataSolicitacao: Date = new Date();
   solicitacao: Solicitacoes | undefined;
   paginaAtual: number = 1;
-  solicitacoesPorPagina: number = 5;
+  solicitacoesPorPagina: number = 7;
   public readonly Roles: typeof Role = Role;
 
   constructor(private service: SolicitacoesService, private authenticationService: AuthenticationService) {}
 
   ngOnInit() {
-    this.filtroStatus = 'EM ANDAMENTO';
+    this.filtroStatus = 'Pendentes';
     this.obterTodasSolicitacoes();
     this.filtrarPorStatus();
   }
@@ -33,7 +33,6 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
     this.service.listarSolicitacoesPorEmailServidor().toPromise().then((solicitacoes) => {
       this.todasSolicitacoes = solicitacoes;
       this.filtrarPorStatus();
-      this.filtrarPorEtapa();
       this.ordenarSolicitacoes();
     }).catch((error) => {
       console.error('Erro ao obter as solicitações:', error);
@@ -131,39 +130,59 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   filtrarPorStatus() {
     this.paginaAtual = 1;
 
+    if (this.filtroStatus === 'Pendentes') {
+      this.listaSolicitacoes = this.todasSolicitacoes.filter((solicitacao: Solicitacoes) => {
+        return solicitacao.status === 'Em Andamento' && this.filtrarPorEtapa(solicitacao);
+      });
+      this.ordenarSolicitacoes();
+      return;
+    }
+
+    if (this.filtroStatus === 'Em Andamento') {
+      this.listaSolicitacoes = this.todasSolicitacoes.filter((solicitacao: Solicitacoes) => {
+        return solicitacao.status === 'Em Andamento';
+      });
+      this.ordenarSolicitacoes();
+      return;
+    }
+
+    if (this.filtroStatus === 'Deferido') {
+      this.listaSolicitacoes = this.todasSolicitacoes.filter((solicitacao: Solicitacoes) => {
+        return solicitacao.status === 'Deferido';
+      });
+      this.ordenarSolicitacoes();
+      return;
+    }
+
+    if (this.filtroStatus === 'Indeferido') {
+      this.listaSolicitacoes = this.todasSolicitacoes.filter((solicitacao: Solicitacoes) => {
+        return solicitacao.status === 'Indeferido';
+      });
+      this.ordenarSolicitacoes();
+      return;
+    }
+
     if (this.filtroStatus === 'todas') {
       this.listaSolicitacoes = [...this.todasSolicitacoes];
-    } else {
-      const filtroStatusUpperCase = this.filtroStatus.toUpperCase();
-      this.listaSolicitacoes = this.todasSolicitacoes.filter(
-        (solicitacao: Solicitacoes) => {
-          const statusUpperCase = solicitacao.status.toUpperCase();
-          return statusUpperCase === filtroStatusUpperCase;
-        }
-      );
     }
 
     this.ordenarSolicitacoes();
   }
 
-  filtrarPorEtapa() {
-    if (this.authenticationService.role === Role.ROLE_SESTAGIO) {
-      this.listaSolicitacoes = this.listaSolicitacoes.filter((solicitacao) => {
-        return solicitacao.etapa === '2';
-      });
+  filtrarPorEtapa(solicitacao: Solicitacoes): boolean {
+    if (this.authenticationService.role === Role.ROLE_SESTAGIO && solicitacao.etapa === '2') {
+      return true;
     }
 
-    if (this.authenticationService.role === Role.ROLE_SERVIDOR) {
-      this.listaSolicitacoes = this.listaSolicitacoes.filter((solicitacao) => {
-        return solicitacao.etapa === '3';
-      });
+    if (this.authenticationService.role === Role.ROLE_SERVIDOR && solicitacao.etapa === '3') {
+      return true;
     }
 
-    if (this.authenticationService.role === Role.ROLE_DIRETOR) {
-      this.listaSolicitacoes = this.listaSolicitacoes.filter((solicitacao) => {
-        return solicitacao.etapa === '4';
-      });
+    if (this.authenticationService.role === Role.ROLE_DIRETOR && solicitacao.etapa === '4') {
+      return true;
     }
+
+    return false;
   }
 
   ordenarSolicitacoes() {

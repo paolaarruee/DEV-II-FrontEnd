@@ -2,6 +2,7 @@ import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AnaliseDocsComponent } from '../analise-docs/analise-docs.component';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-modal-analise',
@@ -12,6 +13,7 @@ export class ModalAnaliseComponent {
   motivoIndeferimento = new FormControl('');
   @ViewChild('motivoInput') motivoInput!: ElementRef;
   constructor(
+    private router: Router,
     public dialogRef: MatDialogRef<ModalAnaliseComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
@@ -23,5 +25,8 @@ export class ModalAnaliseComponent {
     this.data.enviarCallback(this.motivoIndeferimento.value);
     console.log(this.data.enviarCallback(this.motivoIndeferimento.value));
     this.dialogRef.close();
+    this.router.navigateByUrl('/listaSolicitacoesServidor').then(() => {
+      window.location.reload();
+    });
   }
 }

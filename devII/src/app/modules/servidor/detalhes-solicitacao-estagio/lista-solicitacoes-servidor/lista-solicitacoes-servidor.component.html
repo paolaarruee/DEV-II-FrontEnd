@@ -22,7 +22,8 @@
     <form class="filtro-form" (ngSubmit)="filtrarPorStatus()">
       <div class="filtro-wrapper">
         <select [(ngModel)]="filtroStatus" name="filtroStatus" class="filtro-status" (ngModelChange)="filtrarPorStatus()">
-          <option value="EM ANDAMENTO">Em Andamento</option>
+          <option value="Pendentes">Pendentes</option>
+          <option value="Em Andamento">Em Andamento</option>
           <option value="Deferido">Deferidas</option>
           <option value="Indeferido">Indeferidas</option>
           <option value="todas">Todas</option>
