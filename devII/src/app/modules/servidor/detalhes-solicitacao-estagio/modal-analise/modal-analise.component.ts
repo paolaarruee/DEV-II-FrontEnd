@@ -23,10 +23,13 @@ export class ModalAnaliseComponent {
   }
   public enviar(): void {
     this.data.enviarCallback(this.motivoIndeferimento.value);
+
     console.log(this.data.enviarCallback(this.motivoIndeferimento.value));
     this.dialogRef.close();
     this.router.navigateByUrl('/listaSolicitacoesServidor').then(() => {
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     });
   }
 }
