@@ -1,21 +1,21 @@
 .mural{
     padding: 3%;
   }
-  
+
   .vagas {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 1% 15% 0 15%;
+    margin: 1% 5% 0 5%;
   }
-  
+
   .mural-card {
     flex-basis: calc(25% - 12px); /* 4 cards por linha */
     margin: 6px;
   }
-  
-  
-  
+
+
+
   .semVagas{
     display: flex;
     flex-direction: column;
@@ -25,4 +25,3 @@
     font-weight: bold;
     color: #000000;
   }
-  
