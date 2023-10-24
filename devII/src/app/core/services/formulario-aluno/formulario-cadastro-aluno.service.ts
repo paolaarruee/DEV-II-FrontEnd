@@ -16,4 +16,11 @@ export class FormularioCadastroAlunoService {
       aluno
     );
   }
+
+  enviarDadosPerfil(aluno: Aluno): Observable<Aluno> {
+    return this.http.post<Aluno>(
+      `${environment.API_URL}/atualizarAluno`,
+      aluno
+    );
+  }
 }

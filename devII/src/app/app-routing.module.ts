@@ -11,6 +11,7 @@ import { ListaSolicitacoesServidorComponent } from './modules/servidor/detalhes-
 import { FormularioServidorComponent } from './modules/servidor/formulario-servidor/formulario-servidor.component';
 import { CadastrarVagasComponent } from './modules/vagas-estagio/cadastrar-vagas/cadastrar-vagas.component';
 import { MuralDeVagasComponent } from './modules/vagas-estagio/mural-de-vagas/mural-de-vagas.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 const routes: Routes = [
   {
@@ -63,11 +64,15 @@ const routes: Routes = [
     path: 'cadastroVagas',
     component: CadastrarVagasComponent,
   },
-
+  {
+    path: 'perfil',
+    component: PerfilComponent,
+  },
   {
     path: '**',
     redirectTo: 'muralVagas',
   },
+
 ];
 
 @NgModule({

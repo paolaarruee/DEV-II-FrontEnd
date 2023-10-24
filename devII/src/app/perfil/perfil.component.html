@@ -1,0 +1,74 @@
+<div class="titulo">
+        <p>Ajustes de perfil</p>
+    </div>
+    
+    <div class="formulario">
+        <form  class="formulario--centro" (ngSubmit)="enviarSolicitacao()">
+                <div class="formularioBox">
+                <label class="nome-campo">Nome Completo</label>
+                <input class="nome" type="text" name="fname" placeholder="Nome Completo"  [(ngModel)]="aluno.nomeCompleto" >
+    
+                <label class="nome-campo">Email institucional</label>
+                <input class="email" type="text" name="fname" placeholder="aluno@restinga.ifrs.edu.br" value="{{ aluno.usuarioSistema.email }}" [disabled]="true">
+    
+                <label for="turno">Turno</label>
+                <select id="turno" name="turno" type="text"  [(ngModel)]="aluno.turno"required>
+                    <option value="">Selecione o turno</option>
+                    <option value="Manhã">Manhã</option>
+                    <option value="Tarde">Tarde</option>
+                    <option value="Noite">Noite</option>
+                </select>
+    
+                <ul>
+                    <li style="padding-right: 39px;">
+                        <label for="matricula">Matrícula</label>
+                        <input type="text" id="matricula" name="matricula"  [(ngModel)]="aluno.matricula" placeholder="Matrícula" required>
+                    </li>
+    
+                    <li>
+                        <label for="ingresso">Ingresso</label>
+                        <input type="text" id="ingresso" name="ingresso" [(ngModel)]="aluno.ingresso" placeholder="1/2023" required>
+                    </li>
+                </ul>
+    
+                <label for="curso">Curso</label>
+                <select name="curso" id="curso" type="text" [(ngModel)]="aluno.curso"   required>
+                    <option value="" disabled>Escolha um Curso</option>
+                    <option value="10">Análise e Desenvolvimento de Sistemas</option>
+                    <option value="11">Letras Português e Espanhol</option>
+                    <option value="12">Eletrônica Industrial</option>
+                    <option value="13">Gestão Desportiva e de Lazer</option>
+                    <option value="14">Processos Gerenciais</option>
+                </select>
+                
+
+                <h3 class="ttAviso">A senha não é obrigatoria para logins efetuados pelo google.</h3>
+                <div class="senhadiv">
+                    <ul>
+                        <li style="padding-right: 39px;">
+                        <label class="nome-campo">Digite uma senha</label>
+    
+                        <input class="senha" type="password" name="lname" placeholder="Senha" required>
+                        </li>
+    
+                        <li>
+                        <label class="nome-campo">Confirmar senha</label>
+    
+                        <input class="senha" type="password" name="lname" placeholder="Confirmar Senha" required>
+                    </li>
+                    </ul>
+                </div>
+    
+                <input class="botao" type="submit" value="Salvar">
+            </div>
+        </form>
+    </div>
+      
+          
+        
+
+     
+    
+
+
+  

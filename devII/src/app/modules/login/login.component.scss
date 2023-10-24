@@ -39,6 +39,14 @@
     box-shadow: 0 0 5px #0b6a1d;
   }
 
+  .botaoGoogle{
+
+    display: flex;
+    margin-top: 1%;
+    justify-content: center;
+    align-items: center;
+  }
+
   button[type="submit"] {
     display: block;
     right: auto;

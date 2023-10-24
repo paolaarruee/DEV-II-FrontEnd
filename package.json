@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@angular/material": "^16.2.8",
+    "@types/google-one-tap": "^1.2.4",
+    "add": "^2.0.6",
+    "google-one-tap": "^1.0.6"
+  }
+}

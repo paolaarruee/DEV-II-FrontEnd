@@ -1,3 +1,4 @@
+
 <div class="wrapper">
   <div class="corpo">
     <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
@@ -10,6 +11,7 @@
         <button type="submit" [disabled]="loginForm.invalid">Acessar</button>
         <button type="button" routerLink="/cadastrarAluno">Cadastrar</button>
       </div>
+      <div id="buttonDiv" class="botaoGoogle"></div>
     </form>
   </div>
 </div>

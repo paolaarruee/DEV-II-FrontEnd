@@ -25,6 +25,10 @@ export class AuthenticationService {
     );
   }
 
+  logingoogle(data: any) {
+    return this.http.get(`${environment.API_URL}/login/google`,data);
+  }
+
   public logout(): void {
     this.removeAuthData();
     this.router.navigateByUrl('/login');

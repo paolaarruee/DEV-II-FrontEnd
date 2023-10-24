@@ -5,6 +5,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
+import {
+  GoogleLoginProvider,
+  FacebookLoginProvider
+} from '@abacritt/angularx-social-login';
+
+
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
@@ -25,6 +32,7 @@ import { CadastrarVagasComponent } from './modules/vagas-estagio/cadastrar-vagas
 import { DetalhesVagaComponent } from './modules/vagas-estagio/detalhes-vaga/detalhes-vaga.component';
 import { MuralDeVagasComponent } from './modules/vagas-estagio/mural-de-vagas/mural-de-vagas.component';
 import { VagasComponent } from './modules/vagas-estagio/vagas/vagas.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 
 const ANGULAR_MODULES = [
@@ -47,6 +55,7 @@ const COMPONENTS = [
   MuralDeVagasComponent,
   CadastrarVagasComponent,
   VagasComponent,
+  PerfilComponent,
   DetalhesVagaComponent,
   ModalAnaliseComponent,
   SolicitacaoServidorComponent,
@@ -62,9 +71,31 @@ const COMPONENTS = [
 @NgModule({
   declarations: [...COMPONENTS],
 
-  imports: [...ANGULAR_MODULES],
+  imports: [...ANGULAR_MODULES , SocialLoginModule],
 
-  providers: [],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '608337993679-jbh57642rjhkuuaefg5lik3vol1tk4jc.apps.googleusercontent.com'
+            )
+          },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('clientId')
+          }
+        ],
+        onError: (err) => {
+          console.error(err);
+        }
+      } as SocialAuthServiceConfig,
+    }
+  ],
 
   bootstrap: [AppComponent],
 })

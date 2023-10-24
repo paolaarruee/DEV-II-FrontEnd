@@ -11,6 +11,7 @@ import { Solicitacao } from 'src/app/shared/interfaces/SolicitarEstagio';
 export class TelaSolicitacaoComponent {
   userData: any;
   exibir: boolean = false;
+  perfilIncompleto: boolean = false;
   sucesso: boolean = false;
   textoEnvio: string =
     'O seu contrato de estágio deve estar com as vias assinadas pelo estudante e pela empresa contratante.';
@@ -29,6 +30,7 @@ export class TelaSolicitacaoComponent {
 
   ngOnInit() {
     this.userService.getUserData().subscribe((data: any) => {
+      this.verificarDadosPerfil(data);
       this.userData = data;
       this.solicitacao.alunoId = this.userData.id;
       this.solicitacao.cursoId = this.userData.curso.id;
@@ -57,6 +59,18 @@ export class TelaSolicitacaoComponent {
         this.files.length = 0;
       }
     }
+  }
+
+  verificarDadosPerfil(data: any) {
+      console.log('dados do perfil', data);
+      if(data.curso == null || data.matricula == null || data.ingresso == null){
+        this.textoEnvio = 'Complete seu perfil para poder solicitar o estágio!';
+        this.perfilIncompleto = true;
+      }
+  }
+
+  redirecionarPerfil() {
+    this.router.navigate(['/perfil']);
   }
 
   exibirDiv() {

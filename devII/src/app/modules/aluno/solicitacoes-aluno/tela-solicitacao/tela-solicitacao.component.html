@@ -1,9 +1,23 @@
-<div class="avisoFundo" *ngIf="exibir"></div>
+
+
+<div class="avisoFundo" *ngIf="exibir">
+
+</div>
 <div class="corpo">
   <div class="titulo">
     <p>Envio de solicitação</p>
   </div>
-  <div class="formulario">
+
+  
+
+    <div class="aviso" *ngIf="perfilIncompleto">
+      <h1 class="tAviso" >Atenção</h1>
+      <h1 class="titulo">{{ textoEnvio }}</h1>
+      <button class="botaov" type="button" (click)="redirecionarPerfil()">OK</button>
+    </div>
+
+
+  <div class="formulario" *ngIf="!perfilIncompleto">
     <form class="formulario" (ngSubmit)="enviarSolicitacao()">
       <label for="tipo">Tipo:</label>
       <select name="tipo" [(ngModel)]="solicitacao.tipo">
