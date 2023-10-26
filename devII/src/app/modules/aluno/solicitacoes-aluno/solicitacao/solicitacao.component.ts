@@ -66,6 +66,47 @@ export class SolicitacaoComponent {
     console.log(this.solicitacao)
   }
 
+  statusInfo(st : number): string{
+          if(st == 1 && this.solicitacao.etapa >= "1"){
+            if(this.solicitacao.status == "indeferido" && this.solicitacao.etapa == "1"){
+              return "infoStatusNocheck";
+            }else{
+            return "infoStatusCheck"
+            }
+          }
+          else if(st == 2 && this.solicitacao.etapa >= "2"){
+            if(this.solicitacao.status == "indeferido" && this.solicitacao.etapa == "2"){
+              return "infoStatusNocheck";
+            }else{
+            return "infoStatusCheck"
+            }
+          }
+          else if(st == 3 && this.solicitacao.etapa >= "3"){
+            if(this.solicitacao.status == "indeferido" && this.solicitacao.etapa == "3"){
+              return "infoStatusNocheck";
+            }else{
+            return "infoStatusCheck"
+            }
+          }
+          else if(st == 4 && this.solicitacao.etapa >= "4"){
+            if(this.solicitacao.status == "indeferido" && this.solicitacao.etapa == "4"){
+              return "infoStatusNocheck";
+            }else{
+            return "infoStatusCheck"
+            }
+          }
+          else if(st == 5 && this.solicitacao.etapa >= "5"){
+            if(this.solicitacao.status == "indeferido" && this.solicitacao.etapa == "5"){
+              return "infoStatusNocheck";
+            }else{
+            return "infoStatusCheck"
+            }
+          }
+          else{
+          return "";
+          }
+  }
+
   formatarDataSolicitacao(dataSolicitacao: string): string {
     const formattedDateFormat = 'dd/MM/yyyy'; // Formato desejado para exibição
 

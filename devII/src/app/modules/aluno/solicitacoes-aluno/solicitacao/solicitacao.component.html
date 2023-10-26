@@ -1,10 +1,22 @@
 <div class="espacamento">
   <div class="card">
    <div class="header">
-      <span>Estágio {{solicitacao.tipo}}</span>
+      <span class="tituloEstagio">Estágio {{solicitacao.tipo}}</span>
       <div>
         <span>Status</span>
         <span class="retangulo" [ngClass]="statusSolicitacao()">{{solicitacao.status}}</span>
+        <div class="infoStatus">
+          <div class="infoStatusCaixa" id="infoStatusCaixa" [ngClass]="statusInfo(1)">
+          </div>
+          <div class="infoStatusCaixa" id="infoStatusCaixa"[ngClass]="statusInfo(2)">
+          </div>
+          <div class="infoStatusCaixa"id="infoStatusCaixa"[ngClass]="statusInfo(3)">
+          </div>
+          <div class="infoStatusCaixa"id="infoStatusCaixa" [ngClass]="statusInfo(4)">
+          </div>
+          <div class="infoStatusCaixa"id="infoStatusCaixa" [ngClass]="statusInfo(5)">
+          </div>
+        </div>
       </div>
    </div>
 

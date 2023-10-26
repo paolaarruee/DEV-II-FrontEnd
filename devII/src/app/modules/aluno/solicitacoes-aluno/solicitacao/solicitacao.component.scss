@@ -14,7 +14,7 @@
 .header{
   display: flex;
   justify-content: space-between;
-  padding: 16px;
+  padding: 16px 16px 0px 0px;
   font-size: 18px;
 }
 
@@ -27,10 +27,36 @@
   padding-right: 10px;
 }
 
+.infoStatus{
+  display: flex;
+  gap: 5px;
+  margin: 1ch;
+
+}
+
+.infoStatusCaixa{
+  width: 3ch;
+  height: 1ch;
+
+  border: 1px solid black;
+}
+
+.infoStatusCheck{
+  background-color: #2B923C;
+}
+
+.infoStatusNocheck{
+  background-color: #ff0000;
+}
+
+.tituloEstagio{
+  font-size: 22px;
+}
+
 .titulo{
   display: grid;
   padding-left: 16px;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .cardDecoracao2{
