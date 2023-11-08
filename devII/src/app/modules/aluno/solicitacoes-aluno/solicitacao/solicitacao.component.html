@@ -30,6 +30,9 @@
    </div>
 
    <div class="buttonContainer">
+    <div class="buttonDetalhes"  id="buttonDetalhes" >
+      <button (click)="abrirEdicao()" [ngClass]="statusEditavel"> Editar documentos</button>
+    </div>
     <div class="buttonDetalhes">
       <button (click)="openDialog()">Detalhes</button>
     </div>

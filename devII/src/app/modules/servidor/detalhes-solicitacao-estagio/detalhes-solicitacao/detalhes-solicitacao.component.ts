@@ -22,6 +22,10 @@ export class DetalhesSolicitacaoServidorComponent {
         return 'statusColor2'
       }
 
+      if(this.solicitacao.status.toLowerCase() == 'nova') {
+        return 'statusColor4'
+      }
+
       if(this.solicitacao.status.toLowerCase() == 'indeferido'){
         return 'statusColor3'
       }

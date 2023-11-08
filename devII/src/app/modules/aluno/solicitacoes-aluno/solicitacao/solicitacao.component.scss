@@ -18,6 +18,9 @@
   font-size: 18px;
 }
 
+
+
+
 .retangulo {
   color: #FFFFFF;
   background-color: #6A737B;
@@ -96,17 +99,31 @@ button{
   cursor: pointer;
 }
 
+.buttonOff{
+  background: #6d6d6d;
+  font-size: 20px;
+  color: #FFFFFF;
+  border: 0px;
+  cursor: not-allowed;
+
+}
+
 .statusColor1{
   background-color: #2B923C;
   font-size: 22px;
 }
 
 .statusColor2{
-  background-color: #5699ea;
+  background-color: #0077ff;
   font-size: 22px;
 }
 
 .statusColor3{
   background-color: #CB0606;
   font-size: 22px;
+}
+.statusColor4{
+  background-color: #00ff95;
+  font-size: 22px;
+  
 }

@@ -28,6 +28,20 @@
   flex-direction: column;
 }
 
+a{
+  text-decoration: none;
+}
+
+.listaServidores{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.listaservidor{
+  margin-left: calc(21% - 5px);
+}
+
 .formulario--centro {
     display: flex;
     justify-content: center;
@@ -109,6 +123,8 @@ li{
   background: #2F9E41;
   font-style: normal;
   font-size: 25px;
+  padding: 7px;
+  border-radius: 5px;
   color: #FFFFFF;
   cursor: pointer;
 }

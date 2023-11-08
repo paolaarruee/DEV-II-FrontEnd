@@ -1,8 +1,9 @@
-import { Usuario } from './usuario';
+import { Usuario, Curso} from './usuario';
 
 export interface Servidor {
+  id?: number;
   nome: string;
   cargo: string;
-  curso: string;
+  curso: Curso;
   usuarioSistema: Usuario;
 }

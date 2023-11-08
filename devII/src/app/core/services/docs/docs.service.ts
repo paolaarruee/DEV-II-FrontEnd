@@ -18,8 +18,8 @@ export class DocsService {
     return this.httpClient.get<Blob>(`${environment.API_URL}/downloadDocumento?chamadoId=${id}`, { responseType: 'blob' as 'json' });
   }
 
-  public deleteDoc(id: number): Observable<void> {
-    return this.httpClient.delete<void>(`${environment.API_URL}/deletarDocumento?chamadoId=${id}`);
+  public deleteDoc(id: number): Observable<Response> {
+    return this.httpClient.delete<Response>(`${environment.API_URL}/deletarDocumento?chamadoId=${id}`);
   }
 
   public getDocList(): Observable<DocFile[]> {

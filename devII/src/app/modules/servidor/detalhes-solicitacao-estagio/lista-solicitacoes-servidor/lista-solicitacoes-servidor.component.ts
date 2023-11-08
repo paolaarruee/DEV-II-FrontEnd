@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , AfterViewInit} from '@angular/core';
 import { SolicitacoesService } from 'src/app/core/services/solicitacoesEstagio/solicitacoes.service';
 import { Solicitacoes } from 'src/app/shared/interfaces/solicitacoes';
 import { Servidor } from 'src/app/shared/interfaces/servidor';
@@ -24,10 +24,11 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   constructor(private service: SolicitacoesService, private authenticationService: AuthenticationService) {}
 
   ngOnInit() {
-    this.filtroStatus = 'Pendentes';
+    this.filtroStatus = 'todas';
     this.obterTodasSolicitacoes();
-    this.filtrarPorStatus();
+
   }
+
 
   obterTodasSolicitacoes() {
     this.service.listarSolicitacoesPorEmailServidor().toPromise().then((solicitacoes) => {
@@ -129,10 +130,17 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
 
   filtrarPorStatus() {
     this.paginaAtual = 1;
-
     if (this.filtroStatus === 'Pendentes') {
       this.listaSolicitacoes = this.todasSolicitacoes.filter((solicitacao: Solicitacoes) => {
         return solicitacao.status === 'Em Andamento' && this.filtrarPorEtapa(solicitacao);
+      });
+      this.ordenarSolicitacoesCrescente();
+      return;
+    }
+
+    if (this.filtroStatus === 'Novas') {
+      this.listaSolicitacoes = this.todasSolicitacoes.filter((solicitacao: Solicitacoes) => {
+        return solicitacao.status === 'Nova' && this.filtrarPorEtapa(solicitacao);
       });
       this.ordenarSolicitacoes();
       return;
@@ -142,7 +150,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
       this.listaSolicitacoes = this.todasSolicitacoes.filter((solicitacao: Solicitacoes) => {
         return solicitacao.status === 'Em Andamento';
       });
-      this.ordenarSolicitacoes();
+      this.ordenarSolicitacoesCrescente();
       return;
     }
 
@@ -170,7 +178,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   }
 
   filtrarPorEtapa(solicitacao: Solicitacoes): boolean {
-    if (this.authenticationService.role === Role.ROLE_SESTAGIO && solicitacao.etapa === '2') {
+    if (this.authenticationService.role === Role.ROLE_SESTAGIO && solicitacao.etapa === '2' || solicitacao.etapa === '1')  {
       return true;
     }
 
@@ -190,6 +198,14 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
       const dataA = new Date(a.dataSolicitacao).getTime();
       const dataB = new Date(b.dataSolicitacao).getTime();
       return dataB - dataA;
+    });
+  }
+
+  ordenarSolicitacoesCrescente() {
+    this.listaSolicitacoes.sort((a, b) => {
+      const dataA = new Date(a.dataSolicitacao).getTime();
+      const dataB = new Date(b.dataSolicitacao).getTime();
+      return dataA - dataB;
     });
   }
 

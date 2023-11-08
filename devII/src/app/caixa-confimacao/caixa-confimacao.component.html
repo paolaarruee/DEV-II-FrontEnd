@@ -1,0 +1,16 @@
+<div class="espacamento">
+    <div class="header">
+            <div class="confirmarDelete caixa">
+                <h2 mat-dialog-title class="titulo">AVISO</h2>
+                <span class="aviso">Quer mesmo deletar o {{aviso}}?</span>
+                <mat-dialog-content>
+                  <p >Tem certeza de que deseja continuar com esta ação? o {{aviso}} será deletado permanentemente.</p>
+                </mat-dialog-content>
+                <mat-dialog-actions>
+                  <button mat-raised-button color="primary" (click)="onYesClick()">Confirmar</button>
+                  <button mat-raised-button color="warn" (click)="onNoClick()">Cancelar</button>
+                </mat-dialog-actions>
+              </div>
+</div>
+</div>
+  

@@ -3,6 +3,11 @@ import { DetalhesSolicitacaoComponent } from '../detalhes-solicitacao/detalhes-s
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { format, parseISO } from 'date-fns';
+import { Observable } from 'rxjs/internal/Observable';
+import { DocsService } from 'src/app/core/services/docs/docs.service';
+import { DocFile } from 'src/app/shared/interfaces/doc';
+import { AtualizarDocsComponent } from '../../atualizar-docs/atualizar-docs.component';
+import { ToastService } from 'src/app/core/services/toast/toast.service';
 
 @Component({
   selector: 'app-solicitacao',
@@ -10,13 +15,15 @@ import { format, parseISO } from 'date-fns';
   styleUrls: ['./solicitacao.component.scss']
 })
 export class SolicitacaoComponent {
+  
+  statusEditavel: string = ""
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog,
+              private toastService: ToastService,
+              private docslist: DocsService) { }
 
   openDialog() {
     const dialogRef = this.dialog.open(DetalhesSolicitacaoComponent, {
-      // width: '70%',
-      // height: '80%',
       data: this.solicitacao // Passa os dados da solicitação para o modal
     });
 
@@ -32,6 +39,7 @@ export class SolicitacaoComponent {
     status: '',
     tipo: '',
     etapa: '',
+    editavel: '',
     observacao: '',
     dataSolicitacao: '',
     aluno: {
@@ -61,42 +69,74 @@ export class SolicitacaoComponent {
     }
 };
 
+  abrirEdicao(){
+    if(this.solicitacao.editavel){
+    const docs: Observable<DocFile[]> = this.docslist.listarDocumentosPorSolicitarEstagioId(parseInt(this.solicitacao.id));
+    docs.subscribe((docs) => {
+      //OK
+      const dialogRef = this.dialog.open(AtualizarDocsComponent, {data: { docs: docs, solicitacaoId: this.solicitacao.id }
+      });
+      docs.forEach((doc) => {
+        console.log(doc);
+      });
+    }, (error) => {
+      //EERO
+      this.toastService.showMessage('Essa solicitação não tem documentos...')
+    }, () => {
+      //
+    });
+    }else{
+      this.toastService.showMessage('Essa solicitação não está aberta para edição..')
+  }
+  }
+
+
+
+
   ngOnInit() {
     this.solicitacao.dataSolicitacao = this.formatarDataSolicitacao(this.solicitacao.dataSolicitacao);
     console.log(this.solicitacao)
+    this.isEditavel();
+  }
+
+  
+  isEditavel(){
+    if(!this.solicitacao.editavel){
+      this.statusEditavel = "buttonOff"
+    }
   }
 
   statusInfo(st : number): string{
           if(st == 1 && this.solicitacao.etapa >= "1"){
-            if(this.solicitacao.status == "indeferido" && this.solicitacao.etapa == "1"){
+            if(this.solicitacao.status.toLocaleLowerCase() == "indeferido" && this.solicitacao.etapa == "1"){
               return "infoStatusNocheck";
             }else{
             return "infoStatusCheck"
             }
           }
           else if(st == 2 && this.solicitacao.etapa >= "2"){
-            if(this.solicitacao.status == "indeferido" && this.solicitacao.etapa == "2"){
+            if(this.solicitacao.status.toLocaleLowerCase() == "indeferido" && this.solicitacao.etapa == "2"){
               return "infoStatusNocheck";
             }else{
             return "infoStatusCheck"
             }
           }
           else if(st == 3 && this.solicitacao.etapa >= "3"){
-            if(this.solicitacao.status == "indeferido" && this.solicitacao.etapa == "3"){
+            if(this.solicitacao.status.toLocaleLowerCase() == "indeferido" && this.solicitacao.etapa == "3"){
               return "infoStatusNocheck";
             }else{
             return "infoStatusCheck"
             }
           }
           else if(st == 4 && this.solicitacao.etapa >= "4"){
-            if(this.solicitacao.status == "indeferido" && this.solicitacao.etapa == "4"){
+            if(this.solicitacao.status.toLocaleLowerCase() == "indeferido" && this.solicitacao.etapa == "4"){
               return "infoStatusNocheck";
             }else{
             return "infoStatusCheck"
             }
           }
           else if(st == 5 && this.solicitacao.etapa >= "5"){
-            if(this.solicitacao.status == "indeferido" && this.solicitacao.etapa == "5"){
+            if(this.solicitacao.status.toLocaleLowerCase() == "indeferido" && this.solicitacao.etapa == "5"){
               return "infoStatusNocheck";
             }else{
             return "infoStatusCheck"
@@ -121,6 +161,9 @@ export class SolicitacaoComponent {
   statusSolicitacao(): string{
     if(this.solicitacao.status.toLowerCase() == 'deferido' || this.solicitacao.status === 'Deferido' || this.solicitacao.status === 'aprovado'){
       return 'statusColor1'
+    }
+    if(this.solicitacao.status.toLowerCase() == 'nova') {
+      return 'statusColor4'
     }
 
     if(this.solicitacao.status.toLowerCase() == 'em andamento' || this.solicitacao.status === 'Em Andamento'){

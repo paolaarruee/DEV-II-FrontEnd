@@ -44,7 +44,8 @@
           <span class="dados"><b>Responsável</b></span>
           <span class="dados"><b>Data</b></span>
         </div>
-        <div class="etapa" *ngIf="studentData.historico[0]?.etapa == 2">
+        
+        <div class="etapa" *ngIf="studentData.historico[0]?.etapa == 1">
           <span>Etapa 1: {{studentData.historico[0].status}}</span>
           <span class="email">Aluno</span>
           <span class="data">{{ studentData.historico[0]?.data_solicitacao | date : "dd/MM/YYYY" }}</span>

@@ -1,7 +1,13 @@
 export interface Usuario {
+  id? : string;
   email: string;
   senha: string;
   roles: string;
+}
+
+export interface Curso{
+  id: string;
+  nomeCurso: string;
 }
 
 export interface Authorization {

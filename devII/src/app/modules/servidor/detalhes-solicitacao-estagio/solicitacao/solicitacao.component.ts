@@ -81,6 +81,10 @@ export class SolicitacaoServidorComponent implements OnInit {
       return 'statusColor2'
     }
 
+    if(this.solicitacao.status.toLowerCase() == 'nova') {
+      return 'statusColor4'
+    }
+
     if(this.solicitacao.status.toLowerCase() == 'indeferido' || this.solicitacao.status === 'Indeferido' || this.solicitacao.status === 'negado'){
       return 'statusColor3'
     }

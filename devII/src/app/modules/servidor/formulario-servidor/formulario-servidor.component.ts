@@ -15,7 +15,10 @@ export class FormularioServidorComponent {
   servidor: Servidor = {
     nome: '',
     cargo: '',
-    curso: '',
+    curso: {
+      id: '',
+      nomeCurso: '',
+    },
     usuarioSistema: {
       roles: '',
       email: '',
@@ -38,9 +41,9 @@ export class FormularioServidorComponent {
     if(valorSelecionado != "Coordenador"){
       this.exibirCurso = false;
       if(valorSelecionado === "Setor de Estágio"){
-        this.servidor.curso = '15';
+        this.servidor.curso.id = '15';
       }else{
-        this.servidor.curso = '';
+        this.servidor.curso.id = '16';
       }
     }
     else{

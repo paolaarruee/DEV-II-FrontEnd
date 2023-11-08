@@ -13,6 +13,7 @@ export class TelaSolicitacaoComponent {
   exibir: boolean = false;
   perfilIncompleto: boolean = false;
   sucesso: boolean = false;
+  aviso: string = "Aviso";
   textoEnvio: string =
     'O seu contrato de estágio deve estar com as vias assinadas pelo estudante e pela empresa contratante.';
 
@@ -45,7 +46,7 @@ export class TelaSolicitacaoComponent {
       this.toastService.showMessage('arquivo muito grande!');
       return;
     }
-    if (this.files.length < 6) {
+    if (this.files.length < 8) {
       this.files.push(event.target.files[0]);
       const file = event.target.files[0];
       console.log('tamanho do arquivo', file.size);
@@ -102,12 +103,15 @@ export class TelaSolicitacaoComponent {
             console.log('Solicitação cadastrada com sucesso!');
             console.log('Resposta da API:', response);
             this.textoEnvio = 'Solicitação efetuada!!';
+            this.aviso = 'Sucesso'
             this.sucesso = true;
           },
           (error) => {
             if (error.status === 409) {
             }
-            // Lógica adicional em caso de erro ao enviar o formulário
+            this.aviso = "Falha ao enviar a solicitação!"
+            this.textoEnvio = error.error;
+            this.sucesso = true;
           }
         );
     }

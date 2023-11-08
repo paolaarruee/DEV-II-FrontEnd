@@ -1,0 +1,45 @@
+<div class="titulo">
+  <p>Lista de servidores</p>
+</div>
+<ul class="servidores">
+
+  <li  >
+    <div class="card cardHeader">
+    <div class="nome">
+      NOME
+    </div>
+    <div class="email">
+      E-MAIL
+    </div>
+    <div class="cargo">
+      CARGO
+    </div>
+    <div class="curso">
+      CURSO
+    </div>
+    <div class="acoes">
+      AÇÕES
+    </div>
+  </div>
+  </li>
+    <li *ngFor="let servidor of servidores" >
+      <div class="card">
+      <div class="nome">
+        {{ servidor.nome }}
+      </div>
+      <div class="email">
+        {{ servidor.usuarioSistema.email }}
+      </div>
+      <div class="cargo">
+        {{ servidor.cargo }}
+      </div>
+      <div class="curso" contenteditable="true">
+        {{ servidor.curso.nomeCurso }}
+      </div>
+      <div class="acoes">
+        <button (click)="excluirServidor(servidor)">Excluir</button>
+        
+      </div>
+    </div>
+    </li>
+  </ul>

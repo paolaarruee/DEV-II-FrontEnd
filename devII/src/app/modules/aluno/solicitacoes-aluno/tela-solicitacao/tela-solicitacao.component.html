@@ -87,7 +87,7 @@
 
       <div class="aviso" *ngIf="exibir">
         <h1 class="tAviso" *ngIf="!sucesso">Atenção</h1>
-        <h1 class="tAviso" *ngIf="sucesso">Sucesso</h1>
+        <h1 class="tAviso" *ngIf="sucesso" >{{ aviso }}</h1>
         <h1 class="titulo">{{ textoEnvio }}</h1>
         <input
           class="botao"

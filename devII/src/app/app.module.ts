@@ -32,7 +32,11 @@ import { CadastrarVagasComponent } from './modules/vagas-estagio/cadastrar-vagas
 import { DetalhesVagaComponent } from './modules/vagas-estagio/detalhes-vaga/detalhes-vaga.component';
 import { MuralDeVagasComponent } from './modules/vagas-estagio/mural-de-vagas/mural-de-vagas.component';
 import { VagasComponent } from './modules/vagas-estagio/vagas/vagas.component';
+import { AtualizarDocsComponent } from './modules/aluno/atualizar-docs/atualizar-docs.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { CaixaConfimacaoComponent } from './caixa-confimacao/caixa-confimacao.component';
+import { ListaServidorComponent } from './modules/servidor/lista-servidor/lista-servidor.component';
+
 
 
 const ANGULAR_MODULES = [
@@ -63,40 +67,19 @@ const COMPONENTS = [
   ListaSolicitacoesServidorComponent,
   ListaSolicitacoesAlunoComponent,
   SolicitacaoComponent,
+  CaixaConfimacaoComponent,
   DetalhesSolicitacaoComponent,
   TelaSolicitacaoComponent,
+  AtualizarDocsComponent,
+  ListaServidorComponent,
   AnaliseDocsComponent,
+  
 ];
 
 @NgModule({
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS ],
 
-  imports: [...ANGULAR_MODULES , SocialLoginModule],
-
-  providers: [
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '608337993679-jbh57642rjhkuuaefg5lik3vol1tk4jc.apps.googleusercontent.com'
-            )
-          },
-          {
-            id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('clientId')
-          }
-        ],
-        onError: (err) => {
-          console.error(err);
-        }
-      } as SocialAuthServiceConfig,
-    }
-  ],
-
+  imports: [...ANGULAR_MODULES ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

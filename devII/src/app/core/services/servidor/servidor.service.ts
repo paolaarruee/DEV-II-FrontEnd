@@ -8,6 +8,12 @@ import { environment } from 'src/environments/environment.development';
   providedIn: 'root',
 })
 export class ServidorService {
+  public excluirServidor(id: any): Observable<void> {
+    return this.httpClient.get<void>(
+      `${environment.API_URL}/excluirServidor/${id}`
+ 
+    );
+  }
   public constructor(private httpClient: HttpClient) {}
 
   public cadastraServidor(servidor: Servidor): Observable<void> {
@@ -20,6 +26,12 @@ export class ServidorService {
   public listaServidor(id: number): Observable<void> {
     return this.httpClient.get<void>(
       `${environment.API_URL}/buscarServidor/${id}`
+    );
+  }
+
+  public listarTodosServidores(): Observable<Servidor[]> {
+    return this.httpClient.get<Servidor[]>(
+      `${environment.API_URL}/listarServidores`
     );
   }
 }

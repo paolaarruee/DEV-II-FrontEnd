@@ -12,6 +12,7 @@ import { FormularioServidorComponent } from './modules/servidor/formulario-servi
 import { CadastrarVagasComponent } from './modules/vagas-estagio/cadastrar-vagas/cadastrar-vagas.component';
 import { MuralDeVagasComponent } from './modules/vagas-estagio/mural-de-vagas/mural-de-vagas.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { ListaServidorComponent} from './modules/servidor/lista-servidor/lista-servidor.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: 'listaSolicitacoesServidor',
     component: ListaSolicitacoesServidorComponent,
+  },
+  {
+    path: 'listaServidores',
+    component: ListaServidorComponent,
   },
   {
     path: 'solicitacaoEstagio',
