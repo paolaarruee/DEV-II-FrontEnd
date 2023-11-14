@@ -1,17 +1,23 @@
 
 <div class="wrapper">
   <div class="corpo">
+  
     <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
       <div class="image-container">
         <img src="assets/img/imgLogin.png" alt="imagem login">
       </div>
+      <hr>
+      <h3 > Faça login com Google</h3>
+      <div id="buttonDiv" class="botaoGoogle">
+      </div>
+      <h3 > Ou logue no sistema</h3>
+
       <input class="campos" type="email" id="email" formControlName="email" placeholder="Email@restinga.ifrs.edu.br" name="email" required >
       <input class="campos" type="password" id="senha" formControlName="senha" placeholder="Senha" name="senha" required>
       <div class="buttons">
-        <button type="submit" [disabled]="loginForm.invalid">Acessar</button>
         <button type="button" routerLink="/cadastrarAluno">Cadastrar</button>
+        <button type="submit" [disabled]="loginForm.invalid">Acessar</button>
       </div>
-      <div id="buttonDiv" class="botaoGoogle"></div>
     </form>
   </div>
 </div>

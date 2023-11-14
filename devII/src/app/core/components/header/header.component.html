@@ -1,4 +1,4 @@
-<nav class="navbar">
+<nav class="navbar" *ngIf="logado">
   <div class="navbar-inicio">
     <a routerLink="">
       <img src="/assets/img/logo-if-branco.png" />
@@ -12,20 +12,19 @@
   </div>
 
   <div class="navbar-itens">
-    <a class="navbar-itens-menu">
-      <a routerLink="/muralVagas">Oportunidades </a>
+    <a class="navbar-itens-menu navbar-nav">
+      <a routerLink="/muralVagas" class="nav-item">Oportunidades </a>
       <a routerLink="/cadastroVagas" *ngIf="exibirLink">Cadastrar Vagas</a>
-      <a routerLink="/cadastrarServidor" *permission="Roles.ROLE_SESTAGIO"
-        >Cadastrar servidor</a
-      >
-      <a routerLink="/listaSolicitacoesServidor" *ngIf="exibirLink"
-        >Lista Solicitações</a
-      >
-      <a routerLink="/listaSolicitacoesAluno" *permission="Roles.ROLE_ALUNO"
-        >Solicitações</a
-      >
+      <a routerLink="/cadastrarServidor" *permission="Roles.ROLE_SESTAGIO">Cadastrar servidor</a>
+      <a routerLink="/listaSolicitacoesServidor" *ngIf="exibirLink">Lista Solicitações</a>
+      <a routerLink="/listaSolicitacoesAluno" *permission="Roles.ROLE_ALUNO">Solicitações</a>
       <a routerLink="/login" *ngIf="!isAuthenticated">Login</a>
       <a (click)="logout()" *ngIf="isAuthenticated">Logout</a>
     </a>
+
   </div>
+  <div class="bemVindo" *ngIf="isAuthenticated">
+    Você está logado!
+  </div>
+  
 </nav>

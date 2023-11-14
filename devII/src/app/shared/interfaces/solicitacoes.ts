@@ -39,6 +39,7 @@ export interface Solicitacoes {
   };
   tipo: string;
   dataSolicitacao: string;
+  editavel: string;
   status: string;
   titulo: string;
   conteudo: string;

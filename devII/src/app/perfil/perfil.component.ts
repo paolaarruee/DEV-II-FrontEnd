@@ -15,17 +15,16 @@ export class PerfilComponent {
   constructor(
     private userService: UserService,
     private alunoService: FormularioCadastroAlunoService,
-    private router: Router,
     private toastService: ToastService
   ) {}
 
   ngOnInit() {
     this.userService.getUserData().subscribe((data: any) => {
       this.aluno.usuarioSistema.email = data.usuarioSistema.email
+      this.aluno.nomeCompleto = data.nomeCompleto
  
     });
   }
-
 
   aluno: Aluno = {
     nomeCompleto: '',

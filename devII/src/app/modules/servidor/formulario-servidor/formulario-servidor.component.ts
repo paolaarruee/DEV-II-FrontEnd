@@ -1,4 +1,3 @@
-
 import { Component } from '@angular/core';
 
 import { FormularioServidorService } from '../../../core/services/formulario-servidor/formulario-servidor.service';
@@ -20,9 +19,9 @@ export class FormularioServidorComponent {
       nomeCurso: '',
     },
     usuarioSistema: {
-      roles: '',
       email: '',
       senha: '',
+      roles: '',
     },
   };
 
@@ -36,21 +35,19 @@ export class FormularioServidorComponent {
     private toastService: ToastService
   ) {}
 
-  exibirCursos(event : any){
+  exibirCursos(event: any) {
     const valorSelecionado = event.target.value;
-    if(valorSelecionado != "Coordenador"){
+    if (valorSelecionado != 'Coordenador') {
       this.exibirCurso = false;
-      if(valorSelecionado === "Setor de Estágio"){
+      if (valorSelecionado === 'Setor de Estágio') {
         this.servidor.curso.id = '15';
-      }else{
+      } else {
         this.servidor.curso.id = '16';
       }
-    }
-    else{
+    } else {
       this.exibirCurso = true;
       this.habilitarCurso = false;
     }
-
   }
 
   enviarFormulario() {
@@ -64,7 +61,7 @@ export class FormularioServidorComponent {
     let camposObrigatorios = [
       { nome: 'Nome Completo', valor: this.servidor.nome },
       { nome: 'Cargo', valor: this.servidor.cargo },
-      { nome: 'Curso', valor: this.servidor.curso },
+      { nome: 'Curso', valor: this.servidor.curso.id },
       {
         nome: 'Email institucional',
         valor: this.servidor.usuarioSistema.email,
@@ -97,7 +94,6 @@ export class FormularioServidorComponent {
       this.toastService.showMessage(mensagem, 'error');
       return;
     }
-
     this.service.enviarDados(this.servidor).subscribe(
       (response) => {
         console.log('Servidor cadastrado com sucesso!');
@@ -107,10 +103,7 @@ export class FormularioServidorComponent {
       },
       (error: HttpErrorResponse) => {
         if (error.status === 409) {
-          this.toastService.showMessage(
-            "erro: ",
-            error.error
-          );
+          this.toastService.showMessage('erro: ', error.error);
         } else {
           console.error('Erro ao enviar o formulário:', error);
           this.toastService.showMessage(

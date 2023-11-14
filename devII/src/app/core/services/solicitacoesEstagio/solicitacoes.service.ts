@@ -55,6 +55,20 @@ export class SolicitacoesService {
     );
   }
 
+  setEditarSolicitacao(id: number): Observable<any> {
+    return this.httpClient.get<any>(
+      `${environment.API_URL}/editarSolicitacao`,
+      { params: { id: id.toString() } }
+    );
+  }
+
+  setObservacaoDaSolicitacao(id: number, text : String): Observable<any> {
+    return this.httpClient.get<any>(
+      `${environment.API_URL}/editarobservacaoSolicitacao`,
+      { params: { id: id.toString(), texto: text.toString()} }
+    );
+  }
+
   listarSolicitacoesPorEmailServidor(): Observable<any> {
     return this.httpClient
       .get<any>(`${environment.API_URL}/listarSolicitacoesPorEmailServidor`, {})

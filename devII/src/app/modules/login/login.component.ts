@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2} from '@angular/core';
+import { AfterViewInit, Component, OnInit, Renderer2} from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../../core/services/authentication/authentication.service';
@@ -6,48 +6,48 @@ import { Authorization, Usuario } from '../../shared/interfaces/usuario';
 import { ToastService } from '../../core/services/toast/toast.service';
 import { NgZone } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
+import { jwtDecode } from 'jwt-decode';
 
 
 declare var google: any;
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
 
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
 
   public loginForm!: FormGroup;
   
   public constructor(
-    private renderer: Renderer2,
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthenticationService,
     private toastService: ToastService,
-    private ngZone: NgZone
   ) {}
 
- 
- 
   ngOnInit(): void {
     this.setLoginForm();
-    window.loginComponentInstance = this;
+  }
 
+  
+  ngAfterViewInit(): void {
+    window.loginComponentInstance = this;
+    window.onload = () => {
     google.accounts.id.initialize({
       client_id: "608337993679-jbh57642rjhkuuaefg5lik3vol1tk4jc.apps.googleusercontent.com",
       callback: window.handleCredentialResponse.bind(this),
     });
+
     google.accounts.id.renderButton(
       document.getElementById("buttonDiv"),
-      { theme: "outline", size: "large" }  // customization attributes
+      { theme: "outline", size: "large", width: 400 }  // customization attributes
     );
+
     google.accounts.id.prompt();
+  };
   }
-
-
-  
 
   public login(userData: Usuario) {
     this.authService.login(userData).subscribe({
@@ -68,9 +68,6 @@ export class LoginComponent implements OnInit {
       error: () => this.toastService.showMessage('Erro ao autenticar usuário.'),
     });
   }
-
-
-  
 
    public cadastrar(authData : Authorization) {
     this.authService.setAuthData(authData);
@@ -104,8 +101,8 @@ declare global {
 
 //@ts-ignore
 window.handleCredentialResponse = (response) => {
-  //@ts-ignore
-  const data = jwt_decode(response.credential)
+  alert("data");
+  const data = jwtDecode(response.credential);
   alert(data);
   console.log( data );
   fetch(environment.API_URL+"/login/google", {

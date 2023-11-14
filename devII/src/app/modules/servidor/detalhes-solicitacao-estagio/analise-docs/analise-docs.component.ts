@@ -40,6 +40,7 @@ export class AnaliseDocsComponent implements OnInit {
   motivoIndeferimento = new FormControl('');
   public isRequestSent: boolean = false;
   public solicitacao: any;
+  public observacao: String = '';
 
   public constructor(
     private activatedRoute: ActivatedRoute,
@@ -54,6 +55,7 @@ export class AnaliseDocsComponent implements OnInit {
     this.setStudentData();
     this.setSolicitacaoData();
     this.setDocumentListId();
+
   }
 
   download({ id, nome }: DocFile): void {
@@ -76,9 +78,13 @@ export class AnaliseDocsComponent implements OnInit {
   private setStudentData() {
     const { id } = this.activatedRoute.snapshot.params;
     this.studentData$ = this.solicitacoes.getStudentData(id);
+    this.studentData$.subscribe((data) => {
+      this.observacao = data.observacao;
+    });
+
   }
 
-  private setSolicitacaoData() {
+  public setSolicitacaoData() {
     const { id } = this.activatedRoute.snapshot.params;
     this.solicitacaoData$ = this.solicitacoes.getSolicitacoesData(id).pipe(
       tap((solicitacoes: any) => {
@@ -98,12 +104,34 @@ export class AnaliseDocsComponent implements OnInit {
           solicitacoes.statusEtapaDiretor === Status.INDEFERIDO;
         //   solicitacoes.statusEtapaCoordenador === Status.EM_ANDAMENTO ||
         //   solicitacoes.statusEtapaSetorEstagio === Status.EM_ANDAMENTO) ||
-
         solicitacoes.status === Status.INDEFERIDO;
         solicitacoes.status === Status.DEFERIDO;
       })
     );
-    console.log(this.disableButton);
+  }
+
+  trocarEditar(){
+    const { id } = this.activatedRoute.snapshot.params;
+    this.solicitacoes.setEditarSolicitacao(id).subscribe({
+      next: () => {
+        window.location.reload();
+      },
+      error: () => {
+        this.toastService.showMessage('Erro ao mudar edição de documentos.');
+      },
+    });
+  }
+
+  atualizarObservacao(){
+    const { id } = this.activatedRoute.snapshot.params;
+    this.solicitacoes.setObservacaoDaSolicitacao(id, this.observacao).subscribe({
+      next: () => {
+        this.toastService.showMessage('Observação foi salva!');
+      },
+      error: () => {
+        this.toastService.showMessage('Erro ao mudar observação da solicitação.');
+      },
+    });
   }
 
   public abrirDialogDeferir(): void {
