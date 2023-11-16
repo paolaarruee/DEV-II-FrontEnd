@@ -12,10 +12,12 @@ import { FormularioCadastroAlunoService } from '../core/services/formulario-alun
 })
 export class PerfilComponent {
 
+
   constructor(
     private userService: UserService,
     private alunoService: FormularioCadastroAlunoService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -30,7 +32,6 @@ export class PerfilComponent {
     nomeCompleto: '',
     usuarioSistema: {
       email: '',
-      senha: '',
       roles: '',
       },
     turno: '',
@@ -42,14 +43,15 @@ export class PerfilComponent {
   enviarSolicitacao() {
     if (this.aluno.curso.length <= 0) {
       this.toastService.showMessage('Selecione o tipo!');
-    } 
+    } else{
       this.alunoService
         .enviarDadosPerfil(this.aluno)
         .subscribe(
           (response) => {
             console.log('Solicitação cadastrada com sucesso!');
             console.log('Resposta da API:', response);
-            this.toastService.showMessage('Solicitação efetuada!!');
+            this.toastService.showMessage('Sucesso!!');
+            this.router.navigateByUrl('/solicitacaoEstagio');
           },
           (error) => {
             if (error.status === 409) {
@@ -57,6 +59,7 @@ export class PerfilComponent {
             // Lógica adicional em caso de erro ao enviar o formulário
           }
         );
+    }
   }
 
 

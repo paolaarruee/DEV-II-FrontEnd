@@ -23,8 +23,6 @@ export class HeaderComponent {
     }
 
     ngOnInit(): void {
-      
-
       this.logado = this.authService.isAuthenticated;
       if(this.authService.role === 3 || this.authService.role === 2 || this.authService.role === 4)
         this.exibirLink = true;

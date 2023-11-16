@@ -65,6 +65,12 @@ export class FormularioCadastroAlunoComponent {
       return;
     }
 
+    if(this.aluno.usuarioSistema.senha.length < 6){
+      let mensagem = `A senha deve ter no mínimo 6 caracteres.`;
+      this.toastService.showMessage(mensagem, 'error');
+      return;
+    }
+
     if (!/^[\w-]+(\.[\w-]+)*@restinga\.ifrs\.edu\.br$/.test(this.aluno.usuarioSistema.email)) {
       let mensagem = `O email deve ter o final @restinga.ifrs.edu.br`;
       this.toastService.showMessage(mensagem, 'error');

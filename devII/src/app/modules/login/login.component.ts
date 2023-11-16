@@ -26,11 +26,17 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private authService: AuthenticationService,
     private toastService: ToastService,
   ) {}
-
   ngOnInit(): void {
     this.setLoginForm();
+    this.carregarBotao();
   }
 
+  carregarBotao() {
+    google.accounts.id.renderButton(
+      document.getElementById("buttonDiv"),
+      { theme: "outline", size: "large", width: 400 }  // customization attributes
+    );
+  }
   
   ngAfterViewInit(): void {
     window.loginComponentInstance = this;
@@ -39,12 +45,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       client_id: "608337993679-jbh57642rjhkuuaefg5lik3vol1tk4jc.apps.googleusercontent.com",
       callback: window.handleCredentialResponse.bind(this),
     });
-
-    google.accounts.id.renderButton(
-      document.getElementById("buttonDiv"),
-      { theme: "outline", size: "large", width: 400 }  // customization attributes
-    );
-
+    this.carregarBotao();
     google.accounts.id.prompt();
   };
   }
@@ -101,10 +102,7 @@ declare global {
 
 //@ts-ignore
 window.handleCredentialResponse = (response) => {
-  alert("data");
   const data = jwtDecode(response.credential);
-  alert(data);
-  console.log( data );
   fetch(environment.API_URL+"/login/google", {
     method: 'POST',
     headers: {
@@ -119,7 +117,6 @@ window.handleCredentialResponse = (response) => {
       return response.json();
     })
     .then((data) => {
-      console.log('Resposta do back-end:', data);
       if (window.loginComponentInstance) {
         window.loginComponentInstance.cadastrar(data);
       }

@@ -35,8 +35,9 @@ export class AuthenticationService {
   }
 
   public setAuthData({ Authorization, Roles }: Authorization): void {
-    localStorage.setItem(this.TOKEN_KEY, Authorization);
-    localStorage.setItem(this.ROLE_KEY, JSON.stringify(Role[Roles]));
+    sessionStorage.setItem(this.TOKEN_KEY, Authorization);
+    sessionStorage.setItem(this.ROLE_KEY, JSON.stringify(Role[Roles]));
+  
   }
 
   public get isAuthenticated(): boolean {
@@ -44,11 +45,11 @@ export class AuthenticationService {
   }
 
   public get token(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
+    return sessionStorage.getItem(this.TOKEN_KEY);
   }
 
   public get role(): Role | null {
-    const roleAsString: string | null = localStorage.getItem(this.ROLE_KEY);
+    const roleAsString: string | null = sessionStorage.getItem(this.ROLE_KEY);
 
     if (!roleAsString) {
       return null;
@@ -58,8 +59,8 @@ export class AuthenticationService {
   }
 
   private removeAuthData(): void {
-    localStorage.removeItem(this.TOKEN_KEY);
-    localStorage.removeItem(this.ROLE_KEY);
+    sessionStorage.removeItem(this.TOKEN_KEY);
+    sessionStorage.removeItem(this.ROLE_KEY);
   }
 
   public getUsuarioPorEmail(email: string): Observable<any> {
