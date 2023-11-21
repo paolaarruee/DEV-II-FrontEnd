@@ -132,7 +132,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
     this.paginaAtual = 1;
     if (this.filtroStatus === 'Pendentes') {
       this.listaSolicitacoes = this.todasSolicitacoes.filter((solicitacao: Solicitacoes) => {
-        return solicitacao.status === 'Em Andamento' && this.filtrarPorEtapa(solicitacao);
+        return solicitacao.status === 'Em Andamento'.toLowerCase() && this.filtrarPorEtapa(solicitacao);
       });
       this.ordenarSolicitacoesCrescente();
       return;
@@ -148,7 +148,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
 
     if (this.filtroStatus === 'Em Andamento') {
       this.listaSolicitacoes = this.todasSolicitacoes.filter((solicitacao: Solicitacoes) => {
-        return solicitacao.status === 'Em Andamento';
+        return solicitacao.status.toLowerCase() === 'Em andamento'.toLowerCase();
       });
       this.ordenarSolicitacoesCrescente();
       return;

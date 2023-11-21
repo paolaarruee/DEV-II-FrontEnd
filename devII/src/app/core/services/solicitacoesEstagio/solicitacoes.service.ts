@@ -62,6 +62,20 @@ export class SolicitacoesService {
     );
   }
 
+  setEtapaSolicitacao(id: number, etapa: string): Observable<any> {
+    return this.httpClient.get<any>(
+      `${environment.API_URL}/editarEtapa`,
+      { params: { id: id.toString() , etapa : etapa.toString()} }
+    );
+  }
+
+  setStatusSolicitacao(id: number, status: string): Observable<any> {
+    return this.httpClient.get<any>(
+      `${environment.API_URL}/editarstatus`,
+      { params: { id: id.toString(), status: status.toString()} }
+    );
+  }
+
   setObservacaoDaSolicitacao(id: number, text : String): Observable<any> {
     return this.httpClient.get<any>(
       `${environment.API_URL}/editarobservacaoSolicitacao`,

@@ -74,7 +74,7 @@
   </div>
 
   <div *ngIf="solicitacao.observacao !== undefined && solicitacao.observacao !== null">
-    <div class="observacao">
+    <div class="observacao" *ngIf="solicitacao.observacao.length > 0">
       <p><b>Observação:</b> {{ solicitacao.observacao }}</p>
     </div>
   </div>

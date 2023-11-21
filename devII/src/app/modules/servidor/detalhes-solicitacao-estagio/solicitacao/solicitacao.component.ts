@@ -11,8 +11,7 @@ import { format } from 'date-fns';
 })
 export class SolicitacaoServidorComponent implements OnInit {
 
-  //dataFormatada!: string;
-
+  responsavelAtual : string = 'Responsável atual '
   constructor(private dialog: MatDialog) { }
 
   openDialog() {
@@ -67,6 +66,22 @@ export class SolicitacaoServidorComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.solicitacao)
+    this.setResponsavelAtual();
+  }
+
+  setResponsavelAtual(){
+    if(this.solicitacao.etapa === '3'){
+      this.responsavelAtual = 'Responsável atual: Coordenador de curso'
+    }
+    if(this.solicitacao.etapa === '2'){
+      this.responsavelAtual = 'Responsável atual: Setor estágio'
+    }
+    if(this.solicitacao.etapa === '4'){
+      this.responsavelAtual = 'Responsável atual: Diretor'
+    }
+    if(this.solicitacao.etapa === '1'){
+      this.responsavelAtual = 'Responsavel atual: Nova solicitação'
+    }
   }
 
  

@@ -1,7 +1,7 @@
 <div class="espacamento">
   <div class="card">
    <div class="header">
-      <span class="tituloEstagio">Estágio {{solicitacao.tipo}}</span>
+      <span class="tituloEstagio" >Estágio {{solicitacao.tipo}} </span>
       <div>
         <span>Status</span>
         <span class="retangulo" [ngClass]="statusSolicitacao()">{{solicitacao.status}}</span>
@@ -19,7 +19,6 @@
         </div>
       </div>
    </div>
-
    <div class="titulo">
     <span>{{solicitacao.titulo}}</span>
     <span class="cardDecoracao2"></span>
@@ -34,8 +33,9 @@
       <button (click)="abrirEdicao()" [ngClass]="statusEditavel"> Editar documentos</button>
     </div>
     <div class="buttonDetalhes">
-      <button (click)="openDialog()">Detalhes</button>
+      <button (click)="openDialog()">Detalhes </button>
     </div>
+    <mat-icon *ngIf="observacaoOn"  matTooltip="Info about the action" >warning</mat-icon>
    </div>
 
   </div>

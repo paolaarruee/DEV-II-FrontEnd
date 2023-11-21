@@ -143,7 +143,9 @@
         >
           > Deferir
         </button>
+
         <div class="gerencia">
+          <div class="edicoes">
           <mat-form-field class="observacao">
             <mat-label>Observação</mat-label>
             <textarea
@@ -154,11 +156,33 @@
             ></textarea>
           </mat-form-field>
 
-          <button mat-stroked-button color="warn" (click)="trocarEditar()" >
+          <mat-form-field>
+            <mat-label>Status</mat-label>
+            <select
+              matNativeControl
+              (blur)="atualizarStatus()"
+              [(ngModel)]="status"
+            >
+              <option *ngFor="let items of item">{{ items }}</option>
+            </select>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="authenticationService.role === 3">
+            <mat-label>Status</mat-label>
+            <select
+              matNativeControl
+              (blur)="atualizarEtapa()"
+              [(ngModel)]="etapaAtual"
+            >
+              <option *ngFor="let item of listaEtapas | keyvalue" value="{{item.value}}">{{ item.key }}</option>
+            </select>
+          </mat-form-field>
+          </div>
+          <button mat-stroked-button color="warn" (click)="trocarEditar()">
             {{
               studentData.editavel
-                ? "Abrir a edição de documentos para o aluno"
-                : "Fechar a edição de documentos para o aluno"
+                ? "Fechar a edição de documentos para o aluno"
+                : "Abrir a edição de documentos para o aluno"
             }}
           </button>
         </div>

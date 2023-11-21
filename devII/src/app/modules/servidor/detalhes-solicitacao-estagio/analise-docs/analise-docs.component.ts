@@ -33,6 +33,20 @@ export class AnaliseDocsComponent implements OnInit {
   public studentData$!: Observable<any>;
   public solicitacaoData$!: Observable<any>;
   public readonly Roles: typeof Role = Role;
+    item = ['Deferido', 'Indeferido', 'Em andamento'];
+    status = "";
+    etapaAtual : String = "";
+
+
+    listaEtapas= {
+       'Setor estágio': 2,
+       "Coordenador": 3,
+       "Diretor": 4,
+       "Deferido": 5
+    };
+
+
+
 
   public dialogAberto: boolean = false;
   public servidore!: Servidor;
@@ -48,14 +62,13 @@ export class AnaliseDocsComponent implements OnInit {
     private toastService: ToastService,
     public dialog: MatDialog,
     private solicitacoes: SolicitacoesService,
-    private authenticationService: AuthenticationService
+    public authenticationService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
     this.setStudentData();
     this.setSolicitacaoData();
     this.setDocumentListId();
-
   }
 
   download({ id, nome }: DocFile): void {
@@ -70,6 +83,19 @@ export class AnaliseDocsComponent implements OnInit {
     });
   }
 
+  atualizarEtapa(){
+    const { id } = this.activatedRoute.snapshot.params;
+    this.solicitacoes.setEtapaSolicitacao(id, this.etapaAtual.toString()).subscribe({
+      next: () => {
+        this.toastService.showMessage('Etapa da solicitação foi alterada com sucesso.');
+      },
+      error: () => {
+        this.toastService.showMessage('Erro ao mudar etapa.');
+      },
+    });
+
+  }
+
   private setDocumentListId(): void {
     const { id } = this.activatedRoute.snapshot.params;
     this.documentList$ = this.solicitacoes.getlistDocsPorEstagioId(id);
@@ -80,9 +106,14 @@ export class AnaliseDocsComponent implements OnInit {
     this.studentData$ = this.solicitacoes.getStudentData(id);
     this.studentData$.subscribe((data) => {
       this.observacao = data.observacao;
+      this.status = data.status;
+      this.etapaAtual = data.etapa
+
     });
 
   }
+
+  
 
   public setSolicitacaoData() {
     const { id } = this.activatedRoute.snapshot.params;
@@ -121,6 +152,21 @@ export class AnaliseDocsComponent implements OnInit {
       },
     });
   }
+
+  atualizarStatus(){
+    const { id } = this.activatedRoute.snapshot.params;
+    this.solicitacoes.setStatusSolicitacao(id, this.status).subscribe({
+      next: () => {
+        this.toastService.showMessage('Status da solicitação foi alterada com sucesso.');
+      },
+      error: () => {
+        this.toastService.showMessage('Erro ao mudar status da solicitação.');
+        console.log(console.error());
+
+      },
+    });
+  }
+  
 
   atualizarObservacao(){
     const { id } = this.activatedRoute.snapshot.params;
@@ -162,6 +208,8 @@ export class AnaliseDocsComponent implements OnInit {
       this.dialogAberto = false;
     });
   }
+
+
 
   abrirDialogIndeferir() {
     const dialogRef = this.dialog.open(ModalAnaliseComponent, {

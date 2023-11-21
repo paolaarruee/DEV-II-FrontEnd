@@ -8,6 +8,7 @@ import { DocsService } from 'src/app/core/services/docs/docs.service';
 import { DocFile } from 'src/app/shared/interfaces/doc';
 import { AtualizarDocsComponent } from '../../atualizar-docs/atualizar-docs.component';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-solicitacao',
@@ -17,6 +18,7 @@ import { ToastService } from 'src/app/core/services/toast/toast.service';
 export class SolicitacaoComponent {
   
   statusEditavel: string = ""
+  observacaoOn = false;
 
   constructor(private dialog: MatDialog,
               private toastService: ToastService,
@@ -104,7 +106,14 @@ export class SolicitacaoComponent {
     if(!this.solicitacao.editavel){
       this.statusEditavel = "buttonOff"
     }
+    if(this.solicitacao.observacao != null){
+      if(this.solicitacao.observacao.length > 0){
+      this.observacaoOn = true;
+      }
+    }
   }
+
+
 
   statusInfo(st : number): string{
           if(st == 1 && this.solicitacao.etapa >= "1"){

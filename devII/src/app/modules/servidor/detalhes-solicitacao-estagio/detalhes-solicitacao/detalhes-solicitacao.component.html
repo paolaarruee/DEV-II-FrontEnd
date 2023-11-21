@@ -25,7 +25,7 @@
 
           <span class="etapaDeferido" *ngIf="solicitacao.historico[0].etapa == 2 && solicitacao.etapa > 2">*Deferido*</span>
 
-          <span class="etapaIndeferido" *ngIf="solicitacao.historico[0].etapa == 2 && solicitacao.etapa == 2 && solicitacao.status === 'Indeferido'">*Indeferido*</span>
+          <span class="etapaIndeferido" *ngIf="solicitacao.historico[0].etapa == 3 && solicitacao.etapa == 2 && solicitacao.status === 'Indeferido'">*Indeferido*</span>
       </div>
       <span>Análise setor de estágio</span>
     </div>
