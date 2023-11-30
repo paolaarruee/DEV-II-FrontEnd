@@ -29,7 +29,8 @@ export class AtualizarDocsComponent {
     private dialog: MatDialog,
     private toastService: ToastService,
     public dialogRef: MatDialogRef<AtualizarDocsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { docs: DocFile[], solicitacaoId: number }
+    @Inject(MAT_DIALOG_DATA)
+    public data: { docs: DocFile[]; solicitacaoId: number; isAssinado: boolean }
   ) {}
 
   ngAfterViewInit() {
@@ -38,21 +39,41 @@ export class AtualizarDocsComponent {
       const span = document.createElement('span');
       span.textContent = doc.nome;
       span.className = 'documento';
+
       const img = document.createElement('img');
-      img.src = '/assets/img/apagarBotao.png';
+      if (!this.data.isAssinado) {
+        img.src = '/assets/img/apagarBotao.png';
+      } else {
+        img.src = '/assets/img/downloadBotao.png';
+      }
       img.className = 'botaoApagar';
       img.onclick = () => {
-        if (this.data.docs.length == 1) {
-          alert('Você não pode apagar o último documento');
-        } else {
-          const dialogRef = this.dialog.open(CaixaConfimacaoComponent,{
-            data: {data : null , aviso : "documento"} 
-          });
-          dialogRef.afterClosed().subscribe((result) => {
-            if (result) {
-              this.apagarDoc(doc.id);
+        if (this.data.isAssinado) {
+          this.docslist.downloadDoc(doc.id).subscribe(
+            (response) => {
+              console.log('Resposta bem-sucedida:', response);
+              const blob = new Blob([response], { type: 'application/pdf' });
+              const url = window.URL.createObjectURL(blob);
+              window.open(url);
+            },
+            (err) => {
+              // Manipule erros aqui
+              console.error('Erro:', err);
             }
-          });
+          );
+        } else {
+          if (this.data.docs.length == 1) {
+            alert('Você não pode apagar o último documento');
+          } else {
+            const dialogRef = this.dialog.open(CaixaConfimacaoComponent, {
+              data: { data: null, aviso: 'documento' },
+            });
+            dialogRef.afterClosed().subscribe((result) => {
+              if (result) {
+                this.apagarDoc(doc.id);
+              }
+            });
+          }
         }
       };
 
@@ -83,13 +104,12 @@ export class AtualizarDocsComponent {
     docItem.textContent = file.name;
     listaUI?.appendChild(docItem);
 
-    if (file.size > 1048576 ) {
+    if (file.size > 1048576) {
       this.toastService.showMessage('arquivo muito grande!');
       return;
-    }else if(this.arquivosSelecionados.length > 8){
+    } else if (this.arquivosSelecionados.length > 8) {
       this.toastService.showMessage('Limite de arquivos anexados atingido!!');
-    } 
-    else {
+    } else {
       this.arquivosSelecionados.push(file);
     }
   }
@@ -99,27 +119,36 @@ export class AtualizarDocsComponent {
     this.arquivosSelecionados.forEach((file) => {
       arquivosEnvio.append('file', file);
     });
-    arquivosEnvio.append('solicitacaoId', new Blob([JSON.stringify(this.data.solicitacaoId)],{ type: 'application/json' }));
-
-    if(this.arquivosSelecionados.length == 0){
-      this.toastService.showMessage('Sem arquivos anexados para enviar...');
-    }else{
-    this.docslist.uploadDocs(arquivosEnvio).subscribe(
-      (response) => {
-        this.arquivosSelecionados = [];
-        console.log('Resposta bem-sucedida:', response);
-        this.toastService.showMessage('Arquivos enviados!!!');
-        location.reload();
-      },
-      (err) => {
-        console.error('Erro:', err);
-        if(err.status == "509"){
-          this.toastService.showMessage("Limite de arquivos enviados atingido, antes de enviar exclua um arquivo!");
-        }else{
-          this.toastService.showMessage('Ocorreu algum erro. Tente novamente');
-        }
-      }
+    arquivosEnvio.append(
+      'solicitacaoId',
+      new Blob([JSON.stringify(this.data.solicitacaoId)], {
+        type: 'application/json',
+      })
     );
+
+    if (this.arquivosSelecionados.length == 0) {
+      this.toastService.showMessage('Sem arquivos anexados para enviar...');
+    } else {
+      this.docslist.uploadDocs(arquivosEnvio).subscribe(
+        (response) => {
+          this.arquivosSelecionados = [];
+          console.log('Resposta bem-sucedida:', response);
+          this.toastService.showMessage('Arquivos enviados!!!');
+          location.reload();
+        },
+        (err) => {
+          console.error('Erro:', err);
+          if (err.status == '509') {
+            this.toastService.showMessage(
+              'Limite de arquivos enviados atingido, antes de enviar exclua um arquivo!'
+            );
+          } else {
+            this.toastService.showMessage(
+              'Ocorreu algum erro. Tente novamente'
+            );
+          }
+        }
+      );
+    }
   }
-}
 }

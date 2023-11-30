@@ -117,7 +117,7 @@
           </div>
         </mat-step>
         <mat-step label="Upload" state="chat" *ngIf="!disableButton">
-          <p class="titulo">Upload de Documentos</p>
+          <p class="titulo">Upload de Documentos Assinados!</p>
           <div class="arquivos-up">
             <input
               type="file"
@@ -168,7 +168,7 @@
           </mat-form-field>
 
           <mat-form-field *ngIf="authenticationService.role === 3">
-            <mat-label>Status</mat-label>
+            <mat-label>Etapa</mat-label>
             <select
               matNativeControl
               (blur)="atualizarEtapa()"

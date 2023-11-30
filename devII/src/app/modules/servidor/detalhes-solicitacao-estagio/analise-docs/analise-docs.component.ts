@@ -33,20 +33,17 @@ export class AnaliseDocsComponent implements OnInit {
   public studentData$!: Observable<any>;
   public solicitacaoData$!: Observable<any>;
   public readonly Roles: typeof Role = Role;
-    item = ['Deferido', 'Indeferido', 'Em andamento'];
-    status = "";
-    etapaAtual : String = "";
+  item = ['Deferido', 'Indeferido', 'Em andamento'];
+  status = '';
+  statusAtual = '';
+  etapaAtual: String = '';
 
-
-    listaEtapas= {
-       'Setor estágio': 2,
-       "Coordenador": 3,
-       "Diretor": 4,
-       "Deferido": 5
-    };
-
-
-
+  listaEtapas = {
+    'Setor estágio': 2,
+    Coordenador: 3,
+    Diretor: 4,
+    Deferido: 5,
+  };
 
   public dialogAberto: boolean = false;
   public servidore!: Servidor;
@@ -55,6 +52,7 @@ export class AnaliseDocsComponent implements OnInit {
   public isRequestSent: boolean = false;
   public solicitacao: any;
   public observacao: String = '';
+  public observacaoAtual: String = '';
 
   public constructor(
     private activatedRoute: ActivatedRoute,
@@ -83,17 +81,20 @@ export class AnaliseDocsComponent implements OnInit {
     });
   }
 
-  atualizarEtapa(){
+  atualizarEtapa() {
     const { id } = this.activatedRoute.snapshot.params;
-    this.solicitacoes.setEtapaSolicitacao(id, this.etapaAtual.toString()).subscribe({
-      next: () => {
-        this.toastService.showMessage('Etapa da solicitação foi alterada com sucesso.');
-      },
-      error: () => {
-        this.toastService.showMessage('Erro ao mudar etapa.');
-      },
-    });
-
+    this.solicitacoes
+      .setEtapaSolicitacao(id, this.etapaAtual.toString())
+      .subscribe({
+        next: () => {
+          this.toastService.showMessage(
+            'Etapa da solicitação foi alterada com sucesso.'
+          );
+        },
+        error: () => {
+          this.toastService.showMessage('Erro ao mudar etapa.');
+        },
+      });
   }
 
   private setDocumentListId(): void {
@@ -106,14 +107,12 @@ export class AnaliseDocsComponent implements OnInit {
     this.studentData$ = this.solicitacoes.getStudentData(id);
     this.studentData$.subscribe((data) => {
       this.observacao = data.observacao;
+      this.observacaoAtual = data.observacao;
       this.status = data.status;
-      this.etapaAtual = data.etapa
-
+      this.statusAtual = data.status;
+      this.etapaAtual = data.etapa;
     });
-
   }
-
-  
 
   public setSolicitacaoData() {
     const { id } = this.activatedRoute.snapshot.params;
@@ -141,7 +140,7 @@ export class AnaliseDocsComponent implements OnInit {
     );
   }
 
-  trocarEditar(){
+  trocarEditar() {
     const { id } = this.activatedRoute.snapshot.params;
     this.solicitacoes.setEditarSolicitacao(id).subscribe({
       next: () => {
@@ -153,31 +152,41 @@ export class AnaliseDocsComponent implements OnInit {
     });
   }
 
-  atualizarStatus(){
-    const { id } = this.activatedRoute.snapshot.params;
-    this.solicitacoes.setStatusSolicitacao(id, this.status).subscribe({
-      next: () => {
-        this.toastService.showMessage('Status da solicitação foi alterada com sucesso.');
-      },
-      error: () => {
-        this.toastService.showMessage('Erro ao mudar status da solicitação.');
-        console.log(console.error());
-
-      },
-    });
+  atualizarStatus() {
+    if (this.status != this.statusAtual) {
+      this.statusAtual = this.status;
+      const { id } = this.activatedRoute.snapshot.params;
+      this.solicitacoes.setStatusSolicitacao(id, this.status).subscribe({
+        next: () => {
+          this.toastService.showMessage(
+            'Status da solicitação foi alterada com sucesso.'
+          );
+        },
+        error: () => {
+          this.toastService.showMessage('Erro ao mudar status da solicitação.');
+          console.log(console.error());
+        },
+      });
+    }
   }
-  
 
-  atualizarObservacao(){
+  atualizarObservacao() {
+    if(this.observacao != this.observacaoAtual) {
+      this.observacaoAtual = this.observacao;
     const { id } = this.activatedRoute.snapshot.params;
-    this.solicitacoes.setObservacaoDaSolicitacao(id, this.observacao).subscribe({
-      next: () => {
-        this.toastService.showMessage('Observação foi salva!');
-      },
-      error: () => {
-        this.toastService.showMessage('Erro ao mudar observação da solicitação.');
-      },
-    });
+    this.solicitacoes
+      .setObservacaoDaSolicitacao(id, this.observacao)
+      .subscribe({
+        next: () => {
+          this.toastService.showMessage('Observação foi salva!');
+        },
+        error: () => {
+          this.toastService.showMessage(
+            'Erro ao mudar observação da solicitação.'
+          );
+        },
+      });
+    }
   }
 
   public abrirDialogDeferir(): void {
@@ -208,8 +217,6 @@ export class AnaliseDocsComponent implements OnInit {
       this.dialogAberto = false;
     });
   }
-
-
 
   abrirDialogIndeferir() {
     const dialogRef = this.dialog.open(ModalAnaliseComponent, {

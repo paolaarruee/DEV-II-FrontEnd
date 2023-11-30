@@ -29,7 +29,10 @@
    </div>
 
    <div class="buttonContainer">
-    <div class="buttonDetalhes"  id="buttonDetalhes" >
+    <div class="buttonDetalhes"  id="buttonDetalhes" *ngIf="solicitacao.status == 'Deferido'">
+      <button (click)="abrirDownload()"> Baixar documentos</button>
+    </div>
+    <div class="buttonDetalhes"  id="buttonDetalhes" *ngIf="solicitacao.status != 'Deferido'">
       <button (click)="abrirEdicao()" [ngClass]="statusEditavel"> Editar documentos</button>
     </div>
     <div class="buttonDetalhes">

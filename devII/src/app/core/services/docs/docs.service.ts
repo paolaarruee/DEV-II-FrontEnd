@@ -29,4 +29,8 @@ export class DocsService {
     return this.httpClient.get<DocFile[]>(`${environment.API_URL}/listarDocumento/${solicitarEstagioId}`);
   }
 
+  listarDocumentosPorSolicitarEstagioIdAssinados(solicitarEstagioId: number): Observable<DocFile[]> {
+    return this.httpClient.get<DocFile[]>(`${environment.API_URL}/listarDocumentoAssinados/${solicitarEstagioId}`);
+  }
+
 }

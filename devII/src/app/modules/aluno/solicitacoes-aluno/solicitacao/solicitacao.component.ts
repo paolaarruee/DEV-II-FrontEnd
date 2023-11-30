@@ -92,6 +92,27 @@ export class SolicitacaoComponent {
   }
   }
 
+  abrirDownload(){
+    if(this.solicitacao.status.toLowerCase() == "deferido"){
+    const docs: Observable<DocFile[]> = this.docslist.listarDocumentosPorSolicitarEstagioIdAssinados(parseInt(this.solicitacao.id));
+    docs.subscribe((docs) => {
+      //OK
+      const dialogRef = this.dialog.open(AtualizarDocsComponent, {data: { docs: docs, solicitacaoId: this.solicitacao.id, isAssinado: true}
+      });
+      docs.forEach((doc) => {
+        console.log(doc);
+      });
+    }, (error) => {
+      //EERO
+      this.toastService.showMessage('Essa solicitação não tem documentos...')
+    }, () => {
+      //
+    });
+    }else{
+      this.toastService.showMessage('Essa solicitação não está aberta para edição..')
+  }
+  }
+
 
 
 
