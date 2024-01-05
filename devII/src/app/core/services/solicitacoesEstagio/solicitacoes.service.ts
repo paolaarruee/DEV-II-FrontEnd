@@ -34,6 +34,15 @@ export class SolicitacoesService {
     );
   }
 
+  setValidadeContrato(id: number, dataNova: string): Observable<any> {
+
+    return this.httpClient.get<any>(
+      `${environment.API_URL}/trocarValidadeContrato`,
+      { params: { id: id.toString(), dataNova: dataNova } }
+    );
+  }
+
+
   listarSolicitacoes(): Observable<Solicitacoes[]> {
     const url = `${environment.API_URL}/listarSolicitacoes`;
     return this.httpClient.get<Solicitacoes[]>(url);

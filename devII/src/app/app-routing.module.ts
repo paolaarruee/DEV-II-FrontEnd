@@ -13,13 +13,17 @@ import { CadastrarVagasComponent } from './modules/vagas-estagio/cadastrar-vagas
 import { MuralDeVagasComponent } from './modules/vagas-estagio/mural-de-vagas/mural-de-vagas.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { ListaServidorComponent} from './modules/servidor/lista-servidor/lista-servidor.component';
+import { ListaEstagiariosComponent } from './modules/servidor/lista-estagiarios/lista-estagiarios.component';
 
 const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
   },
-
+  {
+    path:'listaEstagiarios',
+    component: ListaEstagiariosComponent,
+  },
   {
     path: 'listaSolicitacoesServidor',
     component: ListaSolicitacoesServidorComponent,

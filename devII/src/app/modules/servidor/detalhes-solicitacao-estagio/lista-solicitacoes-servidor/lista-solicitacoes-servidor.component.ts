@@ -42,6 +42,8 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
 
   filtrarPorNome(): void {
     this.paginaAtual = 1;
+    this.filtroDataInicial = '';
+    this.filtroDataFinal = '';
     if (this.filtroNome.trim() === '') {
       this.listaSolicitacoes = [...this.todasSolicitacoes];
     } else {
@@ -128,11 +130,32 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
 
   //------------------------------------------------------------------------------
 
+   passaramCincoDias(data: Date) {
+    // Obtém a data atual
+    const dataAtual = new Date();
+  
+    // Adiciona 5 dias à data fornecida
+    const dataMaisCincoDias = new Date(data);
+    dataMaisCincoDias.setDate(dataMaisCincoDias.getDate() + 5);
+  
+    // Compara as datas
+    return dataAtual > dataMaisCincoDias;
+  }
+  
+
   filtrarPorStatus() {
     this.paginaAtual = 1;
     if (this.filtroStatus === 'Pendentes') {
       this.listaSolicitacoes = this.todasSolicitacoes.filter((solicitacao: Solicitacoes) => {
         return solicitacao.status === 'Em Andamento'.toLowerCase() && this.filtrarPorEtapa(solicitacao);
+      });
+      this.ordenarSolicitacoesCrescente();
+      return;
+    }
+
+    if(this.filtroStatus === 'Atrasadas') {
+      this.listaSolicitacoes = this.todasSolicitacoes.filter((solicitacao: Solicitacoes) => {
+        return solicitacao.status === 'Em Andamento'.toLowerCase() || this.passaramCincoDias(new Date(solicitacao.dataSolicitacao));
       });
       this.ordenarSolicitacoesCrescente();
       return;

@@ -20,6 +20,8 @@ import { Status } from 'src/app/shared/interfaces/solicitacoes';
 import { Role } from 'src/app/shared/interfaces/usuario';
 import { AuthenticationService } from 'src/app/core/services/authentication/authentication.service';
 import { SolicitacaoIndeferir } from 'src/app/shared/interfaces/solicitacao-indeferir';
+import { DatePipe } from '@angular/common';
+import { PermissionDirective } from 'src/app/shared/directives/permission/permission.directive';
 
 @Component({
   selector: 'app-analise-docs',
@@ -28,15 +30,18 @@ import { SolicitacaoIndeferir } from 'src/app/shared/interfaces/solicitacao-inde
 })
 export class AnaliseDocsComponent implements OnInit {
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
-
+  public readonly Roles: typeof Role = Role;
   public documentList$!: Observable<DocFile[]>;
   public studentData$!: Observable<any>;
   public solicitacaoData$!: Observable<any>;
-  public readonly Roles: typeof Role = Role;
   item = ['Deferido', 'Indeferido', 'Em andamento'];
   status = '';
   statusAtual = '';
   etapaAtual: String = '';
+  dataFinalEstagio = '';
+  dataInicioEstagio = '';
+  dataSolicitacao = '';
+  dataSistema = '';
 
   listaEtapas = {
     'Setor estágio': 2,
@@ -60,14 +65,17 @@ export class AnaliseDocsComponent implements OnInit {
     private toastService: ToastService,
     public dialog: MatDialog,
     private solicitacoes: SolicitacoesService,
-    public authenticationService: AuthenticationService
+    public authenticationService: AuthenticationService,
+    public datePipe: DatePipe,
   ) {}
 
   ngOnInit(): void {
     this.setStudentData();
     this.setSolicitacaoData();
     this.setDocumentListId();
+    alert(this.authenticationService.role);
   }
+
 
   download({ id, nome }: DocFile): void {
     this.docsService.downloadDoc(id).subscribe({
@@ -97,6 +105,20 @@ export class AnaliseDocsComponent implements OnInit {
       });
   }
 
+  direcionarDiretor(documentoId: number): void { 
+    this.docsService.direcionarDiretor(documentoId).subscribe({
+      next: () => {
+        this.toastService.showMessage('Documento direcionado ao diretor com sucesso!', "SUCESSO");
+      },
+      error: (error) => {
+        this.toastService.showMessage(
+          'Erro ao direcionar o documento.',
+          'ERRO'
+        );
+      },
+    });
+  }
+
   private setDocumentListId(): void {
     const { id } = this.activatedRoute.snapshot.params;
     this.documentList$ = this.solicitacoes.getlistDocsPorEstagioId(id);
@@ -106,12 +128,31 @@ export class AnaliseDocsComponent implements OnInit {
     const { id } = this.activatedRoute.snapshot.params;
     this.studentData$ = this.solicitacoes.getStudentData(id);
     this.studentData$.subscribe((data) => {
+      console.log(data);
       this.observacao = data.observacao;
       this.observacaoAtual = data.observacao;
       this.status = data.status;
       this.statusAtual = data.status;
       this.etapaAtual = data.etapa;
+      this.dataFinalEstagio =
+      this.datePipe.transform(data.finalDataEstagio, 'dd-MM-yyyy') || '';
+      this.dataInicioEstagio = this.datePipe.transform(data.inicioDataEstagio, 'dd-MM-yyyy') || '';
+      this.dataSistema = this.dataFinalEstagio;
     });
+  }
+
+  onInput(event: any): void {
+    let inputValue = event.target.value.replace(/\D/g, '');
+    if (inputValue.length > 8) {
+      inputValue = inputValue.slice(0, 8);
+    }
+    if (inputValue.length > 2 && inputValue.indexOf('-') === -1) {
+      inputValue = `${inputValue.slice(0, 2)}-${inputValue.slice(2)}`;
+    }
+    if (inputValue.length > 5 && inputValue.lastIndexOf('-') === 2) {
+      inputValue = `${inputValue.slice(0, 5)}-${inputValue.slice(5)}`;
+    }
+    this.dataFinalEstagio = inputValue;
   }
 
   public setSolicitacaoData() {
@@ -138,6 +179,7 @@ export class AnaliseDocsComponent implements OnInit {
         solicitacoes.status === Status.DEFERIDO;
       })
     );
+    console.log(this.solicitacaoData$);
   }
 
   trocarEditar() {
@@ -150,6 +192,28 @@ export class AnaliseDocsComponent implements OnInit {
         this.toastService.showMessage('Erro ao mudar edição de documentos.');
       },
     });
+  }
+
+  trocarValidadeContrato() {
+    const { id } = this.activatedRoute.snapshot.params;
+    if (this.dataFinalEstagio != this.dataSistema) {
+      if (this.dataFinalEstagio == '') {
+        this.toastService.showMessage('Data de validade do contrato é obrigatória.', 'ERRO');
+      } else {
+        this.solicitacoes.setValidadeContrato(id, this.dataFinalEstagio).subscribe({
+          next: () => {
+            this.toastService.showMessage(
+              'Data de validade do contrato foi modificada com sucesso.'
+            );
+          },
+          error: () => {
+            this.toastService.showMessage(
+              'Erro ao mudar validade do contrato.'
+            );
+          },
+        });
+      }
+    }
   }
 
   atualizarStatus() {
@@ -171,21 +235,21 @@ export class AnaliseDocsComponent implements OnInit {
   }
 
   atualizarObservacao() {
-    if(this.observacao != this.observacaoAtual) {
+    if (this.observacao != this.observacaoAtual) {
       this.observacaoAtual = this.observacao;
-    const { id } = this.activatedRoute.snapshot.params;
-    this.solicitacoes
-      .setObservacaoDaSolicitacao(id, this.observacao)
-      .subscribe({
-        next: () => {
-          this.toastService.showMessage('Observação foi salva!');
-        },
-        error: () => {
-          this.toastService.showMessage(
-            'Erro ao mudar observação da solicitação.'
-          );
-        },
-      });
+      const { id } = this.activatedRoute.snapshot.params;
+      this.solicitacoes
+        .setObservacaoDaSolicitacao(id, this.observacao)
+        .subscribe({
+          next: () => {
+            this.toastService.showMessage('Observação foi salva!');
+          },
+          error: () => {
+            this.toastService.showMessage(
+              'Erro ao mudar observação da solicitação.'
+            );
+          },
+        });
     }
   }
 

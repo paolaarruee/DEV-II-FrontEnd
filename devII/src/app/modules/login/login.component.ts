@@ -55,13 +55,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
       next: (authData: Authorization) => {
         this.authService.setAuthData(authData);
         if (
-          authData.Roles.toLocaleString() === 'ROLE_SERVIDOR' || authData.Roles.toLocaleString() === 'ROLE_SESTAGIO'
+          authData.Roles.toLocaleString() === 'ROLE_SERVIDOR' || authData.Roles.toLocaleString() === 'ROLE_SESTAGIO' || authData.Roles.toLocaleString() === 'ROLE_DIRETOR'
         ) {
           this.router.navigateByUrl('/listaSolicitacoesServidor').then(() => {
             window.location.reload();
           });
         } else {
-          this.router.navigateByUrl('/oportunidades').then(() => {
+          this.router.navigateByUrl('/listaSolicitacoesAluno').then(() => {
             window.location.reload();
           });
         }
@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         window.location.reload();
       });
     } else {
-      this.router.navigateByUrl('/oportunidades').then(() => {
+      this.router.navigateByUrl('/listaSolicitacoesAluno').then(() => {
         window.location.reload();
       });
     }

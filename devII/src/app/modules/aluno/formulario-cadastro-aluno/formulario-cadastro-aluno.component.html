@@ -22,12 +22,12 @@
       <ul>
         <li style="padding-right: 39px;">
           <label for="matricula">Matrícula</label>
-          <input type="text" id="matricula" name="matricula" [(ngModel)]="aluno.matricula" placeholder="Matrícula" required>
+          <input type="text" id="matricula" name="matricula" (input)="onInput($event)" [maxlength]="10" [(ngModel)]="aluno.matricula" placeholder="Matrícula" required>
         </li>
 
         <li>
           <label for="ingresso">Ingresso</label>
-          <input type="text" id="ingresso" name="ingresso" [(ngModel)]="aluno.ingresso" placeholder="1/2023" required>
+          <input type="text" id="ingresso" name="ingresso"  pattern="^\d{1,2}/\d{4}$" [maxLength]="6" [(ngModel)]="aluno.ingresso" placeholder="1/2023" required>
         </li>
       </ul>
 
@@ -39,6 +39,9 @@
         <option value="12">Eletrônica Industrial</option>
         <option value="13">Gestão Desportiva e de Lazer</option>
         <option value="14">Processos Gerenciais</option>
+        <option value="17">Lazer</option>
+        <option value="18">Informática</option>
+        <option value="19">Eletrônica</option>
       </select>
 
       <div class="senhadiv">

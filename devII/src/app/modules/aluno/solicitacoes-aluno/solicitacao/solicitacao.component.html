@@ -1,7 +1,11 @@
 <div class="espacamento">
   <div class="card">
    <div class="header">
-      <span class="tituloEstagio" >Estágio {{solicitacao.tipo}} </span>
+      <span class="tituloEstagio" >Estágio {{solicitacao.tipo}} </span> 
+      <div *ngIf="observacaoOn" >
+      <p><mat-icon class="iconeObservacao" > feedback</mat-icon>
+      </p>
+    </div>
       <div>
         <span>Status</span>
         <span class="retangulo" [ngClass]="statusSolicitacao()">{{solicitacao.status}}</span>
@@ -38,7 +42,6 @@
     <div class="buttonDetalhes">
       <button (click)="openDialog()">Detalhes </button>
     </div>
-    <mat-icon *ngIf="observacaoOn"  matTooltip="Info about the action" >warning</mat-icon>
    </div>
 
   </div>

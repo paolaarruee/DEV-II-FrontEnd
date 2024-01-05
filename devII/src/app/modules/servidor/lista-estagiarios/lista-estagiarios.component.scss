@@ -1,0 +1,63 @@
+.table-container {
+    
+    width: 95%;
+    height: 10vh; /* 100% da altura da viewport (tela) */
+  }
+
+  .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+
+  .titulosEstagiarios{
+    background-color: darkcyan;
+  }
+  
+  table {
+    width: 90%; /* ou a largura desejada */
+    border-collapse: collapse;
+    margin-top: 20px; /* ajuste conforme necessário */
+  }
+  
+table th, table td {
+    height: 40px;
+    text-align: center;
+    font-weight: 500;
+    vertical-align: middle;
+    border: 1px solid #dee2e6; /* adiciona bordas nas células */
+  }
+
+  @media print {
+    td{
+      font-size: small;
+
+    }
+    .table-container , table{
+      width: 100%;
+    }
+  }
+
+  tr:nth-child(odd) td {
+    background-color: #fdfcfc;
+
+  }
+
+  /* Estilizando células de coluna par com cor vermelha */
+  tr:nth-child(even) td {
+    background-color: #d3ffdb;
+   
+  }
+
+  .sucesso{
+    color: green !important; font-size: medium
+   
+  }
+  .falha{
+    color: red !important;
+    font-size: medium;
+  }
+
+

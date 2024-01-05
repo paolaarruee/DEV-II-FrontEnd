@@ -24,6 +24,7 @@
         <select [(ngModel)]="filtroStatus" name="filtroStatus" class="filtro-status" (ngModelChange)="filtrarPorStatus()">
           <option value="todas">Todas</option>
           <option value="Pendentes">Pendentes</option>
+          <option value="Atrasadas">Atrasadas 5 dias</option>
           <option value="Em Andamento">Em Andamento</option>
           <option value="Deferido">Deferidas</option>
           <option value="Indeferido">Indeferidas</option>
@@ -66,7 +67,7 @@
 
 <ng-template #semSolicitacoes>
   <div class="semSolicitacoes">
-    <p>Você não tem solicitações</p>
+    <p>Você não tem solicitações em "{{filtroStatus}}"</p>
   </div>
 </ng-template>
 

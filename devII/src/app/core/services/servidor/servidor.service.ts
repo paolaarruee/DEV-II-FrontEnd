@@ -23,6 +23,13 @@ export class ServidorService {
     );
   }
 
+  public buscarServidor(cursoId: number): Observable<void> {
+    return this.httpClient.post<void>(
+      `${environment.API_URL}/buscarOrientadorCurso`,
+      cursoId
+    );
+  }
+
   public listaServidor(id: number): Observable<void> {
     return this.httpClient.get<void>(
       `${environment.API_URL}/buscarServidor/${id}`

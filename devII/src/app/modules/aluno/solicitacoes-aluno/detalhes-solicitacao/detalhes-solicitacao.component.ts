@@ -10,34 +10,36 @@ export class DetalhesSolicitacaoComponent {
 
   constructor(
     public dialogRef: MatDialogRef<DetalhesSolicitacaoComponent>,
-    @Inject (MAT_DIALOG_DATA) public solicitacao: any
+    @Inject (MAT_DIALOG_DATA) public data: { solicitacao: any , observacaoOn: boolean }
   ) {}
-
+  observacao : string = this.data.solicitacao.observacao;
+  
   statusSolicitacao(): string{
-    if(this.solicitacao.status.toLowerCase() == 'deferido' || this.solicitacao.status === 'Deferido'){
+    
+    if(this.data.solicitacao.status.toLowerCase() == 'deferido' || this.data.solicitacao.status === 'Deferido'){
       return 'statusColor1'
     }
 
-    if(this.solicitacao.status.toLowerCase() == 'em andamento' || this.solicitacao.status === 'Em Andamento'){
+    if(this.data.solicitacao.status.toLowerCase() == 'em andamento' || this.data.solicitacao.status === 'Em Andamento'){
       return 'statusColor2'
     }
 
-    if(this.solicitacao.status.toLowerCase() == 'indeferido' || this.solicitacao.status === 'Indeferido'){
+    if(this.data.solicitacao.status.toLowerCase() == 'indeferido' || this.data.solicitacao.status === 'Indeferido'){
       return 'statusColor3'
     }
     return 'statusColor1'
   }
 
   progressoFluxo(etapa: number): string {
-    if (this.solicitacao.etapa >= etapa) {
+    if (this.data.solicitacao.etapa >= etapa) {
       return 'progressoEtapa';
-    } else if (this.solicitacao.etapa >= etapa) {
+    } else if (this.data.solicitacao.etapa >= etapa) {
       return 'progressoEtapa';
-    } else if (this.solicitacao.etapa >= etapa) {
+    } else if (this.data.solicitacao.etapa >= etapa) {
       return 'progressoEtapa';
-    } else if (this.solicitacao.etapa >= etapa) {
+    } else if (this.data.solicitacao.etapa >= etapa) {
       return 'progressoEtapa';
-    } else if (this.solicitacao.etapa >= etapa) {
+    } else if (this.data.solicitacao.etapa >= etapa) {
       return 'progressoEtapa';
     }
     return '';

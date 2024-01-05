@@ -34,6 +34,11 @@ export class AtualizarDocsComponent {
   ) {}
 
   ngAfterViewInit() {
+
+    this.dialogRef.afterClosed().subscribe((result) => {
+      window.location.reload();
+    });
+    
     this.data.docs.forEach((doc) => {
       const meuElemento = document.getElementById('caixa');
       const span = document.createElement('span');
@@ -68,18 +73,14 @@ export class AtualizarDocsComponent {
             const dialogRef = this.dialog.open(CaixaConfimacaoComponent, {
               data: { data: null, aviso: 'documento' },
             });
-            dialogRef.afterClosed().subscribe((result) => {
-              if (result) {
-                this.apagarDoc(doc.id);
-              }
-            });
+            
           }
         }
       };
-
       meuElemento?.appendChild(span);
       span.appendChild(img);
     });
+    
   }
   apagarDoc(doc: number) {
     this.docslist.deleteDoc(doc).subscribe(

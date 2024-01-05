@@ -8,32 +8,39 @@
     >
       <mat-icon>arrow_back</mat-icon>
     </button>
-  </div>
-  <div class="corpo-titulo">
-    <span>Análise de Documentos</span>
+    <span class="corpo-titulo">Análise de Documentos</span>
   </div>
   <div class="corpo-dados" *ngIf="studentData$ | async as studentData">
-    <div class="subtitulo">
-      <span class="dados">Dados do Aluno</span>
-    </div>
+    <div class="corpo-dados-caixa gap">
     <div class="nome-aluno">
+      <span class="dados subtitulo">Dados do aluno</span>
       <span>Nome: {{ studentData.aluno.nomeCompleto }}</span>
-      <span class="curso">Tipo de Estágio: {{ studentData.tipo }}</span>
+      <span >Tipo de Estágio: {{ studentData.tipo }}</span>
+      <span>Ingresso: {{ studentData.aluno.ingresso }}</span>
+      <span>Matricula: {{ studentData.aluno.matricula }}</span>
+      <span>Turno: {{ studentData.aluno.turno }}</span>
     </div>
 
     <div class="infos-aluno">
-      <span>Matricula: {{ studentData.aluno.matricula }}</span>
-      <span>Ano: {{ studentData.aluno.ingresso }}</span>
-      <!-- <span>Ano: {{ studentData.aluno.ingresso | date : "dd/MM/YYYY" }}</span> -->
-      <span>Turno: {{ studentData.aluno.turno }}</span>
+      <span class="dados subtitulo">Dados da Empresa</span>
+      <span>Empresa: {{ studentData.nomeEmpresa }}</span>
+      <span>Agente: {{ studentData.agente }}</span>
+      <span>Contato: {{ studentData.contatoEmpresa }}</span>
+      <span>Tipo: {{ studentData.ePrivada ? 'Privada' : 'Publica' }}</span>
     </div>
     <div class="curso-aluno">
-      <span
-        >Curso: <b>{{ studentData.aluno.curso.nomeCurso }}</b></span
-      >
-      <span>Semestre: </span>
+      <span class="dados subtitulo">Dados da solicitação</span>
+      <span>Data da solicitação: {{ datePipe.transform(studentData.dataSolicitacao, 'dd-MM-yyyy') }}</span>
+      <span>Data do inicio do contrato:{{ dataInicioEstagio}}</span>
+      <span >Data do fim do contrato:
+        <input class="data"  (blur)="trocarValidadeContrato()" type="text" maxlength="10" [value]="dataFinalEstagio"  (input)="onInput($event)" pattern="(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\d{4}">
+      </span>
+      <span>Curso: <b class="curso">{{ studentData.aluno.curso.nomeCurso }}</b></span>
     </div>
   </div>
+  </div>
+
+  
 
   <div>
     <div>
@@ -99,16 +106,32 @@
       </div>
     </div>
     <div class="corpo-passos">
+      <span class="dados subtitulo">Documentos</span>
       <mat-stepper #stepper>
         <mat-step label="Download" state="phone">
+          <div class="titulosInfoDocumentos">
           <p class="titulo" *ngIf="documentList$ | async as docsData">
+            Nome do documento
+          </p>
+          <p class="titulo">
+            Estado do documento
+          </p>
+          <p class="titulo" *permission="Roles.ROLE_SESTAGIO">
+            Documento para Diretor
+          </p>
+          <p class="titulo">
             Download de Documentos
           </p>
+        </div>
           <div class="historico" *ngFor="let doc of documentList$ | async">
-            <p class="arquivo">{{ doc.nome }}</p>
-            <button mat-icon-button color="primary" (click)="download(doc)">
-              <mat-icon class="salvar">save_alt</mat-icon>
-            </button>
+            <div class="gap">
+              <p [ngClass]="{'arquivo': doc.paraDiretor && authenticationService.role === 4}">{{ doc.nome }}</p>
+              <p class="assinado" >{{doc.assinado ? 'Documento assinado.' : 'Original' }}</p>
+              <p *permission="Roles.ROLE_SESTAGIO"><input type="checkbox" class="checkDiretor" (ngModelChange)="direcionarDiretor(doc.id)"  *permission="Roles.ROLE_SESTAGIO" [(ngModel)]="doc.paraDiretor"></p>
+              <button mat-icon-button color="primary" (click)="download(doc)">
+                <mat-icon class="salvar">save_alt</mat-icon>
+              </button>
+            </div>
           </div>
           <div class="proximo" *ngIf="!disableButton">
             <button [disabled]="disableButton" mat-button matStepperNext>
@@ -133,6 +156,7 @@
           </div>
         </mat-step>
       </mat-stepper>
+      <hr>
       <div class="botoes" *ngIf="studentData$ | async as studentData">
         <button
           class="deferir"
@@ -146,37 +170,42 @@
 
         <div class="gerencia">
           <div class="edicoes">
-          <mat-form-field class="observacao">
-            <mat-label>Observação</mat-label>
-            <textarea
-              matInput
-              (blur)="atualizarObservacao()"
-              [(ngModel)]="observacao"
-              class="observacao"
-            ></textarea>
-          </mat-form-field>
+            <mat-form-field class="observacao">
+              <mat-label>Observação</mat-label>
+              <textarea
+                matInput
+                (blur)="atualizarObservacao()"
+                [(ngModel)]="observacao"
+                class="observacao"
+              ></textarea>
+            </mat-form-field>
 
-          <mat-form-field>
-            <mat-label>Status</mat-label>
-            <select
-              matNativeControl
-              (blur)="atualizarStatus()"
-              [(ngModel)]="status"
-            >
-              <option *ngFor="let items of item">{{ items }}</option>
-            </select>
-          </mat-form-field>
+            <mat-form-field>
+              <mat-label>Status</mat-label>
+              <select
+                matNativeControl
+                (blur)="atualizarStatus()"
+                [(ngModel)]="status"
+              >
+                <option *ngFor="let items of item">{{ items }}</option>
+              </select>
+            </mat-form-field>
 
-          <mat-form-field *ngIf="authenticationService.role === 3">
-            <mat-label>Etapa</mat-label>
-            <select
-              matNativeControl
-              (blur)="atualizarEtapa()"
-              [(ngModel)]="etapaAtual"
-            >
-              <option *ngFor="let item of listaEtapas | keyvalue" value="{{item.value}}">{{ item.key }}</option>
-            </select>
-          </mat-form-field>
+            <mat-form-field *ngIf="authenticationService.role === 3">
+              <mat-label>Etapa</mat-label>
+              <select
+                matNativeControl
+                (blur)="atualizarEtapa()"
+                [(ngModel)]="etapaAtual"
+              >
+                <option
+                  *ngFor="let item of listaEtapas | keyvalue"
+                  value="{{ item.value }}"
+                >
+                  {{ item.key }}
+                </option>
+              </select>
+            </mat-form-field>
           </div>
           <button mat-stroked-button color="warn" (click)="trocarEditar()">
             {{

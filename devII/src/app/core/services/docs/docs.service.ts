@@ -14,6 +14,10 @@ export class DocsService {
     return this.httpClient.post<void>(`${environment.API_URL}/salvarDocumento`, files);
   }
 
+  public direcionarDiretor(documentoId:number): Observable<Response> {
+    return this.httpClient.get<Response>(`${environment.API_URL}/direcionarDocumentoDiretor/${documentoId}`);
+  }
+
   public downloadDoc(id: number): Observable<Blob> {
     return this.httpClient.get<Blob>(`${environment.API_URL}/downloadDocumento?chamadoId=${id}`, { responseType: 'blob' as 'json' });
   }

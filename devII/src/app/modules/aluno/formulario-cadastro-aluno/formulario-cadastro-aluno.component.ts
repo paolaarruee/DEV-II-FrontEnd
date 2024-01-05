@@ -28,8 +28,16 @@ export class FormularioCadastroAlunoComponent {
 
   confirmarSenha: string = '';
   emailPattern: RegExp = /^[\w-]+(\.[\w-]+)*@restinga\.ifrs\.edu\.br$/;
+event: any;
 
   constructor(private service: FormularioCadastroAlunoService, private toastService: ToastService, private router: Router){}
+  
+  onInput(event: any) {
+    const inputValue = event.target.value;
+    const numericValue = inputValue.replace(/\D/g, '');
+    event.target.value = numericValue;
+  }
+
 
   enviarFormulario(){
     console.log(this.aluno.nomeCompleto)
@@ -71,11 +79,11 @@ export class FormularioCadastroAlunoComponent {
       return;
     }
 
-    if (!/^[\w-]+(\.[\w-]+)*@restinga\.ifrs\.edu\.br$/.test(this.aluno.usuarioSistema.email)) {
-      let mensagem = `O email deve ter o final @restinga.ifrs.edu.br`;
+    if (!/^[\w-]+(\.[\w-]+)*@(restinga\.ifrs\.edu\.br|aluno\.restinga\.ifrs\.edu\.br)$/.test(this.aluno.usuarioSistema.email)) {
+      let mensagem = `O email deve ter o final @restinga.ifrs.edu.br ou @aluno.restinga.ifrs.edu.br`;
       this.toastService.showMessage(mensagem, 'error');
       return;
-    }
+  }
 
     this.service.enviarDados(this.aluno).subscribe(
       response => {

@@ -14,6 +14,8 @@
   }
 }
 
+
+
 .titulo {
   padding: 1em;
   display: flex;
@@ -29,18 +31,60 @@
 
 .formulario {
   display: flex;
-  width: 50%;
-
-  margin-left: 5%;
+  width: 75%;
+  margin-left: 7.5%;
   justify-content: center;
   flex-direction: column;
 }
+
+.agente{
+  display: inline ;
+}
+
+.input{
+  display: flex;
+  flex-direction: column;
+  width: 48%;
+}
+
+.caixa{
+  display: flex;
+  justify-content: space-between;
+}
+
+.readonly{
+  background-color: #e4e4e4;
+  color:#000000ab;
+}
+
+.observacaoAluno{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: rgb(228, 255, 228);
+  width: calc(60% - 20px);
+  border-radius: 12px solid black;
+  font-size: 1rem;
+  padding: 0.5em;
+  border: 1px outset #000000cc;
+  border-radius: 15px;
+  box-shadow: 10px 10px 10px -11px rgba(0,0,0,0.58);
+  -webkit-box-shadow: 10px 10px 10px -11px rgba(0,0,0,0.58);
+  -moz-box-shadow: 10px 10px 10px -11px rgba(0,0,0,0.58);
+}
+
+
+
+
+
+
+
 
 .aviso {
   position: absolute;
   border-radius: 5px;
   border: 0.1px solid black;
-  width: 650px;
+  width: 50%;
   height: 350px;
   background-color: #ffffff;
   padding: 10px;
@@ -100,10 +144,6 @@ select {
   flex-wrap: wrap;
 }
 
-.formularioBox {
-  display: flex;
-  flex-direction: column;
-}
 
 .botao {
   border: 0px solid #000000;

@@ -36,6 +36,8 @@ import { AtualizarDocsComponent } from './modules/aluno/atualizar-docs/atualizar
 import { PerfilComponent } from './perfil/perfil.component';
 import { CaixaConfimacaoComponent } from './caixa-confimacao/caixa-confimacao.component';
 import { ListaServidorComponent } from './modules/servidor/lista-servidor/lista-servidor.component';
+import { ListaEstagiariosComponent } from './modules/servidor/lista-estagiarios/lista-estagiarios.component';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -73,12 +75,13 @@ const COMPONENTS = [
   AtualizarDocsComponent,
   ListaServidorComponent,
   AnaliseDocsComponent,
+  ListaEstagiariosComponent,
   
 ];
 
 @NgModule({
   declarations: [...COMPONENTS ],
-
+  providers: [ DatePipe ],
   imports: [...ANGULAR_MODULES ],
   bootstrap: [AppComponent],
 })

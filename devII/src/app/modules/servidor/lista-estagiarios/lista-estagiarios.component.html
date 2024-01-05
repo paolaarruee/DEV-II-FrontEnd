@@ -1,0 +1,47 @@
+<div class="container">
+
+    <table class="table-container" id="tabela">
+      <thead>
+        <tr class="titulosEstagiarios">
+          <th>Estudante</th>
+          <th>Drive</th>
+          <th>Matrícula</th>
+          <th>E-mail</th>
+          <!-- <th>Link Drive</th>  -->
+          <th>Curso</th>
+          <th>Orientador</th>
+          <th>Empresa</th>
+          <!-- <th>Tipo da Empresa</th> -->
+          <th>Contato da empresa</th>
+          <th>Agente integrador</th>
+          <th>Início</th>
+          <th>Fim</th>
+          <th>Turno</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr *ngFor="let estagiario of estagiarios">
+          <td>{{ estagiario.solicitacao.aluno.nomeCompleto }}</td>
+          <td><a [href]="estagiario.urlPastaDocumentos"><mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="link"></mat-icon></a></td>
+          <td>{{ estagiario.solicitacao.aluno.matricula }}</td>
+          <td>{{ estagiario.solicitacao.aluno.usuarioSistema.email}}
+          <td>{{ estagiario.solicitacao.aluno.curso.nomeCurso }}</td>
+          <td>{{ estagiario.orientador}}</td>
+          <td>{{ estagiario.solicitacao.nomeEmpresa }}</td>
+          <td>{{ estagiario.solicitacao.contatoEmpresa }}</td>
+          <td>{{ estagiario.solicitacao.agente }}</td>
+          <td>{{ estagiario.solicitacao.inicioDataEstagio }}</td>
+          <td>{{ estagiario.solicitacao.finalDataEstagio }}</td>
+          <td>{{ estagiario.solicitacao.aluno.turno }}</td>
+          <td>
+            <span [ngClass]="{'sucesso': isDataPassou(estagiario), 'falha': !isDataPassou(estagiario)}">
+              {{isDataPassou(estagiario) ? 'Terminado.' : 'Em andamento.' }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <h2 *ngIf="estagiarios.length == 0" class="container">Não há estagiários cadastrados.</h2>

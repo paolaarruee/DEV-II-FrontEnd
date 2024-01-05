@@ -1,37 +1,141 @@
-
-
-<div class="avisoFundo" *ngIf="exibir">
-
-</div>
+<div class="avisoFundo" *ngIf="exibir"></div>
 <div class="corpo">
-  <div class="titulo">
-    <p>Envio de solicitação</p>
+  <div class="aviso" *ngIf="perfilIncompleto">
+    <h1 class="tAviso">Atenção</h1>
+    <h1 class="titulo">{{ textoEnvio }}</h1>
+    <button class="botaov" type="button" (click)="redirecionarPerfil()">
+      OK
+    </button>
   </div>
-
-  
-
-    <div class="aviso" *ngIf="perfilIncompleto">
-      <h1 class="tAviso" >Atenção</h1>
-      <h1 class="titulo">{{ textoEnvio }}</h1>
-      <button class="botaov" type="button" (click)="redirecionarPerfil()">OK</button>
-    </div>
-
 
   <div class="formulario" *ngIf="!perfilIncompleto">
     <form class="formulario" (ngSubmit)="enviarSolicitacao()">
-      <label for="tipo">Tipo:</label>
-      <select name="tipo" [(ngModel)]="solicitacao.tipo">
-        <option value="" disabled>Escolha um tipo</option>
-        <option value="obrigatório">Estágio obrigatório</option>
-        <option value="Não obrigatório">Estágio não obrigatório</option>
-      </select>
+      <div class="titulo">
+        <p>Envio de solicitação</p>
+      </div>
 
-      <label for="nome">Nome</label>
+      <div class="caixa">
+        <div class="input">
+          <label for="tipo">Tipo de solicitação*</label>
+          <select name="tipo" [(ngModel)]="solicitacao.tipo">
+            <option value="" disabled>Escolha um tipo de estágio</option>
+            <option value="obrigatório">Estágio obrigatório superior</option>
+            <option value="Não obrigatório">Estágio não obrigatório superior</option>
+            <option value="Renovação">Estágio Técnicos Integrados</option>
+            <option value="Renovação">Renovação de estágio</option>
+          </select>
+        </div>
+
+        <div class="input">
+          <label for="inicioDataEstagio">Início do estágio</label>
+          <input
+            name="inicioDataEstagio"
+            type="date"
+            id="nome"
+            [(ngModel)]="solicitacao.inicioDataEstagio"
+            required
+            maxlength="8"
+          />
+        </div>
+      </div>
+      <div class="caixa">
+        <div class="input">
+          <label for="nomeEmpresa">Nome da empresa</label>
+          <input
+            name="nomeEmpresa"
+            type="text"
+            id="nomeEmpresa"
+            [(ngModel)]="solicitacao.nomeEmpresa"
+            required
+          />
+        </div>
+
+        <div class="input">
+          <label for="finalDataEstagio">Final do estágio</label>
+          <input
+            name="finalDataEstagio"
+            type="date"
+            id="nome"
+            [(ngModel)]="solicitacao.finalDataEstagio"
+            required
+            maxlength="8"
+          />
+        </div>
+      </div>
+
+      <div class="caixa">
+        <div class="input">
+          <label for="ePrivada">Tipo da Empresa:</label>
+          <mat-radio-group
+            class="example-radio-group"
+            [(ngModel)]="solicitacao.ePrivada"
+          >
+            <input
+              type="radio"
+              id="privada"
+              name="tipoEmpresa"
+              [(ngModel)]="solicitacao.ePrivada"
+              [value]="true"
+            />
+            <label for="privada">Privada</label>
+            <input
+              type="radio"
+              id="publica"
+              name="tipoEmpresa"
+              [(ngModel)]="solicitacao.ePrivada"
+              [value]="false"
+            />
+            <label for="publica">Pública</label>
+          </mat-radio-group>
+        </div>
+
+        <div class="input">
+          <label for="agente">Agente Integrador:</label>
+          <br />
+          <select
+            name="agente"
+            [(ngModel)]="solicitacao.agente"
+            (change)="selecionarAgente()"
+          >
+            <option value="" disabled>Escolha um dos agentes se houver</option>
+            <option value="CIEE">CIEE</option>
+            <option value="Metta">Metta</option>
+            <option value="Integrar">Integrar</option>
+            <option value="Futura">Futura Estágios</option>
+            <option value="Estagiar">Estagiar</option>
+            <option value="Nenhum">Nenhum agente.</option>
+            <option value=" ">Outro...</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="input" *ngIf="agenteOutro">
+        <label for="agenteOutro">Nome do outro agente integrador:</label>
+        <input
+          name="agenteOutro"
+          type="text"
+          id="agenteOutro"
+          [(ngModel)]="agenteOutroNome"
+        />
+      </div>
+
+      <label for="nome">Aluno </label>
       <input
+        class="readonly"
         name="nome"
         type="text"
         id="nome"
         value=" {{ userData.nomeCompleto }}"
+        [readOnly]="true"
+      />
+      <label for="curso">Curso</label>
+      <input 
+        class="readonly"
+        type="text"
+        name="curso"
+        id="curso"
+        value="{{ userData.curso.nomeCurso }}"
         [readOnly]="true"
       />
 
@@ -48,7 +152,7 @@
         </div>
 
         <div class="row">
-          <label for="ano">Ano</label>
+          <label for="ano">Ano de entrada</label>
           <input
             class="ano"
             type="text"
@@ -59,14 +163,7 @@
         </div>
       </div>
 
-      <label for="curso">Curso</label>
-      <input
-        type="text"
-        name="curso"
-        id="curso"
-        value="{{ userData.curso.nomeCurso }}"
-      />
-
+      <label for="file">Anexo de documentos*</label>
       <input
         type="file"
         name="file"
@@ -87,7 +184,7 @@
 
       <div class="aviso" *ngIf="exibir">
         <h1 class="tAviso" *ngIf="!sucesso">Atenção</h1>
-        <h1 class="tAviso" *ngIf="sucesso" >{{ aviso }}</h1>
+        <h1 class="tAviso" *ngIf="sucesso">{{ aviso }}</h1>
         <h1 class="titulo">{{ textoEnvio }}</h1>
         <input
           class="botao"
@@ -111,5 +208,22 @@
         />
       </div>
     </form>
+  </div>
+  <div class="observacaoAluno">
+    <b>Observações:</b>
+    <ul>
+      <li>Os documentos devem ser anexados em formato .PDF .DOC ou .DOCX!</li>
+      <li>
+        A instituição de ensino é a última a assinar os documentos de estágio.
+        Portanto, todas as vias dos documentos devem conter todas as assinaturas
+        para somente depois coletar as assinaturas da Direção-geral e/ou
+        professor(a) orientador(a).
+      </li>
+      <li>
+        Os documentos podem ser assinados digitalmente. Caso não possua
+        assinatura digital, utilize o assinador do Gov.br.
+      </li>
+      <li>O prazo para resposta é de até 05 (cinco) dias úteis.</li>
+    </ul>
   </div>
 </div>

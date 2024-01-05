@@ -47,7 +47,7 @@
         color: #ffff;
         font-size: 16px;
         font-weight: bold;
-        
+
         &:hover {
           cursor: pointer;
           font-size: larger;
@@ -100,16 +100,21 @@
   }
 }
 
-.bemVindo{
+.bemVindo {
   line-height: 10px;
-          left: 86%;
-          width: 14%;       
-          display: flex;
-          position: absolute;
-          color: #ffffffbd;
-          justify-content:center;
-          font-size: calc(1.5em + 1px);
-          font-weight: bold;
-          font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
-            sans-serif;
-        }
+  left: 86%;
+  width: 14%;
+  display: flex;
+  position: absolute;
+  color: #ffffffbd;
+  justify-content: center;
+  font-size: calc(1.5em + 1px);
+  font-weight: bold;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+@media print {
+  :host {
+    display: none;
+  }
+}

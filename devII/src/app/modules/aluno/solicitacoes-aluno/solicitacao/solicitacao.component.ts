@@ -26,7 +26,7 @@ export class SolicitacaoComponent {
 
   openDialog() {
     const dialogRef = this.dialog.open(DetalhesSolicitacaoComponent, {
-      data: this.solicitacao // Passa os dados da solicitação para o modal
+      data: { solicitacao: this.solicitacao, observacaoOn: this.observacaoOn }
     });
 
     dialogRef.afterClosed().subscribe(result => {
