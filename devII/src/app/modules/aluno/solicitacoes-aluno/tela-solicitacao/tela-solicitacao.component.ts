@@ -69,6 +69,30 @@ export class TelaSolicitacaoComponent {
     }
   }
 
+  deletarArquivo(file: File): void {
+    const index = this.files.indexOf(file);
+    if (index > -1) {
+      this.files.splice(index, 1);
+    }
+  }
+  onInput(event: any, nova: string): void {
+    let inputValue = event.target.value;
+    if (inputValue.length > 10) {
+      inputValue = inputValue.slice(1, 1 , "");
+      this.toastService.showMessage("Data do início do estágio inválida!" );
+    }
+    this.solicitacao.inicioDataEstagio = inputValue;
+  }
+
+  onInputFim(event: any): void {
+    let inputValue = event.target.value;
+    if (inputValue.length > 10) {
+      inputValue = inputValue.slice(0, 10);
+      this.toastService.showMessage("Data do final do estágio inválida!");
+    }
+    this.solicitacao.finalDataEstagio = inputValue;
+  }
+
   selecionarAgente() {
     if (this.solicitacao.agente === " ") {
       this.agenteOutro = true;

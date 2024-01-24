@@ -44,6 +44,19 @@ export class AuthenticationService {
     return !!this.token && !!this.role;
   }
 
+  public recuperarSenha(email : string){
+    return this.http.post(`${environment.API_URL}/login/recuperarSenha`, email);
+  }
+
+  trocarSenha(senha: string, token: string)  {
+    return this.http.post(`${environment.API_URL}/login/trocarSenha/${token}`, senha);
+  }
+
+
+  public validarToken(token : string){
+    return this.http.post(`${environment.API_URL}/login/validarToken`, token);
+  }
+
   public get token(): string | null {
     return sessionStorage.getItem(this.TOKEN_KEY);
   }

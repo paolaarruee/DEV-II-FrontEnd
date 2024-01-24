@@ -18,7 +18,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   dataSolicitacao: Date = new Date();
   solicitacao: Solicitacoes | undefined;
   paginaAtual: number = 1;
-  solicitacoesPorPagina: number = 7;
+  solicitacoesPorPagina: number = 10;
   public readonly Roles: typeof Role = Role;
 
   constructor(private service: SolicitacoesService, private authenticationService: AuthenticationService) {}
@@ -36,7 +36,13 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
       this.filtrarPorStatus();
       this.ordenarSolicitacoes();
     }).catch((error) => {
-      console.error('Erro ao obter as solicitações:', error);
+      if (error.status === 401) {
+        console.error('Erro ao obter as solicitações: Status 401 Unauthorized');
+        this.authenticationService.logout();
+        window.location.href = '/login';
+      } else {
+        console.error('Erro ao obter as solicitações:', error);
+      }
     });
   }
 
@@ -103,9 +109,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
   validarDatas(): boolean {
     const filtroDataInicial = new Date(this.filtroDataInicial);
     const filtroDataFinal = new Date(this.filtroDataFinal);
-    const dataAtual = new Date(); // Obtém a data atual
-
-    // Verifica se as datas são inválidas, vazias ou não são um número
+    const dataAtual = new Date();
     if (
       !this.filtroDataInicial ||
       !this.filtroDataFinal ||
@@ -114,31 +118,22 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
     ) {
       return false;
     }
-
-    // Verifica se a data inicial é maior que a data atual
     if (filtroDataInicial > dataAtual) {
       return false;
     }
-
-    // Verifica se a data final é maior que a data atual
     if (filtroDataFinal > dataAtual) {
       return false;
     }
-
     return true;
   }
 
   //------------------------------------------------------------------------------
 
    passaramCincoDias(data: Date) {
-    // Obtém a data atual
     const dataAtual = new Date();
-  
-    // Adiciona 5 dias à data fornecida
     const dataMaisCincoDias = new Date(data);
     dataMaisCincoDias.setDate(dataMaisCincoDias.getDate() + 5);
-  
-    // Compara as datas
+
     return dataAtual > dataMaisCincoDias;
   }
   

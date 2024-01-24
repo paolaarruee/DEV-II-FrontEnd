@@ -13,6 +13,7 @@ export class HeaderComponent {
   exibirLink: boolean = false;
   logado: boolean = false;
   navBarLinks: any;
+  ultimoLink: HTMLElement | undefined;
 
   public constructor(private authService: AuthenticationService,  private router: Router) {}
     public logout(): void {
@@ -22,10 +23,24 @@ export class HeaderComponent {
       });
     }
 
+    divClick(event : any): void {
+      const a = event.target as HTMLElement;
+      a.classList.add('div-ativa');
+      if(this.ultimoLink != undefined && this.ultimoLink != a){
+        this.ultimoLink.classList.remove('div-ativa');
+      }
+      this.ultimoLink = a;
+    }
+
     ngOnInit(): void {
+
+      
+
+
       this.logado = this.authService.isAuthenticated;
       if(this.authService.role === 3 || this.authService.role === 2 || this.authService.role === 4)
         this.exibirLink = true;
+
       }
 
   public get isAuthenticated(): boolean {

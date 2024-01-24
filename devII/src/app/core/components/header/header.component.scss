@@ -1,3 +1,14 @@
+
+
+
+
+.logo
+{
+  width: 300px;
+}
+img{
+  width: 98%;
+}
 .navbar {
   background-color: #0b6b1d;
   display: flex;
@@ -7,12 +18,14 @@
   &-inicio {
     width: 50%;
     display: flex;
+    align-items: center;
     padding-left: 50px;
 
     &-link {
       text-decoration: none;
-
+      margin-top: 4%;
       .titulo {
+        margin-left: 25px;
         margin-top: 19px;
         color: #ffff;
         font-size: 12px;
@@ -26,6 +39,7 @@
       }
     }
   }
+
 
   &-itens {
     padding-right: 50px;
@@ -55,6 +69,11 @@
       }
     }
   }
+
+  .div-ativa{
+    border-bottom: 3px solid #ffff;
+  }
+
 
   @media screen and (max-width: 1120px) {
     &-inicio {
@@ -103,7 +122,8 @@
 .bemVindo {
   line-height: 10px;
   left: 86%;
-  width: 14%;
+  top: 4%;
+  width: 17%;
   display: flex;
   position: absolute;
   color: #ffffffbd;

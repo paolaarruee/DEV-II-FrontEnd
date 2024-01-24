@@ -1,23 +1,24 @@
 <nav class="navbar " >
   <div class="navbar-inicio">
     <a routerLink="">
-      <img src="/assets/img/logo-if-branco.png" />
+      <div class="logo">
+      <img src="/assets/img/logoColorida.png"/>
+      </div>
     </a>
     <a class="navbar-inicio-link" routerLink="home">
+      <p class="campus">Doc.Estágio</p>
       <p class="titulo">
-        Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Sul
+        Sistema para solicitação de documentação de estágio
       </p>
-      <p class="campus">Campus Restinga</p>
     </a>
   </div>
 
-  <div class="navbar-itens">
+  <div class="navbar-itens " >
     <a class="navbar-itens-menu navbar-nav">
-      <a href="https://mural.ifrs.edu.br/estagios" class="nav-item">Oportunidades </a>
-      <a routerLink="/cadastroVagas" *ngIf="exibirLink">Cadastrar Vagas</a>
-      <a routerLink="/cadastrarServidor" *permission="Roles.ROLE_SESTAGIO">Cadastrar servidor</a>
-      <a routerLink="/listaEstagiarios" *permission="Roles.ROLE_SESTAGIO">Lista estagiários</a>
-      <a routerLink="/listaSolicitacoesServidor" *ngIf="exibirLink">Lista Solicitações</a>
+      <a href="https://mural.ifrs.edu.br/estagios" target="_blank" class="nav-item">Oportunidades </a>
+      <a routerLink="/cadastrarServidor" (click)="divClick($event)" *permission="Roles.ROLE_SESTAGIO">Cadastrar servidor</a>
+      <a routerLink="/listaEstagiarios" (click)="divClick($event)" *permission="Roles.ROLE_SESTAGIO">Lista estagiários</a>
+      <a routerLink="/listaSolicitacoesServidor" (click)="divClick($event)" *ngIf="exibirLink">Lista Solicitações</a>
       <a routerLink="/listaSolicitacoesAluno" *permission="Roles.ROLE_ALUNO">Solicitações</a>
       <a routerLink="/login" *ngIf="!isAuthenticated">Login</a>
       <a (click)="logout()" *ngIf="isAuthenticated">Logout</a>

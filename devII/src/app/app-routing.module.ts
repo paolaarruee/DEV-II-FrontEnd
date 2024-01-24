@@ -14,6 +14,8 @@ import { MuralDeVagasComponent } from './modules/vagas-estagio/mural-de-vagas/mu
 import { PerfilComponent } from './perfil/perfil.component';
 import { ListaServidorComponent} from './modules/servidor/lista-servidor/lista-servidor.component';
 import { ListaEstagiariosComponent } from './modules/servidor/lista-estagiarios/lista-estagiarios.component';
+import { AuthGuard } from './core/guards/auth/auth.guard';
+import { RecuperarSenhaComponent } from './modules/recuperar-senha/recuperar-senha.component';
 
 const routes: Routes = [
   {
@@ -21,67 +23,76 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
+    path: 'recuperarSenha/:token',
+    component: RecuperarSenhaComponent,
+  },
+  {
+    path: 'recuperarSenha',
+    component: RecuperarSenhaComponent,
+  },
+  {
     path:'listaEstagiarios',
     component: ListaEstagiariosComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'listaSolicitacoesServidor',
     component: ListaSolicitacoesServidorComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'listaServidores',
     component: ListaServidorComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'solicitacaoEstagio',
     component: TelaSolicitacaoComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'analisedocs/:id',
     component: AnaliseDocsComponent,
-
-    //canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
-
   {
     path: 'cadastrarAluno',
     component: FormularioCadastroAlunoComponent,
   },
-
   {
     path: 'cadastrarServidor',
     component: FormularioServidorComponent,
-    //ncanActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
-
   {
     path: 'listaSolicitacoesAluno',
     component: ListaSolicitacoesAlunoComponent,
+    canActivate: [AuthGuard],
   },
-
   {
     path: 'solicitacao',
     component: SolicitacaoComponent,
+    canActivate: [AuthGuard],
   },
-
   {
     path: 'muralVagas',
     component: MuralDeVagasComponent,
+    canActivate: [AuthGuard],
   },
-
   {
     path: 'cadastroVagas',
     component: CadastrarVagasComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'perfil',
     component: PerfilComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: '**',
     redirectTo: 'muralVagas',
   },
-
 ];
 
 @NgModule({

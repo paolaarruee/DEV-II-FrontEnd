@@ -1,9 +1,45 @@
-.table-container {
-    
-    width: 95%;
-    height: 10vh; /* 100% da altura da viewport (tela) */
+
+
+
+.loader {
+  width: 24px;
+  height: 24px;
+  border: 5px solid #fff;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
   }
 
+  @keyframes rotation {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+  } 
+
+.titulo {
+
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+
+  p {
+      font-weight: 700;
+      font-size: 2em;
+      border-bottom: 4px solid #2b923c;
+      padding-bottom: 8px;
+  }
+}
+
+.table-container {
+    width: 98%;
+    height: 10vh;
+    border-collapse: collapse;
+  }
   .container{
     display: flex;
     justify-content: center;
@@ -13,26 +49,106 @@
 
 
   .titulosEstagiarios{
-    background-color: darkcyan;
+    background-color: #367a08;
+    color: #fff;
+    
+  }
+ 
+  .next {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border-radius: 5px;
+    background-color: #eeeeee;
+    border: 1px solid #ccc;
+  }
+
+  .busca{
+    display: flex;
+    width: 100%;
+  }
+
+  input{
+    width: 50%;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin: 5px;
+  }
+
+  .buscaButton{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: 35%;
+  }
+
+  
+
+  .buttonOn {
+    display: block;
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+  }
+  .buttonOn:hover{
+    background-color: #367a08;
+  }
+
+  .buttonOff{
+    display: block;
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: auto;
+    color: rgba(0, 0, 0, 0.422);
+    transition: background-color 0.3s ease;
+    background-color: #a2a2a2;
+    border: 1px solid #ccc;
+  }
+  .buttonOff:hover{
+    background-color: #a2a2a2;
+  }
+
+
+  .paginas{
+    margin-top: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  table th{
+    font-family: Roboto, sans-serif, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 1.3em;
+    color: #fff;
+    line-height: 2.3em;
+    font-weight: unset;
   }
   
-  table {
-    width: 90%; /* ou a largura desejada */
-    border-collapse: collapse;
-    margin-top: 20px; /* ajuste conforme necessário */
-  }
   
-table th, table td {
+  table td {
     height: 40px;
     text-align: center;
+    color: rgb(88, 88, 88);
     font-weight: 500;
     vertical-align: middle;
-    border: 1px solid #dee2e6; /* adiciona bordas nas células */
+    font-family: Roboto , sans-serif;
+    font-weight: unset;
+    font-size: 15px;
+    padding: 3px;
+  
   }
 
   @media print {
     td{
       font-size: small;
+      background-color: rebeccapurple;
 
     }
     .table-container , table{
@@ -41,23 +157,23 @@ table th, table td {
   }
 
   tr:nth-child(odd) td {
-    background-color: #fdfcfc;
+    background-color: #f0f0f0;
 
   }
 
   /* Estilizando células de coluna par com cor vermelha */
   tr:nth-child(even) td {
-    background-color: #d3ffdb;
+    background-color: white;
    
   }
 
   .sucesso{
-    color: green !important; font-size: medium
+    color: green !important; font-size: 1em
    
   }
   .falha{
     color: red !important;
-    font-size: medium;
+    font-size: 1em;
   }
 
 

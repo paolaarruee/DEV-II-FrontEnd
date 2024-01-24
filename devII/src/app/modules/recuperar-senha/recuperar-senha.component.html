@@ -1,0 +1,40 @@
+<div class="titulo">
+    <p>Recuperação de senha</p>
+  </div>
+<form (ngSubmit)="recuperarSenha()" *ngIf="etapa === 0">
+    <div class="form-group">
+        <label for="email">Email vinculado:</label>
+        <input type="email" name="emailRecuperacao" class="form-control" [value]="emailRecuperacao" [(ngModel)]="emailRecuperacao" required="true" placeholder="Digite seu email...">
+    </div>
+    <div class="button-group">
+        <button type="submit" class="btn btn-primary" >Buscar</button>
+        <button type="button" class="btn btn-secondary" routerLink="/login">Cancelar</button>
+    </div>
+</form>
+
+<form (ngSubmit)="validarToken()">
+<div class="form-group" *ngIf="etapa === 1">
+    <div class="form-group">
+        <label for="email">Token recebido por e-mail:</label>
+        <input type="email" name="token" class="form-control" [value]="token" [(ngModel)]="token" required="true" placeholder="Cole o token aqui...">
+    </div>
+    <div class="button-group">
+        <button type="submit" class="btn btn-primary" >Verificar</button>
+    </div>
+</div>
+</form>
+
+
+<form (ngSubmit)="trocarSenha()">
+<div class="form-group" *ngIf="etapa === 2">
+    <div class="form-group">
+        <label for="senhaNova">Digita a nova senha:</label>
+        <input type="password" name="senhaNova" class="form-control" [value]="senha" [(ngModel)]="senha" required="true" placeholder="Digita a nova senha...">
+        <label for="confirmarSenhaNova">Confirme a nova senha:</label>
+        <input type="password" name="confirmarSenha" class="form-control" [value]="confirmarSenha" [(ngModel)]="confirmarSenha" required="true" placeholder="Confirme a nova...">
+    </div>
+    <div class="button-group">
+        <button type="submit" class="btn btn-primary" >Concluir </button>
+    </div>
+</div>
+</form>

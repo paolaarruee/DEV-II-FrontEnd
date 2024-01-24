@@ -60,6 +60,32 @@
   font-size: medium;
 }
 
+.boxAtualizarDados {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+
+.spanValores{
+  margin-top: 1px;
+  align-items: center;
+}
+.spanTitulo{
+  width: auto;
+}
+
+
+
+.inputBox {
+  border: 1px solid #ccc;
+  border-radius: 1px;
+  width: 60%;
+  height: 1.8em;
+  margin-top: 1%;
+}
+
 .corpo-dados,
 .corpo-dados-etapas,
 .corpo-passos {
@@ -68,6 +94,12 @@
   border-radius: 5px;
   padding: 20px;
 
+}
+
+.gerencia{
+  margin-top: 3em;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .curso {

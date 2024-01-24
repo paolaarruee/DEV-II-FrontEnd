@@ -32,6 +32,7 @@
             name="inicioDataEstagio"
             type="date"
             id="nome"
+            (input)="onInput($event , 'nova')"
             [(ngModel)]="solicitacao.inicioDataEstagio"
             required
             maxlength="8"
@@ -57,6 +58,7 @@
             type="date"
             id="nome"
             [(ngModel)]="solicitacao.finalDataEstagio"
+            (input)="onInputFim($event)"
             required
             maxlength="8"
           />
@@ -172,8 +174,8 @@
         accept=".pdf,.doc,.docx"
       />
       <ul>
-        <li *ngFor="let file of files">{{ file.name }}</li>
-      </ul>
+          <li *ngFor="let file of files">{{ file.name}} <img src="/assets/img/apagarBotao.png" width="16px" (click)="deletarArquivo(file)">  </li>
+        </ul>
 
       <input
         class="botao"

@@ -34,11 +34,19 @@ export class SolicitacoesService {
     );
   }
 
-  setValidadeContrato(id: number, dataNova: string): Observable<any> {
+  editarEmpresa(id: number, empresa: any): Observable<any> {
+    return this.httpClient.post<any>(
+      `${environment.API_URL}/editarEmpresaSolicitacao?id=${id}`,
+      empresa
+    );
+  }
+  
+
+  setValidadeContrato(id: number, dataFinalNova: string , dataInicioNova : string): Observable<any> {
 
     return this.httpClient.get<any>(
       `${environment.API_URL}/trocarValidadeContrato`,
-      { params: { id: id.toString(), dataNova: dataNova } }
+      { params: { id: id.toString(), dataFinalNova: dataFinalNova , dataInicioNova : dataInicioNova } }
     );
   }
 

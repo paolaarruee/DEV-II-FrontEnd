@@ -60,9 +60,12 @@
     [ngClass]="{ 'disabled': isPaginaAnteriorDisabled() }">
     Anterior
   </button>
+  <span class="titulo"> <p *ngIf="totalPaginas > 1">pág.<b>{{paginaAtual}}</b> de <b>{{totalPaginas}}</b></p>
+  </span>
   <button class="next" (click)="proximaPagina()" [disabled]="isProximaPaginaDisabled()" [ngClass]="{ 'disabled': isProximaPaginaDisabled() }">
     Próxima
   </button>
+  
 </div>
 
 <ng-template #semSolicitacoes>

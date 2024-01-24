@@ -36,6 +36,10 @@
   height: 3em;
   justify-content: flex-end;
   margin-right: 10%;
+  :hover{
+    background: rgb(67, 135, 77);
+    opacity: 0.8;
+  }
 }
 
 button{
@@ -47,6 +51,7 @@ button{
   color: #FFFFFF;
   border: 0px;
   cursor: pointer;
+
 }
 
 .semSolicitacoes{

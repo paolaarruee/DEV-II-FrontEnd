@@ -32,17 +32,13 @@ export class DetalhesSolicitacaoComponent {
 
   progressoFluxo(etapa: number): string {
     if (this.data.solicitacao.etapa >= etapa) {
-      return 'progressoEtapa';
-    } else if (this.data.solicitacao.etapa >= etapa) {
-      return 'progressoEtapa';
-    } else if (this.data.solicitacao.etapa >= etapa) {
-      return 'progressoEtapa';
-    } else if (this.data.solicitacao.etapa >= etapa) {
-      return 'progressoEtapa';
-    } else if (this.data.solicitacao.etapa >= etapa) {
-      return 'progressoEtapa';
+      if(this.data.solicitacao.status.toLowerCase() == 'indeferido'){
+        return 'progressoEtapa';
+      }else{
+        return 'progressoEtapa';
+      }
     }
-    return '';
+    return "";
   }
 
   closeDialog() {

@@ -38,6 +38,7 @@ import { CaixaConfimacaoComponent } from './caixa-confimacao/caixa-confimacao.co
 import { ListaServidorComponent } from './modules/servidor/lista-servidor/lista-servidor.component';
 import { ListaEstagiariosComponent } from './modules/servidor/lista-estagiarios/lista-estagiarios.component';
 import { DatePipe } from '@angular/common';
+import { RecuperarSenhaComponent } from './modules/recuperar-senha/recuperar-senha.component';
 
 
 
@@ -76,6 +77,7 @@ const COMPONENTS = [
   ListaServidorComponent,
   AnaliseDocsComponent,
   ListaEstagiariosComponent,
+  RecuperarSenhaComponent,
   
 ];
 

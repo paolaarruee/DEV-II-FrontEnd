@@ -79,11 +79,11 @@ event: any;
       return;
     }
 
-    if (!/^[\w-]+(\.[\w-]+)*@(restinga\.ifrs\.edu\.br|aluno\.restinga\.ifrs\.edu\.br)$/.test(this.aluno.usuarioSistema.email)) {
-      let mensagem = `O email deve ter o final @restinga.ifrs.edu.br ou @aluno.restinga.ifrs.edu.br`;
-      this.toastService.showMessage(mensagem, 'error');
-      return;
-  }
+    //if (!/^[\w-]+(\.[\w-]+)*@(restinga\.ifrs\.edu\.br|aluno\.restinga\.ifrs\.edu\.br)$/.test(this.aluno.usuarioSistema.email)) {
+    //  let mensagem = `O email deve ter o final @restinga.ifrs.edu.br ou @aluno.restinga.ifrs.edu.br`;
+    //  this.toastService.showMessage(mensagem, 'error');
+    //  return;
+    // }
 
     this.service.enviarDados(this.aluno).subscribe(
       response => {

@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           });
         }
       },
-      error: () => this.toastService.showMessage('Erro ao autenticar usuário.'),
+      error: (error) => this.toastService.showMessage('Erro ao autenticar usuário.'),
     });
   }
 
@@ -103,12 +103,14 @@ declare global {
 //@ts-ignore
 window.handleCredentialResponse = (response) => {
   const data = jwtDecode(response.credential);
+  console.log(response.credential);
   fetch(environment.API_URL+"/login/google", {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(data)
+    body: response.credential
+    
   })
     .then((response) => {
       if (!response.ok) {

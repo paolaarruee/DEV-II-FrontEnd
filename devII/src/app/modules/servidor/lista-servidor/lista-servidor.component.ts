@@ -5,6 +5,8 @@ import { CaixaConfimacaoComponent } from 'src/app/caixa-confimacao/caixa-confima
 import { ServidorService } from 'src/app/core/services/servidor/servidor.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { Servidor } from 'src/app/shared/interfaces/servidor';
+import { AuthenticationService } from 'src/app/core/services/authentication/authentication.service';
+import { Role } from 'src/app/shared/interfaces/usuario';
 
 @Component({
   selector: 'app-lista-servidor',
@@ -15,6 +17,7 @@ export class ListaServidorComponent {
 
   constructor(
     private servidorService: ServidorService,
+    public authenticationService: AuthenticationService,
     private dialog: MatDialog,
     private toastService: ToastService,
   ) {}
@@ -23,6 +26,11 @@ export class ListaServidorComponent {
   
 
   ngOnInit() {
+    if (this.authenticationService.role === Role.ROLE_ALUNO) {
+      alert("Authenticação inválida!");
+      window.location.href = '/muralVagas';
+      }
+
     this.servidorService.listarTodosServidores().subscribe(
       (response) => {
         this.servidores = response;

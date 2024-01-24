@@ -4,6 +4,8 @@ import { FormularioServidorService } from '../../../core/services/formulario-ser
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { Servidor } from 'src/app/shared/interfaces/servidor';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthenticationService } from 'src/app/core/services/authentication/authentication.service';
+import { Role } from 'src/app/shared/interfaces/usuario';
 
 @Component({
   selector: 'app-formulario-servidor',
@@ -32,8 +34,16 @@ export class FormularioServidorComponent {
 
   constructor(
     private service: FormularioServidorService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    public authenticationService: AuthenticationService,
   ) {}
+
+  ngOnInit(): void {
+    if (this.authenticationService.role === Role.ROLE_ALUNO) {
+      alert("Authenticação inválida!");
+      window.location.href = '/muralVagas';
+      }
+  }
 
   exibirCursos(event: any) {
     const valorSelecionado = event.target.value;

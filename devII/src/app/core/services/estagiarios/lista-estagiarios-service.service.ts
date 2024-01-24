@@ -14,4 +14,8 @@ export class ListaEstagiariosServiceService {
     return this.httpClient.get<Response>(`${environment.API_URL}/retornarListaEstagiarios`);
   }
 
+  public listaEstagiariosPagina(pagina: number): Observable<Response> {
+    return this.httpClient.get<Response>(`${environment.API_URL}/retornarListaEstagiariosPagina?pagina=${pagina}`);
+  }
+
 }
