@@ -150,7 +150,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
 
     if(this.filtroStatus === 'Atrasadas') {
       this.listaSolicitacoes = this.todasSolicitacoes.filter((solicitacao: Solicitacoes) => {
-        return solicitacao.status === 'Em Andamento'.toLowerCase() || this.passaramCincoDias(new Date(solicitacao.dataSolicitacao));
+        return this.passaramCincoDias(new Date(solicitacao.dataSolicitacao)) && solicitacao.status !== 'Deferido' && solicitacao.status !== 'Indeferido';
       });
       this.ordenarSolicitacoesCrescente();
       return;
@@ -158,7 +158,7 @@ export class ListaSolicitacoesServidorComponent implements OnInit {
 
     if (this.filtroStatus === 'Novas') {
       this.listaSolicitacoes = this.todasSolicitacoes.filter((solicitacao: Solicitacoes) => {
-        return solicitacao.status === 'Nova' && this.filtrarPorEtapa(solicitacao);
+        return solicitacao.status === 'Nova';
       });
       this.ordenarSolicitacoes();
       return;

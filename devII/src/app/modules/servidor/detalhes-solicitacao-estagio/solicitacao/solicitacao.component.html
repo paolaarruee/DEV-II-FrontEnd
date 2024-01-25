@@ -22,19 +22,21 @@
       <span class="cardDecoracao2"></span>
     </div>
 
-    <div class="cardConteudo">
+    <div class="cardConteudo ">
       <span>Curso: {{ solicitacao.aluno.curso.nomeCurso }}</span>
       <span>Data da solicitação: {{ solicitacao.dataSolicitacao | date:'dd/MM/yyyy' }}</span>
-      <span>{{responsavelAtual}}</span>
-    </div>
-
-    <div class="buttonContainer">
-      <div class="buttonDetalhes">
-        <button (click)="openDialog()">Detalhes</button>
-      </div>
-
-      <div class="buttonGerenciar">
-        <button [routerLink]="['/analisedocs', solicitacao.id]">Gerenciar</button>
+      <div class="buttonContainer">
+        <span>{{ responsavelAtual}}</span>
+        <div class="buttons">
+          <div class="buttonDetalhes">
+            <button  (click)="openDialog()">Detalhes</button>
+          </div>
+          <div class="buttonGerenciar">
+            <button [routerLink]="['/analisedocs', solicitacao.id]">
+              Gerenciar
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

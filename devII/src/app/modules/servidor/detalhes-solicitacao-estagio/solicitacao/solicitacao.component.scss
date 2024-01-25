@@ -18,6 +18,8 @@
   font-size: 18px;
 }
 
+
+
 .retangulo {
   color: #FFFFFF;
   background-color: #6A737B;
@@ -30,7 +32,7 @@
 .titulo {
   display: grid;
   padding-left: 16px;
-  font-size: 20px;
+  font-size: 1.5em;
 }
 
 .cardDecoracao2 {
@@ -45,19 +47,23 @@
   display: flex;
   margin-top: 15px;
   margin-left: 16px;
-  font-size: 20px;
+  font-size: 1.3em;
   margin-right: 10%;
   flex-direction: column;
 }
 
 .cardConteudo span {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .buttonContainer {
+  width: 112%;
   display: flex;
   // padding: 16px;
-  justify-content: flex-end;
+  justify-content: space-between;
+}
+.buttons{
+  display: flex;
 }
 
 .buttonDetalhes{

@@ -60,7 +60,7 @@ export class AnaliseDocsComponent implements OnInit {
     'Setor estágio': 2,
     Coordenador: 3,
     Diretor: 4,
-    Deferido: 5,
+    Concluido: 5,
   };
 
 

@@ -70,6 +70,7 @@ export class SolicitacaoServidorComponent implements OnInit {
   }
 
   setResponsavelAtual(){
+ 
     if(this.solicitacao.etapa === '3'){
       this.responsavelAtual = 'Responsável atual: Coordenador de curso'
     }
@@ -81,6 +82,9 @@ export class SolicitacaoServidorComponent implements OnInit {
     }
     if(this.solicitacao.etapa === '1'){
       this.responsavelAtual = 'Responsavel atual: Nova solicitação'
+    }
+    if(this.solicitacao.etapa === '5'){
+      this.responsavelAtual = 'Concluído';
     }
   }
 

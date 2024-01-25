@@ -4,6 +4,7 @@
   grid-template-rows: auto auto auto;
   gap: 20px;
   flex-direction: column;
+
 }
 
 .corpo-titulo {
@@ -160,6 +161,10 @@
   grid-column: span 3;
   text-align: center;
   margin-top: 20px;
+}
+
+.proximoB{
+  border: 1px, 0px, 0px, 0px solid #ccc;;
 }
 
 .gerencia {

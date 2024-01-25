@@ -74,7 +74,7 @@ export class SolicitacoesService {
 
   setEditarSolicitacao(id: number): Observable<any> {
     return this.httpClient.get<any>(
-      `${environment.API_URL}/editarSolicitacao`,
+      `${environment.API_URL}/setEdicaoDocumentosSolicitacao`,
       { params: { id: id.toString() } }
     );
   }
