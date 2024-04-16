@@ -10,4 +10,9 @@ export class ToastService {
   public showMessage(message: string, action: string = 'Fechar'): void {
     this.snackBar.open(message, action, { duration: 2500 });
   }
+
+  public showMessageTimer(message: string, timer: number, action: string = 'Fechar'): void {
+    this.snackBar.open(message, action, { duration: timer });
+  }
+ 
 }

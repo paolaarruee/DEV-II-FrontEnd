@@ -47,9 +47,8 @@
     width: 100%;
     min-height: 20%;
     overflow: auto;
+    
   }
-
-
 
 
   .headerDocumentos{
@@ -66,6 +65,7 @@
     align-content: center;
     overflow: auto;
     height: 98%;
+    width: calc(35em - 64px);
   }
 
   .botaoApagar{

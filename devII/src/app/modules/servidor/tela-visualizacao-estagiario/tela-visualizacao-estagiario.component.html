@@ -1,0 +1,185 @@
+<section class="espacamento" *ngIf="!confirm">
+    <h1>Dados estágio</h1>
+    <div class="container" *ngIf="mostrar == 1">
+    <table id="dadosAluno">
+        <tr>
+            <td class="titulo" colspan="2">Aluno</td>
+        </tr>
+        <tr>
+            <td>Nome:</td>
+            <td>{{estagiario.solicitacao.aluno.nomeCompleto}}</td>
+        </tr>
+        <tr>
+            <td>Curso:</td>
+            <td>{{estagiario.solicitacao.curso.nomeCurso}}</td>
+        </tr>
+        <tr>
+            <td>Matrícula:</td>
+            <td>{{estagiario.solicitacao.aluno.matricula}}</td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td>{{estagiario.solicitacao.aluno.usuarioSistema.email}}</td>
+        </tr>
+        <tr>
+            <td>Turno:</td>
+            <td>{{estagiario.solicitacao.aluno.turno}}</td>
+        </tr>
+        <tr>
+            <td>Orientador: </td>
+            <td>{{estagiario.orientador}}</td>
+        </tr>
+      </table>
+
+      <table id="dadosSolicitacao">
+        <tr>
+            <td class="titulo" colspan="2">Solicitação</td>
+        </tr>
+        <tr>
+            <td>Tipo: </td>
+            <td>{{estagiario.solicitacao.tipo}}</td>
+        </tr>
+        <tr>
+            <td>Status: </td>
+            <td>{{estagiario.solicitacao.status}}</td>
+        </tr>
+        <tr>
+            <td>Integrador: </td>
+            <td>{{estagiario.solicitacao.agente}}</td>
+        </tr>
+        <tr>
+            <td>Link Drive: </td>
+            <td><a [href]="estagiario.urlPastaDocumentos" target="_blank">><mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="link"></mat-icon><</a></td>
+        </tr>
+        <tr>
+            <td>Data solicitação: </td>
+            <td>{{estagiario.solicitacao.dataSolicitacao | date:'dd/MM/yyyy'}}</td>
+        </tr>
+        <tr>
+            <td>Início: </td>
+            <td>{{estagiario.dataInicioEstagio}}</td>
+        </tr>
+        <tr>
+            <td>Fim: </td>
+            <td>{{estagiario.dataFinalEstagio}}</td>
+        </tr>
+      </table>
+
+      
+      <table id="dadosEstagio">
+        <tr>
+            <td class="titulo" colspan="2">Estágio</td>
+        </tr>
+        <tr>
+            <td>Turno: </td>
+            <td *ngIf="!edicao">{{estagiario.solicitacao.turnoEstagio}}</td>
+            <td *ngIf="edicao">
+                <select [(ngModel)]="estagiario.solicitacao.turnoEstagio">
+                <option value="" disabled>Escolha um turno</option>
+                <option value="Manhã">Manhã</option>
+                <option value="Tarde">Tarde</option>
+                <option value="Noite">Noite</option>
+                </select>
+        </tr>
+        <tr>
+            <td>Empresa: </td>
+            <td *ngIf="!edicao">{{estagiario.solicitacao.nomeEmpresa}}</td>
+            <td *ngIf="edicao"><input type="text" [(ngModel)]="estagiario.solicitacao.nomeEmpresa"></td>
+        </tr>
+        <tr>
+            <td>Contato empresa: </td>
+            <td *ngIf="!edicao">{{estagiario.solicitacao.contatoEmpresa}}</td>
+            <td *ngIf="edicao"><input type="text" max="11" [(ngModel)]="estagiario.solicitacao.contatoEmpresa"></td>
+        </tr>
+        <tr>
+            <td *ngIf="!edicao">Natureza: </td>
+            <td *ngIf="edicao">Privada? </td>
+            <td *ngIf="!edicao">{{estagiario.solicitacao.eprivada ? 'Privada': 'Publica' }}</td>
+            <td *ngIf="edicao"><input type="checkbox" [(ngModel)]="estagiario.solicitacao.eprivada"></td>
+        </tr>
+        <tr>
+            <td>Salário: </td>
+            <td *ngIf="!edicao">{{estagiario.solicitacao.salario}}</td>
+            <td *ngIf="edicao"><input type="text" (input)="validarSalario($event)" [(ngModel)]="estagiario.solicitacao.salario"></td>
+        </tr>
+        <tr>
+            <td>CH: </td>
+            <td *ngIf="!edicao">{{estagiario.solicitacao.cargaHoraria}}</td>
+            <td *ngIf="edicao"><input type="number" [(ngModel)]="estagiario.solicitacao.cargaHoraria"></td>
+        </tr>
+        <tr *ngIf="!estagiario.ativo">
+            <td>Ativo: </td>
+            <td *ngIf="!edicao">{{estagiario.ativo ? 'Sim' : 'Não'}}</td>
+            <td *ngIf="edicao"><input type="checkbox" [(ngModel)]="estagiario.ativo"></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="container" *ngIf="mostrar == 2">
+        <table id="dadosHistorico">
+            <tr>
+                <td class="titulo">Responsável</td>
+                <td class="titulo">Ação</td>
+                <td class="titulo">Data</td>
+            </tr>
+            <tr *ngFor="let historico of estagiario.solicitacao.historico">
+                <td>{{historico.etapa}}</td>
+                <td>{{historico.status}}</td>
+                <td>{{historico.data_solicitacao | date:'dd/MM/yyyy'}}</td>
+        </table>
+    </div>
+
+    <div class="container" *ngIf="mostrar == 3">
+        <table id="dadosHistorico">
+            <tr>
+                <td class="titulo">#</td>
+                <td class="titulo">Assinado</td>
+                <td class="titulo">Nome</td>
+                <td class="titulo">Baixar</td>
+            </tr>
+            <tr *ngFor="let documento of docs">
+                <td>{{documento.id}}</td>
+                <td>{{documento.assinado ? 'Sim' : 'Não'}}</td>
+                <td>{{documento.nome}}</td>
+                <mat-icon aria-hidden="false" fontIcon="download" style="cursor: pointer;" (click)="downloadDocumento(documento.id,documento.nome)"></mat-icon>
+        </table>
+    </div>
+    <div class="container">
+        <button mat-raised-button color="warn" (click)="confirm = true" [disabled]="!estagiario.ativo">
+            Cancelar estágio
+        </button>
+        <button mat-raised-button color="primary" (click)="edicao = !edicao" *ngIf="!edicao" [disabled]="mostrar != 1">
+            Editar
+        </button>
+        <div style="display: flex; gap: 0.1em;" *ngIf="edicao">
+        <button mat-raised-button color="primary" (click)="edicao ? atualizarEstagio() : edicao = !edicao" [disabled]="mostrar != 1">
+                {{edicao ? 'Salvar' : 'Editar'}}
+        </button>
+        <button mat-raised-button color="warn" (click)="edicao = false"  [disabled]="mostrar != 1">
+            X
+        </button>
+         </div>
+        <button mat-raised-button (click)="this.mostrar == 2 ? mostrar = 1 : mostrar = 2">
+            {{mostrar == 2 ? 'Ocultar' : 'Mostrar'}} histórico
+        </button>
+        <button mat-raised-button (click)="pegarListaDocumentos(estagiario.solicitacao.id)">
+            Documentos
+        </button>
+    </div>
+
+</section>
+
+<section class="espacamento" *ngIf="confirm">
+    <h1>Confirmar cancelamento</h1>
+    <span class="descricao">Deseja realmente cancelar o estágio do aluno {{estagiario.solicitacao.aluno.nomeCompleto}}?</span>
+    <div class="container space-center">
+        <button mat-raised-button color="primary" (click)="cancelarEstagio()" [disabled]="!estagiario.ativo">
+            Confirmar
+        </button>
+        <button mat-raised-button color="warn" (click)="confirm = false" [disabled]="!estagiario.ativo">
+            Cancelar
+        </button>
+        
+    </div>
+</section>
+

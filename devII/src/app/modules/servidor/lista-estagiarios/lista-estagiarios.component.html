@@ -1,32 +1,105 @@
 <div class="titulo">
   <p>Lista de estagiários</p>
 </div>
+
+<div class="filtros">
+  <mat-form-field class="selectDoFiltro">
+    <mat-label>Curso</mat-label>
+    <select matNativeControl  [(ngModel)]="filtro.curso" (change)="filtros()">
+      <option value="" disabled>Filtrar por Curso</option>
+      <option value="10">Análise e Des. de Sistemas</option>
+      <option value="11">Letras Português e Espanhol</option>
+      <option value="12">Eletrônica Industrial</option>
+      <option value="13">Gestão Desportiva e de Lazer</option>
+      <option value="14">Processos Gerenciais</option>
+      <option value="17">Lazer</option>
+      <option value="18">Informática</option>
+      <option value="19">Eletrônica</option>
+    </select>
+  </mat-form-field>
+    <section>
+    <mat-checkbox (change)="filtros()" color="primary" [(ngModel)]="filtro.estagioObrigatorio" [ngModelOptions]="{standalone: true}">Obrigatórios</mat-checkbox>
+    <mat-checkbox (change)="filtros()" color="primary" [(ngModel)]="filtro.estagioNaoObrigatorio" [ngModelOptions]="{standalone: true}">Não obrigatórios</mat-checkbox>
+    <mat-checkbox (change)="filtros()" color="primary" [(ngModel)]="filtro.estagioRenovacao" [ngModelOptions]="{standalone: true}">Renovação</mat-checkbox>
+    <mat-checkbox (change)="filtros()" color="primary" [(ngModel)]="filtro.aproveitamento" [ngModelOptions]="{standalone: true}">Aproveitamento</mat-checkbox>
+    </section>
+    <section>
+    <mat-radio-group [(ngModel)]="filtro.status" (change)="filtros()">
+      <mat-radio-button value="terminado" (click)="filtros(true)">Terminado</mat-radio-button>
+      <mat-radio-button value="cancelado" (click)="filtros(true)">Cancelado</mat-radio-button>
+      <mat-radio-button value="andamento" (click)="filtros(true)">Em andamento</mat-radio-button>
+    </mat-radio-group>
+     </section>
+    <section>
+    <button class="limparFiltro" (click)="limparFiltros()" mat-flat-button color="warn" *ngIf="filtro.status != '' || filtro.aproveitamento || filtro.estagioRenovacao|| filtro.estagioNaoObrigatorio || filtro.estagioObrigatorio">Limpar filtro</button>
+    </section>
+</div>
+
 <div class="container">
     <table class="table-container" id="tabela">
       <thead>
         <tr class="titulosEstagiarios">
           <th>#</th>
+
           <th class="busca">
-            <div class="buscaButton">
-            <button class="next " (click)="ativarBuscaNome()"><mat-icon aria-hidden="false" fontIcon="{{buscarNomeOn ? 'search_off' : 'search'}}"></mat-icon></button>
-            <span class="loader" *ngIf="isProcurando"></span>
+            <div class="">
+              <span class="hoverBuscadores buscaMatricula" *ngIf="!buscarNomeOn" (click)="buscarNomeOn = !buscarNomeOn">Nome<mat-icon aria-hidden="false" fontIcon="search"></mat-icon></span>
+              <input *ngIf="buscarNomeOn" type="text" (keydown)="onEnter($event)" (blur)="listaDeEstagiariosNome()" [(ngModel)]="nomeBusca">
+              <button class="next " (click)="pegarListaNormal()" type="button" *ngIf="buscarNomeOn" (click)="buscarNomeOn = !buscarNomeOn">X</button>
           </div>
-            <input type="text" *ngIf="buscarNomeOn" (keydown)="onEnter($event)" (blur)="listaDeEstagiariosNome()" [(ngModel)]="nomeBusca" ><span *ngIf="!buscarNomeOn">Nome</span>
+          
+          
           </th>
+          
+
+          
+
           <th>Drive</th>
-          <th class="tituloTeste2">Matrícula</th>
-          <th>E-mail</th>
+          <th>
+            <div class="">
+              <span class="hoverBuscadores buscaMatricula" *ngIf="!buscaMatriculaOn" (click)="buscaMatriculaOn = !buscaMatriculaOn">Matrícula<mat-icon aria-hidden="false" fontIcon="search"></mat-icon></span>
+              <input *ngIf="buscaMatriculaOn" type="number" (keydown)="onEnter($event)" (blur)="buscaEstagiarioPorMatricual()" [(ngModel)]="matriculaBusca">
+              <button class="next " (click)="pegarListaNormal()" type="button" *ngIf="buscaMatriculaOn" (click)="buscaMatriculaOn = !buscaMatriculaOn">X</button>
+
+            </div>
+          </th>
+          <th>
+            <div>E-mail</div>
+          </th>
           <!-- <th>Link Drive</th>  -->
-          <th>Curso</th>
-          <th>Orientador</th>
-          <th>Empresa</th>
+          <th>
+            <div>Curso</div>
+          </th>
+          <th>
+            <div>
+              <span>Orientador</span>
+            </div>
+          </th>
+          <th>
+            <div>Empresa</div>
+          </th>
           <!-- <th>Tipo da Empresa</th> -->
-          <th>Contato da empresa</th>
-          <th>Agente integrador</th>
-          <th>Início</th>
-          <th>Fim</th>
-          <th>Turno</th>
-          <th>Status</th>
+          <th>
+            <div>Contato da empresa</div>
+          </th>
+          <th>
+            <div>Agente integrador</div>
+          </th>
+          <th>
+            <div>Início</div>
+          </th>
+          <th>
+            <div>Fim</div>
+          </th>
+          <th>
+            <div>Turno</div>
+          </th>
+          <th>
+            <div>Status</div>
+          </th>
+          <th *ngIf="authenticationService.role === 3">
+            <div><mat-icon aria-hidden="false" fontIcon="new_releases"></mat-icon></div>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -34,7 +107,7 @@
         <tr *ngFor="let estagiario of estagiarios">
           <td>{{estagiario.id}}</td>
           <td>{{ estagiario.solicitacao.aluno.nomeCompleto }}</td>
-          <td><a [href]="estagiario.urlPastaDocumentos" target="_blank"><mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="link"></mat-icon></a></td>
+          <td><a [href]="estagiario.urlPastaDocumentos" target="_blank">><mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="link"></mat-icon><</a></td>
           <td>{{ estagiario.solicitacao.aluno.matricula }}</td>
           <td>{{ estagiario.solicitacao.aluno.usuarioSistema.email}}
           <td>{{ qualCurso(estagiario.solicitacao.aluno.curso.id )}}</td>
@@ -46,10 +119,14 @@
           <td>{{ estagiario.solicitacao.finalDataEstagio }}</td>
           <td>{{ estagiario.solicitacao.aluno.turno }}</td>
           <td>
-            <span [ngClass]="{'sucesso': isDataPassou(estagiario), 'falha': !isDataPassou(estagiario)}">
-              {{isDataPassou(estagiario) ? 'Terminado.' : 'Em andamento.' }}
+            <span>
+              {{estagiario.ativo ? (isDataPassou(estagiario) ? 'Terminado' : 'Em andamento') : 'Cancelado'}}
             </span>
           </td>
+          <td *ngIf="authenticationService.role === 3">
+            <button mat-icon-button (click)="abrirTelaEstagiario(estagiario)">
+              <mat-icon aria-hidden="false" fontIcon="edit"></mat-icon>
+            </button>
         </tr>
       </tbody>
     </table>

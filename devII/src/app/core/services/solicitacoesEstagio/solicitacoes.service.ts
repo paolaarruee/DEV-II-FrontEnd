@@ -50,6 +50,16 @@ export class SolicitacoesService {
     );
   }
 
+  enviarRelatorioFinal(id: string, file: File[]): Observable<any> {
+    const formData = new FormData();
+    file.forEach(element => {
+      formData.append('file', element)
+    });
+    formData.append('id', id);
+    return this.httpClient.post<any>(
+      `${environment.API_URL}/salvarRelatorioFinal`, formData);
+  }
+
 
   listarSolicitacoes(): Observable<Solicitacoes[]> {
     const url = `${environment.API_URL}/listarSolicitacoes`;
@@ -70,6 +80,16 @@ export class SolicitacoesService {
     return this.httpClient.get<DocFile[]>(
       `${environment.API_URL}/listarDocumento/${id}`
     );
+  }
+
+  enviarCancelamento(id: string, file: File[]): Observable<any> {
+    const formData = new FormData();
+    file.forEach(element => {
+      formData.append('file', element)
+    });
+    formData.append('id', id);
+    return this.httpClient.post<any>(
+      `${environment.API_URL}/cancelarEstagio`, formData);
   }
 
   setEditarSolicitacao(id: number): Observable<any> {

@@ -1,0 +1,51 @@
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 75%;
+}
+
+.titulo{
+    font-size: 24px;
+    font-weight: bold;
+    margin: 30px;
+    text-align: center;
+}
+
+.descricao{
+    font-size: 18px;
+    margin: 30px;
+    text-align: center;
+}
+
+.msgErro{
+    color: red;
+    font-size: 1.3em;
+    text-align: center;
+
+}
+
+input
+ {
+  background: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  padding: 7px;
+  font-size: 18px;
+}
+
+label{
+    font-size: 18px;
+    font-weight: bold;
+
+}
+
+.buttons{
+    display: flex;
+    justify-content: space-evenly;
+    width: 50%;
+}

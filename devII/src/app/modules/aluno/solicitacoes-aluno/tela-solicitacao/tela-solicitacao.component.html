@@ -8,6 +8,8 @@
     </button>
   </div>
 
+ 
+
   <div class="formulario" *ngIf="!perfilIncompleto">
     <form class="formulario" (ngSubmit)="enviarSolicitacao()">
       <div class="titulo">
@@ -17,11 +19,16 @@
       <div class="caixa">
         <div class="input">
           <label for="tipo">Tipo de solicitação*</label>
-          <select name="tipo" [(ngModel)]="solicitacao.tipo">
+          <select
+            name="tipo"
+            [class]="camposErro['tipo'] ? 'erroCampo' : ''"
+            [(ngModel)]="solicitacao.tipo"
+            (change)="mostrarDocumentosObrigatorios(); resetCamposErro()"
+          >
             <option value="" disabled>Escolha um tipo de estágio</option>
-            <option value="obrigatório">Estágio obrigatório superior</option>
-            <option value="Não obrigatório">Estágio não obrigatório superior</option>
-            <option value="Renovação">Estágio Técnicos Integrados</option>
+            <option value="Obrigatório">Obrigatório</option>
+            <option value="Não obrigatório">Não obrigatório</option>
+            <option value="Aproveitamento">Aproveitamento</option>
             <option value="Renovação">Renovação de estágio</option>
           </select>
         </div>
@@ -32,22 +39,45 @@
             name="inicioDataEstagio"
             type="date"
             id="nome"
-            (input)="onInput($event , 'nova')"
-            [(ngModel)]="solicitacao.inicioDataEstagio"
+            [class]="camposErro['inicioDataEstagio'] ? 'erroCampo' : ''"
+            (input)="onInput($event, 'nova'); resetCamposErro()"
+            [(ngModel)]="inicioDataEstagio"
             required
             maxlength="8"
           />
         </div>
       </div>
-      <div class="caixa">
+      <div class="caixa" *ngIf="solicitacao.tipo == 'Aproveitamento'">
         <div class="input">
-          <label for="nomeEmpresa">Nome da empresa</label>
+          <label for="tipoAproveitamento">Tipo de aproveitamento*</label>
+          <select name="tipoAproveitamento" [(ngModel)]="tipoAproveitamento" (change)="mostrarDocumentosObrigatorios()">
+            <option value="" disabled>Escolha um tipo de aproveitamento</option>
+            <option value="APRO1">
+              estágio não obrigatório como estágio obrigatório
+            </option>
+            <option value="APRO2">
+              trabalho vigente como estágio obrigatório
+            </option>
+            <option value="APRO3">
+              atividades de extensão, monitoria, ensino e de iniciação
+              científica vigente como estágio obrigatório
+            </option>
+            <option value="APRO4">Experiência profissional comprovada</option>
+          </select>
+        </div>
+      </div>
+      <div class="caixa">
+        <div class="input" >
+          <label  for="nomeEmpresa">Nome da empresa</label>
           <input
+            [class]="camposErro['salario'] ? 'erroCampo' : ''"
             name="nomeEmpresa"
             type="text"
             id="nomeEmpresa"
             [(ngModel)]="solicitacao.nomeEmpresa"
+            (input)="resetCamposErro()"
             required
+            maxlength="48"
           />
         </div>
 
@@ -56,48 +86,69 @@
           <input
             name="finalDataEstagio"
             type="date"
+            [class]="camposErro['finalDataEstagio'] ? 'erroCampo' : ''"
             id="nome"
-            [(ngModel)]="solicitacao.finalDataEstagio"
-            (input)="onInputFim($event)"
+            [(ngModel)]="finalDataEstagio"
+            (input)="onInputFim($event); resetCamposErro()"
             required
             maxlength="8"
           />
         </div>
       </div>
-
       <div class="caixa">
         <div class="input">
-          <label for="ePrivada">Tipo da Empresa:</label>
-          <mat-radio-group
-            class="example-radio-group"
-            [(ngModel)]="solicitacao.ePrivada"
-          >
-            <input
-              type="radio"
-              id="privada"
-              name="tipoEmpresa"
-              [(ngModel)]="solicitacao.ePrivada"
-              [value]="true"
-            />
-            <label for="privada">Privada</label>
-            <input
-              type="radio"
-              id="publica"
-              name="tipoEmpresa"
-              [(ngModel)]="solicitacao.ePrivada"
-              [value]="false"
-            />
-            <label for="publica">Pública</label>
-          </mat-radio-group>
+          <div class="caixa">
+            <div class="input">
+              <label for="ePrivada">Tipo da Empresa:</label>
+              <mat-radio-group
+                class="example-radio-group"
+                [(ngModel)]="solicitacao.ePrivada"
+              >
+                <input
+                  type="radio"
+                  [class]="camposErro['ePrivada'] ? 'erroCampo' : ''"
+                  id="ePrivada"
+                  name="tipoEmpresa"
+                  [(ngModel)]="solicitacao.ePrivada"
+                  [value]="true"
+                  required
+                />
+                <label for="privada">Privada</label>
+                <input
+                  type="radio"
+                  id="publica"
+                  name="tipoEmpresa"
+                  [(ngModel)]="solicitacao.ePrivada"
+                  [value]="false"
+                  required
+                />
+                <label for="publica">Pública</label>
+              </mat-radio-group>
+            </div>
+            <div class="input">
+              <label for="contatoEmpresa">Contato da empresa</label>
+              <input
+                name="contatoEmpresa"
+                [class]="camposErro['contatoEmpresa'] ? 'erroCampo' : ''"
+                type="text"
+                id="contatoEmpresa"
+                [(ngModel)]="solicitacao.contatoEmpresa"
+                (input)="validarContato($event); resetCamposErro()"
+                required
+                maxlength="11"
+              />
+            </div>
+          </div>
         </div>
 
         <div class="input">
           <label for="agente">Agente Integrador:</label>
-          <br />
           <select
             name="agente"
             [(ngModel)]="solicitacao.agente"
-            (change)="selecionarAgente()"
+            [class]="camposErro['agente'] ? 'erroCampo' : ''"
+            (change)="selecionarAgente(); resetCamposErro()"
+            maxlength="20"
           >
             <option value="" disabled>Escolha um dos agentes se houver</option>
             <option value="CIEE">CIEE</option>
@@ -109,30 +160,85 @@
             <option value=" ">Outro...</option>
           </select>
         </div>
-
       </div>
 
       <div class="input" *ngIf="agenteOutro">
         <label for="agenteOutro">Nome do outro agente integrador:</label>
         <input
-          name="agenteOutro"
+          name="agenteOutroNome"
           type="text"
+          [class]="camposErro['agenteOutroNome'] ? 'erroCampo' : ''"
           id="agenteOutro"
           [(ngModel)]="agenteOutroNome"
+          [maxlength]="20"
         />
+      </div>
+
+      <div class="caixa">
+        <div class="input">
+          <div class="caixa">
+            <div class="input">
+              <label for="salario">Bolsa auxílio hora</label>
+              <div class="inputSalario">
+                <p class="simboloDinheiro">R$</p>
+                <input
+                  name="salario"
+                  type="text"
+                  class="inputSalario"
+                  id="salario"
+                  [class]="camposErro['salario'] ? 'erroCampo' : ''"
+                  [(ngModel)]="solicitacao.salario"
+                  required
+                  (input)="validarSalario($event); resetCamposErro()"
+                  placeholder="0,00"
+                />
+              </div>
+            </div>
+            <div class="input">
+              <label for="turno">Turno</label>
+              <select
+                name="turno"
+                [(ngModel)]="solicitacao.turnoEstagio"
+                [class]="camposErro['turnoEstagio'] ? 'erroCampo' : ''"
+                required
+                (change)="camposErro['turnoEstagio'] ? resetCamposErro() : ''"
+                maxlength="20"
+              >
+                <option value="" disabled>Escolha um turno</option>
+                <option value="Manhã">Manhã</option>
+                <option value="Tarde">Tarde</option>
+                <option value="Noite">Noite</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="input">
+          <label for="cargaHoraria">Carga horária semanal</label>
+          <input
+            name="cargaHoraria"
+            type="number"
+            id="cargaHoraria"
+            [class]="camposErro['cargaHoraria'] ? 'erroCampo' : ''"
+            (input)="validarCargaHoraria($event); resetCamposErro()"
+            [(ngModel)]="solicitacao.cargaHoraria"
+            required
+            placeholder="20"
+          />
+        </div>
       </div>
 
       <label for="nome">Aluno </label>
       <input
         class="readonly"
-        name="nome"
+        name="nomeCompleto"
         type="text"
         id="nome"
         value=" {{ userData.nomeCompleto }}"
         [readOnly]="true"
       />
       <label for="curso">Curso</label>
-      <input 
+      <input
         class="readonly"
         type="text"
         name="curso"
@@ -143,29 +249,22 @@
 
       <div class="container">
         <div class="row">
-          <label for="matricula">Matricula</label>
+          <label for="matricula">Matrícula</label>
           <input
-            class="matricula"
+            class="matricula readonly"
             name="matricula"
             type="text"
             id="matricula"
-            value=" {{ userData.matricula }}"
+            value="{{ userData.matricula }}"
+            maxlength="10"
+            [readOnly]="true"
           />
         </div>
 
-        <div class="row">
-          <label for="ano">Ano de entrada</label>
-          <input
-            class="ano"
-            type="text"
-            name="ano"
-            id="ano"
-            value="{{ userData.ingresso }}"
-          />
-        </div>
+        <div class="row"></div>
       </div>
 
-      <label for="file">Anexo de documentos*</label>
+      <h1 for="file">Anexo de documentos</h1>
       <input
         type="file"
         name="file"
@@ -173,9 +272,108 @@
         (change)="onFileSelected($event)"
         accept=".pdf,.doc,.docx"
       />
+
+      <label for="tce" *ngIf="inputMostrar.tce">Termo de compromisso de estágio (TCE)</label>
+      <input
+      *ngIf="inputMostrar.tce"
+        class="inputFileM"
+        type="file"
+        name="tce"
+        (change)="anexarDocObrigatorios($event, 'tce')"
+        placeholder="teste"
+        accept=".pdf,.doc,.docx"
+      />
+      <label *ngIf="inputMostrar.atividades" for="atividades">Plano de Atividades</label>
+      <input
+      *ngIf="inputMostrar.atividades"
+        class="inputFileM"
+        type="file"
+        name="atividades"
+        (change)="anexarDocObrigatorios($event, 'atividades')"
+        value="Anexe o relatório de atividades"
+        accept=".pdf,.doc,.docx"
+      />
+      <label *ngIf="inputMostrar.requerimento" for="requerimentoAproveitamento">Requerimento</label>
+      <input
+        *ngIf="inputMostrar.requerimento"
+        class="inputFileM"
+        type="file"
+        name="requerimentoAproveitamento"
+        (change)="anexarDocObrigatorios($event, 'requerimento')"
+        value="Anexe o relatório de atividades"
+        accept=".pdf,.doc,.docx"
+      />
+    
+      <label *ngIf="inputMostrar.vinculo" for="vinculo">Comprovante de vinculo com a empresa</label>
+      <input
+       *ngIf="inputMostrar.vinculo"
+        class="inputFileM"
+        type="file"
+        name="vinculo"
+        (change)="anexarDocObrigatorios($event, 'vinculo')"
+        value="Anexe o relatório de atividades"
+        accept=".pdf,.doc,.docx"
+      />
+      
+      <label *ngIf="inputMostrar.atividadesEmpresa" for="atividadesEmpresa">Declaração de atividades da empresa</label>
+      <input
+      *ngIf="inputMostrar.atividadesEmpresa"
+        class="inputFileM"
+        type="file"
+        name="atividadesEmpresa"
+        (change)="anexarDocObrigatorios($event, 'atividadesEmpresa')"
+        value="Anexe o relatório de atividades"
+        accept=".pdf,.doc,.docx"
+      />
+      
+      <label *ngIf="inputMostrar.comprovanteExtensao" for="comprovanteExtensao">Doc. oficial comprovando o vínculo e atividades desenvolvidas</label>
+      <input
+       *ngIf="inputMostrar.comprovanteExtensao"
+        class="inputFileM"
+        type="file"
+        name="comprovanteExtensao"
+        (change)="anexarDocObrigatorios($event, 'comprovanteExtensao')"
+        value="Anexe o relatório de atividades"
+        accept=".pdf,.doc,.docx"
+      />
+      <label *ngIf="inputMostrar.comprovanteExtensao" for="termoFornalizacao">Termo de formalização</label>
+      <input
+       *ngIf="inputMostrar.comprovanteExtensao"
+        class="inputFileM"
+        type="file"
+        name="termoFornalizacao"
+        (change)="anexarDocObrigatorios($event, 'termoFornalizacao')"
+        value="Anexe o termo Fornalizacao"
+        accept=".pdf,.doc,.docx"
+      />
+      <label *ngIf="inputMostrar.comprovanteExtensao" for="PlanoAtividades">Plano de atividades (Opcional)</label>
+      <input
+       *ngIf="inputMostrar.comprovanteExtensao"
+        class="inputFileM"
+        type="file"
+        name="PlanoAtividades"
+        (change)="anexarDocObrigatorios($event, 'PlanoAtividades')"
+        value="Anexe o plano de atividades"
+        accept=".pdf,.doc,.docx"
+      />
+
+      <button
+        class="fileInput"
+        type="button"
+        onclick="document.getElementById('file').click()"
+      >
+        Anexar outros documentos
+      </button>
       <ul>
-          <li *ngFor="let file of files">{{ file.name}} <img src="/assets/img/apagarBotao.png" width="16px" (click)="deletarArquivo(file)">  </li>
-        </ul>
+        <li *ngFor="let file of files">
+          {{ file.name }}
+          <img
+            src="/assets/img/apagarBotao.png"
+            width="16px"
+            (click)="deletarArquivo(file)"
+          />
+        </li>
+      </ul>
 
       <input
         class="botao"
@@ -183,7 +381,6 @@
         (click)="exibirDiv()"
         value="Enviar solicitação"
       />
-
       <div class="aviso" *ngIf="exibir">
         <h1 class="tAviso" *ngIf="!sucesso">Atenção</h1>
         <h1 class="tAviso" *ngIf="sucesso">{{ aviso }}</h1>
@@ -211,7 +408,7 @@
       </div>
     </form>
   </div>
-  <div class="observacaoAluno">
+  <div class="observacaoAluno" >
     <b>Observações:</b>
     <ul>
       <li>Os documentos devem ser anexados em formato .PDF .DOC ou .DOCX!</li>

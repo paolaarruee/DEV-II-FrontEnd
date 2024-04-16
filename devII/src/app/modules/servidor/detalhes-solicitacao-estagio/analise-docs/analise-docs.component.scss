@@ -19,14 +19,20 @@
 .titulosInfoDocumentos {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: calc(18% - 30px);
+  gap: calc(12% - 30px);
   text-decoration: dotted;
+  
+}
+
+.testeX{
+  overflow-y: overlay;
+  max-height: 600px;
 }
 
 .gap{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: calc(18% - 30px);
+  gap: calc(11% - 30px);
 }
 
 .checkDiretor {
@@ -57,8 +63,9 @@
 }
 .corpo-dados-caixa {
   display: flex;
-  font-family: "Roboto", "Open Sans", "Lato", sans-serif;
+  font-family: "Roboto Flex", "Open Sans", "Lato", sans-serif;
   font-size: medium;
+  justify-content: space-between;
 }
 
 .boxAtualizarDados {
@@ -82,7 +89,7 @@
 .inputBox {
   border: 1px solid #ccc;
   border-radius: 1px;
-  width: 60%;
+  width: 70%;
   height: 1.8em;
   margin-top: 1%;
 }
@@ -94,11 +101,16 @@
   border: 1px solid #dee2e6;
   border-radius: 5px;
   padding: 20px;
+}
+
+.dadoAcaoHistorico{
+  overflow: overlay;
+  max-height: 100px;
 
 }
 
 .gerencia{
-  margin-top: 3em;
+  margin-top: 0.5em;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
@@ -120,9 +132,18 @@
   display: grid;
   font-size: medium;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  font-family: "Roboto", "Open Sans", "Lato", sans-serif;
+  font-family: "Roboto Flex", "Open Sans", "Lato", sans-serif;
   gap: 10px;
 }
+
+.etapaCaixa:nth-of-type(odd) {
+  background-color: #f0f0f0;
+}
+
+.etapaCaixa:nth-of-type(even) {
+  background-color: #F8F9FA; 
+}
+
 
 .nome-aluno,
 .infos-aluno,
@@ -152,7 +173,7 @@
 
 .arquivo {
   font-size: 1.3em;
-  color: red;
+  color: rgb(28, 16, 80);
 }
 
 .proximo,
@@ -161,6 +182,8 @@
   grid-column: span 3;
   text-align: center;
   margin-top: 20px;
+  display: flex;
+  justify-content: center;
 }
 
 .proximoB{
@@ -182,4 +205,48 @@
 
 .observacao {
   width: 100%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+p{
+  width: 130%;
+  overflow: hidden;
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}
+
+.informacao:hover + .informacaoTexto{
+  visibility: visible;
+  opacity: 1;
+
+}
+
+.historicoCorpo{
+  max-height: 350px !important;
+  overflow: auto;
+}
+
+.informacaoTexto {
+  position: absolute;
+  width: 350px;
+  word-wrap: break-word;
+  z-index: 10;
+  visibility: hidden;
+  opacity: 0;
+  font-weight: 400;
+  text-align: left;
+  padding: 15px;
+  font-size: 14px;
+  transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  border-radius: 25px;
+background: #F8F9FA;
+box-shadow:  7px -7px 33px #c6c7c8,
+             -7px 7px 33px #ffffff;
 }

@@ -1,7 +1,7 @@
-<div class="espacamento">
+<div class="espacamento" *ngIf="!data.msgOnly">
   <div class="header">
     <div class="titulo">
-      <span>Solicitação de: {{ data.solicitacao.titulo }}</span>
+      <span>Estágio:  {{ data.solicitacao.tipo }}</span>
       <span class="cardDecoracao"></span>
     </div>
 
@@ -14,7 +14,7 @@
 
   <div class="caixa">
     <div class="observacao">
-      <p> <b *ngIf="data.observacaoOn">Observação adicionada: </b>{{observacao}}</p>
+      <p> <b *ngIf="data.observacaoOn">Observação: </b>{{observacao}}</p>
     </div>
   </div>
 
@@ -75,11 +75,16 @@
   <div class="cardConteudo">
     <span>{{ data.solicitacao.conteudo }}</span>
   </div>
-
-
-
   <div class="buttonFechar">
     <button (click)="closeDialog()">Fechar</button>
   </div>
-
 </div>
+
+<div class="espacamento" *ngIf="data.msgOnly">
+  <div class="caixa">
+    <div class="observacao" style="font-size: large;">
+      <p> <b *ngIf="data.observacaoOn">Observação: </b>{{observacao}}</p>
+    </div>
+  </div>
+</div>
+

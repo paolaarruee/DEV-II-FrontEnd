@@ -26,6 +26,8 @@ export class ListaServidorComponent {
   
 
   ngOnInit() {
+
+
     if (this.authenticationService.role === Role.ROLE_ALUNO) {
       alert("Authenticação inválida!");
       window.location.href = '/muralVagas';
@@ -58,7 +60,7 @@ export class ListaServidorComponent {
                   window.location.reload();
                 },
                 (error: HttpErrorResponse) => {
-                  // Lógica adicional em caso de erro ao enviar o formulário
+                  this.toastService.showMessage('Erro ' + error.error);
                 }
               );
             }

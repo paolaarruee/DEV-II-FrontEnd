@@ -23,6 +23,10 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
+    path: 'login/:id',
+    component: LoginComponent,
+  },
+  {
     path: 'recuperarSenha/:token',
     component: RecuperarSenhaComponent,
   },

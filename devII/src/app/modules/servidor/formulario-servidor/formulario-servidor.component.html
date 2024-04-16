@@ -3,11 +3,61 @@
 </div>
 
 <div class="listaServidores">
-<a routerLink="/listaServidores" class="listaservidor "><button class="botao ">Lista dos servidores</button></a>
+  <a routerLink="/listaServidores" class="listaservidor"
+    ><button 
+      matTooltip="Lista de servidores que estão cadastrados no sistema"
+      [matTooltipHideDelay]="500"
+      [matTooltipShowDelay]="1000"
+      color="primary"
+      aria-label="Lista de servidores"
+    class="botao">Lista dos servidores</button></a
+  >
+  <button
+    class="botao"
+    [matTooltip]="
+      desbloqueio
+        ? 'Cadastrar um servidor no sistema'
+        : 'Desbloquer um email de servidor esteja sendo utilizado por engano...'
+    "
+    [matTooltipHideDelay]="500"
+    [matTooltipShowDelay]="1500"
+    (click)="desbloqueio = !desbloqueio"
+  >
+    {{ desbloqueio ? "Cadastrar servidor" : "Desbloquear e-mail" }}
+  </button>
 </div>
 <div class="formulario">
-  
-  <form class="formulario--centro" (ngSubmit)="enviarFormulario()">
+  <form
+    class="formulario--centro"
+    role="form"
+    (ngSubmit)="excluirServidor()"
+    *ngIf="desbloqueio"
+  >
+    <div class="formularioBox">
+      <span
+        >Se, ao tentar cadastrar um servidor, for exibido que o e-mail já está
+        cadastrado no sistema, você pode realizar o desbloqueio aqui. A conta
+        associada ao e-mail do servidor será excluída..</span
+      >
+      <br />
+      <label class="emailDesbloqueio-campo">Desbloquear e-mail</label>
+      <input
+        class="nome"
+        type="text"
+        id="emailDesbloqueio"
+        name="emailDesbloqueio"
+        placeholder="Digite o e-mail do servidor"
+        [(ngModel)]="emailDesbloqueio"
+      />
+      <input class="botao" type="submit" value="Pesquisar" />
+    </div>
+  </form>
+
+  <form
+    class="formulario--centro"
+    (ngSubmit)="enviarFormulario()"
+    *ngIf="!desbloqueio"
+  >
     <div class="formularioBox">
       <div class="divcargo">
         <label for="cargo">Cargo</label>
@@ -71,33 +121,28 @@
       </select>
 
       <div class="senhadiv">
-        <ul>
-          <li style="padding-right: 39px">
-            <label class="nome-campo">Digite uma senha</label>
-            <input
-              class="senha"
-              type="password"
-              id="password"
-              name="password"
-              [(ngModel)]="servidor.usuarioSistema.senha"
-              placeholder="Digite a senha"
-              required
-            />
-          </li>
-
-          <li>
-            <label class="nome-campo">Confirmar senha</label>
-            <input
-              class="senha"
-              type="password"
-              id="Confirm_password"
-              name="Confirm_password"
-              [(ngModel)]="confirmarSenha"
-              placeholder="Digite novamente a Senha"
-              required
-            />
-          </li>
-        </ul>
+        <div class="senha">
+          <label class="nome-campo">Digite uma senha</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            [(ngModel)]="servidor.usuarioSistema.senha"
+            placeholder="Digite a senha"
+            required
+          />
+        </div>
+        <div class="senha">
+          <label class="nome-campo">Confirmar senha</label>
+          <input
+            type="password"
+            id="Confirm_password"
+            name="Confirm_password"
+            [(ngModel)]="confirmarSenha"
+            placeholder="Digite novamente a Senha"
+            required
+          />
+        </div>
       </div>
 
       <input class="botao" type="submit" value="Cadastrar" />

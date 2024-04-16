@@ -14,7 +14,7 @@
 .header {
   display: flex;
   justify-content: space-between;
-  padding: 16px;
+  padding: 13px;
   font-size: 18px;
 }
 
@@ -31,12 +31,12 @@
 
 .titulo {
   display: grid;
-  padding-left: 16px;
-  font-size: 1.5em;
+  padding-left: 13px;
+  font-size: 1.3em;
 }
 
 .cardDecoracao2 {
-  width: 130px;
+  width: 10%;
   height: 1px;
   left: 123px;
   top: 314px;
@@ -45,9 +45,11 @@
 
 .cardConteudo {
   display: flex;
-  margin-top: 15px;
+  margin-top: 13px;
   margin-left: 16px;
-  font-size: 1.3em;
+  font-size: 1.1em;
+  width: 50%;
+  font-weight: 400;
   margin-right: 10%;
   flex-direction: column;
 }
@@ -56,14 +58,33 @@
   margin-bottom: 5px;
 }
 
+.conteudo{
+  display: flex;
+}
+
+.cardPendente{
+  background-color: #ffbebe;
+}
+.cardIndeferido{
+  background-color: #ffffff;
+}
+.cardDeferido{
+  background-color: #ffffff;
+
+}
+.cardEmAndamento{
+  background-color: #ffffff;
+}
 .buttonContainer {
-  width: 112%;
+  width: 50%;
   display: flex;
   // padding: 16px;
-  justify-content: space-between;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 .buttons{
   display: flex;
+  
 }
 
 .buttonDetalhes{
@@ -82,8 +103,23 @@ button {
   background: #2B923C;
   font-size: 20px;
   color: #FFFFFF;
-  border: 0px;
+  border: 5px;
+  border-radius: 3px;
   cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+button:hover{
+  background: #5699ea;
+}
+
+.responsavel{
+  color: #05418a;
+  font-size: 1.1em;
+}
+
+.buttonVerde{
+  background: #2B923C !important;
+  color: #FFFFFF !important;
 }
 
 .statusColor1 {
@@ -105,4 +141,8 @@ button {
   background-color: #00ff95;
   font-size: 22px;
   
+}
+.statusColor5{
+  background-color: #ffcc23;
+  font-size: 22px;
 }

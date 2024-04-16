@@ -14,12 +14,12 @@ import { CaixaConfimacaoComponent } from 'src/app/caixa-confimacao/caixa-confima
 import { DocsService } from 'src/app/core/services/docs/docs.service';
 import { DocFile } from 'src/app/shared/interfaces/doc';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
+import * as saveAs from 'file-saver';
 
 @Component({
   selector: 'app-atualizar-docs',
   templateUrl: './atualizar-docs.component.html',
   styleUrls: ['./atualizar-docs.component.scss'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class AtualizarDocsComponent {
   delete: boolean = false;
@@ -36,14 +36,18 @@ export class AtualizarDocsComponent {
   ngAfterViewInit() {
 
     this.dialogRef.afterClosed().subscribe((result) => {
-      window.location.reload();
+      
     });
     
     this.data.docs.forEach((doc) => {
       const meuElemento = document.getElementById('caixa');
       const span = document.createElement('span');
-      span.textContent = doc.nome;
+      span.textContent = "▸" + doc.nome;
+      span.id = doc.id.toString();
       span.className = 'documento';
+      span.style.margin = '0.7em';
+      span.style.fontSize= 'large';
+      span.style.cursor = 'pointer';
 
       const img = document.createElement('img');
       if (!this.data.isAssinado) {
@@ -51,14 +55,28 @@ export class AtualizarDocsComponent {
       } else {
         img.src = '/assets/img/downloadBotao.png';
       }
-      img.className = 'botaoApagar';
-      img.onclick = () => {
+      img.height = 24;
+      img.width = 24;
+      img.style.cursor = 'pointer';
+      //hover
+      img.onmouseover = () => {
+        img.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
+        img.style.borderRadius = '5px';
+      };
+      img.onmouseleave = () => {
+        img.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+        img.style.borderRadius = '0px';
+      }
+      
+
+      span.onclick = () => {
         if (this.data.isAssinado) {
           this.docslist.downloadDoc(doc.id).subscribe(
             (response) => {
               console.log('Resposta bem-sucedida:', response);
               const blob = new Blob([response], { type: 'application/pdf' });
               const url = window.URL.createObjectURL(blob);
+              saveAs(new Blob([blob]), doc.nome);
               window.open(url);
             },
             (err) => {
@@ -68,10 +86,20 @@ export class AtualizarDocsComponent {
           );
         } else {
           if (this.data.docs.length == 1) {
-            alert('Você não pode apagar o último documento');
-          } else {
+            this.toastService.showMessage('Não é possível excluir o ultimo documento');
+          }
+           else {
             const dialogRef = this.dialog.open(CaixaConfimacaoComponent, {
               data: { data: null, aviso: 'documento' },
+            });
+            dialogRef.afterClosed().subscribe((resultado) => {
+              if (resultado === true) {
+                this.data.docs = this.data.docs.filter((item) => item.id !== doc.id);
+                this.apagarDoc(doc.id, img, img.parentElement);
+
+              } else {
+                console.log('Cancelado');
+              }
             });
             
           }
@@ -82,18 +110,20 @@ export class AtualizarDocsComponent {
     });
     
   }
-  apagarDoc(doc: number) {
+  apagarDoc(doc: number, element1: HTMLElement, element2?: any) {
     this.docslist.deleteDoc(doc).subscribe(
       (response) => {
         console.log('Resposta bem-sucedida:', response);
-        window.location.reload();
+        element1.remove();
+        element2?.remove();
+        // Perform any additional logic with the elements here
       },
       (err) => {
-        // Manipule erros aqui
+        // Handle errors here
         console.error('Erro:', err);
       }
     );
-    window.location.reload();
+
   }
 
   arquivosSelecionados: File[] = [];
@@ -103,7 +133,7 @@ export class AtualizarDocsComponent {
     const listaUI = document.getElementById('listaDocAnexo');
     const docItem = document.createElement('li');
     docItem.textContent = file.name;
-    listaUI?.appendChild(docItem);
+    
 
     if (file.size > 1048576) {
       this.toastService.showMessage('arquivo muito grande!');
@@ -111,8 +141,13 @@ export class AtualizarDocsComponent {
     } else if (this.arquivosSelecionados.length > 8) {
       this.toastService.showMessage('Limite de arquivos anexados atingido!!');
     } else {
+      listaUI?.appendChild(docItem);
       this.arquivosSelecionados.push(file);
     }
+  }
+
+  fechar(){
+    this.dialogRef.close();
   }
 
   onUpload() {

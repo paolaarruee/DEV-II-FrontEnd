@@ -14,8 +14,23 @@ export class ListaEstagiariosServiceService {
     return this.httpClient.get<Response>(`${environment.API_URL}/retornarListaEstagiarios`);
   }
 
+  public retornarEstagiarioMatricula(matricula: string): Observable<Response> {
+    return this.httpClient.get<Response>(`${environment.API_URL}/retornarEstagiarioMatricula`, {params: {matricula}});
+  }
+
   public listaEstagiariosPagina(pagina: number): Observable<Response> {
     return this.httpClient.get<Response>(`${environment.API_URL}/retornarListaEstagiariosPagina?pagina=${pagina}`);
+  }
+
+  public retornarEstagioEstagiario(id: number): Observable<Response> {
+    return this.httpClient.get<Response>(`${environment.API_URL}/retornarEstagioEstagiario`, {params: {id}});
+  }
+  public atualizarEstagio(estagiario: any): Observable<Response> {
+    return this.httpClient.put<Response>(`${environment.API_URL}/atualizarEstagio`, estagiario);
+  }
+
+  public cancelarEstagio(id: string): Observable<Response> {
+    return this.httpClient.put<Response>(`${environment.API_URL}/cancelarEstagio`, id );
   }
 
 }

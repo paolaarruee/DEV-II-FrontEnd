@@ -5,7 +5,11 @@
 
 <div class="espacamento">
   <div class="buttonSolicitacao">
-    <button button [routerLink]="'/solicitacaoEstagio'">Solicitação <b>+</b></button>
+    <button  
+    matTooltip="Clique aqui para criar uma nova solicitação."
+    [matTooltipShowDelay]="500"
+    [matTooltipHideDelay]="500"
+    [routerLink]="'/solicitacaoEstagio'">Solicitação <b>+</b></button>
   </div>
 
   <div class="solicitacao" *ngIf="listaSolicitacoes.length > 0, else semSolicitacoes">

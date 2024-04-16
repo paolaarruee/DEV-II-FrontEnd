@@ -47,6 +47,15 @@
 
   }
 
+  .limparFiltro{
+    margin-left: 5px;
+    padding: 8px !important;
+  }
+  .selectDoFiltro{
+    margin: 0px;
+    padding: 0px !important;
+  }
+
 
   .titulosEstagiarios{
     background-color: #367a08;
@@ -62,13 +71,29 @@
     border: 1px solid #ccc;
   }
 
+  .buscaMatricula{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5%;
+    text-decoration: underline;
+  }
+
+  .hoverBuscadores:hover{
+    background-color: #43970ac0;
+    border-radius: 5px;
+    color: #fff;
+  }
+
   .busca{
     display: flex;
+    align-items: baseline;
     width: 100%;
   }
 
   input{
     width: 50%;
+    max-width: 150px;
     height: 30px;
     border-radius: 5px;
     border: 1px solid #ccc;
@@ -125,22 +150,26 @@
 
   table th{
     font-family: Roboto, sans-serif, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: 1.3em;
+    font-size: 1.1em;
     color: #fff;
-    line-height: 2.3em;
     font-weight: unset;
+  }
+  .filtros{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5%;  
   }
   
   
   table td {
     height: 40px;
-    text-align: center;
     color: rgb(88, 88, 88);
     font-weight: 500;
     vertical-align: middle;
     font-family: Roboto , sans-serif;
     font-weight: unset;
-    font-size: 15px;
+    font-size: 1em;
     padding: 3px;
   
   }

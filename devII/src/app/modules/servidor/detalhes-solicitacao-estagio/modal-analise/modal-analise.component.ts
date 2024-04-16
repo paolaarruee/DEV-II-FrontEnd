@@ -21,15 +21,16 @@ export class ModalAnaliseComponent {
   onNoClick(): void {
     this.dialogRef.close();
   }
+
   public enviar(): void {
     this.data.enviarCallback(this.motivoIndeferimento.value);
-
-    console.log(this.data.enviarCallback(this.motivoIndeferimento.value));
     this.dialogRef.close();
-    this.router.navigateByUrl('/listaSolicitacoesServidor').then(() => {
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    });
+    if(this.data.retroceder){
+      this.router.navigateByUrl('/listaSolicitacoesServidor').then(() => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      });
+    }
   }
 }

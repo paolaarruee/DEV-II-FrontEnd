@@ -51,7 +51,6 @@ export class SolicitacaoServidorComponent implements OnInit {
         },
         turno: '',
         matricula: '',
-        ingresso: '',
         role: {
             id: '',
             name: ''
@@ -89,20 +88,43 @@ export class SolicitacaoServidorComponent implements OnInit {
   }
 
  
-
+  solicitacaoStatus(){
+      const dataAtual = new Date();
+      const dataMaisCincoDias = new Date(this.solicitacao.dataSolicitacao);
+      dataMaisCincoDias.setDate(dataMaisCincoDias.getDate() + 5);
+      if(dataAtual > dataMaisCincoDias && (this.solicitacao.status.toLowerCase() === "nova" || this.solicitacao.status.toLowerCase() === "Em análise")){
+        return "cardPendente"
+      }
+      if(this.solicitacao.status.toLowerCase() === "indeferido"){
+        return "cardIndeferido"
+      }
+      if(this.solicitacao.status.toLowerCase() === "deferido"){
+        return "cardDeferido"
+      }
+      if(this.solicitacao.status.toLowerCase() === "Em análise"){
+        return "cardEmAndamento"
+      }
+      else{
+        return ""
+      }
+    }
 
   statusSolicitacao(): string{
     if(this.solicitacao.status.toLowerCase() == 'deferido' || this.solicitacao.status === 'Deferido' || this.solicitacao.status === 'aprovado'){
       return 'statusColor1'
     }
+    if(this.solicitacao.status.toLowerCase() == 'pendente' || this.solicitacao.status.toLowerCase() == 'relatório'){
+      return 'statusColor5';
+    }
 
-    if(this.solicitacao.status.toLowerCase() == 'em andamento' || this.solicitacao.status === 'Em Andamento'){
+    if(this.solicitacao.status.toLowerCase() == 'Em análise' || this.solicitacao.status === 'Em análise'){
       return 'statusColor2'
     }
 
     if(this.solicitacao.status.toLowerCase() == 'nova') {
       return 'statusColor4'
     }
+    
 
     if(this.solicitacao.status.toLowerCase() == 'indeferido' || this.solicitacao.status === 'Indeferido' || this.solicitacao.status === 'negado'){
       return 'statusColor3'

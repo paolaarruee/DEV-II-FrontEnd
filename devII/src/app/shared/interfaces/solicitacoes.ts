@@ -14,7 +14,6 @@ export interface Solicitacoes {
     };
     turno: string;
     matricula: string;
-    ingresso: string;
     role: {
       id: string;
       name: string;
@@ -61,5 +60,5 @@ export interface Historico {
 export enum Status {
   DEFERIDO = 'Deferido',
   INDEFERIDO = 'Indeferido',
-  EM_ANDAMENTO = 'Em Andamento',
+  EM_ANDAMENTO = 'Em análise',
 }

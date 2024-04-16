@@ -10,10 +10,10 @@ export class DetalhesSolicitacaoComponent {
   constructor(
     public dialogRef: MatDialogRef<DetalhesSolicitacaoComponent>,
     @Inject(MAT_DIALOG_DATA)
-    public data: { solicitacao: any; observacaoOn: boolean }
+    public data: { solicitacao: any; observacaoOn: boolean ; msgOnly: boolean}
   ) {}
   observacao: string = this.data.solicitacao.observacao;
-
+    
   statusSolicitacao(): string {
     if (
       this.data.solicitacao.status.toLowerCase() == 'deferido' ||
@@ -23,8 +23,8 @@ export class DetalhesSolicitacaoComponent {
     }
 
     if (
-      this.data.solicitacao.status.toLowerCase() == 'em andamento' ||
-      this.data.solicitacao.status === 'Em Andamento'
+      this.data.solicitacao.status.toLowerCase() == 'Em análise' ||
+      this.data.solicitacao.status === 'Em análise'
     ) {
       return 'statusColor2';
     }
@@ -33,6 +33,9 @@ export class DetalhesSolicitacaoComponent {
       this.data.solicitacao.status === 'Indeferido'
     ) {
       return 'statusColor3';
+    }
+    if(this.data.solicitacao.status.toLowerCase() == 'respondido' || this.data.solicitacao.status.toLowerCase() == 'pendente'){
+      return 'statusColor5';
     }
     return 'statusColor1';
   }

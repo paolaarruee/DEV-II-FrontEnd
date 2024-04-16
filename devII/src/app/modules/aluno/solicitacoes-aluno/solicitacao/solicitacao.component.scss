@@ -18,7 +18,16 @@
   font-size: 18px;
 }
 
+.buttonObs{
+  background: #2B923C !important;
+  font-size: 1em;
+  border-radius: 1px;
+  color: #FFFFFF !important;
+  border-radius: 15px;
+  cursor: pointer;
+  
 
+}
 
 
 .retangulo {
@@ -91,22 +100,30 @@
   padding: 0px 16px 16px 0px;
   
   :hover{
-    opacity: 0.8;
+    opacity: 0.9;
   }
 }
 
 button{
-  background: #2B923C;
-  font-size: 20px;
+  background: #2B923C !important;
+  font-size: 1.3em;
   border-radius: 1px;
+  color: #FFFFFF !important;
+  border: 0px;
+  cursor: pointer;
+}
+
+.buttonAzul{
+  background: #0077ff !important;
+  font-size: 1.3em;
   color: #FFFFFF;
   border: 0px;
   cursor: pointer;
 }
 
 .buttonOff{
-  background: #6d6d6d;
-  font-size: 20px;
+  background: #6d6d6d !important;
+  font-size: 1.3em;
   color: #FFFFFF;
   border: 0px;
   cursor: not-allowed;
@@ -131,4 +148,8 @@ button{
   background-color: #00ff95;
   font-size: 22px;
   
+}
+.statusColor5{
+  background-color: #ffcc23;
+  font-size: 22px;
 }

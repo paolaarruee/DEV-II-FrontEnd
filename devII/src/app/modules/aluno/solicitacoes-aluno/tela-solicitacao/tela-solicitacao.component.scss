@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
   padding: 30px;
   .titulo {
     p {
@@ -110,10 +111,14 @@
 }
 
 label {
-  font-size: 20px;
+  font-size: 1.4em;
   font-style: normal;
-  width: 530px;
-  height: 28px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.erroCampo{
+  background-color: rgb(255 27 27 / 13%);
 }
 
 input,
@@ -131,6 +136,31 @@ select {
   width: 90%;
 }
 
+#cancelamentoEstágio{
+  margin-bottom: 12%;
+}
+
+.inputSalario{
+  display: flex;
+  flex-direction: inline;
+  width: 95% !important;
+  border-radius: 0px 5px 5px 0px;
+}
+
+.simboloDinheiro{
+  display: flex;
+  align-items: center;
+  background-color: #e4e4e4;
+  border: 1px solid #000000;
+  border-right: 0px;
+  border-radius: 5px 0px 0px 5px;
+  margin-bottom: 30px;
+  padding: 2%;
+  font-weight: 500;
+  font-size: 1em;
+
+}
+
 .container {
   display: flex;
   flex-direction: row;
@@ -142,6 +172,22 @@ select {
   width: 50%;
   display: flex;
   flex-wrap: wrap;
+}
+
+.table{
+  width: 100%;
+  background-color: #eeeeee;
+  border-collapse: collapse;
+  border-spacing: 0;
+ 
+  border-radius: 5px;
+  margin-top: 2%;
+  font-size: 1.3em;
+}
+
+tr, td, th {
+  padding: 8px;
+  text-align: center;
 }
 
 
@@ -165,3 +211,114 @@ select {
   cursor: pointer;
   
 }
+
+.fileInput{
+  display: flex;
+  flex-direction: column;
+  background: #339e2f;
+  margin-top: 1%;
+  font-style: normal;
+  width: 35%;
+  font-size: 1.1em;
+  padding: 0.5em;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  align-items: center;
+  transition: 0.3s;
+}
+.fileInput:hover{
+  background-color: #2a913bfa;
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+li{
+  margin-top: 1%;
+  font-size: 1.1em;
+}
+
+img{
+  width: 20px;
+  height: 20px;
+}
+img:hover{
+  cursor: pointer;
+  background-color: #6e6e6e75;
+  border-radius: 55%;
+  width: 25px;
+
+}
+
+input[type='file'] {
+  display: none;
+}
+
+.inputFileM{
+  display: flex !important;
+}
+
+/* Hide the default checkbox */
+.containerCheckBox input {
+  display: none;
+}
+
+#checkBox{
+  width: 25px !important;
+  margin-left: 40% !important;
+}
+
+.containerCheckBox {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  font-size: 20px;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 1.3em;
+  width: 1.3em;
+  background-color: #2196F300;
+  border-radius: 0.25em;
+  transition: all 0.25s;
+  
+}
+
+/* When the checkbox is checked, add a blue background */
+.containerCheckBox input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  transform: rotate(0deg);
+  border: 0.1em solid black;
+  left: 0;
+  top: 0;
+  width: 1.05em;
+  height: 1.05em;
+  
+  border-radius: 0.25em;
+  transition: all 0.25s, border-width 0.1s;
+}
+
+/* Show the checkmark when checked */
+.containerCheckBox input:checked ~ .checkmark:after {
+  left: 0.45em;
+  top: 0.25em;
+  width: 0.25em;
+  height: 0.5em;
+  border-color: #fff0 white white #fff0;
+  border-width: 0 0.15em 0.15em 0;
+  border-radius: 0em;
+  transform: rotate(45deg);
+}
+

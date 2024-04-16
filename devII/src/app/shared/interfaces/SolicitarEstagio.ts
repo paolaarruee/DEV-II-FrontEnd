@@ -7,4 +7,8 @@ export interface Solicitacao{
   tipo : string
   alunoId : string
   cursoId: string
+  contatoEmpresa: string
+  salario: string
+  cargaHoraria: string
+  turnoEstagio: string
 }

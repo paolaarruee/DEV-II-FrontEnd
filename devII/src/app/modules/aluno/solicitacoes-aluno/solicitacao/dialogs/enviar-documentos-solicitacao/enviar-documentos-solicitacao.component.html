@@ -1,0 +1,25 @@
+<h1 class="titulo">{{data.tipo == 'relatorio' ? ' Envio de relatório final' : ' Solicitação de cancelamento de estágio'}}</h1>
+ <div class="container">
+    <p class="descricao">
+        {{data.tipo == 'relatorio' ? 'Envie o relatório final de atividades para avaliação do coornedador de curso.' 
+        : 'Envie o requerimento de cancelamento de estágio para que o possa ser validado, assim que for deferido o estágio será marcado como
+        cancelado no sistema.'}}
+    </p>
+    <p class="msgErro">{{msgErro}}</p>
+    <label for="requerimentoAproveitamento">Anexe o {{data.tipo == 'relatorio' ? ' relatório final de atividades' : ' requerimento'}}</label>
+    <input
+      class="inputFileM"
+      type="file"
+      name="relatorioFinal"
+      (change)="onFileChange($event)"
+      value="Anexe o relatório final de atividades"
+      accept=".pdf, .txt, .doc, .docx, .odt"
+    />
+    <div class="buttons">
+        <button mat-raised-button color="primary" (click)="enviarRelatorioFinal()">Enviar documento</button>
+        <button mat-raised-button color="warn" (click)="fecharDialog()">Cancelar</button>
+    </div>
+
+ </div>
+ 
+

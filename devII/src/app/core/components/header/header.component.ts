@@ -29,18 +29,28 @@ export class HeaderComponent {
       if(this.ultimoLink != undefined && this.ultimoLink != a){
         this.ultimoLink.classList.remove('div-ativa');
       }
+      if(this.ultimoLink == a){
+        window.location.reload();
+      }
+     
+
       this.ultimoLink = a;
     }
 
     ngOnInit(): void {
-
-      
-
-
       this.logado = this.authService.isAuthenticated;
       if(this.authService.role === 3 || this.authService.role === 2 || this.authService.role === 4)
         this.exibirLink = true;
 
+      }
+
+      public eServidor(): boolean {
+        if(this.authService.role === Role.ROLE_SERVIDOR)
+          return true;
+        else if(this.authService.role === Role.ROLE_SESTAGIO)
+          return true;
+        else
+          return false;
       }
 
   public get isAuthenticated(): boolean {

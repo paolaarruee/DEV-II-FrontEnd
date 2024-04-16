@@ -14,6 +14,13 @@ export class ServidorService {
  
     );
   }
+
+  public excluirServidorEmail(email: any): Observable<any> {
+    return this.httpClient.post<void>(
+      `${environment.API_URL}/excluirServidorEmail`,
+      email
+    );
+  }
   public constructor(private httpClient: HttpClient) {}
 
   public cadastraServidor(servidor: Servidor): Observable<void> {
@@ -27,6 +34,12 @@ export class ServidorService {
     return this.httpClient.post<void>(
       `${environment.API_URL}/buscarOrientadorCurso`,
       cursoId
+    );
+  }
+
+  public listaOrientadores(): Observable<Servidor[]> {
+    return this.httpClient.get<Servidor[]>(
+      `${environment.API_URL}/listaOrientadoresCursos`
     );
   }
 

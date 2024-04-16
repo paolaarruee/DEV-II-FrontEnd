@@ -39,6 +39,15 @@ import { ListaServidorComponent } from './modules/servidor/lista-servidor/lista-
 import { ListaEstagiariosComponent } from './modules/servidor/lista-estagiarios/lista-estagiarios.component';
 import { DatePipe } from '@angular/common';
 import { RecuperarSenhaComponent } from './modules/recuperar-senha/recuperar-senha.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
+import { TelaVisualizacaoEstagiarioComponent } from './modules/servidor/tela-visualizacao-estagiario/tela-visualizacao-estagiario.component';
+import {MatTableModule} from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { EnviarDocumentosSolicitacaoComponent } from './modules/aluno/solicitacoes-aluno/solicitacao/dialogs/enviar-documentos-solicitacao/enviar-documentos-solicitacao.component';
+
 
 
 
@@ -52,6 +61,12 @@ const ANGULAR_MODULES = [
   MatDialogModule,
   CoreModule,
   SharedModule,
+  MatButtonModule,
+  MatTooltipModule,
+  MatCheckboxModule,
+  MatRadioModule,
+  MatTableModule,
+  MatInputModule,
 ];
 
 const COMPONENTS = [
@@ -78,6 +93,8 @@ const COMPONENTS = [
   AnaliseDocsComponent,
   ListaEstagiariosComponent,
   RecuperarSenhaComponent,
+  TelaVisualizacaoEstagiarioComponent,
+  EnviarDocumentosSolicitacaoComponent,
   
 ];
 

@@ -33,9 +33,11 @@ a{
 }
 
 .listaServidores{
+  justify-content: flex-start;
   width: 100%;
   display: flex;
-  flex-direction: column;
+  gap: 2em;
+  flex-direction: row;
 }
 
 .listaservidor{
@@ -83,6 +85,7 @@ input {
 
 .formularioBox{
   display: flex;
+  width: 75%;
   flex-direction: column;
 }
 
@@ -113,6 +116,20 @@ ul{
   padding-left: 0px;
 }
 
+.senhadiv{
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.senha{
+  display: flex;
+  width: 48%;
+  flex-direction: column;
+  background-color: red($color: #000000);
+}
+
 li{
   display: flex;
   flex-direction: column;
@@ -127,4 +144,8 @@ li{
   border-radius: 5px;
   color: #FFFFFF;
   cursor: pointer;
+  transition: background 0.2s ease-in-ou;
+}
+button:hover , .botao:hover{
+  background: #5699ea;
 }

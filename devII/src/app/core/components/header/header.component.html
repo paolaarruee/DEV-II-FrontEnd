@@ -1,11 +1,11 @@
-<nav class="navbar " >
+<nav class="navbar " md-cols-sm="2">
   <div class="navbar-inicio">
     <a routerLink="">
       <div class="logo">
       <img src="/assets/img/logoColorida.png"/>
       </div>
     </a>
-    <a class="navbar-inicio-link" routerLink="home">
+    <a class="navbar-inicio-link" routerLink="home" >
       <p class="campus">Doc.Estágio</p>
       <p class="titulo">
         Sistema para solicitação de documentação de estágio
@@ -13,12 +13,13 @@
     </a>
   </div>
 
-  <div class="navbar-itens " >
+  <div class="navbar-itens" >
     <a class="navbar-itens-menu navbar-nav">
-      <a href="https://mural.ifrs.edu.br/estagios" target="_blank" class="nav-item">Oportunidades </a>
-      <a routerLink="/cadastrarServidor" (click)="divClick($event)" *permission="Roles.ROLE_SESTAGIO">Cadastrar servidor</a>
-      <a routerLink="/listaEstagiarios" (click)="divClick($event)" *permission="Roles.ROLE_SESTAGIO">Lista estagiários</a>
-      <a routerLink="/listaSolicitacoesServidor" (click)="divClick($event)" *ngIf="exibirLink">Lista Solicitações</a>
+      <a href="https://mural.ifrs.edu.br/estagios" target="_blank" class="nav-item oportunidade">Oportunidades</a>
+      <a id="cadS" routerLink="/cadastrarServidor" (click)="divClick($event)" *permission="Roles.ROLE_SESTAGIO">Cadastrar servidor</a>
+      <a id="listaEst" routerLink="/listaEstagiarios" (click)="divClick($event)" *ngIf="eServidor()">Lista de estagiários</a>
+      <a id="listaSol" routerLink="/listaSolicitacoesServidor" (click)="divClick($event)" *ngIf="exibirLink">Lista de Solicitações</a>
+      <a routerLink="/perfil" *permission="Roles.ROLE_ALUNO">Seus dados</a>
       <a routerLink="/listaSolicitacoesAluno" *permission="Roles.ROLE_ALUNO">Solicitações</a>
       <a routerLink="/login" *ngIf="!isAuthenticated">Login</a>
       <a (click)="logout()" *ngIf="isAuthenticated">Logout</a>

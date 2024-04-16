@@ -1,28 +1,27 @@
 <div class="espacamento">
     <div class="headerDocumentos header">
-      <span class="titulo tituloCaixaDocs">Documentos anexados: </span>
+      <span class="titulo tituloCaixaDocs" *ngIf="!data.isAssinado">Documentos anexados: </span>
+      <span class="titulo tituloCaixaDocs" *ngIf="data.isAssinado">Documentos assinados: </span>
         <div class="caixa headerDocumentos" id="caixa" *ngIf="!delete">
      </div>
-
-
-     
-     <div class="caixaInputDocumentos">
+     <div class="caixaInputDocumentos" *ngIf="!data.isAssinado">
       <label class="document-label">Documentos para Anexar:</label>
-    
       <ul id="listaDocAnexo">
         <!-- aqui vai os docs anexados :D -->
       </ul>
       <input type="file" id="file" (change)="onFileSelected($event)" multiple style="display: none;" accept=".pdf,.doc,.docx">
-  
+      
     </div>
-    <div class="caixaBotoes">
+
+    <div class="caixaBotoes" *ngIf="data.isAssinado" >
+      <button mat-raised-button color="primary" (click)="fechar()">Fechar</button>
+    </div>
+    <div class="caixaBotoes" *ngIf="!data.isAssinado" >
       <label for="file" class="custom-file-button">
         Escolher Arquivos
       </label>
       <button mat-raised-button color="primary" (click)="onUpload()">Enviar</button>
     </div>
-    
-
 </div>
 </div>
   

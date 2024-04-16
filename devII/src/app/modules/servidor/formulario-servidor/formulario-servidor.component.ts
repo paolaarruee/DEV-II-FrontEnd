@@ -6,6 +6,9 @@ import { Servidor } from 'src/app/shared/interfaces/servidor';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthenticationService } from 'src/app/core/services/authentication/authentication.service';
 import { Role } from 'src/app/shared/interfaces/usuario';
+import { ServidorService } from 'src/app/core/services/servidor/servidor.service';
+import { ModalAnaliseComponent } from '../detalhes-solicitacao-estagio/modal-analise/modal-analise.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-formulario-servidor',
@@ -27,6 +30,8 @@ export class FormularioServidorComponent {
     },
   };
 
+  desbloqueio = false;
+  emailDesbloqueio: string = '';
   confirmarSenha: string = '';
   emailPattern: RegExp = /^[\w-]+(\.[\w-]+)*@restinga\.ifrs\.edu\.br$/;
   exibirCurso: boolean = true;
@@ -36,13 +41,15 @@ export class FormularioServidorComponent {
     private service: FormularioServidorService,
     private toastService: ToastService,
     public authenticationService: AuthenticationService,
+    private servidorService: ServidorService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     if (this.authenticationService.role === Role.ROLE_ALUNO) {
-      alert("Authenticação inválida!");
+      alert('Authenticação inválida!');
       window.location.href = '/muralVagas';
-      }
+    }
   }
 
   exibirCursos(event: any) {
@@ -58,6 +65,39 @@ export class FormularioServidorComponent {
       this.exibirCurso = true;
       this.habilitarCurso = false;
     }
+  }
+
+  excluirServidor() {
+    if (this.emailDesbloqueio == '') {
+      this.toastService.showMessage(
+        'Informe o email do servidor para desbloqueio'
+      );
+      return;
+    }
+
+    const dialog = this.dialog.open(ModalAnaliseComponent, {
+      width: '600px',
+      data: {
+        conteudo: 'Deseja desbloquear o email: ' + this.emailDesbloqueio + '?',
+        email: this.emailDesbloqueio,
+        enviarCallback: () => {
+          this.servidorService
+            .excluirServidorEmail(this.emailDesbloqueio)
+            .subscribe(
+              (response) => {
+                this.toastService.showMessage('Email desbloqueado com sucesso.');
+              },
+              (error: HttpErrorResponse) => {
+                if (error.status === 404) {
+                  this.toastService.showMessage('Nenhum cadastro encontrado com o email informado.', 'error');
+                } else {
+                this.toastService.showMessage('ERRO: Verifique o email! ' , error.error);
+                }
+              }
+            );
+        } 
+      }
+    });
   }
 
   enviarFormulario() {
@@ -95,25 +135,20 @@ export class FormularioServidorComponent {
       return;
     }
 
-    if (
-      !/^[\w-]+(\.[\w-]+)*@restinga\.ifrs\.edu\.br$/.test(
-        this.servidor.usuarioSistema.email
-      )
-    ) {
-      let mensagem = `O email deve ter o final @restinga.ifrs.edu.br`;
-      this.toastService.showMessage(mensagem, 'error');
-      return;
-    }
     this.service.enviarDados(this.servidor).subscribe(
       (response) => {
         console.log('Servidor cadastrado com sucesso!');
         console.log('Resposta da API:', response);
+        this.limparDadosCadastro();
         this.toastService.showMessage('Servidor Cadastrado.');
         // Lógica adicional após o envio bem-sucedido do formulário
       },
       (error: HttpErrorResponse) => {
         if (error.status === 409) {
           this.toastService.showMessage('erro: ', error.error);
+          if (error.error.includes('email')) {
+            this.toastService.showMessage('Email já cadastrado.');
+          }
         } else {
           console.error('Erro ao enviar o formulário:', error);
           this.toastService.showMessage(
@@ -123,5 +158,22 @@ export class FormularioServidorComponent {
         // Lógica adicional em caso de erro ao enviar o formulário
       }
     );
+  }
+
+  limparDadosCadastro() {
+    this.servidor = {
+      nome: '',
+      cargo: '',
+      curso: {
+        id: '',
+        nomeCurso: '',
+      },
+      usuarioSistema: {
+        email: '',
+        senha: '',
+        roles: '',
+      },
+    };
+    this.confirmarSenha = '';
   }
 }

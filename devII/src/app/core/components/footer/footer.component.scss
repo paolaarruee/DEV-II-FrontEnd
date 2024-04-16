@@ -1,8 +1,15 @@
+.logo-ifrs-footer{
+  width: 55%;
+  height: 55%;
+}
+
 .footer {
   background-color: #f8f9fa;
   height: 200px;
   width: 100%;
   display: flex;
+  position: relative;
+  bottom: 0;
 
   &-logo {
     display: flex;

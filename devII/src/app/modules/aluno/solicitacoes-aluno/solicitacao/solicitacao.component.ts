@@ -9,30 +9,29 @@ import { DocFile } from 'src/app/shared/interfaces/doc';
 import { AtualizarDocsComponent } from '../../atualizar-docs/atualizar-docs.component';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatButtonModule} from '@angular/material/button';
+import { EnviarDocumentosSolicitacaoComponent } from './dialogs/enviar-documentos-solicitacao/enviar-documentos-solicitacao.component';
 
 @Component({
   selector: 'app-solicitacao',
   templateUrl: './solicitacao.component.html',
-  styleUrls: ['./solicitacao.component.scss']
+  styleUrls: ['./solicitacao.component.scss'],
+  providers: [MatTooltipModule, MatButtonModule]
 })
+
+
 export class SolicitacaoComponent {
   
   statusEditavel: string = ""
   observacaoOn = false;
+  titulo = 'Detalhes da solicitação';
 
   constructor(private dialog: MatDialog,
               private toastService: ToastService,
-              private docslist: DocsService) { }
+              private docslist: DocsService,
+              ) { }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(DetalhesSolicitacaoComponent, {
-      data: { solicitacao: this.solicitacao, observacaoOn: this.observacaoOn }
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      // Lógica a ser executada após o fechamento do modal, se necessário
-    });
-  }
 
   @Input() solicitacao = {
     id:'',
@@ -44,6 +43,7 @@ export class SolicitacaoComponent {
     editavel: '',
     observacao: '',
     dataSolicitacao: '',
+    relatorioEntregue: '',
     aluno: {
         id: '',
         nomeCompleto: '',
@@ -58,7 +58,6 @@ export class SolicitacaoComponent {
         },
         turno: '',
         matricula: '',
-        ingresso: '',
         role: {
             id: '',
             name: ''
@@ -75,14 +74,14 @@ export class SolicitacaoComponent {
     if(this.solicitacao.editavel){
     const docs: Observable<DocFile[]> = this.docslist.listarDocumentosPorSolicitarEstagioId(parseInt(this.solicitacao.id));
     docs.subscribe((docs) => {
-      //OK
       const dialogRef = this.dialog.open(AtualizarDocsComponent, {data: { docs: docs, solicitacaoId: this.solicitacao.id }
       });
       docs.forEach((doc) => {
         console.log(doc);
       });
     }, (error) => {
-      //EERO
+      const dialogRef = this.dialog.open(AtualizarDocsComponent, {data: { docs: docs, solicitacaoId: this.solicitacao.id }
+      });
       this.toastService.showMessage('Essa solicitação não tem documentos...')
     }, () => {
       //
@@ -92,8 +91,42 @@ export class SolicitacaoComponent {
   }
   }
 
+  dataPassou(solicitacao: any){
+    const data = new Date();
+    const dataSolicitacao = new Date(solicitacao.finalDataEstagio);
+    if(dataSolicitacao.getTime() < data.getTime()){
+      return true;
+    }
+    return false;
+  }
+
+  abrirEnvioDocumentos(tipo : string){
+    const dialogRef = this.dialog.open(EnviarDocumentosSolicitacaoComponent, {
+      width: '50%',
+      height: '500px',
+      data: { solicitacao: this.solicitacao, tipo : tipo}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      window.location.reload();
+    });
+  }
+
+
+  openDialog(msg? : boolean) {
+    const dialogRef = this.dialog.open(DetalhesSolicitacaoComponent, {
+
+      data: { solicitacao: this.solicitacao, observacaoOn: this.observacaoOn , msgOnly : msg}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // Lógica a ser executada após o fechamento do modal, se necessário
+    });
+  }
+
+
   abrirDownload(){
-    if(this.solicitacao.status.toLowerCase() == "deferido"){
+    if(this.solicitacao.status.toLowerCase() == "deferido" || this.solicitacao.status.toLowerCase() == "finalizado"){
     const docs: Observable<DocFile[]> = this.docslist.listarDocumentosPorSolicitarEstagioIdAssinados(parseInt(this.solicitacao.id));
     docs.subscribe((docs) => {
       //OK
@@ -104,7 +137,7 @@ export class SolicitacaoComponent {
       });
     }, (error) => {
       //EERO
-      this.toastService.showMessage('Essa solicitação não tem documentos...')
+      this.toastService.showMessage('Essa solicitação não tem documentos assinados...')
     }, () => {
       //
     });
@@ -120,8 +153,25 @@ export class SolicitacaoComponent {
     this.solicitacao.dataSolicitacao = this.formatarDataSolicitacao(this.solicitacao.dataSolicitacao);
     console.log(this.solicitacao)
     this.isEditavel();
+    this.definirTitulo();
   }
 
+  definirTitulo(){
+    const tipo = this.solicitacao.tipo.toLowerCase();
+    if(this.solicitacao.tipo.toLowerCase()  == "cancelamento"){
+      this.titulo = "Solicitação de cancelamento";
+    }
+    else if(this.solicitacao.tipo.toLowerCase() == "relatório"){
+      this.titulo = "Solicitação de relatório final";
+    }
+    else if(tipo.includes("aproveitamento")){
+      this.titulo = "Solicitação de aproveitamento de estágio ";
+    }
+    else{
+      this.titulo = "Solicitação de estágio " + this.solicitacao.tipo;
+    }
+    
+  }
   
   isEditavel(){
     if(!this.solicitacao.editavel){
@@ -195,8 +245,10 @@ export class SolicitacaoComponent {
     if(this.solicitacao.status.toLowerCase() == 'nova') {
       return 'statusColor4'
     }
-
-    if(this.solicitacao.status.toLowerCase() == 'em andamento' || this.solicitacao.status === 'Em Andamento'){
+    if(this.solicitacao.status.toLowerCase() == 'pendente' || this.solicitacao.status.toLowerCase() == 'respondido'){
+      return 'statusColor5';
+    }
+    if(this.solicitacao.status.toLowerCase() == 'Em análise' || this.solicitacao.status === 'Em Andamento'){
       return 'statusColor2'
     }
 
@@ -204,6 +256,40 @@ export class SolicitacaoComponent {
       return 'statusColor3'
     }
     return 'statusColor1'
+  }
+
+  getDescricaoStatus(){
+    if(this.solicitacao.status.toLowerCase() == 'deferido' || this.solicitacao.status === 'Deferido' || this.solicitacao.status === 'aprovado'){
+      return 'Solicitação deferida'
+    }
+    if(this.solicitacao.status.toLowerCase() == 'nova') {
+      return 'Solicitação nova, ainda não foi visualizada pela unidade de estágio.'
+    }
+    if(this.solicitacao.status.toLowerCase() == 'respondido'){
+      return 'Aluno resolveu a pendência da solicitação, aguardando resposta da unidade de estágio.';
+    }
+    if(this.solicitacao.status.toLowerCase() == 'pendente'){
+      return 'Solicitação com alguma pendência, verificar observação para mais detalhes.'
+    }
+    if(this.solicitacao.status.toLowerCase() == 'indeferido'){
+      return 'Solicitação foi indeferida, verifique os detalhes para ver o motivo é a etapa.';
+    }
+    if(this.solicitacao.status.toLowerCase() == 'em análise' || this.solicitacao.status === 'Em Andamento'){
+      return 'Solicitação em análise pela unidade de estágio.'
+    }
+    if(this.solicitacao.status.toLowerCase() == 'finalizado'){
+      return 'O estágio desta solicitação agora é considerado como finalizado devido ao aluno ter entregue o relatório final de atividades.'
+    }
+    if(this.solicitacao.status.toLowerCase() == 'relatório'){
+      return 'Solicitação com relatório final entregue, aguardando análise da unidade de estágio.'
+    }
+    if(this.solicitacao.status.toLowerCase() == 'cancelado'){
+      return 'O estágio desta solicitação foi cancelado pelo aluno.'
+    }
+    if(this.solicitacao.status.toLowerCase() == 'cancelamento'){
+      return 'Solicitação de cancelamento de estágio, aguardando análise da unidade de estágio.'
+    }
+    return "Descrição não encontrada"
   }
 
 }

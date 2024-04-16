@@ -1,29 +1,34 @@
+
 <div class="titulo">
-  <p>Lista de servidores</p>
+  <div class="voltar">
+    <button
+      mat-icon-button
+      matTooltip="Voltar para a página de cadastro de servidores"
+      [matTooltipHideDelay]="500"
+      [matTooltipShowDelay]="1000"
+      color="primary"
+      aria-label="Voltar"
+      routerLink="/cadastrarServidor"
+    >
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
+  <div class="titulo">
+    <p>Lista de servidores</p>
+  </div>
 </div>
 <ul class="servidores">
-
-  <li  >
+  <li>
     <div class="card cardHeader">
-    <div class="nome">
-      NOME
+      <div class="nome">NOME</div>
+      <div class="email">E-MAIL</div>
+      <div class="cargo">CARGO</div>
+      <div class="curso">CURSO</div>
+      <div class="acoes">AÇÕES</div>
     </div>
-    <div class="email">
-      E-MAIL
-    </div>
-    <div class="cargo">
-      CARGO
-    </div>
-    <div class="curso">
-      CURSO
-    </div>
-    <div class="acoes">
-      AÇÕES
-    </div>
-  </div>
   </li>
-    <li *ngFor="let servidor of servidores" >
-      <div class="card">
+  <li *ngFor="let servidor of servidores">
+    <div class="card">
       <div class="nome">
         {{ servidor.nome }}
       </div>
@@ -37,9 +42,15 @@
         {{ servidor.curso.nomeCurso }}
       </div>
       <div class="acoes">
-        <button (click)="excluirServidor(servidor)">Excluir</button>
-        
+        <button
+          (click)="excluirServidor(servidor)"
+          matTooltip="Excluir o cadastro do servidor do sistema, liberando o e-mail para ser utilizado novamente."
+          [matTooltipHideDelay]="500"
+          [matTooltipShowDelay]="1000"
+        >
+          Excluir
+        </button>
       </div>
     </div>
-    </li>
-  </ul>
+  </li>
+</ul>

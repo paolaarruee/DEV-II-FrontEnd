@@ -22,7 +22,6 @@ export class FormularioCadastroAlunoComponent {
       },
     turno: '',
     matricula: '',
-    ingresso: '',
     curso: ''
   };
 
@@ -38,14 +37,12 @@ event: any;
     event.target.value = numericValue;
   }
 
-
   enviarFormulario(){
     console.log(this.aluno.nomeCompleto)
     console.log(this.aluno.usuarioSistema.email)
     console.log(this.aluno.usuarioSistema.senha)
     console.log(this.aluno.turno)
     console.log(this.aluno.matricula)
-    console.log(this.aluno.ingresso)
     console.log(this.aluno.curso)
     console.log(this.confirmarSenha)
 
@@ -54,7 +51,6 @@ event: any;
       { nome: 'Email institucional', valor: this.aluno.usuarioSistema.email },
       { nome: 'Turno', valor: this.aluno.turno },
       { nome: 'Matrícula', valor: this.aluno.matricula },
-      { nome: 'Ingresso', valor: this.aluno.ingresso },
       { nome: 'Curso', valor: this.aluno.curso },
       { nome: 'Senha', valor: this.aluno.usuarioSistema.senha }
     ];
@@ -73,17 +69,18 @@ event: any;
       return;
     }
 
-    if(this.aluno.usuarioSistema.senha.length < 6){
-      let mensagem = `A senha deve ter no mínimo 6 caracteres.`;
+    if(this.aluno.usuarioSistema.senha.length < 8){
+      let mensagem = `A senha deve ter no mínimo 8 caracteres.`;
       this.toastService.showMessage(mensagem, 'error');
       return;
     }
 
-    //if (!/^[\w-]+(\.[\w-]+)*@(restinga\.ifrs\.edu\.br|aluno\.restinga\.ifrs\.edu\.br)$/.test(this.aluno.usuarioSistema.email)) {
-    //  let mensagem = `O email deve ter o final @restinga.ifrs.edu.br ou @aluno.restinga.ifrs.edu.br`;
-    //  this.toastService.showMessage(mensagem, 'error');
-    //  return;
-    // }
+
+    if (!/^[\w-]+(\.[\w-]+)*@(restinga\.ifrs\.edu\.br|aluno\.restinga\.ifrs\.edu\.br)$/.test(this.aluno.usuarioSistema.email)) {
+      let mensagem = `O email deve ter o final @restinga.ifrs.edu.br ou @aluno.restinga.ifrs.edu.br`;
+      this.toastService.showMessage(mensagem, 'error');
+     return;
+    }
 
     this.service.enviarDados(this.aluno).subscribe(
       response => {

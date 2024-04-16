@@ -5,6 +5,5 @@ export interface Aluno {
   usuarioSistema: Usuario;
   turno: string;
   matricula: string;
-  ingresso: string;
   curso: string;
 }

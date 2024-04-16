@@ -19,12 +19,8 @@
           <span class="spanValores">{{ studentData.aluno.nomeCompleto }}</span>
         </div>
         <div class="boxAtualizarDados">
-          <span class="spanTitulo">Tipo de Estágio:</span>
-          <span class="spanValores">{{ studentData.tipo }}</span>
-        </div>
-        <div class="boxAtualizarDados">
-          <span class="spanTitulo">Ingresso: </span>
-          <span class="spanValores">{{ studentData.aluno.ingresso }}</span>
+          <span class="spanTitulo">Tipo de solicitação:</span>
+          <span class="spanValores"><b>{{ studentData.tipo }}</b></span>
         </div>
         <div class="boxAtualizarDados">
           <span class="spanTitulo">Matricula: </span>
@@ -34,12 +30,151 @@
           <span class="spanTitulo">Turno:</span>
           <span class="spanValores">{{ studentData.aluno.turno }}</span>
         </div>
+        <div class="boxAtualizarDados">
+          <span>Curso:</span>
+          <span
+            ><b class="curso">{{ studentData.aluno.curso.nomeCurso }}</b></span
+          >
+        </div>
+      </div>
+
+      <div class="infos-aluno" *ngIf="!editarEstagio">
+        <span class="dados subtitulo"
+          >Dados do estágio
+          <button
+            class=""
+            (click)="editarEstagio = !editarEstagio"
+            *permission="Roles.ROLE_SESTAGIO"
+          >
+            <mat-icon aria-hidden="false" fontIcon="edit"></mat-icon>
+          </button>
+        </span>
+
+        <div class="boxAtualizarDados">
+          <span class="spanTitulo">Bolsa hora:</span>
+          <span class="spanValores">R$ {{ empresa.salario }}</span>
+        </div>
+        <div class="boxAtualizarDados">
+          <span class="spanTitulo">Turno:</span>
+          <span class="spanValores">{{ empresa.turnoEstagio }}</span>
+        </div>
+        <div class="boxAtualizarDados">
+          <span class="spanTitulo">Carga horária:</span>
+          <span class="spanValores">{{ empresa.cargaHoraria }} h</span>
+        </div>
+      </div>
+
+      <div class="infos-aluno" *ngIf="editarEstagio">
+        <span class="dados subtitulo"
+          >Dados do estágio
+          <button class="" (click)="atualizarEstagio()">
+            <mat-icon aria-hidden="false" fontIcon="done"></mat-icon></button
+        ></span>
+        <div class="boxAtualizarDados">
+          <span>Salário:</span>
+          <input
+            class="inputBox"
+            type="text"
+            [(ngModel)]="empresa.salario"
+            placeholder="R$ 3,40"
+            maxlength="10"
+            (input)="validarSalario($event)"
+          />
+        </div>
+        <div class="boxAtualizarDados">
+          <span>Turno:</span>
+          <select
+            class="inputBox"
+            [(ngModel)]="empresa.turnoEstagio"
+            placeholder="Turno"
+          >
+            <option value="Manha">Manhã</option>
+            <option value="Tarde">Tarde</option>
+            <option value="Noite">Noite</option>
+          </select>
+        </div>
+        <div class="boxAtualizarDados">
+          <span>Carga Horária:</span>
+          <input
+            class="inputBox"
+            type="text"
+            [(ngModel)]="empresa.contatoEmpresa"
+            placeholder="20"
+            (input)="noLetter($event)"
+            [maxlength]="11"
+          />
+        </div>
+      </div>
+
+      <div class="curso-aluno">
+        <span class="dados subtitulo"
+          >Dados da solicitação
+          <button
+            (click)="editarDatas = !editarDatas"
+            *ngIf="!editarDatas && authenticationService.role === 3"
+          >
+            <mat-icon aria-hidden="false" fontIcon="edit"></mat-icon>
+          </button>
+          <button
+            class=""
+            (click)="trocarValidadeContrato()"
+            *ngIf="editarDatas"
+          >
+            <mat-icon aria-hidden="false" fontIcon="done"></mat-icon></button
+        ></span>
+
+        <div class="boxAtualizarDados">
+          <span> Data da solicitação:</span>
+          <span>
+            {{ datePipe.transform(studentData.dataSolicitacao, "dd-MM-yyyy") }}
+          </span>
+        </div>
+        <div class="boxAtualizarDados">
+          <span> Início do contrato:</span>
+          <span *ngIf="!editarDatas">{{ dataInicioEstagio }}</span>
+          <input
+            *ngIf="editarDatas"
+            class="data"
+            type="text"
+            maxlength="10"
+            [value]="dataInicioEstagio"
+            [(ngModel)]="dataInicioEstagio"
+            (input)="onInput($event, 'nova')"
+            pattern="(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\d{4}"
+          />
+        </div>
+        <div class="boxAtualizarDados">
+          <span> Fim do contrato:</span>
+          <span *ngIf="!editarDatas">{{ dataFinalEstagio }}</span>
+          <input
+            *ngIf="editarDatas"
+            class="data"
+            type="text"
+            maxlength="10"
+            [value]="dataFinalEstagio"
+            [(ngModel)]="dataFinalEstagio"
+            (input)="onInput($event, 'final')"
+            pattern="(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\d{4}"
+          />
+        </div>
+        <div class="boxAtualizarDados">
+          <span>Tipo:</span>
+          <span>{{ studentData.tipo }}</span>
+        </div>
+        <div class="boxAtualizarDados">
+          <span class="spanTitulo">Responsável atual:</span>
+          <span class="spanValores" >{{responsavelAtual()}}</span>
+        </div>
       </div>
 
       <div class="infos-aluno" *ngIf="!editarEmpresa">
         <span class="dados subtitulo"
           >Dados da Empresa
-          <button class="" (click)="editarEmpresa = !editarEmpresa" *permission="Roles.ROLE_SESTAGIO">
+          <button
+            class=""
+            (click)="editarEmpresa = !editarEmpresa"
+            *permission="Roles.ROLE_SESTAGIO"
+          >
             <mat-icon aria-hidden="false" fontIcon="edit"></mat-icon>
           </button>
         </span>
@@ -76,6 +211,7 @@
             type="text"
             [(ngModel)]="empresa.nomeEmpresa"
             placeholder="Nome da empresa"
+            maxlength="48"
           />
         </div>
         <div class="boxAtualizarDados">
@@ -85,6 +221,7 @@
             type="text"
             [(ngModel)]="empresa.agente"
             placeholder="Nome do agente"
+            maxlength="16"
           />
         </div>
         <div class="boxAtualizarDados">
@@ -94,63 +231,17 @@
             type="text"
             [(ngModel)]="empresa.contatoEmpresa"
             placeholder="Contato da empresa"
-            maxlength="11"
+            (input)="noLetter($event)"
+            [maxlength]="11"
           />
         </div>
         <div class="boxAtualizarDados">
-          <label>é privada?</label>
+          <label>Privada?</label>
           <input
             class="inputBox checkDiretor"
             type="checkbox"
             [(ngModel)]="empresa.ePrivada"
           />
-        </div>
-      </div>
-
-      <div class="curso-aluno">
-        <span class="dados subtitulo">Dados da solicitação 
-            <button  (click)="editarDatas = !editarDatas" *ngIf="!editarDatas && authenticationService.role === 3">
-            <mat-icon  aria-hidden="false" fontIcon="edit"></mat-icon >
-          </button>
-          <button class="" (click)="trocarValidadeContrato()" *ngIf="editarDatas">
-            <mat-icon aria-hidden="false" fontIcon="done"></mat-icon></button
-        ></span>
-
-        <div class="boxAtualizarDados">
-          <span> Data da solicitação:</span>
-          <span>
-            {{ datePipe.transform(studentData.dataSolicitacao, "dd-MM-yyyy") }}
-          </span>
-        </div>
-        <div class="boxAtualizarDados">
-          <span> Início do contrato:</span>
-          <span *ngIf="!editarDatas">{{ dataInicioEstagio }}</span>
-          <input *ngIf="editarDatas"
-          class="data"
-          type="text"
-          maxlength="10"
-          [value]="dataInicioEstagio"
-          [(ngModel)]="dataInicioEstagio"
-          (input)="onInput($event , 'nova')"
-          pattern="(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\d{4}"
-           />
-        </div>
-        <div class="boxAtualizarDados">
-          <span> Fim do contrato:</span>
-          <span *ngIf="!editarDatas">{{ dataFinalEstagio }}</span>
-          <input *ngIf="editarDatas"
-          class="data"
-          type="text"
-          maxlength="10"
-          [value]="dataFinalEstagio"
-          [(ngModel)]="dataFinalEstagio"
-          (input)="onInput($event , 'final')"
-          pattern="(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\d{4}"
-           />
-        </div>
-        <div class="boxAtualizarDados">
-          <span>Curso:</span>
-          <span><b class="curso">{{ studentData.aluno.curso.nomeCurso }}</b></span>
         </div>
       </div>
     </div>
@@ -159,69 +250,41 @@
   <div>
     <div>
       <div
-        class="corpo-dados-etapas"
+        class="corpo-dados-etapas historicoCorpo"
         *ngIf="studentData$ | async as studentData"
       >
         <div class="subtitulo">
           <span class="dados">Histórico de Etapas</span>
         </div>
-        <div class="etapa">
-          <span class="dados"><b>Etapa</b></span>
-          <span class="dados"><b>Responsável</b></span>
-          <span class="dados"><b>Data</b></span>
+        <div class="etapaCaixa">
+          <div class="etapa">
+            <span class="dados"><b>Responsavel</b></span>
+            <span class="dados"><b>Ação</b></span>
+            <span class="dados"><b>Data</b></span>
+          </div>
         </div>
 
-        <div class="etapa" *ngIf="studentData.historico[0]?.etapa == 1">
-          <span>Etapa 1: {{ studentData.historico[0].status }}</span>
-          <span class="email">Aluno</span>
-          <span class="data">{{
-            studentData.historico[0]?.data_solicitacao | date : "dd/MM/YYYY"
-          }}</span>
-        </div>
-        <div
-          class="etapa"
-          *ngIf="
-            studentData.historico[1]?.etapa == 3 ||
-            studentData.historico[1]?.etapa == 2
-          "
-        >
-          <span>Etapa 2: {{ studentData.historico[1].status }}</span>
-          <span class="email">Setor Estagio</span>
-          <span class="data">{{
-            studentData.historico[1]?.data_solicitacao | date : "dd/MM/YYYY"
-          }}</span>
-        </div>
-        <div
-          class="etapa"
-          *ngIf="
-            studentData.historico[2]?.etapa == 4 ||
-            studentData.historico[2]?.etapa == 3
-          "
-        >
-          <span>Etapa 3: {{ studentData.historico[2].status }}</span>
-          <span class="email">Coordenador</span>
-          <span class="data">{{
-            studentData.historico[2]?.data_solicitacao | date : "dd/MM/YYYY"
-          }}</span>
-        </div>
-        <div
-          class="etapa"
-          *ngIf="
-            studentData.historico[3]?.etapa == 5 ||
-            studentData.historico[3]?.etapa == 4
-          "
-        >
-          <span>Etapa 4: {{ studentData.historico[3].status }}</span>
-          <span class="email">Diretor</span>
-          <span class="data">{{
-            studentData.historico[3]?.data_solicitacao | date : "dd/MM/YYYY"
-          }}</span>
+        <div class="etapaCaixa" *ngFor="let historico of studentData.historico">
+          <div class="etapa">
+            <span *ngIf="historico.etapa == 1">Aluno</span>
+            <span *ngIf="historico.etapa == 3">Coordenador</span>
+            <span *ngIf="historico.etapa == 2">Estágios</span>
+            <span *ngIf="historico.etapa == 4">Diretor</span>
+            <span *ngIf="historico.etapa == 5">Sistema</span>
+            <span
+              class="dadoAcaoHistorico"
+              [innerHTML]="historico.status"
+            ></span>
+            <span class="data">{{
+              historico.data_solicitacao | date : "dd/MM/YYYY HH:mm"
+            }}</span>
+          </div>
         </div>
       </div>
     </div>
     <div class="corpo-passos">
       <span class="dados subtitulo">Documentos</span>
-      <mat-stepper #stepper>
+      <mat-stepper #stepper class="limiteVerticalDocs">
         <mat-step label="Download" state="phone">
           <div class="titulosInfoDocumentos">
             <p class="titulo" *ngIf="documentList$ | async as docsData">
@@ -234,7 +297,11 @@
             <p class="titulo">Download de Documentos</p>
           </div>
           <div class="historico" *ngFor="let doc of documentList$ | async">
-            <div class="gap">
+            <div
+              class="gap"
+              id="docDiretor"
+              *ngIf="authenticationService.role === 4 && doc.paraDiretor"
+            >
               <p
                 [ngClass]="{
                   arquivo: doc.paraDiretor && authenticationService.role === 4
@@ -242,11 +309,32 @@
               >
                 {{ doc.nome }}
               </p>
+
               <p class="assinado">
                 {{ doc.assinado ? "Documento assinado." : "Original" }}
               </p>
+              <button mat-icon-button color="primary" (click)="download(doc)">
+                <mat-icon class="salvar">save_alt</mat-icon>
+              </button>
+            </div>
+            <div class="gap" *ngIf="authenticationService.role !== 4">
+              <p
+                [ngClass]="{
+                  arquivo: doc.paraDiretor
+                }"
+              >
+                {{ doc.nome }}
+              </p>
+
+              <p class="assinado">
+                {{ doc.assinado ? "Documento assinado." : "Original" }}
+              </p>
+
               <p *permission="Roles.ROLE_SESTAGIO">
                 <input
+                  matTooltip="Colocar o documento em exibição para o diretor assinar."
+                  [matTooltipShowDelay]="600"
+                  [matTooltipHideDelay]="600"
                   type="checkbox"
                   class="checkDiretor"
                   (ngModelChange)="direcionarDiretor(doc.id)"
@@ -254,19 +342,26 @@
                   [(ngModel)]="doc.paraDiretor"
                 />
               </p>
+
               <button mat-icon-button color="primary" (click)="download(doc)">
                 <mat-icon class="salvar">save_alt</mat-icon>
               </button>
             </div>
           </div>
           <div class="proximo" *ngIf="!disableButton">
-            <button class="proximoB" [disabled]="disableButton" mat-button matStepperNext>
+            <button
+              class="proximoB"
+              [disabled]="disableButton"
+              mat-button
+              matStepperNext
+            >
               Proximo
             </button>
           </div>
         </mat-step>
         <mat-step label="Upload" state="chat" *ngIf="!disableButton">
           <p class="titulo">Upload de Documentos Assinados!</p>
+
           <div class="arquivos-up">
             <input
               type="file"
@@ -275,13 +370,59 @@
               multiple
               #fileInput
               [disabled]="disableButton"
+              (change)="addFileLista()"
+              accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
             />
           </div>
+          <ul>
+            <li *ngFor="let file of fileLista">
+              <span>{{ file.name }} a</span>
+              <button mat-icon-button color="warn" (click)="removeFile(file)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </li>
+          </ul>
+          <button
+          *ngIf="fileLista.length > 0"
+          class="deferir"
+          mat-raised-button
+          color="primary"
+          (click)="salvarDocumentos()"
+        >
+          Salvar documento
+        </button>
+        <br>
           <div class="proximo">
             <button mat-button matStepperPrevious>Voltar</button>
           </div>
         </mat-step>
       </mat-stepper>
+
+      <hr class="gerencia" />
+      <div class="proximo subtitulo">
+        <span class="dados">Ações</span>
+        <div class="dados">
+          <mat-icon
+            class="informacao"
+            color="primary"
+            aria-hidden="false"
+            aria-label="info"
+            fontIcon="info"
+            tooltip="TESTE de informação"
+          >
+          </mat-icon>
+          <div class="informacaoTexto">
+            *Abaixo se encontram os botões para deferir e indeferir a
+            solicitação.
+            <br />
+            *Definir etapa para o coordenador do curso.
+            <br />
+            *Definir etapa para a assinatura do diretor.
+            <br />
+            *Retornar para edição do aluno junto com uma observação.
+          </div>
+        </div>
+      </div>
 
       <div class="botoes" *ngIf="studentData$ | async as studentData">
         <button
@@ -289,79 +430,66 @@
           mat-raised-button
           color="primary"
           (click)="abrirDialogDeferir()"
-          [disabled]="disableButton"
+          [disabled]="studentData.status == 'Deferido' || studentData.status == 'Finalizado' || disableButton"
         >
-          > Deferir
+          Deferir
         </button>
-
         <button
           mat-stroked-button
+          matTooltip="Modificar etapa de edição do aluno, essa ação enviara um e-mail para o aluno."
+          [matTooltipShowDelay]="400"
+          [matTooltipHideDelay]="400"
           color="warn"
+          *ngIf="authenticationService.role !== 4"
           class="deferir"
-          (click)="trocarEditar()"
+          (click)="studentData.editavel ? trocarEditar() : abrirDialogEdicao()"
         >
           {{
             studentData.editavel
-              ? "Fechar a edição de documentos para o aluno"
-              : "Abrir a edição de documentos para o aluno"
+              ? "Fechar edição"
+              : "Retornar para edição
+                  "
           }}
+        </button>
+        <button
+          class="indeferir btVerde"
+          mat-raised-button
+          matTooltip="Modificar etapa para coordenador, essa ação enviara um e-mail para o coordenador do curso."
+          [matTooltipShowDelay]="400"
+          [matTooltipHideDelay]="400"
+          (click)="atualizarEtapa('3')"
+          [disabled]="disableButton"
+          *ngIf="authenticationService.role === 3"
+        >
+          Análise coordenador
+        </button>
+        <button
+          class="deferir"
+          mat-raised-button
+          color="accent"
+          matTooltip="Modificar etapa para diretor, essa ação enviara um e-mail para o diretor do campus."
+          [matTooltipShowDelay]="400"
+          [matTooltipHideDelay]="400"
+          (click)="atualizarEtapa('4')"
+          [disabled]="disableButton"
+          *ngIf="
+            authenticationService.role !== 4 &&
+            studentData.status != 'Relatório'
+          "
+        >
+          Assinatura Diretor
         </button>
 
         <button
           class="indeferir"
           mat-raised-button
           color="warn"
+          *ngIf="authenticationService.role !== 4"
           (click)="abrirDialogIndeferir()"
           [disabled]="disableButton"
         >
-          > Indeferir
+          Indeferir
         </button>
-      </div>
-
-      <hr class="gerencia" />
-      <div class="proximo subtitulo" *ngIf="eSetorEstagio">
-        <span class="dados">Gerenciar solicitação</span>
-      </div>
-
-      <div class="gerencia" *ngIf="eSetorEstagio">
-        <div class="edicoes">
-          <mat-form-field class="observacao">
-            <mat-label>Adicionar observação <br />para o aluno</mat-label>
-            <textarea
-              matInput
-              (blur)="atualizarObservacao()"
-              [(ngModel)]="observacao"
-              class="observacao"
-            ></textarea>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Definir status</mat-label>
-            <select
-              matNativeControl
-              (blur)="atualizarStatus()"
-              [(ngModel)]="status"
-            >
-              <option *ngFor="let items of item">{{ items }}</option>
-            </select>
-          </mat-form-field>
-
-          <mat-form-field *ngIf="authenticationService.role === 3">
-            <mat-label>Definir Etapa</mat-label>
-            <select
-              matNativeControl
-              (blur)="atualizarEtapa()"
-              [(ngModel)]="etapaAtual"
-            >
-              <option
-                *ngFor="let item of listaEtapas | keyvalue"
-                value="{{ item.value }}"
-              >
-                {{ item.key }}
-              </option>
-            </select>
-          </mat-form-field>
-        </div>
       </div>
     </div>
   </div>

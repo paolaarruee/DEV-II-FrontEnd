@@ -1,13 +1,15 @@
 <div class="body">
   <h2 mat-dialog-title class="title">Atenção</h2>
   <mat-dialog-content class="content">
-    <p>{{ data.conteudo }}</p>
+    <p [innerHTML]="data.conteudo"></p>
     <form #form="ngForm" (ngSubmit)="enviar()" ngNativeValidate>
       <mat-form-field *ngIf="data.mostrarCampoMotivo">
         <textarea
           matInput
           [formControl]="motivoIndeferimento"
-          placeholder="Motivo do indeferimento"
+          [placeholder]="
+            data.edicaoAluno ? 'Observação ao aluno' : 'Motivo do indeferimento'
+          "
           #motivoInput
           required
         ></textarea>
@@ -17,24 +19,28 @@
             (motivoIndeferimento.dirty || motivoIndeferimento.touched)
           "
         >
-          Motivo do indeferimento é obrigatório.
+          {{
+            data.edicaoAluno
+              ? "A observação  ao aluno é obrigatoria"
+              : "O campo motivo do indeferimento é obrigatório"
+          }}
         </mat-error>
       </mat-form-field>
     </form>
   </mat-dialog-content>
 
   <mat-dialog-actions class="buttons">
-    <button mat-raised-button color="warn" mat-dialog-close class="close">
-      Fechar
-    </button>
     <button
       mat-raised-button
       color="primary"
       (click)="enviar()"
       [disabled]="data.mostrarCampoMotivo && motivoIndeferimento.value === ''"
-      routerLink="/listaSolicitacoesServidor"
     >
-      Enviar
+      Confirmar
+    </button>
+
+    <button mat-raised-button color="warn" mat-dialog-close class="close">
+      Fechar
     </button>
   </mat-dialog-actions>
 </div>
