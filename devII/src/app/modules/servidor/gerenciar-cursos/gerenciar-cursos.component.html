@@ -1,0 +1,70 @@
+<div class="titulo">
+  <p>Gerenciamento de cursos</p>
+</div>
+<section class="corpo">
+    <div class="container">
+        <div class="boxInput">
+            <input
+                type="text"
+                id="nomeCurso"
+                name="nomeCurso"
+                placeholder="Digite o nome do novo curso"
+                [(ngModel)]="novoCurso.nomeCurso"
+                required
+                >
+        </div>
+        <div class="boxInput">
+            <button mat-stroked-button (click)="adicionarCurso()">Adicionar curso</button>
+        </div>
+    </div>
+  <div class="container">
+    <table mat-table [dataSource]="cursos" class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID.</th>
+        <td mat-cell *matCellDef="let curso">{{ curso.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nomeCurso">
+        <th mat-header-cell *matHeaderCellDef>Nome curso</th>
+        <td mat-cell *matCellDef="let curso">{{ curso.nomeCurso }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="ativo">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let curso">
+          <span>
+            {{ curso.ativo ? "Ativo" : "Inativo" }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="editar">
+        <th mat-header-cell *matHeaderCellDef>Trocar status</th>
+        <td mat-cell *matCellDef="let curso">
+          <button
+            mat-stroked-button
+            (click)="trocarStatus(curso.id)"
+            [disabled]="curso.id == 15 || curso.id == 16"
+          >
+            {{ curso.ativo ? "Desativar" : "Ativar" }}
+          </button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="deletar">
+        <th mat-header-cell *matHeaderCellDef>Deletar</th>
+        <td mat-cell *matCellDef="let curso">
+          <button
+            mat-icon-button
+            (click)="deletarCurso(curso.id)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</section>

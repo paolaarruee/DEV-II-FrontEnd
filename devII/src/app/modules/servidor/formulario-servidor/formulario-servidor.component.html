@@ -4,13 +4,16 @@
 
 <div class="listaServidores">
   <a routerLink="/listaServidores" class="listaservidor"
-    ><button 
+    ><button
       matTooltip="Lista de servidores que estão cadastrados no sistema"
       [matTooltipHideDelay]="500"
       [matTooltipShowDelay]="1000"
       color="primary"
       aria-label="Lista de servidores"
-    class="botao">Lista dos servidores</button></a
+      class="botao"
+    >
+      Lista dos servidores
+    </button></a
   >
   <button
     class="botao"
@@ -34,22 +37,22 @@
     *ngIf="desbloqueio"
   >
     <div class="formularioBox">
-      <span
-        >Se, ao tentar cadastrar um servidor, for exibido que o e-mail já está
-        cadastrado no sistema, você pode realizar o desbloqueio aqui. A conta
-        associada ao e-mail do servidor será excluída..</span
+      <h3
+        >Se você precisa desbloquear um servidor ou desbloquear um aluno com e-mail já cadastrado, pode fazer isso aqui.
+         Durante esse processo, a conta vinculada ao e-mail será excluída.</h3
       >
+
       <br />
-      <label class="emailDesbloqueio-campo">Desbloquear e-mail</label>
+      <label class="emailDesbloqueio-campo">E-mail</label>
       <input
         class="nome"
         type="text"
         id="emailDesbloqueio"
         name="emailDesbloqueio"
-        placeholder="Digite o e-mail do servidor"
+        placeholder="Digite o e-mail do usuário para o desbloqueio"
         [(ngModel)]="emailDesbloqueio"
       />
-      <input class="botao" type="submit" value="Pesquisar" />
+      <input class="botao" type="submit" value="Desbloquear" />
     </div>
   </form>
 
@@ -109,15 +112,13 @@
         [disabled]="habilitarCurso"
       >
         <option value="" disabled>Escolha um Curso</option>
-        <option value="10">Análise e Desenvolvimento de Sistemas</option>
-        <option value="11">Letras Português e Espanhol</option>
-        <option value="12">Eletrônica Industrial</option>
-        <option value="13">Gestão Desportiva e de Lazer</option>
-        <option value="14">Processos Gerenciais</option>
-        <option value="15">Setor de Estágio</option>
-        <option value="17">Lazer</option>
-        <option value="18">Informática</option>
-        <option value="19">Eletrônica</option>
+        <option
+          value="{{ curso.id }}"
+          *ngFor="let curso of cursos"
+          [disabled]="!curso.ativo"
+        >
+          {{ curso.nomeCurso }}
+        </option>
       </select>
 
       <div class="senhadiv">

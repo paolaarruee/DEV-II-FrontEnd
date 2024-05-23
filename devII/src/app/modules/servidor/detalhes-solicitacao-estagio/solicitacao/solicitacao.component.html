@@ -1,57 +1,60 @@
 <div class="espacamento">
-  <div class="card" [ngClass]="solicitacaoStatus()">
-    <div class="header">
-      <div
-        class="tituloTipo"
-        *ngIf="solicitacao.tipo === 'bolsa'; else estagio"
-      >
-        <h3>{{ solicitacao.tipo }}</h3>
-      </div>
-
-      <ng-template #estagio>
-        <div class="estagio">
-          <span>Tipo de Estágio: {{ solicitacao.tipo }}</span>
-        </div>
-      </ng-template>
-
+  <mat-card class="card" [ngClass]="solicitacaoStatus()">
+    <mat-card-header class="header">
+      <mat-card-title> Tipo de Estágio: {{getTipoAproveitamento(solicitacao.tipo)}} </mat-card-title>
       <div>
         <span>Status</span>
         <span class="retangulo" [ngClass]="statusSolicitacao()">{{
           solicitacao.status
         }}</span>
       </div>
-    </div>
+    </mat-card-header>
 
-    <div class="titulo">
-      <span>Aluno: {{ solicitacao.aluno.nomeCompleto }}</span>
-      <span class="cardDecoracao2"></span>
-    </div>
-
-    <div class="conteudo">
-      <div class="cardConteudo">
-        <span>Curso: {{ solicitacao.aluno.curso.nomeCurso }}</span>
-        <span
-          >Data da solicitação:
-          {{ solicitacao.dataSolicitacao | date : "dd/MM/yyyy" }}</span
-        >
-        <span class="responsavel">{{ responsavelAtual }}</span>
+    <mat-card-content>
+      <div class="titulo">
+        <span>Aluno: {{ solicitacao.aluno.nomeCompleto }}</span>
+        <span class="cardDecoracao2"></span>
       </div>
-      <div class="buttonContainer">
-        <div class="buttons">
-          <div class="buttonDetalhes">
-            <button class="buttonVerde" mat-raised-button (click)="openDialog()">Detalhes</button>
+      <div class="conteudo">
+        <div class="cardConteudo">
+          <span>Curso do aluno: {{ solicitacao.aluno.curso.nomeCurso }}</span>
+          <span
+            >Data da solicitação:
+            {{ solicitacao.dataSolicitacao | date : "dd/MM/yyyy" }}</span
+          >
+
+          <span class="responsavel">{{ responsavelAtual }}</span>
+        </div>
+        <div class="buttonContainer">
+          <div class="avisos" >
+            <span *ngIf="solicitacao.relatorioEntregue">>Relatório final entregue</span>
+            <span *ngIf="solicitacao.cancelamento">> Solicitado cancelamento</span>
+            <span *ngIf="solicitacao.editavel">>> Edição aberta</span>
           </div>
-          <div class="buttonGerenciar">
-            <button
-              class="buttonVerde"
-              mat-raised-button
-              [routerLink]="['/analisedocs', solicitacao.id]"
-            >
-              Gerenciar
-            </button>
+          
+          <div class="buttons">
+            <div class="buttonDetalhes">
+              <button
+                class="buttonVerde"
+                mat-raised-button
+                (click)="openDialog()"
+              >
+                Detalhes
+              </button>
+            </div>
+            <div class="buttonGerenciar">
+              <button
+                class="buttonVerde"
+                mat-raised-button
+                [routerLink]="['/analisedocs', solicitacao.id]"
+                 *ngIf="solicitacao.status.toLowerCase() != 'processando'"
+              >
+                Analisar
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </mat-card-content>
+  </mat-card>
 </div>

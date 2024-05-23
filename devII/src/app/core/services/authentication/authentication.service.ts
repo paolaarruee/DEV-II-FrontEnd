@@ -34,10 +34,10 @@ export class AuthenticationService {
     this.router.navigateByUrl('/login');
   }
 
-  public setAuthData({ Authorization, Roles }: Authorization): void {
+  public setAuthData({ Authorization, Roles , nomeUsuario}: Authorization): void {
     sessionStorage.setItem(this.TOKEN_KEY, Authorization);
     sessionStorage.setItem(this.ROLE_KEY, JSON.stringify(Role[Roles]));
-  
+    sessionStorage.setItem('nomeUsuario', nomeUsuario);
   }
 
   public get isAuthenticated(): boolean {
@@ -69,6 +69,10 @@ export class AuthenticationService {
     }
 
     return JSON.parse(roleAsString);
+  }
+
+  public get nomeUsuario(): string | any{
+    return sessionStorage.getItem('nomeUsuario');
   }
 
   private removeAuthData(): void {

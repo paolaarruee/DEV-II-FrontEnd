@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ListaEstagiariosServiceService {
 
+
   constructor(private httpClient: HttpClient) { }
 
   public listaEstagiarios(): Observable<Response> {
@@ -17,6 +18,11 @@ export class ListaEstagiariosServiceService {
   public retornarEstagiarioMatricula(matricula: string): Observable<Response> {
     return this.httpClient.get<Response>(`${environment.API_URL}/retornarEstagiarioMatricula`, {params: {matricula}});
   }
+
+  public downloadPDF(): Observable<Blob> {
+    return this.httpClient.get<Blob>(`${environment.API_URL}/pegarPdfEstagiarios`,{ responseType: 'blob' as 'json' });
+  }
+
 
   public listaEstagiariosPagina(pagina: number): Observable<Response> {
     return this.httpClient.get<Response>(`${environment.API_URL}/retornarListaEstagiariosPagina?pagina=${pagina}`);

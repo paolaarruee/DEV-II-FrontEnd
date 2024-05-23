@@ -1,146 +1,285 @@
 <div class="titulo">
   <p>Lista de estagiários</p>
+  <section>
+    <button
+      mat-stroked-button
+      color="basic"
+      matTooltip="Baixar a tabela com todos os estagiários do sistema."
+      [matTooltipShowDelay]="1000"
+      (click)="baixarPDF()"
+    >
+      Baixar PDF<mat-icon
+        aria-hidden="false"
+        aria-label="Example home icon"
+        fontIcon="download"
+      ></mat-icon>
+    </button>
+  </section>
 </div>
 
 <div class="filtros">
+  <button
+    mat-stroked-button
+    class="colunaBusca hoverBuscadores"
+    *ngIf="!buscarNomeOn"
+    (click)="buscarNomeOn = !buscarNomeOn; limparBuscaMatricula()"
+  >
+    <span>Nome</span>
+    <mat-icon aria-hidden="false" fontIcon="search"></mat-icon>
+  </button>
+  <input
+    *ngIf="buscarNomeOn"
+    type="text"
+    (keydown)="onEnter($event)"
+    (blur)="listaDeEstagiariosNome()"
+    [(ngModel)]="nomeBusca"
+    placeholder="Nome do aluno..."
+  />
+  <button
+    class="next"
+    (click)="pegarListaNormal()"
+    type="button"
+    *ngIf="buscarNomeOn"
+    (click)="buscarNomeOn = !buscarNomeOn"
+  >
+    X
+  </button>
+
+  <button
+    mat-stroked-button
+    class="colunaBusca hoverBuscadores"
+    *ngIf="!buscaMatriculaOn"
+    (click)="buscaMatriculaOn = !buscaMatriculaOn; limparBuscaNome()"
+  >
+    <span>Matricula</span>
+    <mat-icon aria-hidden="false" fontIcon="search"></mat-icon>
+  </button>
+  <input
+    *ngIf="buscaMatriculaOn"
+    type="text"
+    (keydown)="onEnter($event)"
+    maxlength="10"
+    (blur)="buscaEstagiarioPorMatricual()"
+    [(ngModel)]="matriculaBusca"
+    placeholder="Matricula do aluno..."
+  />
+  <button
+    class="next"
+    (click)="pegarListaNormal()"
+    type="button"
+    *ngIf="buscaMatriculaOn"
+    (click)="buscaMatriculaOn = !buscaMatriculaOn"
+  >
+    X
+  </button>
+
   <mat-form-field class="selectDoFiltro">
     <mat-label>Curso</mat-label>
-    <select matNativeControl  [(ngModel)]="filtro.curso" (change)="filtros()">
+    <select matNativeControl [(ngModel)]="filtro.curso" (change)="filtros()">
       <option value="" disabled>Filtrar por Curso</option>
-      <option value="10">Análise e Des. de Sistemas</option>
-      <option value="11">Letras Português e Espanhol</option>
-      <option value="12">Eletrônica Industrial</option>
-      <option value="13">Gestão Desportiva e de Lazer</option>
-      <option value="14">Processos Gerenciais</option>
-      <option value="17">Lazer</option>
-      <option value="18">Informática</option>
-      <option value="19">Eletrônica</option>
+      <option
+        value="{{ curso.id }}"
+        *ngFor="let curso of cursos"
+        [disabled]="!curso.ativo"
+      >
+        {{ curso.nomeCurso }}
+      </option>
     </select>
   </mat-form-field>
-    <section>
-    <mat-checkbox (change)="filtros()" color="primary" [(ngModel)]="filtro.estagioObrigatorio" [ngModelOptions]="{standalone: true}">Obrigatórios</mat-checkbox>
-    <mat-checkbox (change)="filtros()" color="primary" [(ngModel)]="filtro.estagioNaoObrigatorio" [ngModelOptions]="{standalone: true}">Não obrigatórios</mat-checkbox>
-    <mat-checkbox (change)="filtros()" color="primary" [(ngModel)]="filtro.estagioRenovacao" [ngModelOptions]="{standalone: true}">Renovação</mat-checkbox>
-    <mat-checkbox (change)="filtros()" color="primary" [(ngModel)]="filtro.aproveitamento" [ngModelOptions]="{standalone: true}">Aproveitamento</mat-checkbox>
-    </section>
-    <section>
+  <section>
+    <mat-checkbox
+      (change)="filtros()"
+      color="primary"
+      [(ngModel)]="filtro.estagioObrigatorio"
+      [ngModelOptions]="{ standalone: true }"
+      >Obrigatórios</mat-checkbox
+    >
+    <mat-checkbox
+      (change)="filtros()"
+      color="primary"
+      [(ngModel)]="filtro.estagioNaoObrigatorio"
+      [ngModelOptions]="{ standalone: true }"
+      >Não obrigatórios</mat-checkbox
+    >
+    <mat-checkbox
+      (change)="filtros()"
+      color="primary"
+      [(ngModel)]="filtro.estagioRenovacao"
+      [ngModelOptions]="{ standalone: true }"
+      >Renovação</mat-checkbox
+    >
+    <mat-checkbox
+      (change)="filtros()"
+      color="primary"
+      [(ngModel)]="filtro.aproveitamento"
+      [ngModelOptions]="{ standalone: true }"
+      >Aproveitamento</mat-checkbox
+    >
+  </section>
+  <section>
     <mat-radio-group [(ngModel)]="filtro.status" (change)="filtros()">
-      <mat-radio-button value="terminado" (click)="filtros(true)">Terminado</mat-radio-button>
-      <mat-radio-button value="cancelado" (click)="filtros(true)">Cancelado</mat-radio-button>
-      <mat-radio-button value="andamento" (click)="filtros(true)">Em andamento</mat-radio-button>
+      <mat-radio-button value="finalizado" (click)="filtros(true)"
+        >Finalizado</mat-radio-button
+      >
+      <mat-radio-button value="cancelado" (click)="filtros(true)"
+        >Cancelado</mat-radio-button
+      >
+      <mat-radio-button value="andamento"  (click)="filtros(true)"
+        >Em andamento</mat-radio-button
+      >
     </mat-radio-group>
-     </section>
-    <section>
-    <button class="limparFiltro" (click)="limparFiltros()" mat-flat-button color="warn" *ngIf="filtro.status != '' || filtro.aproveitamento || filtro.estagioRenovacao|| filtro.estagioNaoObrigatorio || filtro.estagioObrigatorio">Limpar filtro</button>
-    </section>
+  </section>
+  <section>
+    <button
+      class="limparFiltro"
+      (click)="limparFiltros()"
+      mat-flat-button
+      color="warn"
+      *ngIf="
+        filtro.status != '' ||
+        filtro.aproveitamento ||
+        filtro.estagioRenovacao ||
+        filtro.estagioNaoObrigatorio ||
+        filtro.estagioObrigatorio
+      "
+    >
+      Limpar filtro
+    </button>
+  </section>
 </div>
 
 <div class="container">
-    <table class="table-container" id="tabela">
-      <thead>
-        <tr class="titulosEstagiarios">
-          <th>#</th>
+  <table mat-table [dataSource]="estagiarios" class="mat-elevation-z8">
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef>
+        <span>Nome</span>
+      </th>
+      <td mat-cell *matCellDef="let estagiario">
+        {{ estagiario.solicitacao.aluno.nomeCompleto }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="drive">
+      <th mat-header-cell *matHeaderCellDef>Drive</th>
+      <td mat-cell *matCellDef="let estagiario">
+        <a [href]="estagiario.urlPastaDocumentos" target="_blank"
+          ><mat-icon
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="link"
+          ></mat-icon
+        ></a>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="matricula">
+      <th mat-header-cell *matHeaderCellDef>Matrícula</th>
+      <td mat-cell *matCellDef="let estagiario">
+        {{ estagiario.solicitacao.aluno.matricula }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>E-mail</th>
+      <td mat-cell *matCellDef="let estagiario">
+        {{ estagiario.solicitacao.aluno.usuarioSistema.email }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="curso">
+      <th mat-header-cell *matHeaderCellDef>Curso</th>
+      <td mat-cell *matCellDef="let estagiario">
+        {{ qualCurso(estagiario.solicitacao.aluno.curso.id) }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="orientador">
+      <th mat-header-cell *matHeaderCellDef>Orientador</th>
+      <td mat-cell *matCellDef="let estagiario">{{ estagiario.orientador }}</td>
+    </ng-container>
+    <ng-container matColumnDef="empresa">
+      <th mat-header-cell *matHeaderCellDef>Empresa</th>
+      <td mat-cell *matCellDef="let estagiario">
+        {{ estagiario.solicitacao.nomeEmpresa }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="contatoEmpresa">
+      <th mat-header-cell *matHeaderCellDef>Contato</th>
+      <td mat-cell *matCellDef="let estagiario">
+        {{ estagiario.solicitacao.contatoEmpresa }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="agente">
+      <th mat-header-cell *matHeaderCellDef>Agente</th>
+      <td mat-cell *matCellDef="let estagiario">
+        {{ estagiario.solicitacao.agente }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="inicio">
+      <th mat-header-cell *matHeaderCellDef>Inicio</th>
+      <td mat-cell *matCellDef="let estagiario">
+        {{ estagiario.solicitacao.inicioDataEstagio }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="fim">
+      <th mat-header-cell *matHeaderCellDef>Fim</th>
+      <td mat-cell *matCellDef="let estagiario">
+        {{ estagiario.solicitacao.finalDataEstagio }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="turno">
+      <th mat-header-cell *matHeaderCellDef>Turno</th>
+      <td mat-cell *matCellDef="let estagiario">
+        {{ estagiario.solicitacao.aluno.turno }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let estagiario">
+        <span>
+          {{ getStatusAtual(estagiario) }}
+        </span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="editar">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ authenticationService.role === 3 ? "Editar" : "" }}
+      </th>
+      <td mat-cell *matCellDef="let estagiario">
+        <button
+          *ngIf="authenticationService.role === 3"
+          mat-icon-button
+          (click)="abrirTelaEstagiario(estagiario)"
+        >
+          <mat-icon aria-hidden="false" fontIcon="edit"></mat-icon>
+        </button>
+      </td>
+    </ng-container>
 
-          <th class="busca">
-            <div class="">
-              <span class="hoverBuscadores buscaMatricula" *ngIf="!buscarNomeOn" (click)="buscarNomeOn = !buscarNomeOn">Nome<mat-icon aria-hidden="false" fontIcon="search"></mat-icon></span>
-              <input *ngIf="buscarNomeOn" type="text" (keydown)="onEnter($event)" (blur)="listaDeEstagiariosNome()" [(ngModel)]="nomeBusca">
-              <button class="next " (click)="pegarListaNormal()" type="button" *ngIf="buscarNomeOn" (click)="buscarNomeOn = !buscarNomeOn">X</button>
-          </div>
-          
-          
-          </th>
-          
+    <tr mat-header-row *matHeaderRowDef="listaColunas"></tr>
+    <tr mat-row *matRowDef="let row; columns: listaColunas"></tr>
+  </table>
+</div>
 
-          
-
-          <th>Drive</th>
-          <th>
-            <div class="">
-              <span class="hoverBuscadores buscaMatricula" *ngIf="!buscaMatriculaOn" (click)="buscaMatriculaOn = !buscaMatriculaOn">Matrícula<mat-icon aria-hidden="false" fontIcon="search"></mat-icon></span>
-              <input *ngIf="buscaMatriculaOn" type="number" (keydown)="onEnter($event)" (blur)="buscaEstagiarioPorMatricual()" [(ngModel)]="matriculaBusca">
-              <button class="next " (click)="pegarListaNormal()" type="button" *ngIf="buscaMatriculaOn" (click)="buscaMatriculaOn = !buscaMatriculaOn">X</button>
-
-            </div>
-          </th>
-          <th>
-            <div>E-mail</div>
-          </th>
-          <!-- <th>Link Drive</th>  -->
-          <th>
-            <div>Curso</div>
-          </th>
-          <th>
-            <div>
-              <span>Orientador</span>
-            </div>
-          </th>
-          <th>
-            <div>Empresa</div>
-          </th>
-          <!-- <th>Tipo da Empresa</th> -->
-          <th>
-            <div>Contato da empresa</div>
-          </th>
-          <th>
-            <div>Agente integrador</div>
-          </th>
-          <th>
-            <div>Início</div>
-          </th>
-          <th>
-            <div>Fim</div>
-          </th>
-          <th>
-            <div>Turno</div>
-          </th>
-          <th>
-            <div>Status</div>
-          </th>
-          <th *ngIf="authenticationService.role === 3">
-            <div><mat-icon aria-hidden="false" fontIcon="new_releases"></mat-icon></div>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-
-        <tr *ngFor="let estagiario of estagiarios">
-          <td>{{estagiario.id}}</td>
-          <td>{{ estagiario.solicitacao.aluno.nomeCompleto }}</td>
-          <td><a [href]="estagiario.urlPastaDocumentos" target="_blank">><mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="link"></mat-icon><</a></td>
-          <td>{{ estagiario.solicitacao.aluno.matricula }}</td>
-          <td>{{ estagiario.solicitacao.aluno.usuarioSistema.email}}
-          <td>{{ qualCurso(estagiario.solicitacao.aluno.curso.id )}}</td>
-          <td>{{ estagiario.orientador}}</td>
-          <td>{{ estagiario.solicitacao.nomeEmpresa }}</td>
-          <td>{{ estagiario.solicitacao.contatoEmpresa }}</td>
-          <td>{{ estagiario.solicitacao.agente }}</td>
-          <td>{{ estagiario.solicitacao.inicioDataEstagio }}</td>
-          <td>{{ estagiario.solicitacao.finalDataEstagio }}</td>
-          <td>{{ estagiario.solicitacao.aluno.turno }}</td>
-          <td>
-            <span>
-              {{estagiario.ativo ? (isDataPassou(estagiario) ? 'Terminado' : 'Em andamento') : 'Cancelado'}}
-            </span>
-          </td>
-          <td *ngIf="authenticationService.role === 3">
-            <button mat-icon-button (click)="abrirTelaEstagiario(estagiario)">
-              <mat-icon aria-hidden="false" fontIcon="edit"></mat-icon>
-            </button>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
-  <h2 *ngIf="estagiarios.length == 0" class="container">Não há estagiários cadastrados.</h2>
-  <div class="paginas">
-    
-  <button class="next buttonOn" (click)="paginaAnterior()" [ngClass]="{'buttonOff' : paginaAtual === 0}">
+<h2 *ngIf="estagiarios.length == 0" class="container">
+  Não há estagiários cadastrados.
+</h2>
+<div class="paginas">
+  <button
+    class="next buttonOn"
+    (click)="paginaAnterior()"
+    [ngClass]="{ buttonOff: paginaAtual === 0 }"
+  >
     Anterior
   </button>
-  <span class=""> <p>pág.<b>{{paginaAtual}}</b></p>
+  <span class="">
+    <p>
+      pág.<b>{{ paginaAtual }}</b>
+    </p>
   </span>
-  <button class="next buttonOn" (click)="proximaPagina()" [ngClass]="{'buttonOff' : estagiarios.length === 0}" [disabled]="estagiarios.length === 0">
+  <button
+    class="next buttonOn"
+    (click)="proximaPagina()"
+    [ngClass]="{ buttonOff: estagiarios.length === 0 }"
+    [disabled]="
+      estagiarios.length === 0 || buscarNomeOn || estagiarios.length < 20
+    "
+  >
     Próxima
   </button>
-  </div>
+</div>

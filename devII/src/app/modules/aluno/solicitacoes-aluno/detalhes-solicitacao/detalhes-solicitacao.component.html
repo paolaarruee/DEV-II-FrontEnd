@@ -31,7 +31,7 @@
       <div class="etapa">
         <span class="emAndamento" *ngIf="data.solicitacao.etapa == 2 && data.solicitacao.status != 'Indeferido' " >*Em análise*</span>
         <span class="etapaIndeferido" *ngIf="data.solicitacao.etapa == 2 && data.solicitacao.status === 'Indeferido'   " >*Indeferido*</span>
-        <span class="etapaDeferido" *ngIf="data.solicitacao.etapa > 2" >*Deferido*</span>
+        <span class="etapaDeferido" *ngIf="data.solicitacao.etapa > 2" >*Aprovado*</span>
       </div>
       <span>Análise setor de estágio</span>
 
@@ -41,7 +41,7 @@
       <div class="circle" [ngClass]="progressoFluxo(3)">3</div>
       <div class="etapa">
         <span class="emAndamento" *ngIf="  data.solicitacao.etapa == 3 && data.solicitacao.status !== 'Indeferido'">*Em Análise*</span>
-        <span class="etapaDeferido" *ngIf="data.solicitacao.etapa > 3 ">*Deferido*</span>
+        <span class="etapaDeferido" *ngIf="data.solicitacao.etapa > 3 ">*Aprovado*</span>
         <span class="etapaIndeferido" *ngIf="data.solicitacao.etapa == 3 && data.solicitacao.status === 'Indeferido'">*Indeferido*</span>
       </div>
       <span>Assinatura Coordenador de curso</span>
@@ -52,7 +52,7 @@
       <div class="circle" [ngClass]="progressoFluxo(4)">4</div>
       <div class="etapa">
         <span class="emAndamento" *ngIf=" data.solicitacao.etapa == 4 && data.solicitacao.status !== 'Indeferido'">*Em Análise*</span>
-        <span class="etapaDeferido" *ngIf="data.solicitacao.etapa > 4 && data.solicitacao.status !== 'Indeferido'" >*Deferido*</span>
+        <span class="etapaDeferido" *ngIf="data.solicitacao.etapa > 4 && data.solicitacao.status !== 'Indeferido'" >*Aprovado*</span>
         <span class="etapaIndeferido" *ngIf=" data.solicitacao.etapa == 4 && data.solicitacao.status == 'Indeferido'">*Indeferido*</span>
       </div>
       <span>Assinatura Diretor</span>
@@ -64,7 +64,7 @@
       <div class="etapa">
         <!-- <span class="emAndamento" *ngIf="solicitacao.historico[3].etapa == 5 && solicitacao.etapa == 5 && solicitacao.status !== 'Indeferido'">*Em Análise*</span> -->
 
-          <span class="etapaDeferido" *ngIf=" data.solicitacao.etapa == 5 && data.solicitacao.status == 'Deferido'">*Concluído*</span>
+          <span class="etapaDeferido" *ngIf=" data.solicitacao.etapa == 5 && data.solicitacao.status == 'Aprovado'">*Concluído*</span>
 
           <span class="etapaIndeferido" *ngIf=" data.solicitacao.etapa == 5 && data.solicitacao.status == 'Indeferido'">*Indeferido*</span>
       </div>

@@ -37,4 +37,8 @@ export class DocsService {
     return this.httpClient.get<DocFile[]>(`${environment.API_URL}/listarDocumentoAssinados/${solicitarEstagioId}`);
   }
 
+  pegarUrlDocDrive(id: number): Observable<any> {
+    return this.httpClient.get<any>(`${environment.API_URL}/retornarEstagiarioDrivePorSolicitacaoId`, {params: {id}});
+  }
+
 }

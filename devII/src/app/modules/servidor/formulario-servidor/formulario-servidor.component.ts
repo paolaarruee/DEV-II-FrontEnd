@@ -9,6 +9,7 @@ import { Role } from 'src/app/shared/interfaces/usuario';
 import { ServidorService } from 'src/app/core/services/servidor/servidor.service';
 import { ModalAnaliseComponent } from '../detalhes-solicitacao-estagio/modal-analise/modal-analise.component';
 import { MatDialog } from '@angular/material/dialog';
+import { CursosServiceService } from 'src/app/core/services/cursoService/cursos-service.service';
 
 @Component({
   selector: 'app-formulario-servidor',
@@ -42,14 +43,20 @@ export class FormularioServidorComponent {
     private toastService: ToastService,
     public authenticationService: AuthenticationService,
     private servidorService: ServidorService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cursosService: CursosServiceService
   ) {}
 
+  cursos: any;
   ngOnInit(): void {
     if (this.authenticationService.role === Role.ROLE_ALUNO) {
       alert('Authenticação inválida!');
       window.location.href = '/muralVagas';
     }
+
+    this.cursos = this.cursosService.getTodosCursos().subscribe((data: any) => {
+      this.cursos = data.filter((curso: any) => curso.ativo == true);
+    });
   }
 
   exibirCursos(event: any) {
@@ -78,25 +85,36 @@ export class FormularioServidorComponent {
     const dialog = this.dialog.open(ModalAnaliseComponent, {
       width: '600px',
       data: {
-        conteudo: 'Deseja desbloquear o email: ' + this.emailDesbloqueio + '?',
+        conteudo:
+          'Deseja desbloquear o email: ' +
+          this.emailDesbloqueio +
+          '?<br> <strong>Todos os dados serão excluídos!</strong>',
         email: this.emailDesbloqueio,
         enviarCallback: () => {
           this.servidorService
             .excluirServidorEmail(this.emailDesbloqueio)
             .subscribe(
               (response) => {
-                this.toastService.showMessage('Email desbloqueado com sucesso.');
+                this.toastService.showMessage(
+                  'Email desbloqueado com sucesso.'
+                );
               },
               (error: HttpErrorResponse) => {
                 if (error.status === 404) {
-                  this.toastService.showMessage('Nenhum cadastro encontrado com o email informado.', 'error');
+                  this.toastService.showMessage(
+                    'Nenhum cadastro encontrado com o email informado.',
+                    'error'
+                  );
                 } else {
-                this.toastService.showMessage('ERRO: Verifique o email! ' , error.error);
+                  this.toastService.showMessage(
+                    'ERRO: Verifique o email! ',
+                    error.error
+                  );
                 }
               }
             );
-        } 
-      }
+        },
+      },
     });
   }
 
@@ -134,6 +152,17 @@ export class FormularioServidorComponent {
       this.toastService.showMessage(mensagem, 'error');
       return;
     }
+    if (this.servidor.usuarioSistema.senha.length < 8) {
+      let mensagem = `A senha deve ter no mínimo 8 caracteres.`;
+      this.toastService.showMessage(mensagem, 'error');
+      return;
+    }
+
+    if (this.servidor.usuarioSistema.senha.includes(' ')) {
+      let mensagem = `A senha não pode conter espaços em branco.`;
+      this.toastService.showMessage(mensagem, 'error');
+      return;
+    }
 
     this.service.enviarDados(this.servidor).subscribe(
       (response) => {
@@ -147,7 +176,11 @@ export class FormularioServidorComponent {
         if (error.status === 409) {
           this.toastService.showMessage('erro: ', error.error);
           if (error.error.includes('email')) {
-            this.toastService.showMessage('Email já cadastrado.');
+            this.toastService.showMessageTimer(
+              'Email já cadastrado.',
+              4000,
+              'Desbloqueie o email para cadastrar novamente!'
+            );
           }
         } else {
           console.error('Erro ao enviar o formulário:', error);

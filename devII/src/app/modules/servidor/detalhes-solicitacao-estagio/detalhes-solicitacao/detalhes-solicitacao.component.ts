@@ -14,7 +14,7 @@ export class DetalhesSolicitacaoServidorComponent {
     @Inject(MAT_DIALOG_DATA) public solicitacao: any  ) {}
 
     statusSolicitacao(): string{
-      if(this.solicitacao.status.toLowerCase() == 'deferido' || this.solicitacao.status === 'Deferido' || this.solicitacao.status === 'aprovado'){
+      if(this.solicitacao.status.toLowerCase() == 'Aprovado' || this.solicitacao.status === 'Aprovado' || this.solicitacao.status === 'aprovado'){
         return 'statusColor1'
       }
 

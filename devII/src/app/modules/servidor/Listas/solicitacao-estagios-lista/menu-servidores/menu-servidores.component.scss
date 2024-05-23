@@ -1,0 +1,70 @@
+.container{
+    float: left;
+    font-family: 'Roboto',sans-serif;
+    padding-top: 0.5em;
+    background-color: #F8F9FA;
+    box-shadow: 0.1em 0.1em 0.2em rgb(192, 192, 192);
+    p{
+        font-size: 0.8vw;
+        margin: 0 ;
+        margin-top: 0.4em;
+        margin-bottom: 0.4em;
+    }
+    h2{
+        margin: 0.5em 0 0 0;
+        font-size: 1.3em !important;
+        font-weight: 400;
+    }
+    a{
+        text-decoration: none;
+        color: black;
+        width: 100%;
+    }
+    a:hover {
+        color: #007bff;
+    }
+    ul{
+        list-style-type: none;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+        li{
+            display: flex;
+            padding-left: 1em;
+            padding-bottom: 0.5em;
+            padding-top: 0.5em;
+            align-items: center
+        }
+        li:hover{
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+  
+    }
+    .caixaItem{
+        height: 2em;
+
+    }
+    .itemPrincipal{
+        font-size: 0.8vw !important;
+        height: 1.5em !important;
+        margin: none;
+        padding: 0 !important;
+    }
+    .itemPrincipal:hover{
+        background-color: #ffffff !important;
+    }
+    .titulo{
+        font-size: 1em;
+        margin-left: 5px;
+        font-weight: bold;
+    }
+    .active{
+        background-color: #1c88fc54;
+        color: rgb(0, 0, 0);
+        border-radius: 5px;
+        width: 100%;
+    }
+}
+
+
+

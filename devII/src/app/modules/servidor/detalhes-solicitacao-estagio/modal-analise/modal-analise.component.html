@@ -1,5 +1,5 @@
 <div class="body">
-  <h2 mat-dialog-title class="title">Atenção</h2>
+  <h3 mat-dialog-title class="title">Atenção</h3>
   <mat-dialog-content class="content">
     <p [innerHTML]="data.conteudo"></p>
     <form #form="ngForm" (ngSubmit)="enviar()" ngNativeValidate>
@@ -10,6 +10,7 @@
           [placeholder]="
             data.edicaoAluno ? 'Observação ao aluno' : 'Motivo do indeferimento'
           "
+          [maxlength]="200"
           #motivoInput
           required
         ></textarea>

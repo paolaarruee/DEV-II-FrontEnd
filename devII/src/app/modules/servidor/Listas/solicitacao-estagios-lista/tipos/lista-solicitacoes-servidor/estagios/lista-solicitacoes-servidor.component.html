@@ -1,0 +1,132 @@
+<div class="filtro-container" style="margin-top: 20px">
+  <div class="filtro-row">
+    <form class="filtro-form" (ngSubmit)="filtrarPorNome()">
+      <div class="filtro-wrapper">
+        <label for="filtroNome">Aluno</label>
+        <input
+          type="text"
+          [(ngModel)]="filtroNome"
+          name="filtroNome"
+          placeholder="Filtrar por nome do aluno"
+          class="filtro-input"
+          (blur)="filtrar()"
+          (change)="filtrar()"
+        />
+      </div>
+      <button type="submit" class="filtro-button">Filtrar</button>
+    </form>
+    <form class="filtro-form" (ngSubmit)="filtrarPorData()">
+      <div class="filtro-wrapper">
+        De
+        <input
+        type="month"
+          [(ngModel)]="filtroDataInicial"
+          name="filtroDataInicial"
+          class="filtro-input"
+        />
+        Até
+        <input
+        type="month"
+          [(ngModel)]="filtroDataFinal"
+          name="filtroDataFinal"
+          class="filtro-input"
+        />
+      </div>
+      <button type="submit" class="filtro-button">Filtrar Por Data</button>
+    </form>
+  </div>
+  <div class="filtro-row">
+    <span class="filtro-titulo">Total: {{todasSolicitacoes.length}}</span>
+    |
+    <span class="filtro-titulo">Filtro: {{listaSolicitacoes.length}}</span>
+    <button matTooltip="Trocar ordenação" mat-icon-button color="primary" (click)="ordenacao = !ordenacao; inverterOrdem()">
+      <mat-icon *ngIf="!ordenacao">arrow_downward</mat-icon>
+      <mat-icon *ngIf="ordenacao">arrow_upward</mat-icon>
+    </button>
+    <mat-slide-toggle
+    [(ngModel)]="minhasSolicitacoes"
+    (change)="filtrar()"
+    aria-label="apenas minhas solicitações"
+    matTooltip="Mostrar todas as solicitações que já foram gerenciadas por você"
+    *ngIf="responsavelLogado != '2'"
+   >Histórico</mat-slide-toggle>
+    <mat-form-field style="transform: scale(0.85);">
+      <select matNativeControl required (change)="filtrar()" [(ngModel)]="filtroCurso">
+        <option value="" disabled selected >Selecione um curso</option>
+        <option
+        value="{{ curso.id }}"
+        *ngFor="let curso of cursos"
+        [disabled]="responsavelLogado !=  '2'">
+        {{ curso.nomeCurso }}
+      </option>
+      </select>
+    </mat-form-field>
+
+
+
+
+    <mat-label>Status: </mat-label>
+    <mat-radio-group
+      [(ngModel)]="filtroStatus"
+      (change)="filtrar()"
+      aria-label="Select an option"
+    >
+      <mat-radio-button value="analise"    >Em análise</mat-radio-button>
+      <mat-radio-button value="novas" [disabled]="listaTipo != 'estagios' && listaTipo != 'renovacao'">Novas</mat-radio-button>
+      <mat-radio-button value="deferidas"  >Deferidas</mat-radio-button>
+      <mat-radio-button value="indeferidas">Indeferidas</mat-radio-button>
+      <mat-radio-button value="atrasadas"  >Atrasadas</mat-radio-button>
+      <mat-radio-button value="edicao"  matTooltip="Solicitações com a edição aberta ou que foram respondidas por alunos"   >Em edição</mat-radio-button>
+    </mat-radio-group>
+    <button
+      color="warn"
+      (click)="limparFiltro()"
+      *ngIf="filtroStatus != 'todas' || filtroCurso != '' || filtroNome != '' || filtroDataInicial != '' || filtroDataFinal != ''"
+      mat-flat-button
+    >
+      Limpar filtro
+    </button>
+  </div>
+</div>
+<div
+  class="solicitacao"
+  *ngIf="solicitacoesPagina.length > 0; else semSolicitacoes"
+>
+
+  <div *ngFor="let solicitacao of solicitacoesPagina">
+    
+    <app-solicitacao-servidor
+      [solicitacao]="solicitacao"
+    ></app-solicitacao-servidor>
+  </div>
+</div>
+
+<div class="pagination">
+  <button
+    class="previous"
+    (click)="paginaAnterior()"
+    [disabled]="isPaginaAnteriorDisabled()"
+    [ngClass]="{ disabled: isPaginaAnteriorDisabled() }"
+  >
+    Anterior
+  </button>
+  <span class="titulo">
+    <p *ngIf="totalPaginas > 1">
+      pág.<b>{{ paginaAtual }}</b> de <b>{{ totalPaginas }}</b>
+    </p>
+  </span>
+  <button
+    class="next"
+    (click)="proximaPagina()"
+    [disabled]="isProximaPaginaDisabled()"
+    [ngClass]="{ disabled: isProximaPaginaDisabled() }"
+  >
+    Próxima
+  </button>
+</div>
+
+<ng-template #semSolicitacoes>
+  <div class="semSolicitacoes">
+    <p>Você não tem solicitações em "{{ filtroStatus }}"</p>
+  </div>
+</ng-template>

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { ToastService } from '../core/services/toast/toast.service';
 import { FormularioCadastroAlunoService } from '../core/services/formulario-aluno/formulario-cadastro-aluno.service';
 import { HttpErrorResponse } from '@angular/common/http';
-
+import { CursosServiceService } from '../core/services/cursoService/cursos-service.service';
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
@@ -18,7 +18,8 @@ export class PerfilComponent {
     private userService: UserService,
     private alunoService: FormularioCadastroAlunoService,
     private toastService: ToastService,
-    private router: Router
+    private router: Router,
+    private cursosService: CursosServiceService
   ) {}
 
   ngOnInit() {
@@ -28,10 +29,20 @@ export class PerfilComponent {
       this.aluno.turno = data.turno
       this.aluno.matricula = data.matricula
       this.aluno.curso = data.curso.id
-      
     });
+    
     this.checarAlunoNovo();
+    this.cursos = this.pegarCursos();
   }
+
+  cursos: any;
+  pegarCursos(){
+    this.cursos = this.cursosService.getTodosCursos().subscribe((data: any) => {
+      this.cursos = this.cursos = data.filter((curso: any) => curso.ativo == true);
+    }
+    );
+  }
+
   checarAlunoNovo(){
     if(this.aluno.matricula == ""){
       this.checkNewAluno = true;
@@ -74,16 +85,19 @@ export class PerfilComponent {
     else if (this.aluno.nomeCompleto.length > 45) {
       this.toastService.showMessage('O nome deve conter no máximo 45 caracteres!');
     }
-   else if (this.aluno.matricula == null) {
+    else if (this.aluno.matricula == null) {
       this.toastService.showMessage('Preencha a matrícula!');
     }
     else if (this.aluno.matricula.length < 5  || this.aluno.matricula.length >= 11) {
       this.toastService.showMessage('A matrícula deve conter no mínimo 5 e no máximo 10 caracteres!');
     }
-      else if (/[a-zA-Z]/.test(this.aluno.matricula)) {
-      this.toastService.showMessage('A matrícula não pode conter letras!');
+      else if (/[a-zA-Z]/.test(this.aluno.matricula) || /[^a-zA-Z0-9]/.test(this.aluno.matricula)) {
+      this.toastService.showMessage('A matrícula não pode conter letras ou caracteres especiais!');
     } else if (/\s/.test(this.aluno.matricula)) {
       this.toastService.showMessage('A matrícula não pode conter espaços vazios!');
+    }
+    else if (this.aluno.turno == null) {
+      this.toastService.showMessage('Selecione o turno!');
     }
     else{
       this.aluno.usuarioSistema.senha = this.senha;
@@ -103,7 +117,7 @@ export class PerfilComponent {
               // Exibir mensagens de erro de validação
               if (error.error && Array.isArray(error.error)) {
                 error.error.forEach((validationError: { campo: string, mensagem: string }) => {
-                  this.toastService.showMessage(validationError.campo + " " + validationError.mensagem);
+                  this.toastService.showMessage(validationError.campo + ": " + validationError.mensagem);
                 });
               }
               else{

@@ -26,7 +26,7 @@ export class ModalAnaliseComponent {
     this.data.enviarCallback(this.motivoIndeferimento.value);
     this.dialogRef.close();
     if(this.data.retroceder){
-      this.router.navigateByUrl('/listaSolicitacoesServidor').then(() => {
+      this.router.navigateByUrl('/lista/solicitacaoEstagiosLista').then(() => {
         setTimeout(() => {
           window.location.reload();
         }, 1000);

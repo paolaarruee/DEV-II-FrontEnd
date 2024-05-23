@@ -1,21 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { LoginComponent } from './modules/login/login.component';
 import { FormularioCadastroAlunoComponent } from './modules/aluno/formulario-cadastro-aluno/formulario-cadastro-aluno.component';
 import { ListaSolicitacoesAlunoComponent } from './modules/aluno/solicitacoes-aluno/lista-solicitacoes-aluno/lista-solicitacoes-aluno.component';
 import { SolicitacaoComponent } from './modules/aluno/solicitacoes-aluno/solicitacao/solicitacao.component';
 import { TelaSolicitacaoComponent } from './modules/aluno/solicitacoes-aluno/tela-solicitacao/tela-solicitacao.component';
 import { AnaliseDocsComponent } from './modules/servidor/detalhes-solicitacao-estagio/analise-docs/analise-docs.component';
-import { ListaSolicitacoesServidorComponent } from './modules/servidor/detalhes-solicitacao-estagio/lista-solicitacoes-servidor/lista-solicitacoes-servidor.component';
+import { ListaSolicitacoesServidorComponent } from './modules/servidor/Listas/solicitacao-estagios-lista/tipos/lista-solicitacoes-servidor/estagios/lista-solicitacoes-servidor.component';
 import { FormularioServidorComponent } from './modules/servidor/formulario-servidor/formulario-servidor.component';
-import { CadastrarVagasComponent } from './modules/vagas-estagio/cadastrar-vagas/cadastrar-vagas.component';
 import { MuralDeVagasComponent } from './modules/vagas-estagio/mural-de-vagas/mural-de-vagas.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { ListaServidorComponent} from './modules/servidor/lista-servidor/lista-servidor.component';
 import { ListaEstagiariosComponent } from './modules/servidor/lista-estagiarios/lista-estagiarios.component';
 import { AuthGuard } from './core/guards/auth/auth.guard';
 import { RecuperarSenhaComponent } from './modules/recuperar-senha/recuperar-senha.component';
+import { GerenciarCursosComponent } from './modules/servidor/gerenciar-cursos/gerenciar-cursos.component';  
+import { MenuServidoresComponent } from './modules/servidor/Listas/solicitacao-estagios-lista/menu-servidores/menu-servidores.component';
+import { SolicitacaoEstagiosListaComponent } from './modules/servidor/Listas/solicitacao-estagios-lista/solicitacao-estagios-lista.component';
 
 const routes: Routes = [
   {
@@ -45,6 +46,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'lista/solicitacaoEstagiosLista',
+    component: SolicitacaoEstagiosListaComponent,
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'listaServidores',
     component: ListaServidorComponent,
     canActivate: [AuthGuard],
@@ -53,6 +59,10 @@ const routes: Routes = [
     path: 'solicitacaoEstagio',
     component: TelaSolicitacaoComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'devOnly',
+    component: MenuServidoresComponent,
   },
   {
     path: 'analisedocs/:id',
@@ -84,13 +94,13 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'cadastroVagas',
-    component: CadastrarVagasComponent,
+    path: 'perfil',
+    component: PerfilComponent,
     canActivate: [AuthGuard],
   },
   {
-    path: 'perfil',
-    component: PerfilComponent,
+    path: 'gerenciarCursos',
+    component: GerenciarCursosComponent,
     canActivate: [AuthGuard],
   },
   {

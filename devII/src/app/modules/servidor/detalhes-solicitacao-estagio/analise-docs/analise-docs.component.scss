@@ -4,6 +4,7 @@
   grid-template-rows: auto auto auto;
   gap: 20px;
   flex-direction: column;
+  font-family: 'Roboto','Nunito', sans-serif;
 
 }
 
@@ -11,17 +12,9 @@
   grid-column: span 3;
   text-align: center;
   font-size: 1.5em;
-  font-weight: bold;
+  font-weight: 500;
   margin-bottom: 10px;
   margin-left: 40%;
-}
-
-.titulosInfoDocumentos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: calc(12% - 30px);
-  text-decoration: dotted;
-  
 }
 
 .testeX{
@@ -32,7 +25,7 @@
 .gap{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: calc(11% - 30px);
+  gap: calc(8% - 30px);
 }
 
 .checkDiretor {
@@ -54,7 +47,7 @@
   padding: 4px;
   border-radius: 4px;
   border: 1px solid #ccc;
-  width: 200px;
+  width: 150px;
 }
 
 .data:focus {
@@ -63,14 +56,14 @@
 }
 .corpo-dados-caixa {
   display: flex;
-  font-family: "Roboto Flex", "Open Sans", "Lato", sans-serif;
   font-size: medium;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  align-items: flex-start;
 }
 
 .boxAtualizarDados {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
   gap: 10px;
@@ -89,25 +82,21 @@
 .inputBox {
   border: 1px solid #ccc;
   border-radius: 1px;
-  width: 70%;
-  height: 1.8em;
+  width: 100%;
+  height: 2em;
   margin-top: 1%;
 }
 
 .corpo-dados,
 .corpo-dados-etapas,
 .corpo-passos {
-  background-color: #f8f9fa;
+  background-color: #FFFFFF;
   border: 1px solid #dee2e6;
   border-radius: 5px;
   padding: 20px;
 }
 
-.dadoAcaoHistorico{
-  overflow: overlay;
-  max-height: 100px;
 
-}
 
 .gerencia{
   margin-top: 0.5em;
@@ -115,34 +104,28 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
-.curso {
-  color: #007bff;
+.bAzul {
+  color: #024fa1;
 }
 
 .subtitulo {
-  font-size: 1.2em;
-  font-weight: bold;
+  font-size: 1.3em;
+  font-weight: 500;
+  margin-top: 10px;
   margin-bottom: 10px;
+  margin-left: 2%;
 }
 
-.etapa,
-.historico,
+
+
 .arquivos-up,
 .botoes {
   display: grid;
   font-size: medium;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  font-family: "Roboto Flex", "Open Sans", "Lato", sans-serif;
   gap: 10px;
 }
 
-.etapaCaixa:nth-of-type(odd) {
-  background-color: #f0f0f0;
-}
-
-.etapaCaixa:nth-of-type(even) {
-  background-color: #F8F9FA; 
-}
 
 
 .nome-aluno,
@@ -150,6 +133,45 @@
 .curso-aluno{
   display: flex;
   flex-direction: column;
+  &.w12{
+    width: 13%;
+  }
+}
+
+
+
+.divValor{
+  display: flex;
+  flex-direction: column;
+  width: 78%;
+  text-align: left;
+  font-weight: 400;
+  &.w50{
+    width: 50%;
+  }
+  &.w40{
+    width: 40%;
+  }
+}
+.divTitulo{
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 0.9em;
+  color: #292929;
+  width: 22%;
+  &.w50{
+    width: 50%;
+  }
+  &.w60{
+    width: 60%;
+  }
+  &.w30{
+    width: 30%;
+  }
+  &.wAuto{
+    width: auto;
+  }
 }
 
 .botoes {
@@ -173,7 +195,7 @@
 
 .arquivo {
   font-size: 1.3em;
-  color: rgb(28, 16, 80);
+  color: rgb(37, 2, 196);
 }
 
 .proximo,
@@ -228,11 +250,6 @@ input[type=number] {
 
 }
 
-.historicoCorpo{
-  max-height: 350px !important;
-  overflow: auto;
-}
-
 .informacaoTexto {
   position: absolute;
   width: 350px;
@@ -250,3 +267,61 @@ background: #F8F9FA;
 box-shadow:  7px -7px 33px #c6c7c8,
              -7px 7px 33px #ffffff;
 }
+
+.icone{
+  background-color: #cffcd2;
+ 
+}
+.vermelho{
+  background-color: #fc7979 !important;
+}
+
+
+.historicoCorpo{
+  max-height: 350px !important;
+  overflow: auto;
+  .etapaCaixa{
+    margin-left: 2%;
+    border-radius: 5px;
+  }
+}
+
+.historicoItem{
+  display: flex;
+  align-items: center;
+  font-size: 1.2em;
+  gap: 0.5em;
+  padding: 5px;
+  .dataHistorico{
+    font-size: 0.8em;
+    color: #56728a;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.etapaCaixa:nth-of-type(odd) {
+  background-color: #ebebeb;
+
+}
+.etapaCaixa:nth-of-type(even) {
+  background-color: #F8F9FA; 
+}
+
+
+.documentosCorpo{
+  margin-left: 2%;
+  .documentosTabela{
+    max-height: 350px !important;
+    overflow: auto;
+  }
+}
+
+th{
+  background-color: #ebebeb !important;
+}
+
+tr:nth-of-type(odd){
+  background-color: #F8F9FA !important;
+}
+

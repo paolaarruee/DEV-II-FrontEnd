@@ -1,71 +1,113 @@
 <div class="titulo">
-        <p>Ajustes de perfil</p>
+  <p>Ajustes de perfil</p>
+</div>
+
+<div class="formulario">
+  <form class="formulario--centro" (ngSubmit)="enviarSolicitacao()">
+    <div class="formularioBox">
+      <label class="nome-campo">Nome Completo</label>
+      <input
+        class="nome"
+        type="text"
+        name="fname"
+        placeholder="Nome Completo"
+        [(ngModel)]="aluno.nomeCompleto"
+        [maxlength]="45"
+        [disabled]="true"
+      />
+
+      <label class="nome-campo">Email institucional</label>
+      <input
+        class="email"
+        type="text"
+        name="fname"
+        placeholder="aluno@restinga.ifrs.edu.br"
+        value="{{ aluno.usuarioSistema.email }}"
+        [disabled]="true"
+      />
+
+      <label for="turno">Turno</label>
+      <select
+        id="turno"
+        name="turno"
+        type="text"
+        [(ngModel)]="aluno.turno"
+        required
+      >
+        <option value="">Selecione o turno</option>
+        <option value="Manhã">Manhã</option>
+        <option value="Tarde">Tarde</option>
+        <option value="Noite">Noite</option>
+      </select>
+
+      <ul>
+        <li style="padding-right: 39px">
+          <label for="matricula">Matrícula</label>
+          <input
+            type="text"
+            id="matricula"
+            name="matricula"
+            [(ngModel)]="aluno.matricula"
+            placeholder="Matrícula"
+            [maxlength]="10"
+            required
+          />
+        </li>
+      </ul>
+
+      <label for="curso">Curso</label>
+      <select
+        name="curso"
+        id="curso"
+        type="text"
+        [(ngModel)]="aluno.curso"
+        required
+      >
+        <option value="" disabled>Escolha um Curso</option>
+        <option
+          value="{{ curso.id }}"
+          *ngFor="let curso of cursos"
+          [disabled]="!curso.ativo"
+          [class]="!curso.ativo ? 'desativado' : ''"
+        >
+          {{ curso.nomeCurso }}
+        </option>
+      </select>
+      <h3 class="ttAviso">
+        Senha com no mínimo 8 caracteres! não é necessário alterar senha para
+        usuários que tenham logado com o Google.
+      </h3>
+      <div class="senhadiv">
+        <ul>
+          <li style="padding-right: 39px">
+            <label class="nome-campo">Digite uma senha</label>
+
+            <input
+              class="senha"
+              type="password"
+              name="lname"
+              [(ngModel)]="senha"
+              placeholder="Senha"
+              required
+            />
+          </li>
+
+          <li>
+            <label class="nome-campo">Confirmar senha</label>
+
+            <input
+              class="senha"
+              type="password"
+              name="lname"
+              [(ngModel)]="senhaVerificar"
+              placeholder="Confirmar Senha"
+              required
+            />
+          </li>
+        </ul>
+      </div>
+
+      <input class="botao" type="submit" value="Salvar" />
     </div>
-    
-    <div class="formulario">
-        <form  class="formulario--centro" (ngSubmit)="enviarSolicitacao()">
-                <div class="formularioBox">
-                <label class="nome-campo">Nome Completo</label>
-                <input class="nome" type="text" name="fname" placeholder="Nome Completo"  [(ngModel)]="aluno.nomeCompleto" [maxlength]="45" >
-    
-                <label class="nome-campo">Email institucional</label>
-                <input class="email" type="text" name="fname" placeholder="aluno@restinga.ifrs.edu.br" value="{{ aluno.usuarioSistema.email }}" [disabled]="true">
-    
-                <label for="turno">Turno</label>
-                <select id="turno" name="turno" type="text"  [(ngModel)]="aluno.turno"required>
-                    <option value="">Selecione o turno</option>
-                    <option value="Manhã">Manhã</option>
-                    <option value="Tarde">Tarde</option>
-                    <option value="Noite">Noite</option>
-                </select>
-    
-                <ul>
-                    <li style="padding-right: 39px;">
-                        <label for="matricula">Matrícula</label>
-                        <input type="text" id="matricula" name="matricula"  [(ngModel)]="aluno.matricula" placeholder="Matrícula" [maxlength]="10" required>
-                    </li>
-    
-                </ul>
-    
-                <label for="curso">Curso</label>
-                <select name="curso" id="curso" type="text" [(ngModel)]="aluno.curso"   required>
-                    <option value="" disabled>Escolha um Curso</option>
-                    <option value="10">Análise e Desenvolvimento de Sistemas</option>
-                    <option value="11">Letras Português e Espanhol</option>
-                    <option value="12">Eletrônica Industrial</option>
-                    <option value="13">Gestão Desportiva e de Lazer</option>
-                    <option value="14">Processos Gerenciais</option>
-                    <option value="17">Téc. Lazer</option>
-                    <option value="18">Téc. Informática</option>
-                    <option value="19">Téc. Eletrônica</option>
-                  </select>
-                <h3 class="ttAviso">Senha com no mínimo 8 caracteres! não é necessário alterar senha para usuários que tenham logado com o Google.</h3>
-                <div class="senhadiv">
-                    <ul>
-                        <li style="padding-right: 39px;">
-                        <label class="nome-campo">Digite uma senha</label>
-    
-                        <input class="senha" type="password" name="lname" [(ngModel)]="senha" placeholder="Senha" required>
-                        </li>
-    
-                        <li>
-                        <label class="nome-campo">Confirmar senha</label>
-    
-                        <input class="senha" type="password" name="lname" [(ngModel)]="senhaVerificar" placeholder="Confirmar Senha" required>
-                    </li>
-                    </ul>
-                </div>
-    
-                <input class="botao" type="submit" value="Salvar">
-            </div>
-        </form>
-    </div>
-      
-          
-        
-
-     
-    
-
-
-  
+  </form>
+</div>

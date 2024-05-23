@@ -1,9 +1,6 @@
 import {
   Component,
   Inject,
-  OnInit,
-  ViewChild,
-  ViewEncapsulation,
 } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
@@ -30,110 +27,61 @@ export class AtualizarDocsComponent {
     private toastService: ToastService,
     public dialogRef: MatDialogRef<AtualizarDocsComponent>,
     @Inject(MAT_DIALOG_DATA)
-    public data: { docs: DocFile[]; solicitacaoId: number; isAssinado: boolean }
+    public data: { docs: DocFile[]; solicitacaoId: number; isAssinado: boolean; urlDrive: any}
   ) {}
 
-  ngAfterViewInit() {
-
-    this.dialogRef.afterClosed().subscribe((result) => {
-      
-    });
-    
-    this.data.docs.forEach((doc) => {
-      const meuElemento = document.getElementById('caixa');
-      const span = document.createElement('span');
-      span.textContent = "▸" + doc.nome;
-      span.id = doc.id.toString();
-      span.className = 'documento';
-      span.style.margin = '0.7em';
-      span.style.fontSize= 'large';
-      span.style.cursor = 'pointer';
-
-      const img = document.createElement('img');
-      if (!this.data.isAssinado) {
-        img.src = '/assets/img/apagarBotao.png';
-      } else {
-        img.src = '/assets/img/downloadBotao.png';
-      }
-      img.height = 24;
-      img.width = 24;
-      img.style.cursor = 'pointer';
-      //hover
-      img.onmouseover = () => {
-        img.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
-        img.style.borderRadius = '5px';
-      };
-      img.onmouseleave = () => {
-        img.style.backgroundColor = 'rgba(0, 0, 0, 0)';
-        img.style.borderRadius = '0px';
-      }
-      
-
-      span.onclick = () => {
-        if (this.data.isAssinado) {
-          this.docslist.downloadDoc(doc.id).subscribe(
-            (response) => {
-              console.log('Resposta bem-sucedida:', response);
-              const blob = new Blob([response], { type: 'application/pdf' });
-              const url = window.URL.createObjectURL(blob);
-              saveAs(new Blob([blob]), doc.nome);
-              window.open(url);
-            },
-            (err) => {
-              // Manipule erros aqui
-              console.error('Erro:', err);
-            }
-          );
-        } else {
-          if (this.data.docs.length == 1) {
-            this.toastService.showMessage('Não é possível excluir o ultimo documento');
-          }
-           else {
-            const dialogRef = this.dialog.open(CaixaConfimacaoComponent, {
-              data: { data: null, aviso: 'documento' },
-            });
-            dialogRef.afterClosed().subscribe((resultado) => {
-              if (resultado === true) {
-                this.data.docs = this.data.docs.filter((item) => item.id !== doc.id);
-                this.apagarDoc(doc.id, img, img.parentElement);
-
-              } else {
-                console.log('Cancelado');
-              }
-            });
-            
-          }
-        }
-      };
-      meuElemento?.appendChild(span);
-      span.appendChild(img);
-    });
+  ngOnInit(){
     
   }
-  apagarDoc(doc: number, element1: HTMLElement, element2?: any) {
+
+  apagarDocumento(doc: number){
+    if(this.data.docs.length == 1){
+      this.toastService.showMessage('Não é possível excluir o único documento da solicitação!');
+      return;
+    }
+    const dialogRef = this.dialog.open(CaixaConfimacaoComponent, {
+      data: {
+        aviso: 'documento selecionado',
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.deleteDoc(doc);
+      }
+    }
+    );
+  }
+
+  deleteDoc(doc: number) {
     this.docslist.deleteDoc(doc).subscribe(
       (response) => {
-        console.log('Resposta bem-sucedida:', response);
-        element1.remove();
-        element2?.remove();
-        // Perform any additional logic with the elements here
+        this.toastService.showMessage('Documento excluído com sucesso!');
+        location.reload();
       },
       (err) => {
-        // Handle errors here
         console.error('Erro:', err);
       }
     );
+  }
 
+  abrirDocumento(doc: number, nome: string) {
+    this.docslist.downloadDoc(doc).subscribe(
+      (response) => {
+        console.log('Resposta bem-sucedida:', response);
+        const blob = new Blob([response], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        saveAs(new Blob([blob]), nome);
+        window.open(url);
+      },
+      (err) => {
+        console.error('Erro:', err);
+      }
+    );
   }
 
   arquivosSelecionados: File[] = [];
   onFileSelected($event: any) {
     const file = ($event.target as HTMLInputElement).files![0];
-
-    const listaUI = document.getElementById('listaDocAnexo');
-    const docItem = document.createElement('li');
-    docItem.textContent = file.name;
-    
 
     if (file.size > 1048576) {
       this.toastService.showMessage('arquivo muito grande!');
@@ -141,7 +89,6 @@ export class AtualizarDocsComponent {
     } else if (this.arquivosSelecionados.length > 8) {
       this.toastService.showMessage('Limite de arquivos anexados atingido!!');
     } else {
-      listaUI?.appendChild(docItem);
       this.arquivosSelecionados.push(file);
     }
   }

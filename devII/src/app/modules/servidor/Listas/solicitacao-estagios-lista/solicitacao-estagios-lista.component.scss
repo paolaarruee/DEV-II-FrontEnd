@@ -1,0 +1,62 @@
+
+.container{
+    display: flex;
+    float: right;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.lista{
+    width: 85%;
+}
+
+.menuBar{
+    width: 15%;
+    padding: 10px;
+}
+
+.tituloprincipal {
+    font-size: 28px;
+    font-weight: bold;
+    color: #000000;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 2% 2% 0% 5%;
+    grid-template-columns: auto 1fr auto;
+    grid-gap: 10px;
+    flex-direction: column;
+    .cardDecoracao1 {
+        width: 264px;
+        height: 3px;
+        left: 123px;
+        top: 314px;
+        background-color: #2B923C;
+        border: 1px solid #2B923C;
+        margin-top: 6px;
+      }
+  }
+
+.cards{
+    gap: 5%;
+    width: auto !important;
+    float: none !important;
+    justify-content: center;
+    margin-bottom: 5%;
+    width: 115% !important;
+    .dataCard{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    svg:hover{
+        background-color: #54fa78;
+        border-radius: 128px;
+        cursor: pointer;
+    }
+    mat-card{
+        height: 100%;
+    }
+}
+
+  

@@ -25,7 +25,6 @@
 .formulario {
   display: flex;
   justify-content: center;
-  flex-direction: column;
 }
 
 a{
@@ -33,31 +32,23 @@ a{
 }
 
 .listaServidores{
-  justify-content: flex-start;
+  justify-content: center;
   width: 100%;
   display: flex;
   gap: 2em;
+  padding-bottom: 20px;
   flex-direction: row;
 }
 
-.listaservidor{
-  margin-left: calc(21% - 5px);
-}
+
 
 .formulario--centro {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    padding: 30px;
-    gap: 16px;
-    width: 100%;
-    align-items: center;
+    width: 50%;
 }
 
 label{
   font-size: 20px;
   font-style: normal;
-  width: 530px;
   height: 28px;
 }
 
@@ -85,7 +76,6 @@ input {
 
 .formularioBox{
   display: flex;
-  width: 75%;
   flex-direction: column;
 }
 

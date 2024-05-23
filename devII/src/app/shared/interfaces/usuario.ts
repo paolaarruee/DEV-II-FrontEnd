@@ -13,6 +13,7 @@ export interface Curso{
 export interface Authorization {
   Authorization: string;
   Roles: Role;
+  nomeUsuario: string;
 }
 
 export enum Role {

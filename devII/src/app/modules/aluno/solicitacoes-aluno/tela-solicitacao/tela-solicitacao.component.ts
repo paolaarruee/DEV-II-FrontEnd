@@ -4,6 +4,8 @@ import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { UserService } from 'src/app/core/services/user/user.service';
 import { Solicitacao } from 'src/app/shared/interfaces/SolicitarEstagio';
 import { ListaEstagiariosServiceService } from 'src/app/core/services/estagiarios/lista-estagiarios-service.service';
+import { ModalAnaliseComponent } from 'src/app/modules/servidor/detalhes-solicitacao-estagio/modal-analise/modal-analise.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   templateUrl: './tela-solicitacao.component.html',
@@ -16,8 +18,7 @@ export class TelaSolicitacaoComponent {
   agenteOutro: boolean = false;
   exibir: boolean = false;
   perfilIncompleto: boolean = false;
-  sucesso: boolean = false;
-  aviso: string = "Aviso";
+
   agenteOutroNome : string = "";
   textoEnvio: string =
     'O contrato de estágio deve ter a assinatura tanto do estudante quanto da empresa contratante!';
@@ -57,7 +58,8 @@ export class TelaSolicitacaoComponent {
     private userService: UserService,
     private router: Router,
     private toastService: ToastService,
-    private estagiariosService: ListaEstagiariosServiceService
+    private estagiariosService: ListaEstagiariosServiceService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -77,6 +79,7 @@ export class TelaSolicitacaoComponent {
       this.toastService.showMessage('arquivo é muito grande!');
       return;
     }
+    this.camposErro['documentoObrigatorio'] = false;
     this.documentos[tipo] = event.target.files[0];
   }
 
@@ -149,10 +152,12 @@ export class TelaSolicitacaoComponent {
             this.inputMostrar.requerimento = true;
             this.inputMostrar.vinculo = true;
             this.inputMostrar.atividadesEmpresa = true;
+            this.solicitacao.agente = "Nenhum"
           }
           else if(this.tipoAproveitamento == "APRO3"){
             this.inputMostrar.requerimento = true;
             this.inputMostrar.comprovanteExtensao = true;
+            this.solicitacao.agente = "Nenhum"
           }
           else if(this.tipoAproveitamento == "APRO4"){
             this.inputMostrar.requerimento = true;
@@ -194,9 +199,9 @@ export class TelaSolicitacaoComponent {
   validarCargaHoraria(event: any) {
     let inputValue = event.target.value;
     inputValue = inputValue.replace(/[^\d]/g, "");
-    if (inputValue.length > 4) {
-      inputValue = inputValue.slice(0, 4);
-      this.toastService.showMessage("Carga horária inválida!", "MAX 4 caracteres");
+    if (inputValue.length > 3) {
+      inputValue = inputValue.slice(0, 3);
+      this.toastService.showMessage("Carga horária inválida!", "MAX 3 caracteres");
     }
     this.solicitacao.cargaHoraria = inputValue;
     event.target.value = inputValue;
@@ -247,7 +252,7 @@ export class TelaSolicitacaoComponent {
 
   verificarDadosPerfil(data: any) {
       console.log('dados do perfil', data);
-      if(data.curso == null || data.matricula == null){
+      if(data.curso == null || data.matricula == null || data.matricula == ''){
         this.textoEnvio = 'Complete seu perfil para poder solicitar o estágio!';
         this.perfilIncompleto = true;
       }
@@ -258,26 +263,30 @@ export class TelaSolicitacaoComponent {
   }
 
   exibirDiv() {
+    if( this.verificarDados()){
+      return;
+    }
     if (this.files['length'] == 0 && Object.keys(this.documentos).length == 0){
       this.toastService.showMessage('Sem documentos anexados!!');
       return;
     }
-
-    if( this.verificarDados()){
-      return;
-    }
-    
     if (this.solicitacao.tipo.length <= 0) {
       this.toastService.showMessage('Selecione o tipo!');
-    } else {
-      this.exibir = !this.exibir;
-    }
+    }  else {
+      const dialogRef = this.dialog.open(ModalAnaliseComponent, {
+        width: '600px',
+        data: {
+          conteudo: 'Verifique se todos os dados estão corretos! <br><br><br><strong>'  + this.textoEnvio,
+          retroceder: false,
+          enviarCallback: () => {
+            this.enviarSolicitacao();
+          },
+        }
+      });
+      }
+
   }
 
-  retornar() {
-    this.router.navigate(['/listaSolicitacoesAluno']);
-    this.exibir = false;
-  }
 
   verificarDados(): boolean{
     var erro = 'Campos inválidos: ';
@@ -305,7 +314,7 @@ export class TelaSolicitacaoComponent {
       this.camposErro['salario'] = true;
       erroOn = true;
     }
-    if(this.solicitacao.cargaHoraria.length > 5 || this.solicitacao.cargaHoraria.length < 1){
+    if(this.solicitacao.cargaHoraria.length > 3 || this.solicitacao.cargaHoraria.length < 1){
       erro += 'Carga horária inválida! ';
       this.camposErro['cargaHoraria'] = true;
       erroOn = true;
@@ -342,26 +351,32 @@ export class TelaSolicitacaoComponent {
     }
     if(this.solicitacao.tipo == "Aproveitamento" && this.tipoAproveitamento == "APRO1" && (this.documentos['requerimento'] == null || this.documentos['tce'] == null || this.documentos['atividades'] == null)){
       erro += 'Anexe todos os documentos! ';
+      this.camposErro['documentoObrigatorio'] = true;
       erroOn = true;
     }
     if(this.solicitacao.tipo == "Aproveitamento" && this.tipoAproveitamento == "APRO2" && (this.documentos['requerimento'] == null || this.documentos['vinculo'] == null || this.documentos['atividadesEmpresa'] == null)){
       erro += 'Anexe todos os documentos! ';
+      this.camposErro['documentoObrigatorio'] = true;
       erroOn = true;
     }
     if(this.solicitacao.tipo == "Aproveitamento" && this.tipoAproveitamento == "APRO3" && (this.documentos['requerimento'] == null || this.documentos['termoFornalizacao'] == null|| this.documentos['comprovanteExtensao'] == null)){
       erro += 'Anexe todos os documentos! ';
+      this.camposErro['documentoObrigatorio'] = true;
       erroOn = true;
     }
     if(this.solicitacao.tipo == "Aproveitamento" && this.tipoAproveitamento == "APRO4" && (this.documentos['requerimento'] == null || this.documentos['vinculo'] == null || this.documentos['atividadesEmpresa'] == null)){
       erro += 'Anexe todos os documentos! ';
+      this.camposErro['documentoObrigatorio'] = true;
       erroOn = true;
     }
     if(this.solicitacao.tipo == "Obrigatório"  && (this.documentos['tce'] == null || this.documentos['atividades'] == null)){
       erro += 'Anexe todos os documentos! ';
+      this.camposErro['documentoObrigatorio'] = true;
       erroOn = true;
     }
     if(this.solicitacao.tipo == "Não obrigatório"  && (this.documentos['tce'] == null || this.documentos['atividades'] == null)){
       erro += 'Anexe todos os documentos! ';
+      this.camposErro['documentoObrigatorio'] = true;
       erroOn = true;
     }
     if(this.solicitacao.agente == ""){
@@ -405,15 +420,28 @@ export class TelaSolicitacaoComponent {
             console.log('Solicitação cadastrada com sucesso!');
             console.log('Resposta da API:', response);
             this.textoEnvio = 'Solicitação efetuada!!';
-            this.aviso = 'Sucesso'
-            this.sucesso = true;
+  
+            this.router.navigate(['/listaSolicitacoesAluno']);
           },
           (error) => {
             if (error.status === 409) {
             }
-            this.aviso = "Falha ao enviar a solicitação!"
             this.textoEnvio = error.error;
-            this.sucesso = true;
+            const dialogRef = this.dialog.open(ModalAnaliseComponent, {
+              width: '600px',
+              data: {
+                conteudo: this.textoEnvio,
+                retroceder: true,
+                enviarCallback: () => {
+                },
+              }
+            });
+            dialogRef.afterClosed().subscribe((result) => {
+              
+                this.router.navigate(['/listaSolicitacoesAluno']);
+              
+            });
+
           }
         );
     }

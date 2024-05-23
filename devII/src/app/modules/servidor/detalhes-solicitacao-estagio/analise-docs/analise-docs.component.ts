@@ -16,11 +16,13 @@ import { AuthenticationService } from 'src/app/core/services/authentication/auth
 import { SolicitacaoIndeferir } from 'src/app/shared/interfaces/solicitacao-indeferir';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-analise-docs',
   templateUrl: './analise-docs.component.html',
   styleUrls: ['./analise-docs.component.scss'],
+  providers: [MatTableModule]
 })
 export class AnaliseDocsComponent implements OnInit {
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
@@ -28,10 +30,11 @@ export class AnaliseDocsComponent implements OnInit {
   public documentList$!: Observable<DocFile[]>;
   public studentData$!: Observable<any>;
   public solicitacaoData$!: Observable<any>;
-  item = ['Deferido', 'Indeferido', 'Em análise'];
+  item = ['Aprovado', 'Indeferido', 'Em análise'];
   status = '';
   etapa: String = '';
   statusAtual = '';
+  tipo = '';
   etapaAtual: String = '';
   dataFinalEstagio = '';
   dataInicioEstagio = '';
@@ -43,11 +46,19 @@ export class AnaliseDocsComponent implements OnInit {
   editarEstagio = false;
   editarDatas = false;
 
+  cancelamento = false;
+  relatorioEntregue = false;
+
+  btDeferir = true;
+  btEdicao: boolean = false;
+  btCoordenador: boolean = false;
+  btDiretor: boolean = false;
+  btIndeferir: boolean = true;
   empresa = {
     nomeEmpresa: '',
     contatoEmpresa: '',
     agente: '',
-    ePrivada: false,
+    eprivada: false,
     salario: '',
     cargaHoraria: '',
     turnoEstagio: '',
@@ -62,12 +73,12 @@ export class AnaliseDocsComponent implements OnInit {
 
   public dialogAberto: boolean = false;
   public servidore!: Servidor;
-  public disableButton?: boolean;
+  public disableButton = false;
   motivoIndeferimento = new FormControl('');
   public isRequestSent: boolean = false;
-  public solicitacao: any;
   public observacaoAtual: String = '';
   public fileLista: File[] = [];
+  documentList: any;
 
   public constructor(
     private activatedRoute: ActivatedRoute,
@@ -128,30 +139,35 @@ export class AnaliseDocsComponent implements OnInit {
     );
   }
 
-  responsavelAtual(){
-    if(this.etapaAtual.toString() === '2'){
+  responsavelAtual() {
+    if (this.etapaAtual.toString() === '2') {
       return 'Setor de Estágio';
     }
-    if(this.etapaAtual.toString() === '3'){
+    if (this.etapaAtual.toString() === '3') {
       return 'Coordenador de Curso';
     }
-    if(this.etapaAtual.toString() === '4'){
+    if (this.etapaAtual.toString() === '4') {
       return 'Diretor de Curso';
     }
-    if(this.etapaAtual.toString() === '5'){
+    if (this.etapaAtual.toString() === '5') {
       return 'Concluído';
     }
-      return 'Nova solicitação';
+    return 'Nova solicitação';
   }
 
   atualizarEtapa(etapa: string) {
     if (etapa != this.etapaAtual) {
       var msg = '';
-      if(this.status.toLowerCase() == 'deferido' || this.status.toLowerCase() == 'indeferido' || this.status.toLowerCase() == 'finalizado'){
-        msg = 'Mudar a etapa de uma solicitação encerrada fara com que ela volte para o processo de análise! <br>Deseja realmente continuar?';
-      }
-      else{
-        msg = 'Confirmar modificação da etapa?<br> O novo responsável pela etapa será notificado.';
+      if (
+        this.status.toLowerCase() == 'Aprovado' ||
+        this.status.toLowerCase() == 'indeferido' ||
+        this.status.toLowerCase() == 'finalizado'
+      ) {
+        msg =
+          'Mudar a etapa de uma solicitação encerrada fara com que ela volte para o processo de análise! <br>Deseja realmente continuar?';
+      } else {
+        msg =
+          'Confirmar modificação da etapa?<br> O novo responsável pela etapa será notificado.';
       }
       const { id } = this.activatedRoute.snapshot.params;
       const dialogRef = this.dialog.open(ModalAnaliseComponent, {
@@ -167,11 +183,13 @@ export class AnaliseDocsComponent implements OnInit {
                     'Etapa da solicitação foi alterada com sucesso.'
                   );
                 if (this.etapaAtual.toString() === '5') {
-                  this.status = 'Deferido';
+                  this.status = 'Aprovado';
                 } else {
                   this.status = 'Em análise';
                 }
                 this.etapaAtual = etapa;
+                this.gerenciamentoDeBotoes();
+
               },
               error: (error) => {
                 if (error.status === 404) {
@@ -189,6 +207,7 @@ export class AnaliseDocsComponent implements OnInit {
     } else {
       this.toastService.showMessage('Já se encontra nessa etapa.');
     }
+    
   }
 
   async atualizarEstagio() {
@@ -197,8 +216,9 @@ export class AnaliseDocsComponent implements OnInit {
     const studentData = await this.studentData$.toPromise();
     if (
       this.empresa.cargaHoraria === studentData.cargaHoraria &&
-      this.empresa.turnoEstagio === studentData.turno &&
-      this.empresa.salario === studentData.salario
+      this.empresa.turnoEstagio === studentData.turnoEstagio &&
+      this.empresa.salario === studentData.salario &&
+      this.empresa.eprivada === studentData.ePrivada
     ) {
       this.toastService.showMessage(
         'Nenhuma alteração foi feita nos dados do estágio.'
@@ -208,14 +228,19 @@ export class AnaliseDocsComponent implements OnInit {
     if (
       this.empresa.cargaHoraria.length > 4 ||
       this.empresa.turnoEstagio.length > 10 ||
-      this.empresa.salario.length > 16
+      this.empresa.salario.length > 16 ||
+      this.empresa.salario == '' ||
+      this.empresa.cargaHoraria == ''
     ) {
+      this.empresa.salario = studentData.salario;
+      this.empresa.cargaHoraria = studentData.cargaHoraria;
       this.toastService.showMessage(
         'Dados do estágio inválidos',
-        'MAX CARACTERES!'
+        'Verifique os campos!'
       );
       return;
     }
+
     this.solicitacoes.editarEmpresa(id, this.empresa).subscribe({
       next: () => {
         this.toastService.showMessage('Empresa editada com sucesso!');
@@ -239,12 +264,12 @@ export class AnaliseDocsComponent implements OnInit {
   async atualizarEmpresa() {
     const { id } = this.activatedRoute.snapshot.params;
     this.editarEmpresa = false;
-    const studentData = await this.studentData$.toPromise(); // Await the subscription and extract the value from the observable
+    const studentData = await this.studentData$.toPromise();
     if (
       this.empresa.agente === studentData.agente &&
       this.empresa.nomeEmpresa === studentData.nomeEmpresa &&
       this.empresa.contatoEmpresa === studentData.contatoEmpresa &&
-      this.empresa.ePrivada === studentData.ePrivada
+      this.empresa.eprivada === studentData.ePrivada
     ) {
       this.toastService.showMessage(
         'Nenhuma alteração foi feita nos dados da empresa.'
@@ -259,6 +284,21 @@ export class AnaliseDocsComponent implements OnInit {
       this.toastService.showMessage(
         'Dados da empresa inválidos',
         'MAX CARACTERES!'
+      );
+      return;
+    }
+    if (
+      this.empresa.nomeEmpresa == '' ||
+      this.empresa.agente == '' ||
+      this.empresa.contatoEmpresa == ''
+    ) {
+      this.empresa.agente = studentData.agente;
+      this.empresa.nomeEmpresa = studentData.nomeEmpresa;
+      this.empresa.contatoEmpresa = studentData.contatoEmpresa;
+      this.empresa.eprivada = studentData.ePrivada;
+      this.toastService.showMessage(
+        'Dados da empresa inválidos',
+        'Preencha todos os campos!'
       );
       return;
     }
@@ -289,9 +329,59 @@ export class AnaliseDocsComponent implements OnInit {
     });
   }
 
-  private setDocumentListId(): void {
-    const { id } = this.activatedRoute.snapshot.params;
-    this.documentList$ = this.solicitacoes.getlistDocsPorEstagioId(id);
+
+  private gerenciamentoDeBotoes() {
+    if (
+      this.status.toLowerCase() == 'aprovado' ||
+      this.status.toLowerCase() == 'finalizado' ||
+      this.status.toLowerCase() == 'aprovado' ||
+      this.status.toLowerCase() == 'cancelado' ||
+      this.status.toLowerCase() == 'indeferido'
+    ) {
+      this.disableButton = true;
+    }
+
+    if (this.authenticationService.role == 3) {
+      if (this.cancelamento != true) {
+        this.btDeferir = false;
+      }
+      this.btCoordenador = true;
+      this.btDiretor = true;
+      if (this.relatorioEntregue) {
+        this.btDiretor = false;
+      }
+      this.btEdicao = true;
+    }
+
+    if (this.authenticationService.role == 2) {
+      this.btEdicao = true;
+      if (this.relatorioEntregue) {
+        this.btDiretor = false;
+      }
+      else{
+        this.btDiretor = true;
+      }
+
+      if(this.etapaAtual != '3'){
+        this.disableButton = true;
+      }
+    }
+
+    if (this.authenticationService.role == 4) {
+      this.btEdicao = false;
+      this.btIndeferir = false;
+      this.btCoordenador = false;
+      this.btDiretor = false;
+      if (this.etapa != '4') {
+        this.disableButton = true;
+      }
+    }
+    if(this.etapaAtual == '3'){
+      this.btCoordenador = false;
+    }
+    if(this.etapaAtual == '4'){
+      this.btDiretor = false;
+    }
   }
 
   private setStudentData() {
@@ -311,14 +401,17 @@ export class AnaliseDocsComponent implements OnInit {
           this.datePipe.transform(data.inicioDataEstagio, 'dd-MM-yyyy') || '';
         this.dataSistema = this.dataFinalEstagio;
         this.dataInicioSistema = this.dataInicioEstagio;
-        //Dados Empresa
         this.empresa.agente = data.agente;
         this.empresa.nomeEmpresa = data.nomeEmpresa;
         this.empresa.contatoEmpresa = data.contatoEmpresa;
-        this.empresa.ePrivada = data.ePrivada;
+        this.empresa.eprivada = data.ePrivada;
         this.empresa.salario = data.salario;
         this.empresa.cargaHoraria = data.cargaHoraria;
         this.empresa.turnoEstagio = data.turnoEstagio;
+        this.cancelamento = data.cancelamento;
+        this.relatorioEntregue = data.relatorioEntregue;
+        this.tipo = data.tipo;
+        this.gerenciamentoDeBotoes();
       },
       (error) => {
         if (error.status === 401) {
@@ -370,31 +463,34 @@ export class AnaliseDocsComponent implements OnInit {
     event.target.value = inputValue;
   }
 
+  colunas: string[] = ['icone','nome', 'estado','diretor', 'download'];
+  solicicitacaoTeste: any;
   public setSolicitacaoData() {
     const { id } = this.activatedRoute.snapshot.params;
-    this.solicitacaoData$ = this.solicitacoes.getSolicitacoesData(id).pipe(
-      tap((solicitacoes: any) => {
-        this.disableButton =
-          (this.authenticationService.role === Role.ROLE_SESTAGIO &&
-            solicitacoes.statusEtapaSetorEstagio === Status.DEFERIDO) ||
-          solicitacoes.statusEtapaSetorEstagio === Status.INDEFERIDO ||
-          (this.authenticationService.role === Role.ROLE_SERVIDOR &&
-            solicitacoes.statusEtapaCoordenador === Status.DEFERIDO) ||
-          solicitacoes.statusEtapaCoordenador === Status.INDEFERIDO ||
-          solicitacoes.statusEtapaSetorEstagio === Status.INDEFERIDO ||
-          //solicitacoes.statusEtapaSetorEstagio === Status.EM_ANDAMENTO) ||
-          (this.authenticationService.role === Role.ROLE_DIRETOR &&
-            solicitacoes.statusEtapaDiretor === Status.DEFERIDO) ||
-          solicitacoes.statusEtapaCoordenador === Status.INDEFERIDO ||
-          solicitacoes.statusEtapaSetorEstagio === Status.INDEFERIDO ||
-          solicitacoes.statusEtapaDiretor === Status.INDEFERIDO;
-        //   solicitacoes.statusEtapaCoordenador === Status.EM_ANDAMENTO ||
-        //   solicitacoes.statusEtapaSetorEstagio === Status.EM_ANDAMENTO) ||
-        solicitacoes.status === Status.INDEFERIDO;
-        solicitacoes.status === Status.DEFERIDO;
-      })
-    );
-    console.log(this.solicitacaoData$);
+    this.solicitacoes.getSolicitacoesData(id).subscribe({
+      next: (data) => {
+        this.solicicitacaoTeste = data;
+        console.log(this.solicicitacaoTeste);
+      },
+      error: () => {
+        this.toastService.showMessage('Erro ao carregar dados da solicitação.');
+      },
+    });
+  }
+
+  private setDocumentListId(): void {
+    const { id } = this.activatedRoute.snapshot.params;
+    if(this.authenticationService.role != Role.ROLE_SESTAGIO){
+      this.colunas.splice(3, 1);
+    }
+    this.solicitacoes.getlistDocsPorEstagioId(id).subscribe({
+      next: (data) => {
+        this.documentList = data;
+      },
+      error: () => {
+        this.toastService.showMessage('Erro ao carregar documentos.');
+      },
+    });
   }
 
   trocarEditar() {
@@ -417,9 +513,10 @@ export class AnaliseDocsComponent implements OnInit {
       this.dataInicioEstagio != this.dataInicioSistema
     ) {
       if (this.dataFinalEstagio == '') {
+        this.dataFinalEstagio = this.dataSistema;
         this.toastService.showMessage(
-          'Data de validade do contrato é obrigatória.',
-          'ERRO'
+          'Data de fim do contrato é obrigatória.',
+          'Preencha o campo!'
         );
       } else {
         this.solicitacoes
@@ -437,30 +534,15 @@ export class AnaliseDocsComponent implements OnInit {
               );
             },
             error: () => {
+              this.dataFinalEstagio = this.dataSistema;
+              this.dataInicioEstagio = this.dataInicioSistema;
               this.toastService.showMessage(
-                'Erro ao mudar validade do contrato.'
+                'Erro ao mudar validade do contrato.',
+                'verifique os campos!'
               );
             },
           });
       }
-    }
-  }
-
-  atualizarStatus() {
-    if (this.status != this.statusAtual) {
-      this.statusAtual = this.status;
-      const { id } = this.activatedRoute.snapshot.params;
-      this.solicitacoes.setStatusSolicitacao(id, this.status).subscribe({
-        next: () => {
-          this.toastService.showMessage(
-            'Status da solicitação foi alterada com sucesso.'
-          );
-        },
-        error: () => {
-          this.toastService.showMessage('Erro ao mudar status da solicitação.');
-          console.log(console.error());
-        },
-      });
     }
   }
 
@@ -470,6 +552,7 @@ export class AnaliseDocsComponent implements OnInit {
       const { id } = this.activatedRoute.snapshot.params;
       this.solicitacoes.setObservacaoDaSolicitacao(id, obs).subscribe({
         next: () => {
+          this.trocarEditar();
           this.toastService.showMessage('Observação foi salva!');
         },
         error: () => {
@@ -482,16 +565,17 @@ export class AnaliseDocsComponent implements OnInit {
   }
 
   public abrirDialogDeferir(): void {
+  
     if (this.dialogAberto) {
       return;
     }
 
     this.dialogAberto = true;
     var msg =
-      'Você tem certeza que deseja deferir o estágio do aluno? <br> O deferimento encerra o processo de análise e o aluno será notificado.';
+      'Você tem certeza que deseja deferir a solicitação do aluno? <br> O deferimento encerra o processo de análise e o aluno será notificado.';
     if (this.authenticationService.role === Role.ROLE_DIRETOR) {
       msg =
-        'Deferir o estágio do aluno? Lembre-se de anexar o Termo de Compromisso assinado.';
+        'Deferir o estágio do aluno? <br><br><strong>Lembre-se de anexar o Termo de Compromisso assinado.</strong>';
     }
     const dialogRef = this.dialog.open(ModalAnaliseComponent, {
       width: '600px',
@@ -521,7 +605,8 @@ export class AnaliseDocsComponent implements OnInit {
     const dialogRef = this.dialog.open(ModalAnaliseComponent, {
       width: '600px',
       data: {
-        conteudo: 'Você tem certeza que deseja indeferir essa solicitação? <br> Para indeferir insira o motivo no campo abaixo.',
+        conteudo:
+          'Você tem certeza que deseja indeferir essa solicitação? <br> Para indeferir insira o motivo no campo abaixo.',
         retroceder: true,
         mostrarCampoMotivo: true,
         enviarCallback: (motivoIndeferimento: string) =>
@@ -534,12 +619,12 @@ export class AnaliseDocsComponent implements OnInit {
     const dialogRef = this.dialog.open(ModalAnaliseComponent, {
       width: '600px',
       data: {
-        conteudo: 'Digite o motivo do retorno para edição. <br> O aluno será notificado.',
+        conteudo:
+          'Digite o motivo do retorno para edição. <br> O aluno será notificado.',
         mostrarCampoMotivo: true,
-        retroceder: true,
+        retroceder: false,
         edicaoAluno: true,
         enviarCallback: (motivoIndeferimento: string) => {
-          this.trocarEditar();
           this.atualizarObservacao(motivoIndeferimento);
         },
       },
@@ -549,8 +634,8 @@ export class AnaliseDocsComponent implements OnInit {
   public enviarDeferimentoDiretor(): void {
     const { id } = this.activatedRoute.snapshot.params;
     const data = {
-      status: Status.DEFERIDO,
-      statusEtapaDiretor: Status.DEFERIDO,
+      status: Status.Aprovado,
+      statusEtapaDiretor: Status.Aprovado,
     };
     const formData: FormData = new FormData();
 
@@ -583,7 +668,7 @@ export class AnaliseDocsComponent implements OnInit {
 
   public enviarDeferimentoSetorEstagio(): void {
     const { id } = this.activatedRoute.snapshot.params;
-    const data = { statusEtapaSetorEstagio: Status.DEFERIDO };
+    const data = { statusEtapaSetorEstagio: Status.Aprovado };
 
     const formData: FormData = new FormData();
 
@@ -632,7 +717,7 @@ export class AnaliseDocsComponent implements OnInit {
     this.docsService.uploadDocs(formData).subscribe({
       next: () => {
         this.fileLista = [];
-        this.documentList$ = this.solicitacoes.getlistDocsPorEstagioId(id);
+        this.documentList = this.solicitacoes.getlistDocsPorEstagioId(id);
         this.toastService.showMessage('Documentos enviados com sucesso!');
       },
       error: () => {
@@ -644,7 +729,7 @@ export class AnaliseDocsComponent implements OnInit {
   public enviarDeferimento(): void {
     const { id } = this.activatedRoute.snapshot.params;
 
-    const data = { statusEtapaCoordenador: Status.DEFERIDO };
+    const data = { statusEtapaCoordenador: Status.Aprovado };
 
     const formData: FormData = new FormData();
 
@@ -678,6 +763,7 @@ export class AnaliseDocsComponent implements OnInit {
   dados: SolicitacaoIndeferir = {
     observacao: '',
   };
+
   public enviarIndeferimento(motivo: string): void {
     const { id } = this.activatedRoute.snapshot.params;
     console.log(this.activatedRoute.snapshot.params);
@@ -711,4 +797,61 @@ export class AnaliseDocsComponent implements OnInit {
       }
     );
   }
+
+  public getTipoAproveitamento(tipo : string){
+    if(tipo.includes('APRO1')){
+      return "Aproveitamento de Est. não obrigatório como estágio obrigatório."
+    }
+    if(tipo.includes('APRO2')){
+      return "Aproveitamento de trabalho vigente como estágio obrigatório."
+    }
+    if(tipo.includes('APRO3')){
+      return "Aproveitamento de atividades de extensão/bolsa/monitoria ..."
+    }
+    if(tipo.includes('APRO4')){
+      return "Aproveitamento de experiência profissional comprovada."
+    }
+    else{
+      return tipo;
+    }
+  }
+
+  getResponsavelAtual(){
+    if(this.etapaAtual === '1'){
+      return 'Aluno'
+    }
+    if(this.etapaAtual === '2'){
+      return 'Setor de estágio'
+    }
+    if(this.etapaAtual === '3'){
+      return  'Coordenador'
+    }
+    if(this.etapaAtual === '4'){
+      return 'Diretor'
+    }
+    if(this.etapaAtual === '5'){
+      return 'Concluído'
+    }
+    return 'Sistema'
+  }
+
+  getResponsavelAtualByEtapa(etapa : any){
+    if(etapa === '1'){
+      return 'Aluno'
+    }
+    if(etapa === '2'){
+      return 'Setor de estágio'
+    }
+    if(etapa === '3'){
+      return  'Coordenador'
+    }
+    if(etapa === '4'){
+      return 'Diretor'
+    }
+    if(etapa === '5'){
+      return 'Sistema'
+    }
+    return 'Sistema'
+  }
+ 
 }

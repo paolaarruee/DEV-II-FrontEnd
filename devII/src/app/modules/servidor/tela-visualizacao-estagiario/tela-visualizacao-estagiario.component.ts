@@ -7,6 +7,7 @@ import { saveAs } from 'file-saver';
 import { ListaEstagiariosServiceService } from 'src/app/core/services/estagiarios/lista-estagiarios-service.service';
 import { Solicitacao } from 'src/app/shared/interfaces/SolicitarEstagio';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
+import { el } from 'date-fns/locale';
 @Component({
   selector: 'app-tela-visualizacao-estagiario',
   templateUrl: './tela-visualizacao-estagiario.component.html',
@@ -54,6 +55,18 @@ export class TelaVisualizacaoEstagiarioComponent {
       });
     }
 
+    isDataPassou(estagiario: any): boolean {
+      return this.compararDatas(
+        estagiario.solicitacao.finalDataEstagio,
+        new Date()
+      );
+    }
+
+    compararDatas(data1: Date, data2: Date): boolean {
+      return new Date(data1) < new Date(data2);
+    }
+  
+
     downloadDocumento(id : number, nome : string){
       this.doc.downloadDoc(id).subscribe({
         next: (blob: Blob) => {
@@ -77,7 +90,7 @@ export class TelaVisualizacaoEstagiarioComponent {
       else if(this.teste.salario.length > 10){
         return true;
       }
-      else if(this.teste.cargaHoraria.length > 5){
+      else if(this.teste.cargaHoraria.length > 4){
         return true;
       }
       else if(this.teste.contatoEmpresa.length > 12){
@@ -117,4 +130,31 @@ export class TelaVisualizacaoEstagiarioComponent {
       this.estagiario.solicitacao.salario = inputValue;
       event.target.value = inputValue;
     }
+
+   pegarEstapaAtual(etapa : number)
+   {
+     if(etapa == 1)
+     {
+       return "Aluno";
+     }
+     else if(etapa == 2)
+     {
+       return "Estágios";
+     }
+     else if(etapa == 3)
+     {
+       return "Coordenador";
+     }
+     else if(etapa == 4)
+     {
+       return "Diretor";
+     }
+     else if(etapa == 5)
+     {
+       return "Concluído";
+     }
+     else{
+        return "Sistema";
+     }
+   }
 }

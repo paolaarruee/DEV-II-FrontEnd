@@ -1,64 +1,147 @@
 <div class="espacamento">
   <div class="card">
-   <div class="header">
-      <span class="tituloEstagio" >{{titulo}} </span> 
-        <div *ngIf="observacaoOn && solicitacao.status.toLowerCase() != 'indeferido' " (click)="openDialog(true)" >
-          <button mat-raised-button class="buttonObs">Observação 
-            <mat-icon class="iconeObservacao" >feedback</mat-icon>
-          </button>
-        </div>
+    <div class="header">
+      <span class="tituloEstagio">{{ titulo }} </span>
+      <div
+        *ngIf="observacaoOn && solicitacao.status.toLowerCase() != 'indeferido'"
+        (click)="openDialog(true)"
+      >
+        <button matTooltip="Você possui pendências a resolver." mat-raised-button class="buttonObs">
+          Observação
+          <mat-icon class="iconeObservacao">feedback</mat-icon>
+        </button>
+      </div>
       <div>
         <span>Status</span>
-        <span  matTooltip="Descrição do status:  {{getDescricaoStatus()}}" class="retangulo" [ngClass]="statusSolicitacao()">{{solicitacao.status}}</span>
+        <span
+          matTooltip="Descrição do status:  {{ getDescricaoStatus() }}"
+          class="retangulo"
+          [ngClass]="statusSolicitacao()"
+          >{{ solicitacao.status }}</span
+        >
         <div class="infoStatus">
-          <div class="infoStatusCaixa" id="infoStatusCaixa" [ngClass]="statusInfo(1)">
-          </div>
-          <div class="infoStatusCaixa" id="infoStatusCaixa"[ngClass]="statusInfo(2)">
-          </div>
-          <div class="infoStatusCaixa"id="infoStatusCaixa"[ngClass]="statusInfo(3)">
-          </div>
-          <div class="infoStatusCaixa"id="infoStatusCaixa" [ngClass]="statusInfo(4)">
-          </div>
-          <div class="infoStatusCaixa"id="infoStatusCaixa" [ngClass]="statusInfo(5)">
-          </div>
+          <div
+            class="infoStatusCaixa"
+            id="infoStatusCaixa"
+            [ngClass]="statusInfo(1)"
+          ></div>
+          <div
+            class="infoStatusCaixa"
+            id="infoStatusCaixa"
+            [ngClass]="statusInfo(2)"
+          ></div>
+          <div
+            class="infoStatusCaixa"
+            id="infoStatusCaixa"
+            [ngClass]="statusInfo(3)"
+          ></div>
+          <div
+            class="infoStatusCaixa"
+            id="infoStatusCaixa"
+            [ngClass]="statusInfo(4)"
+          ></div>
+          <div
+            class="infoStatusCaixa"
+            id="infoStatusCaixa"
+            [ngClass]="statusInfo(5)"
+          ></div>
         </div>
       </div>
-   </div>
-   <div class="titulo">
-    <span>{{solicitacao.titulo}}</span>
-    <span class="cardDecoracao2"></span>
-   </div>
+    </div>
+    <div class="titulo">
+      <span>{{ solicitacao.titulo }}</span>
+      <span class="cardDecoracao2"></span>
+    </div>
 
-   <div class="cardConteudo">
-    <span><p>Data da solicitação: {{ solicitacao.dataSolicitacao }}</p></span>
-   </div>
+    <div class="cardConteudo">
+      <span
+        ><p>Data da solicitação: {{ solicitacao.dataSolicitacao }}</p></span
+      >
+      <span
+        ><p>Empresa: {{ solicitacao.nomeEmpresa }}</p></span
+      >
+    </div>
 
-   <div class="buttonContainer">
-    <div class="buttonDetalhes"  id="buttonDetalhes" *ngIf="solicitacao.status == 'Deferido' && dataPassou(solicitacao) ||  solicitacao.relatorioEntregue && dataPassou(solicitacao) && solicitacao.status != 'Finalizado' && solicitacao.status != 'Cancelado'">
-      <button mat-raised-button class="buttonAzul" color="primary" (click)="abrirEnvioDocumentos('relatorio')"> Enviar relatório final</button>
+    <div class="buttonContainer">
+      <div
+        class="buttonDetalhes"
+        id="buttonDetalhes"
+        *ngIf="solicitacao.status == 'Aprovado'"
+      >
+        <button
+          mat-raised-button
+          class="buttonAzul"
+          color="primary"
+          (click)="abrirEnvioDocumentos('relatorio')"
+        >
+          Enviar relatório final
+        </button>
+      </div>
+      <div
+        class="buttonDetalhes"
+        id="buttonDetalhes"
+        *ngIf="solicitacao.status == 'Aprovado' && !dataPassou(solicitacao)"
+      >
+        <button
+          mat-raised-button
+          class="buttonAzul"
+          color="primary"
+          (click)="abrirEnvioDocumentos('cancelar')"
+        >
+          Cancelar estágio
+        </button>
+      </div>
+      <div
+        class="buttonDetalhes"
+        id="buttonDetalhes"
+        *ngIf="
+          solicitacao.status == 'Aprovado' ||
+          solicitacao.status == 'Finalizado' ||
+          solicitacao.status == 'Cancelado'
+        "
+      >
+        <button mat-raised-button (click)="abrirDownload()">
+          Baixar documentos
+        </button>
+      </div>
+      <div
+        class="buttonDetalhes"
+        id="buttonDetalhes"
+        *ngIf="
+          solicitacao.status != 'Aprovado' &&
+          solicitacao.status != 'Finalizado' &&
+          solicitacao.status != 'Cancelado'
+        "
+      >
+        <button
+          mat-raised-button
+          matTooltip="{{
+            statusEditavel
+              ? 'Edição de docs. desabilitada!'
+              : 'Enquanto a solicitação estiver pendente ou nova, você pode resolver pendências ou editar documentos.'
+          }}"
+          [matTooltipShowDelay]="500"
+          [matTooltipHideDelay]="500"
+          (click)="abrirEdicao()"
+          [ngClass]="statusEditavel"
+        >
+          {{
+            solicitacao.status == "Pendente"
+              ? "Resolver pendência"
+              : "Editar documentos"
+          }}
+        </button>
+      </div>
+      <div class="buttonDetalhes">
+        <button
+          mat-raised-button
+          matTooltip="Visualize os detalhes de sua solicitação."
+          [matTooltipShowDelay]="500"
+          (click)="openDialog()"
+        >
+          Detalhes
+        </button>
+      </div>
     </div>
-    <div class="buttonDetalhes"  id="buttonDetalhes" *ngIf="solicitacao.status == 'Deferido' && !dataPassou(solicitacao)">
-      <button mat-raised-button class="buttonAzul" color="primary" (click)="abrirEnvioDocumentos('cancelar')"> Cancelar estágio</button>
-    </div>
-    <div class="buttonDetalhes"  id="buttonDetalhes" *ngIf="solicitacao.status == 'Deferido' || solicitacao.status == 'Finalizado' || solicitacao.status == 'Cancelado'">
-      <button mat-raised-button (click)="abrirDownload()"> Baixar documentos</button>
-    </div>
-    <div class="buttonDetalhes" id="buttonDetalhes" *ngIf="solicitacao.status != 'Deferido' && solicitacao.status != 'Finalizado'  && solicitacao.status != 'Cancelado'">
-      <button 
-      mat-raised-button 
-      matTooltip="{{statusEditavel ? 'Edição de docs. desabilitada!' : 'Enquanto a solicitação estiver pendente ou nova, você pode resolver pendências ou editar documentos.'}}" 
-      [matTooltipShowDelay]="500"
-      [matTooltipHideDelay]="500"
-      (click)="abrirEdicao()"
-      [ngClass]="statusEditavel">{{solicitacao.status == "Pendente" ? 'Resolver pendência' : 'Editar documentos'}} </button>
-    </div>
-    <div class="buttonDetalhes">
-      <button 
-      mat-raised-button  
-      matTooltip="Visualize os detalhes de sua solicitação."
-      [matTooltipShowDelay]="500"
-      (click)="openDialog()">Detalhes </button>
-    </div>
-   </div>
   </div>
 </div>

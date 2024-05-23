@@ -18,15 +18,17 @@
 
   }
 
+  
+
 
   .caixaBotoes{
     display: flex;
     padding: 32px 32px 0px;
     font-size: 18px;
     width: 100%;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-
+    gap: 10%;
   }
 
 
@@ -107,11 +109,16 @@
     margin: 0;
     padding: 0;
   }
-  
+
   li {
-    margin-bottom: 5px;
+    margin: 0.3em;
+    font-size: large;
   }
-  
-  
 
+  ul:nth-child(even) {
+    background-color: #ffffff;
+  }
 
+  ul:nth-child(odd) {
+    background-color: #f7f6f6;
+  }

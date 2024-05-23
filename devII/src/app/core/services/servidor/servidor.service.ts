@@ -54,4 +54,10 @@ export class ServidorService {
       `${environment.API_URL}/listarServidores`
     );
   }
+
+  public listarHistoricoServidores(): Observable<any> {
+    return this.httpClient.get<any>(
+      `${environment.API_URL}/pegarHistoricoServidores`
+    );
+  }
 }

@@ -36,9 +36,15 @@ export interface Solicitacoes {
       };
     };
   };
+  curso:{
+    id: string;
+    nomeCurso: string;
+  }
   tipo: string;
   dataSolicitacao: string;
   editavel: string;
+  cancelamento: string;
+  relatorioEntregue: string;
   status: string;
   titulo: string;
   conteudo: string;
@@ -58,7 +64,7 @@ export interface Historico {
 }
 
 export enum Status {
-  DEFERIDO = 'Deferido',
+  Aprovado = 'Aprovado',
   INDEFERIDO = 'Indeferido',
   EM_ANDAMENTO = 'Em análise',
 }

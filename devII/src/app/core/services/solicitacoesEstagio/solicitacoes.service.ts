@@ -16,13 +16,17 @@ export class SolicitacoesService {
   public constructor(private httpClient: HttpClient) {}
 
   deferirSolicitacao(id: number, formData: FormData): Observable<any> {
+    this.setProcessandoSolicitacao(id).subscribe();
+    
     return this.httpClient.put<any>(
       `${environment.API_URL}/deferirSolicitacao/${id}`,
       formData
     );
   }
 
-
+  setProcessandoSolicitacao(id: number): Observable<any> {
+    return this.httpClient.post<any>(`${environment.API_URL}/setProcessando?id=${id}`, {});
+  }
 
   indeferirSolicitacao(
     id: number,
@@ -40,26 +44,35 @@ export class SolicitacoesService {
       empresa
     );
   }
-  
 
-  setValidadeContrato(id: number, dataFinalNova: string , dataInicioNova : string): Observable<any> {
-
+  setValidadeContrato(
+    id: number,
+    dataFinalNova: string,
+    dataInicioNova: string
+  ): Observable<any> {
     return this.httpClient.get<any>(
       `${environment.API_URL}/trocarValidadeContrato`,
-      { params: { id: id.toString(), dataFinalNova: dataFinalNova , dataInicioNova : dataInicioNova } }
+      {
+        params: {
+          id: id.toString(),
+          dataFinalNova: dataFinalNova,
+          dataInicioNova: dataInicioNova,
+        },
+      }
     );
   }
 
   enviarRelatorioFinal(id: string, file: File[]): Observable<any> {
     const formData = new FormData();
-    file.forEach(element => {
-      formData.append('file', element)
+    file.forEach((element) => {
+      formData.append('file', element);
     });
     formData.append('id', id);
     return this.httpClient.post<any>(
-      `${environment.API_URL}/salvarRelatorioFinal`, formData);
+      `${environment.API_URL}/salvarRelatorioFinal`,
+      formData
+    );
   }
-
 
   listarSolicitacoes(): Observable<Solicitacoes[]> {
     const url = `${environment.API_URL}/listarSolicitacoes`;
@@ -84,12 +97,14 @@ export class SolicitacoesService {
 
   enviarCancelamento(id: string, file: File[]): Observable<any> {
     const formData = new FormData();
-    file.forEach(element => {
-      formData.append('file', element)
+    file.forEach((element) => {
+      formData.append('file', element);
     });
     formData.append('id', id);
     return this.httpClient.post<any>(
-      `${environment.API_URL}/cancelarEstagio`, formData);
+      `${environment.API_URL}/cancelarEstagio`,
+      formData
+    );
   }
 
   setEditarSolicitacao(id: number): Observable<any> {
@@ -100,23 +115,15 @@ export class SolicitacoesService {
   }
 
   setEtapaSolicitacao(id: number, etapa: string): Observable<any> {
-    return this.httpClient.get<any>(
-      `${environment.API_URL}/editarEtapa`,
-      { params: { id: id.toString() , etapa : etapa.toString()} }
-    );
+    return this.httpClient.get<any>(`${environment.API_URL}/editarEtapa`, {
+      params: { id: id.toString(), etapa: etapa.toString() },
+    });
   }
 
-  setStatusSolicitacao(id: number, status: string): Observable<any> {
-    return this.httpClient.get<any>(
-      `${environment.API_URL}/editarstatus`,
-      { params: { id: id.toString(), status: status.toString()} }
-    );
-  }
-
-  setObservacaoDaSolicitacao(id: number, text : String): Observable<any> {
+  setObservacaoDaSolicitacao(id: number, text: String): Observable<any> {
     return this.httpClient.get<any>(
       `${environment.API_URL}/editarobservacaoSolicitacao`,
-      { params: { id: id.toString(), texto: text.toString()} }
+      { params: { id: id.toString(), texto: text.toString() } }
     );
   }
 
@@ -125,8 +132,7 @@ export class SolicitacoesService {
       .get<any>(`${environment.API_URL}/listarSolicitacoesPorEmailServidor`, {})
       .pipe(
         map((solicitacoes: any[]) =>
-          solicitacoes.map((solicitacao: any, i: number) => ({
-             //id: i + 1,
+          solicitacoes.map((solicitacao: Solicitacoes, i: number) => ({
             ...solicitacao,
           }))
         )

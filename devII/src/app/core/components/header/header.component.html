@@ -16,9 +16,10 @@
   <div class="navbar-itens" >
     <a class="navbar-itens-menu navbar-nav">
       <a href="https://mural.ifrs.edu.br/estagios" target="_blank" class="nav-item oportunidade">Oportunidades</a>
+      <a routerLink="/gerenciarCursos" class="nav-item" *permission="Roles.ROLE_SESTAGIO">Cursos</a>
       <a id="cadS" routerLink="/cadastrarServidor" (click)="divClick($event)" *permission="Roles.ROLE_SESTAGIO">Cadastrar servidor</a>
       <a id="listaEst" routerLink="/listaEstagiarios" (click)="divClick($event)" *ngIf="eServidor()">Lista de estagiários</a>
-      <a id="listaSol" routerLink="/listaSolicitacoesServidor" (click)="divClick($event)" *ngIf="exibirLink">Lista de Solicitações</a>
+      <a id="listaSol" routerLink="/lista/solicitacaoEstagiosLista" (click)="divClick($event)" *ngIf="exibirLink">Solicitações</a>
       <a routerLink="/perfil" *permission="Roles.ROLE_ALUNO">Seus dados</a>
       <a routerLink="/listaSolicitacoesAluno" *permission="Roles.ROLE_ALUNO">Solicitações</a>
       <a routerLink="/login" *ngIf="!isAuthenticated">Login</a>
@@ -27,7 +28,7 @@
 
   </div>
   <div class="bemVindo" *ngIf="isAuthenticated">
-    Você está logado!
+    Bem-vindo, {{nomeUsuario}}!
   </div>
   
 </nav>

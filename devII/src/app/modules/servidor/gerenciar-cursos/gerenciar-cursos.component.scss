@@ -1,0 +1,64 @@
+
+.titulo {
+
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  
+    p {
+        font-weight: 700;
+        font-size: 2em;
+        border-bottom: 4px solid #2b923c;
+        padding-bottom: 8px;
+    }
+  }
+
+  .corpo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    flex-direction: column;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  input {
+  background: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  padding: 8px;
+  width: 25em;
+  margin-right: 4%;
+  font-size: 18px;
+  }
+
+  .boxInput{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+    margin-bottom: 2%;
+  }	
+
+  th{
+    background-color: #2b923c !important;
+    font-size: medium;
+    color: white;
+  }
+
+  tr:nth-child(even) td {
+    background-color: #eaeaea;
+  }
+
+  tr:nth-child(odd) td {
+    background-color: #f5f5f5;
+  }
+  

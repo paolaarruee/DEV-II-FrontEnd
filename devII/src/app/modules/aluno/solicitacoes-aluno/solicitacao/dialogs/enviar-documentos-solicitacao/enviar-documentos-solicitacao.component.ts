@@ -34,7 +34,6 @@ export class EnviarDocumentosSolicitacaoComponent {
   enviarRelatorioFinal() {
     if (this.file) {
       if (this.data.tipo == 'cancelar') {
-        alert('cancelar');
         this.solicitacoesService
           .enviarCancelamento(this.data.solicitacao.id, this.file)
           .subscribe(

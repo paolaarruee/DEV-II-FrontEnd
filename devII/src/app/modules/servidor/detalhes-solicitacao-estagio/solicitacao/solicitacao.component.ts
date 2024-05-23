@@ -1,18 +1,22 @@
 import { DetalhesSolicitacaoServidorComponent } from '../detalhes-solicitacao/detalhes-solicitacao.component';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { format } from 'date-fns';
+import {MatCardModule} from '@angular/material/card';
+
+
 
 
 @Component({
   selector: 'app-solicitacao-servidor',
   templateUrl: './solicitacao.component.html',
-  styleUrls: ['./solicitacao.component.scss']
+  styleUrls: ['./solicitacao.component.scss'],
+  providers: [MatCardModule]
 })
 export class SolicitacaoServidorComponent implements OnInit {
 
   responsavelAtual : string = 'Responsável atual '
   constructor(private dialog: MatDialog) { }
+
 
   openDialog() {
     const dialogRef = this.dialog.open(DetalhesSolicitacaoServidorComponent, {
@@ -37,6 +41,9 @@ export class SolicitacaoServidorComponent implements OnInit {
     etapa: '',
     observacao: '',
     dataSolicitacao: '',
+    editavel:'',
+    relatorioEntregue: '',
+    cancelamento: '',
     aluno: {
         id: '',
         nomeCompleto: '',
@@ -68,6 +75,26 @@ export class SolicitacaoServidorComponent implements OnInit {
     this.setResponsavelAtual();
   }
 
+
+  public getTipoAproveitamento(tipo : string){
+    if(tipo.includes('APRO1')){
+      return "Aproveitamento de Est. não obrigatório como estágio obrigatório."
+    }
+    if(tipo.includes('APRO2')){
+      return "Aproveitamento de trabalho vigente como estágio obrigatório."
+    }
+    if(tipo.includes('APRO3')){
+      return "Aproveitamento de atividades de extensão/bolsa/monitoria ..."
+    }
+    if(tipo.includes('APRO4')){
+      return "Aproveitamento de experiência profissional comprovada."
+    }
+    else{
+      return tipo;
+    }
+  }
+
+
   setResponsavelAtual(){
  
     if(this.solicitacao.etapa === '3'){
@@ -86,7 +113,6 @@ export class SolicitacaoServidorComponent implements OnInit {
       this.responsavelAtual = 'Concluído';
     }
   }
-
  
   solicitacaoStatus(){
       const dataAtual = new Date();
@@ -98,7 +124,7 @@ export class SolicitacaoServidorComponent implements OnInit {
       if(this.solicitacao.status.toLowerCase() === "indeferido"){
         return "cardIndeferido"
       }
-      if(this.solicitacao.status.toLowerCase() === "deferido"){
+      if(this.solicitacao.status.toLowerCase() === "Aprovado"){
         return "cardDeferido"
       }
       if(this.solicitacao.status.toLowerCase() === "Em análise"){
@@ -110,7 +136,7 @@ export class SolicitacaoServidorComponent implements OnInit {
     }
 
   statusSolicitacao(): string{
-    if(this.solicitacao.status.toLowerCase() == 'deferido' || this.solicitacao.status === 'Deferido' || this.solicitacao.status === 'aprovado'){
+    if(this.solicitacao.status.toLowerCase() == 'Aprovado' || this.solicitacao.status === 'Aprovado' || this.solicitacao.status === 'aprovado'){
       return 'statusColor1'
     }
     if(this.solicitacao.status.toLowerCase() == 'pendente' || this.solicitacao.status.toLowerCase() == 'relatório'){

@@ -16,8 +16,8 @@ export class DetalhesSolicitacaoComponent {
     
   statusSolicitacao(): string {
     if (
-      this.data.solicitacao.status.toLowerCase() == 'deferido' ||
-      this.data.solicitacao.status === 'Deferido'
+      this.data.solicitacao.status.toLowerCase() == 'aprovado' ||
+      this.data.solicitacao.status === 'Aprovado'
     ) {
       return 'statusColor1';
     }

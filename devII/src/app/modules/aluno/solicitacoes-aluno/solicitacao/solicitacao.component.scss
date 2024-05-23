@@ -25,10 +25,13 @@
   color: #FFFFFF !important;
   border-radius: 15px;
   cursor: pointer;
-  
-
 }
 
+
+.aviso{
+  display: flex;
+  flex-direction: column;
+}
 
 .retangulo {
   color: #FFFFFF;

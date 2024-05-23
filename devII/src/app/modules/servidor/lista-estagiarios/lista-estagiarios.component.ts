@@ -6,34 +6,34 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Role } from 'src/app/shared/interfaces/usuario';
 import { AuthenticationService } from 'src/app/core/services/authentication/authentication.service';
 import { Servidor } from 'src/app/shared/interfaces/servidor';
-import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDialog } from '@angular/material/dialog';
 import { TelaVisualizacaoEstagiarioComponent } from '../tela-visualizacao-estagiario/tela-visualizacao-estagiario.component';
+import { MatTableModule } from '@angular/material/table';
+import { CursosServiceService } from 'src/app/core/services/cursoService/cursos-service.service';
+import { ToastService } from 'src/app/core/services/toast/toast.service';
 
 @Component({
   selector: 'app-lista-estagiarios',
   templateUrl: './lista-estagiarios.component.html',
   styleUrls: ['./lista-estagiarios.component.scss'],
-  providers: [MatCheckboxModule, MatRadioModule],
+  providers: [MatCheckboxModule, MatRadioModule, MatTableModule],
 })
 export class ListaEstagiariosComponent {
   dataAtual: Date = new Date();
   estagiarios: any[] = [];
   estagiariosCopy: any[] = [];
   paginaAtual: number = 0;
-
   buscarNomeOn = false;
   buscaMatriculaOn = false;
-
   matriculaBusca: string = '';
   matriculaBuscaAux: string = '';
-
   nomeBusca: string = '';
   nomeBuscaAux: string = '';
   isProcurando = false;
   statusAtualFiltro = '';
+  cursos: any;
 
   filtro = {
     curso: '',
@@ -43,19 +43,38 @@ export class ListaEstagiariosComponent {
     estagioCancelado: false,
     estagioTerminado: false,
     aproveitamento: false,
-    status: '',
+    status: 'andamento',
   };
 
   listaOrientadores: Servidor[] = [];
 
+  listaColunas: string[] = [
+    'nome',
+    'drive',
+    'matricula',
+    'email',
+    'curso',
+    'orientador',
+    'empresa',
+    'contatoEmpresa',
+    'agente',
+    'inicio',
+    'fim',
+    'turno',
+    'status',
+    'editar'
+  ];
+
   constructor(
     public location: Location,
-    private router: ActivatedRoute,
     public authenticationService: AuthenticationService,
     private estagiariosService: ListaEstagiariosServiceService,
     private servidorService: ServidorService,
     private datePipe: DatePipe,
-    public dialog: MatDialog
+    private toastService: ToastService,
+    public dialog: MatDialog,
+    private cursosService: CursosServiceService
+
   ) {}
 
   ngOnInit() {
@@ -65,6 +84,9 @@ export class ListaEstagiariosComponent {
     }
     this.buscarListaOrientadores();
     this.listaDeEstagiarios();
+    this.cursos = this.cursosService.getTodosCursos().subscribe((data: any) => {
+      this.cursos = data.filter((curso: any) => curso.ativo == true);
+    });
   }
 
   limparFiltros() {
@@ -79,6 +101,39 @@ export class ListaEstagiariosComponent {
       status: '',
     };
     this.estagiarios = this.estagiariosCopy;
+  }
+
+  baixarPDF() {
+    this.estagiariosService.downloadPDF().subscribe(
+      (res: any) => {
+        const file = new Blob([res], { type: 'application/pdf' });
+        const fileURL = URL.createObjectURL(file);
+        window.open(fileURL);
+      },
+      (error: any) => {
+        alert('Erro ao baixar PDF: ' + error.message);
+      }
+    );
+  }
+
+  getStatusAtual(estagiario: any): string {
+    if(estagiario.solicitacao.cancelamento){
+      return 'Cancelado';
+    }
+    else{
+      if(estagiario.solicitacao.relatorioEntregue){
+        return 'Finalizado';
+      }
+      if(!estagiario.ativo){
+        return 'Finalizado';
+      }
+      if(this.isDataPassou(estagiario)){
+        return 'Finalizado';
+      }
+      else{
+        return 'Em andamento';
+      }
+    }
   }
 
   filtros(checkStatus?: boolean) {
@@ -157,7 +212,7 @@ export class ListaEstagiariosComponent {
       if (this.filtro.status === 'cancelado') {
         return estagiario.ativo === false;
       }
-      if (this.filtro.status === 'terminado') {
+      if (this.filtro.status === 'finalizado') {
         return this.isDataPassou(estagiario);
       } else {
         return true;
@@ -232,12 +287,11 @@ export class ListaEstagiariosComponent {
 
   onEnter(event: KeyboardEvent) {
     if (event.key === 'Enter') {
-      if(this.matriculaBusca != ''){
+      if (this.matriculaBusca != '') {
         this.buscaEstagiarioPorMatricual();
         this.nomeBusca = '';
         this.nomeBuscaAux = '';
-      }
-      else{
+      } else {
         this.listaDeEstagiariosNome();
       }
     }
@@ -292,27 +346,54 @@ export class ListaEstagiariosComponent {
     }
   }
 
-  pegarListaNormal(){
+  pegarListaNormal() {
+    this.nomeBusca = '';
+    this.nomeBuscaAux = '';
+    this.matriculaBusca = '';
+    this.matriculaBuscaAux = '';
     this.listaDeEstagiarios();
   }
 
   abrirTelaEstagiario(estagiario: any) {
-    const dialogRef = this.dialog.open(TelaVisualizacaoEstagiarioComponent,{
+    const dialogRef = this.dialog.open(TelaVisualizacaoEstagiarioComponent, {
       width: '60%',
       maxHeight: '100%',
-      data: estagiario // Passa os dados da solicitação para o modal
+      data: estagiario, // Passa os dados da solicitação para o modal
     });
   }
 
+  limparBuscaNome() {
+    this.buscarNomeOn = false;
+    this.nomeBusca = '';
+    this.nomeBuscaAux = '';
+ 
+  }
+
+  limparBuscaMatricula() {
+    this.buscaMatriculaOn = false;
+    this.matriculaBusca = '';
+    this.matriculaBuscaAux = '';
+  }
+
   buscaEstagiarioPorMatricual() {
+    if(this.matriculaBusca.length < 5 && this.matriculaBusca != ''){
+      this.toastService.showMessage('Matrícula inválida', 'Insira uma matrícula válida');
+      return;
+    }
+    if(this.matriculaBusca.length == 0){
+      return;
+    }
     if (this.buscaMatriculaOn) {
-      this.nomeBusca = '';
-      this.nomeBuscaAux = '';
+      this.limparBuscaNome();
 
       this.estagiariosService
         .retornarEstagiarioMatricula(this.matriculaBusca)
         .subscribe((res: any) => {
           this.estagiarios = res;
+          if (this.estagiarios.length == 0) {
+            this.toastService.showMessage('Estagiário não encontrado', 'Nenhum estagiário encontrado com a matrícula informada');
+            return;
+          }
           this.estagiarios.forEach((estagiario) => {
             console.log(estagiario);
             estagiario.dataInicioEstagio = this.formatarData(

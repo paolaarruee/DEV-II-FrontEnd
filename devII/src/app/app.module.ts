@@ -24,14 +24,11 @@ import { SolicitacaoComponent } from './modules/aluno/solicitacoes-aluno/solicit
 import { TelaSolicitacaoComponent } from './modules/aluno/solicitacoes-aluno/tela-solicitacao/tela-solicitacao.component';
 import { AnaliseDocsComponent } from './modules/servidor/detalhes-solicitacao-estagio/analise-docs/analise-docs.component';
 import { DetalhesSolicitacaoServidorComponent } from './modules/servidor/detalhes-solicitacao-estagio/detalhes-solicitacao/detalhes-solicitacao.component';
-import { ListaSolicitacoesServidorComponent } from './modules/servidor/detalhes-solicitacao-estagio/lista-solicitacoes-servidor/lista-solicitacoes-servidor.component';
+import { ListaSolicitacoesServidorComponent } from './modules/servidor/Listas/solicitacao-estagios-lista/tipos/lista-solicitacoes-servidor/estagios/lista-solicitacoes-servidor.component';
 import { ModalAnaliseComponent } from './modules/servidor/detalhes-solicitacao-estagio/modal-analise/modal-analise.component';
 import { SolicitacaoServidorComponent } from './modules/servidor/detalhes-solicitacao-estagio/solicitacao/solicitacao.component';
 import { FormularioServidorComponent } from './modules/servidor/formulario-servidor/formulario-servidor.component';
-import { CadastrarVagasComponent } from './modules/vagas-estagio/cadastrar-vagas/cadastrar-vagas.component';
-import { DetalhesVagaComponent } from './modules/vagas-estagio/detalhes-vaga/detalhes-vaga.component';
 import { MuralDeVagasComponent } from './modules/vagas-estagio/mural-de-vagas/mural-de-vagas.component';
-import { VagasComponent } from './modules/vagas-estagio/vagas/vagas.component';
 import { AtualizarDocsComponent } from './modules/aluno/atualizar-docs/atualizar-docs.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { CaixaConfimacaoComponent } from './caixa-confimacao/caixa-confimacao.component';
@@ -45,9 +42,16 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
 import { TelaVisualizacaoEstagiarioComponent } from './modules/servidor/tela-visualizacao-estagiario/tela-visualizacao-estagiario.component';
 import {MatTableModule} from '@angular/material/table';
+import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatListModule} from '@angular/material/list';
 import { EnviarDocumentosSolicitacaoComponent } from './modules/aluno/solicitacoes-aluno/solicitacao/dialogs/enviar-documentos-solicitacao/enviar-documentos-solicitacao.component';
-
+import { GerenciarCursosComponent } from './modules/servidor/gerenciar-cursos/gerenciar-cursos.component';
+import { MenuServidoresComponent } from './modules/servidor/Listas/solicitacao-estagios-lista/menu-servidores/menu-servidores.component';
+import { SolicitacaoEstagiosListaComponent } from './modules/servidor/Listas/solicitacao-estagios-lista/solicitacao-estagios-lista.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 
 
@@ -58,15 +62,20 @@ const ANGULAR_MODULES = [
   HttpClientModule,
   ReactiveFormsModule,
   FormsModule,
+  MatListModule,
   MatDialogModule,
   CoreModule,
   SharedModule,
   MatButtonModule,
   MatTooltipModule,
   MatCheckboxModule,
+  MatSelectModule,
+  MatFormFieldModule,
+  MatSlideToggleModule,
   MatRadioModule,
   MatTableModule,
   MatInputModule,
+  MatCardModule,
 ];
 
 const COMPONENTS = [
@@ -75,10 +84,7 @@ const COMPONENTS = [
   FormularioCadastroAlunoComponent,
   FormularioServidorComponent,
   MuralDeVagasComponent,
-  CadastrarVagasComponent,
-  VagasComponent,
   PerfilComponent,
-  DetalhesVagaComponent,
   ModalAnaliseComponent,
   SolicitacaoServidorComponent,
   DetalhesSolicitacaoServidorComponent,
@@ -95,11 +101,13 @@ const COMPONENTS = [
   RecuperarSenhaComponent,
   TelaVisualizacaoEstagiarioComponent,
   EnviarDocumentosSolicitacaoComponent,
-  
+  GerenciarCursosComponent,
+  MenuServidoresComponent,
+  SolicitacaoEstagiosListaComponent,
 ];
 
 @NgModule({
-  declarations: [...COMPONENTS ],
+  declarations: [...COMPONENTS],
   providers: [ DatePipe ],
   imports: [...ANGULAR_MODULES ],
   bootstrap: [AppComponent],

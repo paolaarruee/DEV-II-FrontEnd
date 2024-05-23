@@ -14,6 +14,7 @@ export class HeaderComponent {
   logado: boolean = false;
   navBarLinks: any;
   ultimoLink: HTMLElement | undefined;
+  nomeUsuario: string = sessionStorage.getItem('nomeUsuario') || '';
 
   public constructor(private authService: AuthenticationService,  private router: Router) {}
     public logout(): void {
@@ -28,12 +29,12 @@ export class HeaderComponent {
       a.classList.add('div-ativa');
       if(this.ultimoLink != undefined && this.ultimoLink != a){
         this.ultimoLink.classList.remove('div-ativa');
+
       }
       if(this.ultimoLink == a){
         window.location.reload();
       }
-     
-
+      
       this.ultimoLink = a;
     }
 
@@ -56,4 +57,6 @@ export class HeaderComponent {
   public get isAuthenticated(): boolean {
     return this.authService.isAuthenticated;
   }
+
+
 }

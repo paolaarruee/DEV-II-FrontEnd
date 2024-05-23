@@ -63,6 +63,10 @@
             <td>Fim: </td>
             <td>{{estagiario.dataFinalEstagio}}</td>
         </tr>
+        <tr>
+            <td>Relatório? </td>
+            <td>{{estagiario.solicitacao.relatorioEntregue ? 'Sim' : 'Não'}}</td>
+        </tr>
       </table>
 
       
@@ -123,8 +127,8 @@
                 <td class="titulo">Data</td>
             </tr>
             <tr *ngFor="let historico of estagiario.solicitacao.historico">
-                <td>{{historico.etapa}}</td>
-                <td>{{historico.status}}</td>
+                <td>{{pegarEstapaAtual(historico.etapa)}}</td>
+                <td [innerHTML]="historico.status"></td>
                 <td>{{historico.data_solicitacao | date:'dd/MM/yyyy'}}</td>
         </table>
     </div>
@@ -145,7 +149,7 @@
         </table>
     </div>
     <div class="container">
-        <button mat-raised-button color="warn" (click)="confirm = true" [disabled]="!estagiario.ativo">
+        <button mat-raised-button color="warn" (click)="confirm = true" [disabled]="!estagiario.ativo || isDataPassou(estagiario)">
             Cancelar estágio
         </button>
         <button mat-raised-button color="primary" (click)="edicao = !edicao" *ngIf="!edicao" [disabled]="mostrar != 1">

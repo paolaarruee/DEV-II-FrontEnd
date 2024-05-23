@@ -1,5 +1,5 @@
 <div class="avisoFundo" *ngIf="exibir"></div>
-<div class="corpo">
+<div class="corpo" >
   <div class="aviso" *ngIf="perfilIncompleto">
     <h1 class="tAviso">Atenção</h1>
     <h1 class="titulo">{{ textoEnvio }}</h1>
@@ -16,7 +16,7 @@
         <p>Envio de solicitação</p>
       </div>
 
-      <div class="caixa">
+      <div class="caixa" >
         <div class="input">
           <label for="tipo">Tipo de solicitação*</label>
           <select
@@ -34,7 +34,7 @@
         </div>
 
         <div class="input">
-          <label for="inicioDataEstagio">Início do estágio</label>
+          <label for="inicioDataEstagio">Início do estágio*</label>
           <input
             name="inicioDataEstagio"
             type="date"
@@ -68,7 +68,7 @@
       </div>
       <div class="caixa">
         <div class="input" >
-          <label  for="nomeEmpresa">Nome da empresa</label>
+          <label  for="nomeEmpresa">Nome da empresa*</label>
           <input
             [class]="camposErro['salario'] ? 'erroCampo' : ''"
             name="nomeEmpresa"
@@ -82,7 +82,7 @@
         </div>
 
         <div class="input">
-          <label for="finalDataEstagio">Final do estágio</label>
+          <label for="finalDataEstagio">Final do estágio*</label>
           <input
             name="finalDataEstagio"
             type="date"
@@ -99,7 +99,7 @@
         <div class="input">
           <div class="caixa">
             <div class="input">
-              <label for="ePrivada">Tipo da Empresa:</label>
+              <label for="ePrivada">Tipo da Empresa*</label>
               <mat-radio-group
                 class="example-radio-group"
                 [(ngModel)]="solicitacao.ePrivada"
@@ -126,7 +126,7 @@
               </mat-radio-group>
             </div>
             <div class="input">
-              <label for="contatoEmpresa">Contato da empresa</label>
+              <label for="contatoEmpresa">Contato da empresa*</label>
               <input
                 name="contatoEmpresa"
                 [class]="camposErro['contatoEmpresa'] ? 'erroCampo' : ''"
@@ -141,8 +141,8 @@
           </div>
         </div>
 
-        <div class="input">
-          <label for="agente">Agente Integrador:</label>
+        <div class="input" *ngIf="tipoAproveitamento != 'APRO2' && tipoAproveitamento != 'APRO3' ">
+          <label for="agente">Agente Integrador*</label>
           <select
             name="agente"
             [(ngModel)]="solicitacao.agente"
@@ -178,7 +178,7 @@
         <div class="input">
           <div class="caixa">
             <div class="input">
-              <label for="salario">Bolsa auxílio hora</label>
+              <label for="salario">Salário / Bolsa auxílio*</label>
               <div class="inputSalario">
                 <p class="simboloDinheiro">R$</p>
                 <input
@@ -195,7 +195,7 @@
               </div>
             </div>
             <div class="input">
-              <label for="turno">Turno</label>
+              <label for="turno">Turno*</label>
               <select
                 name="turno"
                 [(ngModel)]="solicitacao.turnoEstagio"
@@ -214,7 +214,7 @@
         </div>
 
         <div class="input">
-          <label for="cargaHoraria">Carga horária semanal</label>
+          <label for="cargaHoraria">Carga horária semanal*</label>
           <input
             name="cargaHoraria"
             type="number"
@@ -264,7 +264,7 @@
         <div class="row"></div>
       </div>
 
-      <h1 for="file">Anexo de documentos</h1>
+      <h1 for="file" *ngIf="solicitacao.tipo != ''">Anexo de documentos obrigatórios!</h1>
       <input
         type="file"
         name="file"
@@ -279,6 +279,7 @@
         class="inputFileM"
         type="file"
         name="tce"
+        [class]="camposErro['documentoObrigatorio'] ? 'erroCampo' : ''"
         (change)="anexarDocObrigatorios($event, 'tce')"
         placeholder="teste"
         accept=".pdf,.doc,.docx"
@@ -289,6 +290,10 @@
         class="inputFileM"
         type="file"
         name="atividades"
+        [class]="camposErro['documentoObrigatorio'] ? 'erroCampo' : ''"
+        matTooltip="Caso as atividades estejam descritas no TCE, anexe o TCE neste campo."
+        [matTooltipShowDelay]="500"
+        [matTooltipPosition]="'above'"
         (change)="anexarDocObrigatorios($event, 'atividades')"
         value="Anexe o relatório de atividades"
         accept=".pdf,.doc,.docx"
@@ -298,6 +303,7 @@
         *ngIf="inputMostrar.requerimento"
         class="inputFileM"
         type="file"
+        [class]="camposErro['documentoObrigatorio'] ? 'erroCampo' : ''"
         name="requerimentoAproveitamento"
         (change)="anexarDocObrigatorios($event, 'requerimento')"
         value="Anexe o relatório de atividades"
@@ -310,6 +316,7 @@
         class="inputFileM"
         type="file"
         name="vinculo"
+        [class]="camposErro['documentoObrigatorio'] ? 'erroCampo' : ''"
         (change)="anexarDocObrigatorios($event, 'vinculo')"
         value="Anexe o relatório de atividades"
         accept=".pdf,.doc,.docx"
@@ -321,6 +328,7 @@
         class="inputFileM"
         type="file"
         name="atividadesEmpresa"
+        [class]="camposErro['documentoObrigatorio'] ? 'erroCampo' : ''"
         (change)="anexarDocObrigatorios($event, 'atividadesEmpresa')"
         value="Anexe o relatório de atividades"
         accept=".pdf,.doc,.docx"
@@ -331,6 +339,7 @@
        *ngIf="inputMostrar.comprovanteExtensao"
         class="inputFileM"
         type="file"
+        [class]="camposErro['documentoObrigatorio'] ? 'erroCampo' : ''"
         name="comprovanteExtensao"
         (change)="anexarDocObrigatorios($event, 'comprovanteExtensao')"
         value="Anexe o relatório de atividades"
@@ -341,6 +350,7 @@
        *ngIf="inputMostrar.comprovanteExtensao"
         class="inputFileM"
         type="file"
+        [class]="camposErro['documentoObrigatorio'] ? 'erroCampo' : ''"
         name="termoFornalizacao"
         (change)="anexarDocObrigatorios($event, 'termoFornalizacao')"
         value="Anexe o termo Fornalizacao"
@@ -351,6 +361,7 @@
        *ngIf="inputMostrar.comprovanteExtensao"
         class="inputFileM"
         type="file"
+        [class]="camposErro['documentoObrigatorio'] ? 'erroCampo' : ''"
         name="PlanoAtividades"
         (change)="anexarDocObrigatorios($event, 'PlanoAtividades')"
         value="Anexe o plano de atividades"
@@ -360,6 +371,9 @@
       <button
         class="fileInput"
         type="button"
+        matTooltip="Anexe outros documentos que julgar necessário."
+        matTooltipPosition="above"
+        [matTooltipShowDelay]="500"
         onclick="document.getElementById('file').click()"
       >
         Anexar outros documentos
@@ -381,31 +395,7 @@
         (click)="exibirDiv()"
         value="Enviar solicitação"
       />
-      <div class="aviso" *ngIf="exibir">
-        <h1 class="tAviso" *ngIf="!sucesso">Atenção</h1>
-        <h1 class="tAviso" *ngIf="sucesso">{{ aviso }}</h1>
-        <h1 class="titulo">{{ textoEnvio }}</h1>
-        <input
-          class="botao"
-          type="submit"
-          *ngIf="!sucesso"
-          value="Enviar solicitação"
-        />
-        <input
-          class="botaov"
-          type="button"
-          *ngIf="!sucesso"
-          (click)="exibirDiv()"
-          value="Cancelar"
-        />
-        <input
-          class="botaov"
-          type="button"
-          *ngIf="sucesso"
-          (click)="retornar()"
-          value="Voltar"
-        />
-      </div>
+
     </form>
   </div>
   <div class="observacaoAluno" >

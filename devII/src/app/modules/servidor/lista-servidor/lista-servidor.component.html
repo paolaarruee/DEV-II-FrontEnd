@@ -1,4 +1,3 @@
-
 <div class="titulo">
   <div class="voltar">
     <button
@@ -17,40 +16,130 @@
     <p>Lista de servidores</p>
   </div>
 </div>
-<ul class="servidores">
-  <li>
-    <div class="card cardHeader">
-      <div class="nome">NOME</div>
-      <div class="email">E-MAIL</div>
-      <div class="cargo">CARGO</div>
-      <div class="curso">CURSO</div>
-      <div class="acoes">AÇÕES</div>
-    </div>
-  </li>
-  <li *ngFor="let servidor of servidores">
-    <div class="card">
-      <div class="nome">
-        {{ servidor.nome }}
-      </div>
-      <div class="email">
-        {{ servidor.usuarioSistema.email }}
-      </div>
-      <div class="cargo">
-        {{ servidor.cargo }}
-      </div>
-      <div class="curso" contenteditable="true">
-        {{ servidor.curso.nomeCurso }}
-      </div>
-      <div class="acoes">
+<div class="rowDiv">
+  <button
+    mat-raised-button
+    class="btVerde"
+    (click)="mostrarHistorico = !mostrarHistorico"
+  >
+    {{
+      mostrarHistorico
+        ? "Mostrar lista de servidores"
+        : "Mostrar histórico de servidores"
+    }}
+  </button>
+</div>
+<div class="container">
+  <table
+    mat-table
+    [dataSource]="servidores"
+    class="mat-elevation-z8"
+    *ngIf="!mostrarHistorico"
+  >
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef>Drive</th>
+      <td mat-cell *matCellDef="let servidor">
+        <span>{{ servidor.nome }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>E-mail</th>
+      <td mat-cell *matCellDef="let servidor">
+        <span>{{ servidor.usuarioSistema.email }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="cargo">
+      <th mat-header-cell *matHeaderCellDef>Cargo</th>
+      <td mat-cell *matCellDef="let servidor">
+        <span>{{ servidor.cargo }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="curso">
+      <th mat-header-cell *matHeaderCellDef>Curso</th>
+      <td mat-cell *matCellDef="let servidor">
+        <span>{{ servidor.curso.nomeCurso }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="acoes">
+      <th mat-header-cell *matHeaderCellDef>Ação</th>
+      <td mat-cell *matCellDef="let servidor">
         <button
+          mat-icon-button
           (click)="excluirServidor(servidor)"
-          matTooltip="Excluir o cadastro do servidor do sistema, liberando o e-mail para ser utilizado novamente."
+          matTooltip="Exclui o cadastro do servidor do sistema liberando o e-mail do sistema!"
           [matTooltipHideDelay]="500"
           [matTooltipShowDelay]="1000"
         >
-          Excluir
+          <mat-icon>delete</mat-icon>
         </button>
-      </div>
-    </div>
-  </li>
-</ul>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="colunas"></tr>
+    <tr mat-row *matRowDef="let row; columns: colunas"></tr>
+  </table>
+
+  <div class="rowDiv" *ngIf="mostrarHistorico">
+    <mat-form-field class="selectDoFiltro">
+      <mat-label>Curso</mat-label>
+      <mat-select
+        matNativeControl
+        (selectionChange)="filtros()"
+        [(ngModel)]="filtro"
+      >
+        <mat-option value="" disabled>Filtrar por Curso</mat-option>
+        <mat-option value="todos" >Todos</mat-option>
+        <mat-option
+          value="{{ his.id }}"
+          *ngFor="let his of cursos"
+          [disabled]="!his.ativo"
+        >
+          {{ his.nomeCurso }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <h4 *ngIf="msgSemMovimentacao" style="color: red">
+    Não há movimentação de servidores no curso selecionado!
+  </h4>
+  <table
+    mat-table
+    [dataSource]="historicoServidores"
+    class="mat-elevation-z8"
+    *ngIf="mostrarHistorico"
+  >
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let historico">
+        <span>{{ historico.id }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="data">
+      <th mat-header-cell *matHeaderCellDef>Data</th>
+      <td mat-cell *matCellDef="let historico">
+        <span>{{ historico.data | date : "dd/MM/yyyy" }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef>Nome</th>
+      <td mat-cell *matCellDef="let historico">
+        <span>{{ historico.nomeServidor }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="curso">
+      <th mat-header-cell *matHeaderCellDef>Curso</th>
+      <td mat-cell *matCellDef="let historico">
+        <span>{{ historico.curso.nomeCurso }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="acao">
+      <th mat-header-cell *matHeaderCellDef>Ação</th>
+      <td mat-cell *matCellDef="let historico">
+        <span>{{ historico.acao }}</span>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="colunasHistorico"></tr>
+    <tr mat-row *matRowDef="let row; columns: colunasHistorico"></tr>
+  </table>
+</div>

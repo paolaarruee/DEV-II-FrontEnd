@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
               window.location.reload();
             });
           } else {
-            this.router.navigateByUrl('/listaSolicitacoesServidor').then(() => {
+            this.router.navigateByUrl('/lista/solicitacaoEstagiosLista').then(() => {
               window.location.reload();
             });
           }
@@ -85,7 +85,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       authData.Roles.toLocaleString() === 'ROLE_SERVIDOR' ||
       authData.Roles.toLocaleString() === 'ROLE_SESTAGIO'
     ) {
-      this.router.navigateByUrl('/listaSolicitacoesServidor').then(() => {
+      this.router.navigateByUrl('/lista/solicitacaoEstagiosLista').then(() => {
         window.location.reload();
       });
     } else {
@@ -113,7 +113,6 @@ declare global {
 //@ts-ignore
 window.handleCredentialResponse = (response) => {
   const data = jwtDecode(response.credential);
-  console.log(response.credential);
   fetch(environment.API_URL + '/login/google', {
     method: 'POST',
     headers: {

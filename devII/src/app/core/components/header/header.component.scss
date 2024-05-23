@@ -40,7 +40,7 @@ img{
 
   &-itens {
     padding-right: 50px;
-    width: 50%;
+    width: 55%;
     height: 100%;
     display: flex;
     align-items: flex-end;
@@ -143,9 +143,9 @@ img{
 
 .bemVindo {
   line-height: 10px;
-  left: 85%;
+  right: 0%;
   top: 1%;
-  width: 15%;
+  margin: 0px 35px;
   display: flex;
   position: absolute;
   color: #ffffffbd;

@@ -1,27 +1,67 @@
 <div class="espacamento">
-    <div class="headerDocumentos header">
-      <span class="titulo tituloCaixaDocs" *ngIf="!data.isAssinado">Documentos anexados: </span>
-      <span class="titulo tituloCaixaDocs" *ngIf="data.isAssinado">Documentos assinados: </span>
-        <div class="caixa headerDocumentos" id="caixa" *ngIf="!delete">
-     </div>
-     <div class="caixaInputDocumentos" *ngIf="!data.isAssinado">
-      <label class="document-label">Documentos para Anexar:</label>
-      <ul id="listaDocAnexo">
-        <!-- aqui vai os docs anexados :D -->
+  <div class="headerDocumentos header">
+    <span class="titulo tituloCaixaDocs" *ngIf="!data.isAssinado"
+      >Documentos anexados:
+    </span>
+    <span class="titulo tituloCaixaDocs" *ngIf="data.isAssinado"
+      >Documentos assinados:</span
+    >
+    <h3 class="tituloCaixaDocs" *ngIf="data.isAssinado">
+      Acesse todos documentos pelo drive ➤  
+      <a href="{{ data.urlDrive }}" target="_blank"
+        ><button mat-mini-fab	color="primary">
+          <mat-icon>cloud_download</mat-icon>
+        </button>
+      </a>
+    </h3>
+    <div class="caixa headerDocumentos" id="caixa" *ngIf="!delete">
+      <ul id="listaDocAnexo" *ngFor="let docs of data.docs">
+        <li>
+          ▸{{ docs.nome }}
+          <button
+            mat-icon-button
+            (click)="apagarDocumento(docs.id)"
+            *ngIf="!data.isAssinado"
+            [disabled]="data.isAssinado"
+          >
+            <img src="/assets/img/apagarBotao.png" />
+          </button>
+          <button mat-icon-button (click)="abrirDocumento(docs.id, docs.nome)">
+            <mat-icon>download</mat-icon>
+          </button>
+        </li>
       </ul>
-      <input type="file" id="file" (change)="onFileSelected($event)" multiple style="display: none;" accept=".pdf,.doc,.docx">
-      
+
     </div>
 
-    <div class="caixaBotoes" *ngIf="data.isAssinado" >
-      <button mat-raised-button color="primary" (click)="fechar()">Fechar</button>
+    <div class="caixaInputDocumentos" *ngIf="!data.isAssinado">
+      <label class="document-label">Documentos para Anexar:</label>
+
+      <ul id="listaDocAnexo">
+        <li *ngFor="let docAnexado of arquivosSelecionados">{{docAnexado.name}}</li>
+      </ul>
+      
+      <input
+        type="file"
+        id="file"
+        (change)="onFileSelected($event)"
+        multiple
+        style="display: none"
+        accept=".pdf,.doc,.docx"
+      />
     </div>
-    <div class="caixaBotoes" *ngIf="!data.isAssinado" >
-      <label for="file" class="custom-file-button">
-        Escolher Arquivos
-      </label>
-      <button mat-raised-button color="primary" (click)="onUpload()">Enviar</button>
+
+    <div class="caixaBotoes" *ngIf="data.isAssinado">
+      <button mat-raised-button color="primary" (click)="fechar()">
+        Fechar
+      </button>
     </div>
+    <div class="caixaBotoes" *ngIf="!data.isAssinado">
+      <label for="file" class="custom-file-button"> Escolher Arquivos </label>
+      
+      <button mat-raised-button color="primary" (click)="onUpload()">
+        Enviar
+      </button>
+    </div>
+  </div>
 </div>
-</div>
-  
