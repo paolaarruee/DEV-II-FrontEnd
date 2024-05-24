@@ -7,7 +7,7 @@
   font-family: 'Roboto','Nunito', sans-serif;
 
 }
-
+//trocar
 .corpo-titulo {
   grid-column: span 3;
   text-align: center;
@@ -15,17 +15,6 @@
   font-weight: 500;
   margin-bottom: 10px;
   margin-left: 40%;
-}
-
-.testeX{
-  overflow-y: overlay;
-  max-height: 600px;
-}
-
-.gap{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: calc(8% - 30px);
 }
 
 .checkDiretor {
@@ -49,7 +38,6 @@
   border: 1px solid #ccc;
   width: 150px;
 }
-
 .data:focus {
   outline: none;
   border-color: #007bff;
@@ -58,35 +46,32 @@
   display: flex;
   font-size: medium;
   justify-content: space-evenly;
-  align-items: flex-start;
+  margin-bottom: 2%;
+  padding-left: 2% !important;
 }
 
-.boxAtualizarDados {
+.caixa-dados{
+  width: 25%;
+}
+
+.caixa-dado{
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  gap: 10px;
+  margin: 1%;
+  gap: 10%;
+  .spanTitulo{
+    min-width: 18%;
+    font-size: 0.9em;
+    font-family: 'Nunito';
+  }
 }
 
 .spanValores{
   margin-top: 1px;
   align-items: center;
 }
-.spanTitulo{
-  width: auto;
-}
 
 
-
-.inputBox {
-  border: 1px solid #ccc;
-  border-radius: 1px;
-  width: 100%;
-  height: 2em;
-  margin-top: 1%;
-}
-
+.corpo-dados-caixa,
 .corpo-dados,
 .corpo-dados-etapas,
 .corpo-passos {
@@ -95,8 +80,6 @@
   border-radius: 5px;
   padding: 20px;
 }
-
-
 
 .gerencia{
   margin-top: 0.5em;
@@ -116,8 +99,6 @@
   margin-left: 2%;
 }
 
-
-
 .arquivos-up,
 .botoes {
   display: grid;
@@ -126,71 +107,9 @@
   gap: 10px;
 }
 
-
-
-.nome-aluno,
-.infos-aluno,
-.curso-aluno{
-  display: flex;
-  flex-direction: column;
-  &.w12{
-    width: 13%;
-  }
-}
-
-
-
-.divValor{
-  display: flex;
-  flex-direction: column;
-  width: 78%;
-  text-align: left;
-  font-weight: 400;
-  &.w50{
-    width: 50%;
-  }
-  &.w40{
-    width: 40%;
-  }
-}
-.divTitulo{
-  display: flex;
-  flex-direction: column;
-  font-weight: 600;
-  font-size: 0.9em;
-  color: #292929;
-  width: 22%;
-  &.w50{
-    width: 50%;
-  }
-  &.w60{
-    width: 60%;
-  }
-  &.w30{
-    width: 30%;
-  }
-  &.wAuto{
-    width: auto;
-  }
-}
-
 .botoes {
   display: flex;
   justify-content: space-evenly;
-}
-
-.etapa,
-.historico,
-.arquivos-up {
-  grid-column: span 3;
-}
-
-.arquivos-up {
-  text-align: center;
-}
-
-.arquivo {
-  font-size: 1.1em;
 }
 
 .arquivo {
@@ -243,31 +162,6 @@ p{
 input[type=number] {
     -moz-appearance:textfield; /* Firefox */
 }
-
-.informacao:hover + .informacaoTexto{
-  visibility: visible;
-  opacity: 1;
-
-}
-
-.informacaoTexto {
-  position: absolute;
-  width: 350px;
-  word-wrap: break-word;
-  z-index: 10;
-  visibility: hidden;
-  opacity: 0;
-  font-weight: 400;
-  text-align: left;
-  padding: 15px;
-  font-size: 14px;
-  transition: visibility 0.2s ease-in-out, opacity 0.2s ease-in-out;
-  border-radius: 25px;
-background: #F8F9FA;
-box-shadow:  7px -7px 33px #c6c7c8,
-             -7px 7px 33px #ffffff;
-}
-
 .icone{
   background-color: #cffcd2;
  
@@ -275,7 +169,6 @@ box-shadow:  7px -7px 33px #c6c7c8,
 .vermelho{
   background-color: #fc7979 !important;
 }
-
 
 .historicoCorpo{
   max-height: 350px !important;
@@ -287,14 +180,16 @@ box-shadow:  7px -7px 33px #c6c7c8,
 }
 
 .historicoItem{
+  font-family: 'Nunito';
   display: flex;
   align-items: center;
   font-size: 1.2em;
   gap: 0.5em;
   padding: 5px;
   .dataHistorico{
-    font-size: 0.8em;
-    color: #56728a;
+    font-size: 0.9em;
+    
+    color: #445f77;
     margin: 0;
     padding: 0;
   }
