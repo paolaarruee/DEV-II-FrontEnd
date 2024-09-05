@@ -1,4 +1,3 @@
-
 <section>
   <div class="container">
     <span class="titulo"><a (click)="reload()">Voltar</a></span>
@@ -7,63 +6,122 @@
       <ul>
         <mat-divider></mat-divider>
         <li>
-          <mat-icon aria-hidden="false"  style="transform: scale(0.5);" aria-label="Seta nav" fontIcon="arrow_forward"></mat-icon>
-          <a  (click)="setNavAtual('1')" [ngClass]="navAtual == '1' ? 'active' : ''"><p>de Estágio</p></a>
+          <mat-icon
+            aria-hidden="false"
+            style="transform: scale(0.5)"
+            aria-label="Seta nav"
+            fontIcon="arrow_forward"
+          ></mat-icon>
+          <a
+            (click)="setNavAtual('1')"
+            [ngClass]="navAtual == '1' ? 'active' : ''"
+            ><p>de Estágio</p></a
+          >
         </li>
         <mat-divider></mat-divider>
         <li>
-          <mat-icon aria-hidden="false"  style="transform: scale(0.5);" aria-label="Seta nav" fontIcon="arrow_forward"></mat-icon>
-          <a (click)="setNavAtual('2')" [ngClass]="navAtual == '2' ? 'active' : ''"
+          <mat-icon
+            aria-hidden="false"
+            style="transform: scale(0.5)"
+            aria-label="Seta nav"
+            fontIcon="arrow_forward"
+          ></mat-icon>
+          <a
+            (click)="setNavAtual('2')"
+            [ngClass]="navAtual == '2' ? 'active' : ''"
             ><p>de Relatório</p></a
           >
         </li>
         <mat-divider></mat-divider>
         <li>
-          <mat-icon aria-hidden="false"  style="transform: scale(0.5);" aria-label="Seta nav" fontIcon="arrow_forward"></mat-icon>
-          <a (click)="setNavAtual('3')" [ngClass]="navAtual == '3' ? 'active' : ''"
+          <mat-icon
+            aria-hidden="false"
+            style="transform: scale(0.5)"
+            aria-label="Seta nav"
+            fontIcon="arrow_forward"
+          ></mat-icon>
+          <a
+            (click)="setNavAtual('3')"
+            [ngClass]="navAtual == '3' ? 'active' : ''"
             ><p>de Cancelamento</p></a
           >
         </li>
         <mat-divider></mat-divider>
         <li>
-          <mat-icon aria-hidden="false"  style="transform: scale(0.5);" aria-label="Seta nav" fontIcon="arrow_forward"></mat-icon>
-          <a (click)="setNavAtual('4')"  [ngClass]="navAtual == '4' ? 'active' : ''"
+          <mat-icon
+            aria-hidden="false"
+            style="transform: scale(0.5)"
+            aria-label="Seta nav"
+            fontIcon="arrow_forward"
+          ></mat-icon>
+          <a
+            (click)="setNavAtual('4')"
+            [ngClass]="navAtual == '4' ? 'active' : ''"
             ><p>de Renovação</p></a
           >
         </li>
-        
-
       </ul>
       <mat-divider></mat-divider>
       <mat-divider></mat-divider>
-        <li>
-          <mat-icon aria-hidden="false"  style="transform: scale(0.75);" aria-label="Seta nav" fontIcon="arrow_forward_ios"></mat-icon>
-          <a (click)="setNavAtual('5')" routerLink="/listaEstagiarios" [ngClass]="navAtual == '5' ? 'active' : ''"
-            ><p>Lista de estagiários</p></a
-          >
-        </li>
-        
-        <mat-divider></mat-divider>
+      <li>
+        <mat-icon
+          aria-hidden="false"
+          style="transform: scale(1)"
+          aria-label="Seta nav"
+          fontIcon="format_list_bulleted"
+        ></mat-icon>
+        <a
+          (click)="setNavAtual('5')"
+          routerLink="/listaEstagiarios"
+          [ngClass]="navAtual == '5' ? 'active' : ''"
+          ><p>Lista de estagiários</p></a
+        >
+      </li>
+
+      <mat-divider></mat-divider>
       <li *permission="Roles.ROLE_SESTAGIO">
-        <mat-icon aria-hidden="false"  style="transform: scale(0.75);" aria-label="Seta nav" fontIcon="arrow_forward_ios"></mat-icon>
-        <a (click)="setNavAtual('6')" routerLink="/listaServidores" [ngClass]="navAtual == '6' ? 'active' : ''"
-          ><p>
-            Lista de servidores</p></a
+        <mat-icon
+          aria-hidden="false"
+          style="transform: scale(1)"
+          aria-label="Seta nav"
+          fontIcon="format_list_bulleted"
+        ></mat-icon>
+        <a
+          (click)="setNavAtual('6')"
+          routerLink="/listaServidores"
+          [ngClass]="navAtual == '6' ? 'active' : ''"
+          ><p>Lista de servidores</p></a
         >
         <mat-divider></mat-divider>
       </li>
-      
+      <mat-divider></mat-divider>
       <li *permission="Roles.ROLE_SESTAGIO">
-        <mat-icon aria-hidden="false"  style="transform: scale(0.75);" aria-label="Seta nav" fontIcon="arrow_forward_ios"></mat-icon>
-        <a (click)="setNavAtual('7')" routerLink="/cadastrarServidor" [ngClass]="navAtual == '8' ? 'active' : ''"
-          ><p>Gerenciamento Servidores </p></a
+        <mat-icon
+          aria-hidden="false"
+          style="transform: scale(1)"
+          aria-label="Seta nav"
+          fontIcon="format_list_bulleted"
+        ></mat-icon>
+        <a
+          (click)="setNavAtual('8')"
+          routerLink="/gerenciarCursos"
+          [ngClass]="navAtual == '8' ? 'active' : ''"
+          ><p>Lista de cursos</p></a
         >
       </li>
       <mat-divider></mat-divider>
       <li *permission="Roles.ROLE_SESTAGIO">
-        <mat-icon aria-hidden="false"  style="transform: scale(0.75);" aria-label="Seta nav" fontIcon="arrow_forward_ios"></mat-icon>
-        <a (click)="setNavAtual('8')" routerLink="/gerenciarCursos" [ngClass]="navAtual == '8' ? 'active' : ''"
-          ><p>Lista de cursos</p></a
+        <mat-icon
+          aria-hidden="false"
+          style="transform: scale(1)"
+          aria-label="Seta nav"
+          fontIcon="settings"
+        ></mat-icon>
+        <a
+          (click)="setNavAtual('7')"
+          routerLink="/cadastrarServidor"
+          [ngClass]="navAtual == '8' ? 'active' : ''"
+          ><p>Gerenciar Usuários</p></a
         >
       </li>
       <mat-divider></mat-divider>

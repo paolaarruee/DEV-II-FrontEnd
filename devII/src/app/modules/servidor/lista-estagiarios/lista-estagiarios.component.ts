@@ -207,13 +207,13 @@ export class ListaEstagiariosComponent {
 
     this.estagiarios = this.estagiarios.filter((estagiario) => {
       if (this.filtro.status === 'andamento') {
-        return !this.isDataPassou(estagiario) && estagiario.ativo === true;
+        return !this.isDataPassou(estagiario) && estagiario.ativo === true && !estagiario.solicitacao.relatorioEntregue && !estagiario.solicitacao.cancelamento;
       }
       if (this.filtro.status === 'cancelado') {
-        return estagiario.ativo === false;
+        return estagiario.solicitacao.cancelamento;
       }
       if (this.filtro.status === 'finalizado') {
-        return this.isDataPassou(estagiario);
+        return this.isDataPassou(estagiario) || estagiario.solicitacao.relatorioEntregue;
       } else {
         return true;
       }
@@ -366,7 +366,7 @@ export class ListaEstagiariosComponent {
     this.buscarNomeOn = false;
     this.nomeBusca = '';
     this.nomeBuscaAux = '';
- 
+    
   }
 
   limparBuscaMatricula() {

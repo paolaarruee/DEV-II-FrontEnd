@@ -17,6 +17,7 @@ import { RecuperarSenhaComponent } from './modules/recuperar-senha/recuperar-sen
 import { GerenciarCursosComponent } from './modules/servidor/gerenciar-cursos/gerenciar-cursos.component';  
 import { MenuServidoresComponent } from './modules/servidor/Listas/solicitacao-estagios-lista/menu-servidores/menu-servidores.component';
 import { SolicitacaoEstagiosListaComponent } from './modules/servidor/Listas/solicitacao-estagios-lista/solicitacao-estagios-lista.component';
+import { ListaAlunosComponent } from './modules/servidor/lista-alunos/lista-alunos.component';
 
 const routes: Routes = [
   {
@@ -81,6 +82,11 @@ const routes: Routes = [
   {
     path: 'listaSolicitacoesAluno',
     component: ListaSolicitacoesAlunoComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'listaAlunos',
+    component: ListaAlunosComponent,
     canActivate: [AuthGuard],
   },
   {

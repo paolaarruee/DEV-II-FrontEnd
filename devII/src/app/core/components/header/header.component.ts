@@ -29,12 +29,8 @@ export class HeaderComponent {
       a.classList.add('div-ativa');
       if(this.ultimoLink != undefined && this.ultimoLink != a){
         this.ultimoLink.classList.remove('div-ativa');
-
       }
-      if(this.ultimoLink == a){
-        window.location.reload();
-      }
-      
+   
       this.ultimoLink = a;
     }
 

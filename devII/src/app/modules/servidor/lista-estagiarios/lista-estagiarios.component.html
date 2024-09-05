@@ -31,7 +31,7 @@
     *ngIf="buscarNomeOn"
     type="text"
     (keydown)="onEnter($event)"
-    (blur)="listaDeEstagiariosNome()"
+    (keyup)="listaDeEstagiariosNome()"
     [(ngModel)]="nomeBusca"
     placeholder="Nome do aluno..."
   />
@@ -140,7 +140,8 @@
         filtro.aproveitamento ||
         filtro.estagioRenovacao ||
         filtro.estagioNaoObrigatorio ||
-        filtro.estagioObrigatorio
+        filtro.estagioObrigatorio ||
+        filtro.curso != ''
       "
     >
       Limpar filtro

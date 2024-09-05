@@ -27,8 +27,8 @@
         </div>
         <div class="buttonContainer">
           <div class="avisos" >
-            <span *ngIf="solicitacao.relatorioEntregue">>Relatório final entregue</span>
-            <span *ngIf="solicitacao.cancelamento">> Solicitado cancelamento</span>
+            <span *ngIf="solicitacao.relatorioEntregue && solicitacao.status != 'Finalizado'">>Relatório final entregue</span>
+            <span *ngIf="solicitacao.cancelamento && solicitacao.status != 'Cancelado'">> Solicitado cancelamento</span>
             <span *ngIf="solicitacao.editavel">>> Edição aberta</span>
           </div>
           

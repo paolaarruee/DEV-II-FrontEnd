@@ -1,56 +1,44 @@
 .logo
 {
-  width: 300px;
+  transform: scale(1.4);
+  border-radius: 15px;
 }
 img{
   width: 98%;
 }
 .navbar {
-  background-color: #0b6b1d;
-  display: flex;
-  align-items: center;
-  height: 6.5em;
+  background: linear-gradient(to right,#17882c 0,#00510f 100%);
+  display: grid;
+  grid-template-columns: auto auto;
   box-shadow: 0px 0px 20px 0px rgb(0 0 0 / 61%);
-
+  padding: 1em;
   &-inicio {
-    width: 50%;
-    display: flex;
-    align-items: center;
-    padding-left: 50px;
-
+    margin-left: 2%;
     &-link {
       text-decoration: none;
-      margin-top: 4%;
+      font-family: monospace;
       .titulo {
-        margin-left: 1em;
-        margin-top: 19px;
         color: #ffff;
         font-size: 12px;
       }
 
       .campus {
-        margin-left: 25px;
+        margin-left: 0.5em;
         color: #ffff;
         font-size: 30px;
         font-weight: bold;
       }
     }
   }
-
-
   &-itens {
-    padding-right: 50px;
-    width: 55%;
-    height: 100%;
     display: flex;
     align-items: flex-end;
 
     &-menu {
       width: 100%;
-      padding-bottom: 12px;
       display: flex;
       text-decoration: none;
-      justify-content: space-between;
+      justify-content: space-evenly;
 
       > a {
         text-decoration: none;
@@ -69,6 +57,10 @@ img{
     }
   }
 
+  .logout{
+    background-color: rgba(255, 0, 0, 0.651) !important;
+    border-radius: 5%;
+  }
   .div-ativa{
     border-bottom: 3px solid #ffff;
     &:hover {
@@ -142,17 +134,11 @@ img{
 }
 
 .bemVindo {
-  line-height: 10px;
-  right: 0%;
-  top: 1%;
-  margin: 0px 35px;
-  display: flex;
-  position: absolute;
   color: #ffffffbd;
-  justify-content: center;
-  font-size: calc(1.5em + 1px);
-  font-weight: bold;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  display: flex;
+  align-items: center;
+  font-size: calc(1.3em + 1px);
+  font-family: "Nunito", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 @media print {

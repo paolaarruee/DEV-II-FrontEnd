@@ -22,4 +22,8 @@ export class CursosServiceService {
     return this.http.put(`${environment.API_URL}/cursos/trocarStatus/${id}`, {});
   }
 
+  deletarCurso(curso: any){
+    return this.http.delete(`${environment.API_URL}/deletarCurso`, {params: {curso}});
+  }
+
 }

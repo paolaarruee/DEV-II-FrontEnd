@@ -7,15 +7,6 @@
   font-family: 'Roboto','Nunito', sans-serif;
 
 }
-//trocar
-.corpo-titulo {
-  grid-column: span 3;
-  text-align: center;
-  font-size: 1.5em;
-  font-weight: 500;
-  margin-bottom: 10px;
-  margin-left: 40%;
-}
 
 .checkDiretor {
   width: 1.5em;
@@ -69,6 +60,27 @@
   margin-top: 1px;
   align-items: center;
 }
+.corpo-header{
+  margin-top: 1%;
+  display: flex;
+  align-items: center;
+  .voltar{
+    width: fit-content;
+  }
+  .dados{
+    width: -webkit-fill-available;
+    text-align: center;
+  }
+  .titulo{
+    font-size: 1.5em;
+    font-weight: 500;
+    
+  }
+  .subtipo{
+    font-weight: 400;
+  }
+}
+
 
 
 .corpo-dados-caixa,
@@ -115,6 +127,7 @@
 .arquivo {
   font-size: 1.3em;
   color: rgb(37, 2, 196);
+  font-weight: bold;
 }
 
 .proximo,

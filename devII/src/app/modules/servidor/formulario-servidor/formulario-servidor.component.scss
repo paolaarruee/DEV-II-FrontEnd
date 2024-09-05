@@ -90,16 +90,6 @@ input {
 }
 
 
-// .senhadiv{
-//   display: flex;
-// }
-
-// .nome-campo {
-//   font-size: 18px;
-//   font-style: normal;
-//   width: 530px;
-//   height: 28px;
-// }
 
 ul{
   display: flex;
@@ -139,3 +129,34 @@ li{
 button:hover , .botao:hover{
   background: #5699ea;
 }
+
+
+.cards{
+  gap: 5%;
+  width: auto !important;
+  float: none !important;
+  justify-content: center;
+  margin-bottom: 5%;
+  width: 100% !important;
+  .dataCard{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+  }
+  svg:hover{
+      background-color: #54fa78;
+      border-radius: 5px;
+  }
+  mat-card{
+      height: 100%;
+  }
+}
+
+.container{
+  display: flex;
+  float: right;
+  width: 100%;
+  margin-top: 20px;
+}
+

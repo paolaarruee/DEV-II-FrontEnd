@@ -52,6 +52,7 @@ import { MenuServidoresComponent } from './modules/servidor/Listas/solicitacao-e
 import { SolicitacaoEstagiosListaComponent } from './modules/servidor/Listas/solicitacao-estagios-lista/solicitacao-estagios-lista.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { ListaAlunosComponent } from './modules/servidor/lista-alunos/lista-alunos.component';
 
 
 
@@ -104,6 +105,7 @@ const COMPONENTS = [
   GerenciarCursosComponent,
   MenuServidoresComponent,
   SolicitacaoEstagiosListaComponent,
+  ListaAlunosComponent,
 ];
 
 @NgModule({

@@ -12,6 +12,7 @@ import { CursosServiceService } from 'src/app/core/services/cursoService/cursos-
 })
 export class FormularioCadastroAlunoComponent {
   aluno: Aluno = {
+    id: '',
     nomeCompleto: '',
     usuarioSistema: {
       email: '',

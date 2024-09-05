@@ -1,6 +1,6 @@
 .container{
     float: left;
-    font-family: 'Roboto',sans-serif;
+    font-family: 'Nunito',sans-serif;
     padding-top: 0.5em;
     background-color: #F8F9FA;
     box-shadow: 0.1em 0.1em 0.2em rgb(192, 192, 192);
@@ -19,6 +19,7 @@
         text-decoration: none;
         color: black;
         width: 100%;
+        margin-left: 5px;
     }
     a:hover {
         color: #007bff;

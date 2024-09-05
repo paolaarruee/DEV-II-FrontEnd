@@ -17,12 +17,13 @@ import { SolicitacaoIndeferir } from 'src/app/shared/interfaces/solicitacao-inde
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
+import { MatStepper, MatStepperPrevious } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-analise-docs',
   templateUrl: './analise-docs.component.html',
   styleUrls: ['./analise-docs.component.scss'],
-  providers: [MatTableModule]
+  providers: [MatTableModule],
 })
 export class AnaliseDocsComponent implements OnInit {
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
@@ -189,7 +190,6 @@ export class AnaliseDocsComponent implements OnInit {
                 }
                 this.etapaAtual = etapa;
                 this.gerenciamentoDeBotoes();
-
               },
               error: (error) => {
                 if (error.status === 404) {
@@ -207,7 +207,6 @@ export class AnaliseDocsComponent implements OnInit {
     } else {
       this.toastService.showMessage('Já se encontra nessa etapa.');
     }
-    
   }
 
   async atualizarEstagio() {
@@ -243,7 +242,7 @@ export class AnaliseDocsComponent implements OnInit {
 
     this.solicitacoes.editarEmpresa(id, this.empresa).subscribe({
       next: () => {
-        this.toastService.showMessage('Empresa editada com sucesso!');
+        this.toastService.showMessage('Dados editados com sucesso!!');
       },
       error: () => {
         this.toastService.showMessage('Erro ao editar empresa.');
@@ -304,7 +303,7 @@ export class AnaliseDocsComponent implements OnInit {
     }
     this.solicitacoes.editarEmpresa(id, this.empresa).subscribe({
       next: () => {
-        this.toastService.showMessage('Empresa editada com sucesso!');
+        this.toastService.showMessage('Dados editados com sucesso!');
       },
       error: () => {
         this.toastService.showMessage('Erro ao editar empresa.');
@@ -314,21 +313,15 @@ export class AnaliseDocsComponent implements OnInit {
 
   direcionarDiretor(documentoId: number): void {
     this.docsService.direcionarDiretor(documentoId).subscribe({
-      next: () => {
-        this.toastService.showMessage(
-          'Documento direcionado ao diretor com sucesso!',
-          'SUCESSO'
-        );
-      },
+      next: () => {},
       error: (error) => {
         this.toastService.showMessage(
-          'Erro ao direcionar o documento.',
+          'Algum erro ocorreu ao marcar para diretor!',
           'ERRO'
         );
       },
     });
   }
-
 
   private gerenciamentoDeBotoes() {
     if (
@@ -357,12 +350,11 @@ export class AnaliseDocsComponent implements OnInit {
       this.btEdicao = true;
       if (this.relatorioEntregue) {
         this.btDiretor = false;
-      }
-      else{
+      } else {
         this.btDiretor = true;
       }
 
-      if(this.etapaAtual != '3'){
+      if (this.etapaAtual != '3') {
         this.disableButton = true;
       }
     }
@@ -376,10 +368,10 @@ export class AnaliseDocsComponent implements OnInit {
         this.disableButton = true;
       }
     }
-    if(this.etapaAtual == '3'){
+    if (this.etapaAtual == '3') {
       this.btCoordenador = false;
     }
-    if(this.etapaAtual == '4'){
+    if (this.etapaAtual == '4') {
       this.btDiretor = false;
     }
   }
@@ -395,10 +387,8 @@ export class AnaliseDocsComponent implements OnInit {
         this.etapa = data.etapa;
         this.statusAtual = data.status;
         this.etapaAtual = data.etapa;
-        this.dataFinalEstagio =
-          this.datePipe.transform(data.finalDataEstagio, 'dd-MM-yyyy') || '';
-        this.dataInicioEstagio =
-          this.datePipe.transform(data.inicioDataEstagio, 'dd-MM-yyyy') || '';
+        this.dataFinalEstagio = data.finalDataEstagio;
+        this.dataInicioEstagio = data.inicioDataEstagio;
         this.dataSistema = this.dataFinalEstagio;
         this.dataInicioSistema = this.dataInicioEstagio;
         this.empresa.agente = data.agente;
@@ -422,40 +412,7 @@ export class AnaliseDocsComponent implements OnInit {
   }
 
   onInput(event: any, nova: string): void {
-    let inputValue = event.target.value.replace(/\D/g, '');
-    if (inputValue.length > 8) {
-      inputValue = inputValue.slice(0, 8);
-    }
-    if (inputValue.length > 2 && inputValue.indexOf('-') === -1) {
-      inputValue = `${inputValue.slice(0, 2)}-${inputValue.slice(2)}`;
-    }
-    if (inputValue.length > 5 && inputValue.lastIndexOf('-') === 2) {
-      inputValue = `${inputValue.slice(0, 5)}-${inputValue.slice(5)}`;
-    }
-
-    // Validar a data do contrato
-    const [dia, mes, ano] = inputValue.split('-');
-    const data = new Date(`${dia}-${mes}-${ano}`);
-
-    if (
-      parseInt(dia) > 31 ||
-      parseInt(mes) > 12 ||
-      mes === '00' ||
-      parseInt(ano) > 3000
-    ) {
-      if (parseInt(dia) > 31) {
-        inputValue = inputValue.replace(dia, '31');
-      }
-      if (parseInt(mes) > 12 || mes === '00') {
-        inputValue = inputValue.replace(mes, '12');
-      }
-      this.toastService.showMessage('Insira uma data válida!', 'ERRO');
-    }
-    if (nova === 'nova') {
-      this.dataInicioEstagio = inputValue;
-      return;
-    }
-    this.dataFinalEstagio = inputValue;
+    
   }
 
   noLetter(event: any) {
@@ -463,7 +420,7 @@ export class AnaliseDocsComponent implements OnInit {
     event.target.value = inputValue;
   }
 
-  colunas: string[] = ['icone','nome', 'estado','diretor', 'download'];
+  colunas: string[] = ['icone', 'nome', 'estado', 'diretor', 'download'];
   solicicitacaoTeste: any;
   public setSolicitacaoData() {
     const { id } = this.activatedRoute.snapshot.params;
@@ -480,7 +437,7 @@ export class AnaliseDocsComponent implements OnInit {
 
   private setDocumentListId(): void {
     const { id } = this.activatedRoute.snapshot.params;
-    if(this.authenticationService.role != Role.ROLE_SESTAGIO){
+    if (this.authenticationService.role != Role.ROLE_SESTAGIO) {
       this.colunas.splice(3, 1);
     }
     this.solicitacoes.getlistDocsPorEstagioId(id).subscribe({
@@ -508,6 +465,12 @@ export class AnaliseDocsComponent implements OnInit {
   trocarValidadeContrato() {
     const { id } = this.activatedRoute.snapshot.params;
     this.editarDatas = false;
+    if(this.dataFinalEstagio < this.dataInicioEstagio){
+      this.toastService.showMessage('Data final não pode ser menor que a data de início.', 'ERRO');
+      this.dataFinalEstagio = this.dataSistema;
+      this.dataInicioEstagio = this.dataInicioSistema;
+      return;
+    }
     if (
       this.dataFinalEstagio != this.dataSistema ||
       this.dataInicioEstagio != this.dataInicioSistema
@@ -565,7 +528,6 @@ export class AnaliseDocsComponent implements OnInit {
   }
 
   public abrirDialogDeferir(): void {
-  
     if (this.dialogAberto) {
       return;
     }
@@ -691,12 +653,13 @@ export class AnaliseDocsComponent implements OnInit {
     });
   }
 
-  public salvarDocumentos(): void {
+  public salvarDocumentos(stepper? : MatStepper): void {
     if (this.fileLista.length === 0) {
       this.toastService.showMessage(
         'Nenhum documento foi adicionado para upload!',
         'Não há documentos anexados!'
       );
+
       return;
     }
     const { id } = this.activatedRoute.snapshot.params;
@@ -719,6 +682,7 @@ export class AnaliseDocsComponent implements OnInit {
         this.fileLista = [];
         this.documentList = this.solicitacoes.getlistDocsPorEstagioId(id);
         this.toastService.showMessage('Documentos enviados com sucesso!');
+        stepper?.previous();
       },
       error: () => {
         this.toastService.showMessage('Erro ao enviar os documentos.');
@@ -798,60 +762,58 @@ export class AnaliseDocsComponent implements OnInit {
     );
   }
 
-  public getTipoAproveitamento(tipo : string){
-    if(tipo.includes('APRO1')){
-      return "Aproveitamento de Est. não obrigatório como estágio obrigatório."
+  public getTipoAproveitamento(tipo: string) {
+    if (tipo.includes('APRO1')) {
+      return 'Aproveitamento de Est. não obrigatório como estágio obrigatório.';
     }
-    if(tipo.includes('APRO2')){
-      return "Aproveitamento de trabalho vigente como estágio obrigatório."
+    if (tipo.includes('APRO2')) {
+      return 'Aproveitamento de trabalho vigente como estágio obrigatório.';
     }
-    if(tipo.includes('APRO3')){
-      return "Aproveitamento de atividades de extensão/bolsa/monitoria ..."
+    if (tipo.includes('APRO3')) {
+      return 'Aproveitamento de atividades de extensão/bolsa/monitoria ...';
     }
-    if(tipo.includes('APRO4')){
-      return "Aproveitamento de experiência profissional comprovada."
-    }
-    else{
+    if (tipo.includes('APRO4')) {
+      return 'Aproveitamento de experiência profissional comprovada.';
+    } else {
       return tipo;
     }
   }
 
-  getResponsavelAtual(){
-    if(this.etapaAtual === '1'){
-      return 'Aluno'
+  getResponsavelAtual() {
+    if (this.etapaAtual === '1') {
+      return 'Aluno';
     }
-    if(this.etapaAtual === '2'){
-      return 'Setor de estágio'
+    if (this.etapaAtual === '2') {
+      return 'Setor de estágio';
     }
-    if(this.etapaAtual === '3'){
-      return  'Coordenador'
+    if (this.etapaAtual === '3') {
+      return 'Coordenador';
     }
-    if(this.etapaAtual === '4'){
-      return 'Diretor'
+    if (this.etapaAtual === '4') {
+      return 'Diretor';
     }
-    if(this.etapaAtual === '5'){
-      return 'Concluído'
+    if (this.etapaAtual === '5') {
+      return 'Concluído';
     }
-    return 'Sistema'
+    return 'Sistema';
   }
 
-  getResponsavelAtualByEtapa(etapa : any){
-    if(etapa === '1'){
-      return 'Aluno'
+  getResponsavelAtualByEtapa(etapa: any) {
+    if (etapa === '1') {
+      return 'Aluno';
     }
-    if(etapa === '2'){
-      return 'Setor de estágio'
+    if (etapa === '2') {
+      return 'Setor de estágio';
     }
-    if(etapa === '3'){
-      return  'Coordenador'
+    if (etapa === '3') {
+      return 'Coordenador';
     }
-    if(etapa === '4'){
-      return 'Diretor'
+    if (etapa === '4') {
+      return 'Diretor';
     }
-    if(etapa === '5'){
-      return 'Sistema'
+    if (etapa === '5') {
+      return 'Sistema';
     }
-    return 'Sistema'
+    return 'Sistema';
   }
- 
 }

@@ -1,15 +1,24 @@
 <div class="corpo">
-  <div class="corpo-back">
-    <button
+
+  <div class="corpo-header" >
+    <div class="voltar">
+          <button
       mat-icon-button
       color="primary"
       aria-label="Voltar"
-      routerLink="/listaSolicitacoesServidor"
+      routerLink="/lista/solicitacaoEstagiosLista"
     >
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <span class="corpo-titulo">Análise de Documentos</span>
+    </div>
+    <div class="dados">
+       <span class="titulo">Análise de Documentos</span><br>
+       <span class="subtipo">- {{getTipoAproveitamento(solicicitacaoTeste.tipo)}} -</span>
+
+    </div>
   </div>
+
+
 
   <div class="corpo-dados" *ngIf="studentData$ | async as studentData">
     <div class="corpo-dados-caixa gap">
@@ -133,39 +142,42 @@
         <div class="caixa-dado">
           <span class="spanTitulo">Data solicitação: </span>
           <span class="spanValores">{{
-            datePipe.transform(studentData.dataSolicitacao, "dd-MM-yyyy")
+            datePipe.transform(studentData.dataSolicitacao, "dd/MM/yyyy")
           }}</span>
         </div>
         <div class="caixa-dado">
           <span class="spanTitulo">Início TCE: </span>
           <span class="spanValores" *ngIf="!editarDatas">{{
-            dataInicioEstagio
+            datePipe.transform(dataInicioEstagio, "dd/MM/yyyy")
           }}</span>
           <input
             *ngIf="editarDatas"
             class="data"
-            type="text"
+            type="date"
             maxlength="10"
             [value]="dataInicioEstagio"
             [(ngModel)]="dataInicioEstagio"
             (input)="onInput($event, 'nova')"
-            pattern="(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\d{4}"
+     
           />
         </div>
         <div class="caixa-dado">
           <span class="spanTitulo">Fim TCE: </span>
           <span class="spanValores" *ngIf="!editarDatas">{{
-            dataFinalEstagio
+            datePipe.transform(dataFinalEstagio, "dd/MM/yyyy")
           }}</span>
+
           <input
             *ngIf="editarDatas"
+            name="finalDataEstagio"
             class="data"
-            type="text"
+            type="date"
             maxlength="10"
             [value]="dataFinalEstagio"
             [(ngModel)]="dataFinalEstagio"
             (input)="onInput($event, 'final')"
-            pattern="(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\d{4}"
+            required
+            maxlength="8"
           />
         </div>
 
@@ -247,12 +259,11 @@
           <span class="spanValores" *ngIf="!editarEmpresa">{{
             empresa.eprivada ? "Privada" : "Pública"
           }}</span>
-          <input
-            *ngIf="editarEmpresa"
-            class="data checkDiretor"
-            type="checkbox"
-            [(ngModel)]="empresa.eprivada"
-          />
+          <mat-checkbox class="example-margin"  *ngIf="editarEmpresa" [(ngModel)]="empresa.eprivada">
+            {{
+              empresa.eprivada ? "Privada" : "Pública"
+            }}
+          </mat-checkbox>
         </div>
       </div>
     </div>
@@ -413,7 +424,8 @@
               class="deferir"
               mat-raised-button
               color="primary"
-              (click)="salvarDocumentos()"
+              (click)="salvarDocumentos(stepper)"
+              
             >
               Salvar documento
             </button>

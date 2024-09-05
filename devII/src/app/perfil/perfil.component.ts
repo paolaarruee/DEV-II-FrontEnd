@@ -56,6 +56,7 @@ export class PerfilComponent {
   senha = "";
   senhaVerificar =  "";
   aluno: Aluno = {
+    id: '',
     nomeCompleto: '',
     usuarioSistema: {
       email: '',

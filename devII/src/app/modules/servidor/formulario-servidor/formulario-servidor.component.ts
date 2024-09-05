@@ -31,6 +31,7 @@ export class FormularioServidorComponent {
     },
   };
 
+  gerenciarServidores: boolean = true;
   desbloqueio = false;
   emailDesbloqueio: string = '';
   confirmarSenha: string = '';
@@ -74,6 +75,14 @@ export class FormularioServidorComponent {
     }
   }
 
+  servidorClick() {
+    this.gerenciarServidores = false;
+  }
+
+  alunoClick() {
+    window.location.href = '/listaAlunos';
+  }
+
   excluirServidor() {
     if (this.emailDesbloqueio == '') {
       this.toastService.showMessage(
@@ -81,6 +90,7 @@ export class FormularioServidorComponent {
       );
       return;
     }
+    
 
     const dialog = this.dialog.open(ModalAnaliseComponent, {
       width: '600px',

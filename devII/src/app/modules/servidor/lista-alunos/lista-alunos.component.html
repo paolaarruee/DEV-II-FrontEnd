@@ -1,0 +1,87 @@
+<div class="titulo">
+  <div class="voltar">
+    <button
+      mat-icon-button
+      matTooltip="Voltar para a página de cadastro de alunoes"
+      [matTooltipHideDelay]="500"
+      [matTooltipShowDelay]="1000"
+      color="primary"
+      aria-label="Voltar"
+      routerLink="/cadastrarServidor"
+    >
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
+  <div class="titulo">
+    <p>Lista de alunos</p>
+  </div>
+  <button (click)="testeDev()">
+    TESTEDEV
+  </button>
+</div>
+
+<div class="container">
+  <button mat-ico-button (click)="filtros()">
+    <mat-icon>search </mat-icon>
+  </button>
+  <input
+    type="text"
+    class="input"
+    placeholder="Filtrar por matrícula"
+    [(ngModel)]="matricula"
+    (keyup)="filtros()"
+  />
+  <table
+    mat-table
+    [dataSource]="matricula == '' ? aluno : alunoFiltro"
+    class="mat-elevation-z8"
+  >
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef>Nome</th>
+      <td mat-cell *matCellDef="let aluno">
+        <span>{{ aluno.nome }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>E-mail</th>
+      <td mat-cell *matCellDef="let aluno">
+        <span>{{ aluno.usuarioSistema.email }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="cargo">
+      <th mat-header-cell *matHeaderCellDef>Turno</th>
+      <td mat-cell *matCellDef="let aluno">
+        <span>{{ aluno.turno }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="curso">
+      <th mat-header-cell *matHeaderCellDef>Curso</th>
+      <td mat-cell *matCellDef="let aluno">
+        <span>{{ aluno.curso.nomeCurso }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="matricula">
+      <th mat-header-cell *matHeaderCellDef>Matricula</th>
+      <td mat-cell *matCellDef="let aluno">
+        <span>{{ aluno.matricula }}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="acoes">
+      <th mat-header-cell *matHeaderCellDef>Ação</th>
+      <td mat-cell *matCellDef="let aluno">
+        <button
+          mat-icon-button
+          (click)="excluirAluno(aluno.usuarioSistema.email)"
+          matTooltip="Exclui o cadastro do aluno do sistema liberando o e-mail do sistema!"
+          [matTooltipHideDelay]="500"
+          [matTooltipShowDelay]="1000"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="colunas"></tr>
+    <tr mat-row *matRowDef="let row; columns: colunas"></tr>
+  </table>
+</div>

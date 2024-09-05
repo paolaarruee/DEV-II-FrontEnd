@@ -1,34 +1,28 @@
 <nav class="navbar " md-cols-sm="2">
   <div class="navbar-inicio">
-    <a routerLink="">
-      <div class="logo">
-      <img src="/assets/img/logoColorida.png"/>
-      </div>
-    </a>
+    <mat-icon class="logo">text_snippet</mat-icon>
     <a class="navbar-inicio-link" routerLink="home" >
-      <p class="campus">Doc.Estágio</p>
-      <p class="titulo">
-        Sistema para solicitação de documentação de estágio
-      </p>
+      <span class="campus">DocEstágio</span>
     </a>
   </div>
 
   <div class="navbar-itens" >
     <a class="navbar-itens-menu navbar-nav">
       <a href="https://mural.ifrs.edu.br/estagios" target="_blank" class="nav-item oportunidade">Oportunidades</a>
-      <a routerLink="/gerenciarCursos" class="nav-item" *permission="Roles.ROLE_SESTAGIO">Cursos</a>
-      <a id="cadS" routerLink="/cadastrarServidor" (click)="divClick($event)" *permission="Roles.ROLE_SESTAGIO">Cadastrar servidor</a>
+      <a routerLink="/gerenciarCursos" (click)="divClick($event)" class="nav-item" *permission="Roles.ROLE_SESTAGIO">Cursos</a>
+      <a id="cadS" href="/cadastrarServidor" (click)="divClick($event)" *permission="Roles.ROLE_SESTAGIO">Gerenciar usuários</a>
       <a id="listaEst" routerLink="/listaEstagiarios" (click)="divClick($event)" *ngIf="eServidor()">Lista de estagiários</a>
-      <a id="listaSol" routerLink="/lista/solicitacaoEstagiosLista" (click)="divClick($event)" *ngIf="exibirLink">Solicitações</a>
+      <a id="listaSol" href="/lista/solicitacaoEstagiosLista" (click)="divClick($event)" *ngIf="exibirLink">Solicitações</a>
       <a routerLink="/perfil" *permission="Roles.ROLE_ALUNO">Seus dados</a>
       <a routerLink="/listaSolicitacoesAluno" *permission="Roles.ROLE_ALUNO">Solicitações</a>
       <a routerLink="/login" *ngIf="!isAuthenticated">Login</a>
-      <a (click)="logout()" *ngIf="isAuthenticated">Logout</a>
+      <span class="bemVindo" *ngIf="isAuthenticated">
+        Bem-vindo, {{nomeUsuario}}!
+      </span>
+      <a (click)="logout()" class="logout" *ngIf="isAuthenticated">Logout</a>
     </a>
 
   </div>
-  <div class="bemVindo" *ngIf="isAuthenticated">
-    Bem-vindo, {{nomeUsuario}}!
-  </div>
+
   
 </nav>

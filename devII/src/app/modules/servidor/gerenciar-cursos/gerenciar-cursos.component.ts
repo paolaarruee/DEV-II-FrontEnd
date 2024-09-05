@@ -123,7 +123,20 @@ export class GerenciarCursosComponent {
       data: {
         conteudo:
           'Após deletar, o curso não estará mais disponível para uso no sistema.<br>Essa ação é <strong>recomendada</strong> apenas para cadastros com nome errado.<br><br><strong>OBS:<br> #Todos os alunos vinculados a este curso serão desvinculados! <br> #Solicitações desse curso serão deletadas!<br>#A documentação das solicitações serão deletadas (Exceto drive) <br> #Conta do coordenador(a) do curso será excluida!</strong>',
-        enviarCallback: () => {},
+        enviarCallback: () => {
+          this.cursosService.deletarCurso(id).subscribe({
+            next: (data) => {
+              this.listaCursos();
+              this.toast.showMessage('Curso foi excluído do sistema!')
+            },
+            error: () => {
+              this.toast.showMessage(
+                'Erro ao excluir curso',
+                'Tente novamente'
+              );
+            },
+          });
+        },
       },
     });
   }
