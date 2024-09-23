@@ -27,8 +27,8 @@ export class PerfilComponent {
       this.aluno.usuarioSistema.email = data.usuarioSistema.email
       this.aluno.nomeCompleto = data.nomeCompleto
       this.aluno.turno = data.turno
-      this.aluno.matricula = data.matricula
       this.aluno.curso = data.curso.id
+      this.aluno.matricula = data.matricula
     });
     
     this.checarAlunoNovo();
@@ -89,14 +89,6 @@ export class PerfilComponent {
     else if (this.aluno.matricula == null) {
       this.toastService.showMessage('Preencha a matrícula!');
     }
-    else if (this.aluno.matricula.length < 5  || this.aluno.matricula.length >= 11) {
-      this.toastService.showMessage('A matrícula deve conter no mínimo 5 e no máximo 10 caracteres!');
-    }
-      else if (/[a-zA-Z]/.test(this.aluno.matricula) || /[^a-zA-Z0-9]/.test(this.aluno.matricula)) {
-      this.toastService.showMessage('A matrícula não pode conter letras ou caracteres especiais!');
-    } else if (/\s/.test(this.aluno.matricula)) {
-      this.toastService.showMessage('A matrícula não pode conter espaços vazios!');
-    }
     else if (this.aluno.turno == null) {
       this.toastService.showMessage('Selecione o turno!');
     }
@@ -108,7 +100,7 @@ export class PerfilComponent {
           (response) => {
             console.log('Solicitação cadastrada com sucesso!');
             console.log('Resposta da API:', response);
-            this.toastService.showMessage('Sucesso!!');
+            this.toastService.showMessageTimer('Solicitação efetuada com sucesso.', 3000);
             this.router.navigateByUrl('/solicitacaoEstagio');
           },
           (error: HttpErrorResponse) => {
@@ -126,13 +118,7 @@ export class PerfilComponent {
               }
             }
           }
-  
         );
     }
   }
-
-
-
-
-
 }
