@@ -55,6 +55,7 @@ export class AnaliseDocsComponent implements OnInit {
   btCoordenador: boolean = false;
   btDiretor: boolean = false;
   btIndeferir: boolean = true;
+
   empresa = {
     nomeEmpresa: '',
     contatoEmpresa: '',
@@ -209,45 +210,66 @@ export class AnaliseDocsComponent implements OnInit {
     }
   }
 
-  async atualizarEstagio() {
+  //O método de atualização foi agrupado para atender todas mudanças em uma solicitação, a validação desse método atualmente ocorre no back-end.
+  async atualizarSolicitacao(){
     const { id } = this.activatedRoute.snapshot.params;
     this.editarEstagio = false;
-    const studentData = await this.studentData$.toPromise();
-    if (
-      this.empresa.cargaHoraria === studentData.cargaHoraria &&
-      this.empresa.turnoEstagio === studentData.turnoEstagio &&
-      this.empresa.salario === studentData.salario &&
-      this.empresa.eprivada === studentData.ePrivada
-    ) {
-      this.toastService.showMessage(
-        'Nenhuma alteração foi feita nos dados do estágio.'
-      );
-      return;
-    }
-    if (
-      this.empresa.cargaHoraria.length > 4 ||
-      this.empresa.turnoEstagio.length > 10 ||
-      this.empresa.salario.length > 16 ||
-      this.empresa.salario == '' ||
-      this.empresa.cargaHoraria == ''
-    ) {
-      this.empresa.salario = studentData.salario;
-      this.empresa.cargaHoraria = studentData.cargaHoraria;
-      this.toastService.showMessage(
-        'Dados do estágio inválidos',
-        'Verifique os campos!'
-      );
-      return;
-    }
-
-    this.solicitacoes.editarEmpresa(id, this.empresa).subscribe({
+    this.editarEmpresa = false;
+    this.solicitacoes.editarSolicitacao(id, this.empresa).subscribe({
       next: () => {
-        this.toastService.showMessage('Dados editados com sucesso!!');
+        this.toastService.showMessage('Solicitação editada com sucesso!');
       },
       error: () => {
-        this.toastService.showMessage('Erro ao editar empresa.');
+        this.toastService.showMessageTimer('Erro ao editar solicitação, verifique os campos.', 5000);
       },
     });
+  }
+
+  trocarValidadeContrato() {
+    const { id } = this.activatedRoute.snapshot.params;
+    this.editarDatas = false;
+    if(this.dataFinalEstagio < this.dataInicioEstagio){
+      this.toastService.showMessage('Data final não pode ser menor que a data de início.', 'ERRO');
+      this.dataFinalEstagio = this.dataSistema;
+      this.dataInicioEstagio = this.dataInicioSistema;
+      return;
+    }
+    if (
+      this.dataFinalEstagio != this.dataSistema ||
+      this.dataInicioEstagio != this.dataInicioSistema
+    ) {
+      if (this.dataFinalEstagio == '') {
+        this.dataFinalEstagio = this.dataSistema;
+        this.toastService.showMessage(
+          'Data de fim do contrato é obrigatória.',
+          'Preencha o campo!'
+        );
+      } else {
+        this.solicitacoes
+          .setValidadeContrato(
+            id,
+            this.dataFinalEstagio,
+            this.dataInicioEstagio
+          )
+          .subscribe({
+            next: () => {
+              this.dataInicioSistema = this.dataInicioEstagio;
+              this.dataSistema = this.dataFinalEstagio;
+              this.toastService.showMessage(
+                'Data de validade do contrato foi modificada com sucesso.'
+              );
+            },
+            error: () => {
+              this.dataFinalEstagio = this.dataSistema;
+              this.dataInicioEstagio = this.dataInicioSistema;
+              this.toastService.showMessage(
+                'Erro ao mudar validade do contrato.',
+                'verifique os campos!'
+              );
+            },
+          });
+      }
+    }
   }
 
   validarSalario(event: any) {
@@ -258,57 +280,6 @@ export class AnaliseDocsComponent implements OnInit {
 
     this.empresa.salario = inputValue;
     event.target.value = inputValue;
-  }
-
-  async atualizarEmpresa() {
-    const { id } = this.activatedRoute.snapshot.params;
-    this.editarEmpresa = false;
-    const studentData = await this.studentData$.toPromise();
-    if (
-      this.empresa.agente === studentData.agente &&
-      this.empresa.nomeEmpresa === studentData.nomeEmpresa &&
-      this.empresa.contatoEmpresa === studentData.contatoEmpresa &&
-      this.empresa.eprivada === studentData.ePrivada
-    ) {
-      this.toastService.showMessage(
-        'Nenhuma alteração foi feita nos dados da empresa.'
-      );
-      return;
-    }
-    if (
-      this.empresa.agente.length > 16 ||
-      this.empresa.nomeEmpresa.length > 48 ||
-      this.empresa.contatoEmpresa.length > 11
-    ) {
-      this.toastService.showMessage(
-        'Dados da empresa inválidos',
-        'MAX CARACTERES!'
-      );
-      return;
-    }
-    if (
-      this.empresa.nomeEmpresa == '' ||
-      this.empresa.agente == '' ||
-      this.empresa.contatoEmpresa == ''
-    ) {
-      this.empresa.agente = studentData.agente;
-      this.empresa.nomeEmpresa = studentData.nomeEmpresa;
-      this.empresa.contatoEmpresa = studentData.contatoEmpresa;
-      this.empresa.eprivada = studentData.ePrivada;
-      this.toastService.showMessage(
-        'Dados da empresa inválidos',
-        'Preencha todos os campos!'
-      );
-      return;
-    }
-    this.solicitacoes.editarEmpresa(id, this.empresa).subscribe({
-      next: () => {
-        this.toastService.showMessage('Dados editados com sucesso!');
-      },
-      error: () => {
-        this.toastService.showMessage('Erro ao editar empresa.');
-      },
-    });
   }
 
   direcionarDiretor(documentoId: number): void {
@@ -462,53 +433,6 @@ export class AnaliseDocsComponent implements OnInit {
     });
   }
 
-  trocarValidadeContrato() {
-    const { id } = this.activatedRoute.snapshot.params;
-    this.editarDatas = false;
-    if(this.dataFinalEstagio < this.dataInicioEstagio){
-      this.toastService.showMessage('Data final não pode ser menor que a data de início.', 'ERRO');
-      this.dataFinalEstagio = this.dataSistema;
-      this.dataInicioEstagio = this.dataInicioSistema;
-      return;
-    }
-    if (
-      this.dataFinalEstagio != this.dataSistema ||
-      this.dataInicioEstagio != this.dataInicioSistema
-    ) {
-      if (this.dataFinalEstagio == '') {
-        this.dataFinalEstagio = this.dataSistema;
-        this.toastService.showMessage(
-          'Data de fim do contrato é obrigatória.',
-          'Preencha o campo!'
-        );
-      } else {
-        this.solicitacoes
-          .setValidadeContrato(
-            id,
-            this.dataFinalEstagio,
-            this.dataInicioEstagio
-          )
-          .subscribe({
-            next: () => {
-              this.dataInicioSistema = this.dataInicioEstagio;
-              this.dataSistema = this.dataFinalEstagio;
-              this.toastService.showMessage(
-                'Data de validade do contrato foi modificada com sucesso.'
-              );
-            },
-            error: () => {
-              this.dataFinalEstagio = this.dataSistema;
-              this.dataInicioEstagio = this.dataInicioSistema;
-              this.toastService.showMessage(
-                'Erro ao mudar validade do contrato.',
-                'verifique os campos!'
-              );
-            },
-          });
-      }
-    }
-  }
-
   atualizarObservacao(obs: string) {
     if (obs != this.observacaoAtual) {
       this.observacaoAtual = obs;
@@ -577,7 +501,7 @@ export class AnaliseDocsComponent implements OnInit {
     });
   }
 
-  abrirDialogEdicao() {
+  abrirDialogParaEdicao() {
     const dialogRef = this.dialog.open(ModalAnaliseComponent, {
       width: '600px',
       data: {

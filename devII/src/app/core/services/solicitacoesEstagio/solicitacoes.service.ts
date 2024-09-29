@@ -38,10 +38,10 @@ export class SolicitacoesService {
     );
   }
 
-  editarEmpresa(id: number, empresa: any): Observable<any> {
+  editarSolicitacao(id: number, solicitacao: any): Observable<any> {
     return this.httpClient.post<any>(
-      `${environment.API_URL}/editarEmpresaSolicitacao?id=${id}`,
-      empresa
+      `${environment.API_URL}/editarSolicitacao?id=${id}`,
+      solicitacao
     );
   }
 
