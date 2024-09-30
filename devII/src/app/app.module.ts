@@ -40,6 +40,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatTabsModule} from '@angular/material/tabs';
 import { TelaVisualizacaoEstagiarioComponent } from './modules/servidor/tela-visualizacao-estagiario/tela-visualizacao-estagiario.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -53,6 +54,7 @@ import { SolicitacaoEstagiosListaComponent } from './modules/servidor/Listas/sol
 import {MatCardModule} from '@angular/material/card';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { ListaAlunosComponent } from './modules/servidor/lista-alunos/lista-alunos.component';
+import { ManualDoAlunoComponent } from './manual-do-aluno/manual-do-aluno.component';
 
 
 
@@ -77,6 +79,7 @@ const ANGULAR_MODULES = [
   MatTableModule,
   MatInputModule,
   MatCardModule,
+  MatTabsModule,
 ];
 
 const COMPONENTS = [
@@ -109,7 +112,7 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS, ManualDoAlunoComponent],
   providers: [ DatePipe ],
   imports: [...ANGULAR_MODULES ],
   bootstrap: [AppComponent],

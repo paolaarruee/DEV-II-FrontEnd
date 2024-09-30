@@ -18,6 +18,7 @@ import { GerenciarCursosComponent } from './modules/servidor/gerenciar-cursos/ge
 import { MenuServidoresComponent } from './modules/servidor/Listas/solicitacao-estagios-lista/menu-servidores/menu-servidores.component';
 import { SolicitacaoEstagiosListaComponent } from './modules/servidor/Listas/solicitacao-estagios-lista/solicitacao-estagios-lista.component';
 import { ListaAlunosComponent } from './modules/servidor/lista-alunos/lista-alunos.component';
+import { ManualDoAlunoComponent } from './manual-do-aluno/manual-do-aluno.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,11 @@ const routes: Routes = [
   {
     path: 'recuperarSenha',
     component: RecuperarSenhaComponent,
+  },
+  {
+    path: 'manualDoAluno',
+    component: ManualDoAlunoComponent
+
   },
   {
     path:'listaEstagiarios',
