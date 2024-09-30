@@ -15,29 +15,39 @@
   <div class="titulo">
     <p>Lista de alunos</p>
   </div>
-
 </div>
 
 <div class="container">
-  <button mat-ico-button (click)="filtros()">
-    <mat-icon>search </mat-icon>
+  <button mat-icon-button (click)="nomeDoAlunoFiltro === '' && matricula === '' ? filtros() : limpar()">
+    <mat-icon>{{ nomeDoAlunoFiltro === '' && matricula === '' ? 'search' : 'cancel' }}</mat-icon>
   </button>
+  
   <input
     type="text"
     class="input"
-    placeholder="Filtrar por matrícula"
+    placeholder="Filtrar por matrícula..."
     [(ngModel)]="matricula"
     (keyup)="filtros()"
   />
+
+  <input
+  type="text"
+  class="input"
+  placeholder="Filtrar por nome..."
+  [(ngModel)]="nomeDoAlunoFiltro"
+  (keyup)="filtrosPorNome()"
+/>
+
+
   <table
     mat-table
-    [dataSource]="matricula == '' ? aluno : alunoFiltro"
+    [dataSource]=" nomeDoAlunoFiltro == '' && matricula == '' ? aluno : alunoFiltro"
     class="mat-elevation-z8"
   >
     <ng-container matColumnDef="nome">
       <th mat-header-cell *matHeaderCellDef>Nome</th>
       <td mat-cell *matCellDef="let aluno">
-        <span>{{ aluno.nome }}</span>
+        <span>{{ aluno.nomeCompleto }}</span>
       </td>
     </ng-container>
     <ng-container matColumnDef="email">

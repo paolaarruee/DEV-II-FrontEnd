@@ -34,6 +34,7 @@ export class ListaAlunosComponent {
   colunas = ['nome', 'email', 'cargo', 'curso','matricula', 'acoes'];
   cursos: any = [];
   matricula = '';
+  nomeDoAlunoFiltro = '';
   msgSemMovimentacao = false;
   
 
@@ -51,7 +52,6 @@ export class ListaAlunosComponent {
         console.log(this.aluno)
       },
       (error: HttpErrorResponse) => {
-        // Lógica adicional em caso de erro ao enviar o formulário
       }
     );
     this.pegarCursos();
@@ -67,13 +67,25 @@ export class ListaAlunosComponent {
         this.toastService.showMessage('Erro ao cadastrar alunos');
       }
     );
+  } 
+
+  limpar(){
+    this.nomeDoAlunoFiltro = '';
+    this.matricula = '';
+  }
+
+  filtrosPorNome(){
+    this.alunoFiltro = this.aluno.filter((aluno) => {
+      return aluno.nomeCompleto.toLowerCase().includes(this.nomeDoAlunoFiltro.toLowerCase());
+    });
+    this.matricula = '';
   }
 
   filtros(){
-    console.log(this.matricula)
     this.alunoFiltro = this.aluno.filter((aluno) => {
       return aluno.matricula.includes(this.matricula);
     });
+    this.nomeDoAlunoFiltro = '';
   }
 
   excluirAluno(email: string){
