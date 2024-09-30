@@ -55,6 +55,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { ListaAlunosComponent } from './modules/servidor/lista-alunos/lista-alunos.component';
 import { ManualDoAlunoComponent } from './manual-do-aluno/manual-do-aluno.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 
@@ -80,6 +81,8 @@ const ANGULAR_MODULES = [
   MatInputModule,
   MatCardModule,
   MatTabsModule,
+  MatExpansionModule,
+  
 ];
 
 const COMPONENTS = [

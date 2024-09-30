@@ -1,93 +1,284 @@
+<section>
 
-
-  <section>
-    
     <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
-        <mat-tab label="Sobre o sistema">   
-             <p>
-                Este sistema foi desenvolvido para gerenciar o processo de estágio no IFRS - 
-                Campus Restinga. Ele automatiza todas as fases do estágio, desde a solicitação inicial até a conclusão, 
-                facilitando o trabalho tanto para alunos quanto para servidores.
-                Teve seu desenvolvimento inicial durante a disciplina de desenvolvimento II orquestrada pela professora Eliana Beatriz
-                Pereira, do curso de Análise e Desenvolvimento de Sistemas. 
-                E teve seu desenvolvimento seguido para projeto de conclusão de curso pelo Aluno Eugenio Cartagena Rodrigues.
-            </p>
-            <p>
-                Durante a disciplina de Desenvolvimento de Sistemas II, o foco foi principalmente na construção da estrutura básica do sistema.
-                 Nesta fase, foram desenvolvidas as funcionalidades essenciais, como a criação de solicitações de estágio e a visualização 
-                 por parte dos servidores e alunos. No entanto, muitas funcionalidades avançadas, como a integração com APIs de terceiros 
-                 (Google Drive e Gmail) e melhorias na interface de usuário, não foram incluídas devido ao tempo limitado e ao escopo do
-                  projeto para a disciplina.
-             </p>
-             <p>
-                Já no trabalho de TCC, o sistema foi aprimorado e expandido com o objetivo de atender completamente às 
-                necessidades do setor de estágios do IFRS - Campus Restinga. Além de otimizar funcionalidades já existentes, 
-                foram implementadas novas, como o gerenciamento de documentos via Google Drive, notificações automáticas por email, 
-                e melhorias significativas na usabilidade e no design. Outra diferença importante foi o processo de validação dos requisitos 
-                com usuários reais, o que permitiu ajustes conforme o feedback do setor de estágios e coordenação.
-             </p>
-            <p>
-                Os participantes no desenvolvimento do sistema foram:
-                    <mat-list>
-                        <mat-list-item><a href="https://github.com/euggnio">Eugenio Cartagena Rodrigues (Desenvolvedor final)</a></mat-list-item>
-                        <mat-list-item><a href="https://github.com/paolaarruee">Paola Arrueé (Desenvolvedora)</a></mat-list-item>
-                        <mat-list-item><a href="https://github.com/vinivcs97">Vinicius (Desenvolvedor)</a></mat-list-item>
-                        <mat-list-item><a href="https://github.com/MayconPadilha">Maycon Padilha (Desenvolvedor)</a></mat-list-item>
-                        <mat-list-item><a href="https://github.com/AdrioRRosa">Adrio Rosa (Desenvolvedor)</a></mat-list-item>
-                        <mat-list-item><a href="https://github.com/EdersonIFRS">Ederson (Desenvolvedor)</a></mat-list-item>
-                        <mat-list-item><a href="https://www.linkedin.com/in/eliana-beatriz-pereira-b172b511a/">Eliana Beatriz Pereira (Orientadora)</a></mat-list-item>
-                       </mat-list>
-                    </p>
-                    <h2>Tecnologias Utilizadas</h2>
-                    <p> 
-                      <li><strong>Backend:</strong> Java com Spring Boot</li>
-                      <li><strong>Frontend:</strong> Angular e Typescript</li>
-                      <li><strong>Banco de Dados:</strong> MySQL</li>
-                      <li><strong>Integrações:</strong> Google Drive API e Gmail API</li>
-                    </p>
-                    <h2>Resumo das funcionalidades do aluno</h2>
-                    <p>
-                          <li>Login via Email ou Google Login</li>
-                          <li>Submissão de nova solicitação de estágio</li>
-                          <li>Acompanhamento do andamento da solicitação</li>
-                          <li>Download de documentos assinados</li>
-                          <li>Submissão do Relatório Final</li>
-                   
-                    </p>
-
-        </mat-tab>
         <mat-tab label="Informações de uso">
             <p>
-                O processo de estágio no IFRS - Campus Restinga é dividido em várias etapas, que são gerenciadas pelo sistema.
+                O processo de solicitação estágio no IFRS - Campus Restinga é dividido em várias etapas, que são
+                gerenciadas pelo sistema. Abaixo pode verificar o resumo de cada uma.
             </p>
-            <h5>Algumas observações importantes sobre o processo de estágio são:</h5>
-            <li>Apenas uma solicitação por tipo de estágio pode ser efetuada.</li>
-            <li>A documentação só pode ser editada quando a solicitação estiver com status de "Nova" ou com alguma observação.</li>
-            <li>O download da documentação assinada acontece apenas após o deferimento</li>
-            <li>A documentação assinada será enviada também por email.</li>
-            <li>O termo de compromisso de estágio deve estar assinado pelo aluno e pela empresa antes de ser anexado.</li>
-            <li>O prazo para resposta é de até 05 (cinco) dias úteis.</li>
-            <li>Os documentos devem ser anexados em formato .PDF .DOC ou .DOCX!</li>
+            <mat-stepper [linear]="false" #stepper>
+                <mat-step>
+                    <ng-template matStepLabel>Solicitação de estágio</ng-template>
+                    <p>
+                        O aluno deve seguir as instruções abaixo para solicitar um estágio a partir do sistema:
+                    </p>
+                    <h2>Solicitação de Estágio</h2>
+                    <p>
+                        # Para iniciar uma solicitação de estágio, o aluno deve acessar a aba de
+                        <strong>Solicitações</strong> e clicar no botão <strong>"SOLICITAÇÃO +".</strong>
+                    </p>
+                    <img src="assets/img/aluno1.png" width="100%" alt="Solicitar Estágio" />
+                    <figcaption>Fig 1 - Botão de solicitação</figcaption>
+                    <p>
+                        # Em seguida, ele deve preencher o formulário com as informações solicitadas, como dados
+                        pessoais, dados da empresa, documentação entre outros.
+                        Após preencher o formulário, o aluno deve clicar no botão <strong>"Enviar solicitação"</strong>
+                        para submeter a solicitação. Todos os campos são obrigatórios!
+                    </p>
+                    <img src="assets/img/aluno2.png" width="100%" alt="Solicitar Estágio" />
+                    <p>
+                        # Após submeter a solicitação, o aluno será redirecionado para a página de solicitações, onde
+                        poderá visualizar o status da solicitação efetuada.
+                    </p>
+                    <img src="assets/img/aluno3.png" width="100%" alt="Solicitar Estágio" />
+                    <p>
+                        # No cartão da solicitação tera informações do status da solicitação, o tipo da solicitação, a
+                        empresa concedente do estágio e a data da solicitação,
+                        além dos botões para editar a documentação anexada e detalhes das etapas.
+                    <h2>Algumas observações importantes sobre o processo de solicitação de estágio são:</h2>
+                    <p>
+                        <li>Apenas uma solicitação por tipo de estágio pode ser efetuada.</li>
+                        <li>A edição dos documentos fica habilitada apenas quando status é "Nova" ou quando tem
+                            observação</li>
+                        <li>O download da documentação assinada acontece apenas após o deferimento</li>
+                        <li>A documentação assinada será enviada também por email.</li>
+                        <li>O termo de compromisso de estágio deve estar assinado pelo aluno e pela empresa antes de ser
+                            anexado.</li>
+                        <li>O prazo para resposta é de até 05 (cinco) dias úteis.</li>
+                        <li>Os documentos devem ser anexados em formato .PDF .DOC ou .DOCX!</li>
+                    </p>
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel>Acompanhamento</ng-template>
+                    <h2>Sobre o acompanhamento</h2>
+                    <p>Após efetuado a solicitação de estágio, o acompanhamento é efetuado na aba de
+                        <strong>Solicitações</strong> onde é apresentado todas
+                        solicitações já efetuadas pelo aluno. As solicitações são apresentadas no formatos de cartões,
+                        contendo informações relacionadas a solicitação
+                    </p>
+                    <p>
+                        Durante o andamento da análise da solicitação, as barras de progresso do cartão da solicitação
+                        avançam sendo preenchidas pela cor verde.
+                        Também é possivel verificar clicanco no botão verde <strong>"Detalhes"</strong>, onde uma tela é
+                        aberta contedo informações detalhadas das etapas.
+                    </p>
+                    <img src="assets/img/aluno4.png" width="100%" alt="Solicitar Estágio">
+                    <figcaption>Fig 4 - Cartão de Solicitação</figcaption>
+                    <p>
+                        A solicitação pode receber uma observação pelo setor de estágios ou coordenação de curso, esse
+                        caso normalmente é relacionado quando a falta de
+                        documentação anexada na solicitação.
+                    </p>
+                    <img src="assets/img/aluno5.png" width="100%" alt="Solicitar Estágio">
+                    <figcaption>Fig 5 - Cartão de Solicitação com observação <H1>VERIFICAR FOTO VERDE</H1>
+                    </figcaption>
+                    <p>
+
+
+
+                    <h2>Status da solicitação</h2>
+                    <p>
+                        A solicitação pode ter os seguintes status:
+                        <br>
+                    </p>
+                    <mat-accordion class="marginStatus" multi>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title> Nova </mat-panel-title>
+                                <mat-panel-description>
+                                    Solicitação criada pelo aluno.
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <p>O status "Nova" permanece quando a solicitação foi criada pelo aluno e o setor de estágios não
+                                começou a análise ainda. A solicitação so irá perder esse status quando setor de
+                                estágios começar a
+                                sua análise.</p>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title> Em análise </mat-panel-title>
+                                <mat-panel-description>
+                                    Solicitação criada pelo aluno.
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <p>O status "Em análise" e significa que a solicitação esta em processo
+                                de análise pelos servidores.</p>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title style="color: rgb(206, 176, 9);"> Respondido
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    Solicitação com observação.
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <p>O status 'Respondido', destacado com fundo amarelo, indica que a solicitação foi respondida em função de uma observação.
+                                 Isso ocorre quando o aluno anexa documentação adicional enquanto a solicitação esta com alguma observação. </p>
+                            <h1>ADICIONAR FOTO</h1>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title> Aprovado </mat-panel-title>
+                                <mat-panel-description>
+                                    Solicitação concluída.
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <p>O status fica "Aprovado" quando a solicitação de estágio foi concluída, o aluno recebe o
+                                email de confirmação contendo
+                                a pasta no google drive para o download da documentação assinada.</p>
+                            <p>O cartão da solicitação também ira liberar a opção de download dos documentos assinados,
+                                além da opção de envio de
+                                relatório final e de cancelamento de estágio.
+                            </p>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title> Indeferido </mat-panel-title>
+                                <mat-panel-description>
+                                    Solicitação não foi aprovada.
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <p>O status de "indeferido" ocorre quando a solicitação não é aprovada na parte análise.
+                                Pode ocorrer devido a atividades não relacionadas ao curso
+                                ou devido a não resposta de uma observação.
+                            </p>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title> Finalizado </mat-panel-title>
+                                <mat-panel-description>
+                                    Estágio concluído ou finalizado.
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <p>O status de "Finalizado" ocorre quando o aluno envia o relatório final do estágio,
+                                indicando o fim do contrato de estágio, ou quando o aluno solicita
+                                o cancelamento de estágio. Esse status indica o fim do estágio ou por tempo de contrato
+                                ou por cancelamento do aluno.
+                            </p>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                    <p></p>
+                    <h2>Conclusão da solicitação</h2>
+                    <p>
+                        Quando uma solicitação e concluída, o status fica como <strong>"Aprovado"</strong>. O aluno irá
+                        receber uma notificação via email da conclusão e o cartão da solicitação terá o botão liberado
+                        para
+                        baixar a documentação assinada. Quando uma solicitação é deferida, também é liberado as ações de
+                        <button mat-raised-button matStepperNext>pós
+                            aprovamento.</button>
+                    </p>
+
+
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel>Pós aprovamento</ng-template>
+                    <P>Quando uma solicitação é concluída ela fica com status de <strong>"Aprovado"</strong> e o aluno é
+                        categorizado como estagiário.
+                        O sistema ira liberar no cartão da solicitação do estágio em três opções para o aluno: O botão
+                        de baixar a documentação assinada, o botão
+                        de solicitar cancelamento de estágio e o botão de enviar relatório final.</P>
+
+                    <h2>Download da documentação assinada</h2>
+                    <p>
+                        O botão de baixar a documentação assinada permite o aluno visualizar e baixar apenas os
+                        documentos assinados e anexados pelos servidores.
+                        Na visualização o aluno também tera acesso a um botão para o redirecionamento a sua pasta do
+                        drive, essa pasta contém todos os arquivos d
+                        a solicitação.
+                    </p>
+
+                    <h2>Envio de relatório final</h2>
+                    <p>
+                        O botão de envio de relatório final, serve para o aluno enviar o relatório final de atividades
+                        do estágio para análise do coordenador, uma obrigação para todos alunos em estágio, nessa opção a
+                        solicitação volta novamente para análise para a verificação do relatório, seguindo o
+                        mesmo processo de uma solicitação normal,
+                        com diferença que ao concluír a solicitação ela
+                        passa para o status de "Finalizado", indicando que todo o processo de estágio foi finalizado.
+                    </p>
+                    <h2>
+                        Cancelamento de estágio
+                    </h2>
+                    <p>
+                        O botão de cancelamento de estágio serve para enviar o documento formalizando o cancelamento, saída ou fim do estágio do aluno. A 
+                        solicitação volta novamente para análise, seguindo o mesmo processo de uma solicitação normal de estágio, com diferença que ao concluir
+                        a solicitação ela passa para o status de "Finalizado", indicando que o processo de estágio foi finalizado.
+                    </p>
+                </mat-step>
+            </mat-stepper>
+        </mat-tab>
+        <mat-tab label="Sobre o sistema">
             <p>
-                O aluno deve seguir as instruções abaixo para solicitar um estágio a partir do sistema:
+                Este sistema foi desenvolvido para gerenciar o processo de estágio no IFRS -
+                Campus Restinga. Ele automatiza todas as fases do estágio, desde a solicitação inicial até a conclusão,
+                facilitando o trabalho tanto para alunos quanto para servidores.
+                Teve seu desenvolvimento inicial durante a disciplina de desenvolvimento II orquestrada pela professora
+                Eliana Beatriz
+                Pereira, do curso de Análise e Desenvolvimento de Sistemas.
+                E teve seu desenvolvimento seguido para projeto de conclusão de curso pelo Aluno Eugenio Cartagena
+                Rodrigues.
             </p>
-            <h2>1. Solicitação de Estágio</h2>
             <p>
-                Para solicitar um estágio, o aluno deve acessar o sistema e clicar no botão <strong>"SOLICITAÇÃO +".</strong>
+                Durante a disciplina de Desenvolvimento de Sistemas II, o foco foi principalmente na construção da
+                estrutura básica do sistema.
+                Nesta fase, foram desenvolvidas as funcionalidades essenciais, como a criação de solicitações de estágio
+                e a visualização
+                por parte dos servidores e alunos. No entanto, muitas funcionalidades avançadas, como a integração com
+                APIs de terceiros
+                (Google Drive e Gmail) e melhorias na interface de usuário, não foram incluídas devido ao tempo limitado
+                e ao escopo do
+                projeto para a disciplina.
             </p>
-            <img src="assets/img/aluno1.png" width="100%" alt="Solicitar Estágio" />
             <p>
-                Em seguida, ele deve preencher o formulário com as informações solicitadas, como dados pessoais, dados da empresa, documentação outros.
-                Após preencher o formulário, o aluno deve clicar no botão "Enviar" para submeter a solicitação.
+                Já no trabalho de TCC, o sistema foi aprimorado e expandido com o objetivo de atender completamente às
+                necessidades do setor de estágios do IFRS - Campus Restinga. Além de otimizar funcionalidades já
+                existentes,
+                foram implementadas novas, como o gerenciamento de documentos via Google Drive, notificações automáticas
+                por email,
+                e melhorias significativas na usabilidade e no design. Outra diferença importante foi o processo de
+                validação dos requisitos
+                com usuários reais, o que permitiu ajustes conforme o feedback do setor de estágios e coordenação.
             </p>
-            <img src="assets/img/aluno2.png" width="100%" alt="Solicitar Estágio" />
             <p>
-                Após submeter a solicitação, o aluno será redirecionado para a página de solicitações, onde poderá visualizar o status da solicitação efetuada.
+                Os participantes no desenvolvimento do sistema foram:
+                <mat-list>
+                    <mat-list-item><a href="https://github.com/euggnio">Eugenio Cartagena Rodrigues (Desenvolvedor
+                            final)</a></mat-list-item>
+                    <mat-list-item><a href="https://github.com/paolaarruee">Paola Arrueé
+                            (Desenvolvedora)</a></mat-list-item>
+                    <mat-list-item><a href="https://github.com/vinivcs97">Vinicius (Desenvolvedor)</a></mat-list-item>
+                    <mat-list-item><a href="https://github.com/MayconPadilha">Maycon Padilha
+                            (Desenvolvedor)</a></mat-list-item>
+                    <mat-list-item><a href="https://github.com/AdrioRRosa">Adrio Rosa
+                            (Desenvolvedor)</a></mat-list-item>
+                    <mat-list-item><a href="https://github.com/EdersonIFRS">Ederson (Desenvolvedor)</a></mat-list-item>
+                    <mat-list-item><a href="https://www.linkedin.com/in/eliana-beatriz-pereira-b172b511a/">Eliana
+                            Beatriz Pereira (Orientadora)</a></mat-list-item>
+                </mat-list>
             </p>
-            <img src="assets/img/aluno3.png" width="100%" alt="Solicitar Estágio" />
+            <h2>Tecnologias Utilizadas</h2>
+            <p>
+                <li><strong>Backend:</strong> Java com Spring Boot</li>
+                <li><strong>Frontend:</strong> Angular e Typescript</li>
+                <li><strong>Banco de Dados:</strong> MySQL</li>
+                <li><strong>Integrações:</strong> Google Drive API e Gmail API</li>
+            </p>
+            <h2>Resumo das funcionalidades do aluno</h2>
+            <p>
+                <li>Login via Email ou Google Login</li>
+                <li>Submissão de nova solicitação de estágio</li>
+                <li>Acompanhamento do andamento da solicitação</li>
+                <li>Download de documentos assinados</li>
+                <li>Submissão do Relatório Final</li>
+
+            </p>
+
         </mat-tab>
     </mat-tab-group>
-    
-  </section>
 
-
+</section>

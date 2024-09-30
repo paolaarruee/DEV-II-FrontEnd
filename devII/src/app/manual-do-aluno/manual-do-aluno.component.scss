@@ -5,7 +5,7 @@ section{
     width: 100%;
     display: flex;
     align-items: center;
-    padding: 0 20%;
+    padding: 0 25%;
     justify-content: center;
 
 }
@@ -17,4 +17,12 @@ p{
     text-indent: 50px;
     line-height: 1.3;
     font-family: Nunito, Geneva, Tahoma, sans-serif;
+}
+
+img{
+    border: 1px solid black;
+}
+
+.marginStatus{
+    margin-top: 5%;
 }
