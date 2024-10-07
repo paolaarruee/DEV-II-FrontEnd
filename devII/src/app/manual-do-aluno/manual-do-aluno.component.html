@@ -12,9 +12,9 @@
                     <p>
                         O aluno deve seguir as instruções abaixo para solicitar um estágio a partir do sistema:
                     </p>
-                    <h2>Solicitação de Estágio</h2>
+                    <h2>Iniciar solicitação de Estágio</h2>
                     <p>
-                        # Para iniciar uma solicitação de estágio, o aluno deve acessar a aba de
+                        Para iniciar uma solicitação de estágio, o aluno deve acessar a aba de
                         <strong>Solicitações</strong> e clicar no botão <strong>"SOLICITAÇÃO +".</strong>
                     </p>
                     <img src="assets/img/aluno1.png" width="100%" alt="Solicitar Estágio" />
@@ -70,7 +70,7 @@
                         documentação anexada na solicitação.
                     </p>
                     <img src="assets/img/aluno5.png" width="100%" alt="Solicitar Estágio">
-                    <figcaption>Fig 5 - Cartão de Solicitação com observação <H1>VERIFICAR FOTO VERDE</H1>
+                    <figcaption>Fig 5 - Cartão de Solicitação com observação
                     </figcaption>
                     <p>
 
@@ -172,24 +172,30 @@
                         <button mat-raised-button matStepperNext>pós
                             aprovamento.</button>
                     </p>
+                    <img src="assets/img/aluno6.png" width="100%" alt="Solicitar Estágio">
+                    <figcaption>Fig 6 - Cartão de Solicitação aprovado 
+                    </figcaption>
 
 
                 </mat-step>
                 <mat-step>
                     <ng-template matStepLabel>Pós aprovamento</ng-template>
-                    <P>Quando uma solicitação é concluída ela fica com status de <strong>"Aprovado"</strong> e o aluno é
+                    <P>Quando uma solicitação é concluída ela fica com status de <strong>"Aprovado"</strong> e o aluno ja é
                         categorizado como estagiário.
                         O sistema ira liberar no cartão da solicitação do estágio em três opções para o aluno: O botão
                         de baixar a documentação assinada, o botão
                         de solicitar cancelamento de estágio e o botão de enviar relatório final.</P>
 
-                    <h2>Download da documentação assinada</h2>
+                        <img src="assets/img/aluno6.png" width="100%" alt="Solicitar Estágio">
+                        <figcaption>Fig 6 - Cartão de Solicitação aprovado 
+                        </figcaption>
+
+                    <h2>Baixar a documentação assinada</h2>
                     <p>
-                        O botão de baixar a documentação assinada permite o aluno visualizar e baixar apenas os
+                        O botão de baixar a documentação assinada, permite ao aluno visualizar e baixar apenas os
                         documentos assinados e anexados pelos servidores.
-                        Na visualização o aluno também tera acesso a um botão para o redirecionamento a sua pasta do
-                        drive, essa pasta contém todos os arquivos d
-                        a solicitação.
+                        Na visualização o aluno também tera acesso a um botão para o redirecionamento para sua pasta do
+                        Google Drive, essa pasta contém todos os arquivos da solicitação.
                     </p>
 
                     <h2>Envio de relatório final</h2>
@@ -208,6 +214,9 @@
                         O botão de cancelamento de estágio serve para enviar o documento formalizando o cancelamento, saída ou fim do estágio do aluno. A 
                         solicitação volta novamente para análise, seguindo o mesmo processo de uma solicitação normal de estágio, com diferença que ao concluir
                         a solicitação ela passa para o status de "Finalizado", indicando que o processo de estágio foi finalizado.
+                    </p>
+                    <p>
+                        O botão de cancelamento do estágio só aparecerá se o aluno ainda estiver dentro do prazo do contrato de estágio. Caso o prazo tenha expirado, o botão não estará disponível.
                     </p>
                 </mat-step>
             </mat-stepper>

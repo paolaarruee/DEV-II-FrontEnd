@@ -9,6 +9,7 @@
   <div class="navbar-itens" >
     <a class="navbar-itens-menu navbar-nav">
       <a href="https://mural.ifrs.edu.br/estagios" target="_blank" class="nav-item oportunidade">Oportunidades</a>
+      <a routerLink="/manualDoAluno" *permission="Roles.ROLE_ALUNO">Manual</a>
       <a routerLink="/gerenciarCursos" (click)="divClick($event)" class="nav-item" *permission="Roles.ROLE_SESTAGIO">Cursos</a>
       <a id="cadS" href="/cadastrarServidor" (click)="divClick($event)" *permission="Roles.ROLE_SESTAGIO">Gerenciar usuários</a>
       <a id="listaEst" routerLink="/listaEstagiarios" (click)="divClick($event)" *ngIf="eServidor()">Lista de estagiários</a>
