@@ -77,6 +77,7 @@ export class TelaSolicitacaoComponent {
   anexarDocObrigatorios(event: any, tipo: string) {
     if(event.target.files[0].size > 1048576){
       this.toastService.showMessage('arquivo é muito grande!');
+      event.target.value = '';
       return;
     }
     this.camposErro['documentoObrigatorio'] = false;
