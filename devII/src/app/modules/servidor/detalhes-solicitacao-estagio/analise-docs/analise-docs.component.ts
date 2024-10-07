@@ -26,6 +26,7 @@ import { MatStepper, MatStepperPrevious } from '@angular/material/stepper';
   providers: [MatTableModule],
 })
 export class AnaliseDocsComponent implements OnInit {
+
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
   public readonly Roles: typeof Role = Role;
   public documentList$!: Observable<DocFile[]>;
@@ -122,6 +123,27 @@ export class AnaliseDocsComponent implements OnInit {
         this.toastService.showMessage('Erro ao baixar o arquivo.');
       },
     });
+  }
+
+  deletar(docDel: DocFile) {
+    const dialogRef = this.dialog.open(ModalAnaliseComponent, {
+      width: '600px',
+      data: {
+        conteudo: "Tem certeza que deseja deletar o documento?",
+        retroceder: false,
+        enviarCallback: () =>
+          this.docsService.deleteDoc(docDel.id).subscribe({
+            next: () => {
+              this.toastService.showMessage('Documento deletado com sucesso!');
+              window.location.reload();
+            },
+            error: () => {
+              this.toastService.showMessageTimer('Erro ao deletar documento, tente novamente.', 5000);
+            },
+          })
+      },
+    });
+
   }
 
   addFileLista(): void {
@@ -391,7 +413,7 @@ export class AnaliseDocsComponent implements OnInit {
     event.target.value = inputValue;
   }
 
-  colunas: string[] = ['icone', 'nome', 'estado', 'diretor', 'download'];
+  colunas: string[] = ['icone', 'nome', 'estado', 'diretor', 'download', 'excluir'];
   solicicitacaoTeste: any;
   public setSolicitacaoData() {
     const { id } = this.activatedRoute.snapshot.params;
