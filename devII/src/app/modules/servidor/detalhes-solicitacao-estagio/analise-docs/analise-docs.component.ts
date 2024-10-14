@@ -448,6 +448,7 @@ export class AnaliseDocsComponent implements OnInit {
     const { id } = this.activatedRoute.snapshot.params;
     this.solicitacoes.setEditarSolicitacao(id).subscribe({
       next: () => {
+        this.reloadObservacao = false;
         window.location.reload();
       },
       error: () => {
@@ -463,6 +464,7 @@ export class AnaliseDocsComponent implements OnInit {
       this.solicitacoes.setObservacaoDaSolicitacao(id, obs).subscribe({
         next: () => {
           this.trocarEditar();
+          
           this.toastService.showMessage('Observação foi salva!');
         },
         error: () => {
