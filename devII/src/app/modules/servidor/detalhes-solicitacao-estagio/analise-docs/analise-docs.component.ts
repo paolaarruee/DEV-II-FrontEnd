@@ -18,12 +18,13 @@ import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatStepper, MatStepperPrevious } from '@angular/material/stepper';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-analise-docs',
   templateUrl: './analise-docs.component.html',
   styleUrls: ['./analise-docs.component.scss'],
-  providers: [MatTableModule],
+  providers: [MatTableModule, MatProgressSpinnerModule],
 })
 export class AnaliseDocsComponent implements OnInit {
 
@@ -523,6 +524,7 @@ export class AnaliseDocsComponent implements OnInit {
     });
   }
 
+  reloadObservacao = false;
   abrirDialogParaEdicao() {
     const dialogRef = this.dialog.open(ModalAnaliseComponent, {
       width: '600px',
@@ -533,6 +535,7 @@ export class AnaliseDocsComponent implements OnInit {
         retroceder: false,
         edicaoAluno: true,
         enviarCallback: (motivoIndeferimento: string) => {
+          this.reloadObservacao = true;
           this.atualizarObservacao(motivoIndeferimento);
         },
       },

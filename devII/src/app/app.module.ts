@@ -56,6 +56,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { ListaAlunosComponent } from './modules/servidor/lista-alunos/lista-alunos.component';
 import { ManualDoAlunoComponent } from './manual-do-aluno/manual-do-aluno.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 
@@ -82,6 +83,7 @@ const ANGULAR_MODULES = [
   MatCardModule,
   MatTabsModule,
   MatExpansionModule,
+  MatProgressSpinnerModule
   
 ];
 

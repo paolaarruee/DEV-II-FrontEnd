@@ -476,25 +476,26 @@
             Deferir
           </button>
           <button
-            mat-stroked-button
-            matTooltip="Modificar etapa de edição do aluno, essa ação enviara um e-mail para o aluno."
-            [matTooltipShowDelay]="400"
-            [matTooltipHideDelay]="400"
-            [disabled]="disableButton"
-            *ngIf="btEdicao"
-            color="warn"
-            class="deferir"
-            (click)="
-              studentData.editavel ? trocarEditar() : abrirDialogParaEdicao()
-            "
-          >
-            {{
-              studentData.editavel
-                ? "Fechar edição"
-                : "Retornar para edição
-                  "
-            }}
-          </button>
+          mat-stroked-button
+          matTooltip="Modificar etapa de edição do aluno, essa ação enviará um e-mail para o aluno."
+          [matTooltipShowDelay]="400"
+          [matTooltipHideDelay]="400"
+          [disabled]="disableButton || reloadObservacao"
+          *ngIf="btEdicao"
+          color="warn"
+          class="deferir"
+          (click)="
+            studentData.editavel ? trocarEditar() : abrirDialogParaEdicao()
+          "
+        >
+          {{
+            reloadObservacao
+              ? "Processando..."
+              : studentData.editavel
+              ? "Fechar edição"
+              : "Retornar para edição"
+          }}
+        </button>
           <button
             class="indeferir"
             color="primary"
