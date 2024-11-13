@@ -22,7 +22,7 @@
     mat-stroked-button
     class="colunaBusca hoverBuscadores"
     *ngIf="!buscarNomeOn"
-    (click)="buscarNomeOn = !buscarNomeOn; limparBuscaMatricula()"
+    (click)="buscarNomeOn = !buscarNomeOn; limparBuscaMatricula(); pegarListaNormal()"
   >
     <span>Nome</span>
     <mat-icon aria-hidden="false" fontIcon="search"></mat-icon>
@@ -49,7 +49,7 @@
     mat-stroked-button
     class="colunaBusca hoverBuscadores"
     *ngIf="!buscaMatriculaOn"
-    (click)="buscaMatriculaOn = !buscaMatriculaOn; limparBuscaNome()"
+    (click)="buscaMatriculaOn = !buscaMatriculaOn; limparBuscaNome(); pegarListaNormal()"
   >
     <span>Matricula</span>
     <mat-icon aria-hidden="false" fontIcon="search"></mat-icon>
@@ -58,6 +58,7 @@
     *ngIf="buscaMatriculaOn"
     type="text"
     (keydown)="onEnter($event)"
+    (keyup)="buscaEstagiarioPorMatricual()"
     maxlength="10"
     (blur)="buscaEstagiarioPorMatricual()"
     [(ngModel)]="matriculaBusca"

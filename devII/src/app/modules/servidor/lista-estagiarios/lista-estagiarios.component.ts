@@ -376,8 +376,7 @@ export class ListaEstagiariosComponent {
   }
 
   buscaEstagiarioPorMatricual() {
-    if(this.matriculaBusca.length < 5 && this.matriculaBusca != ''){
-      this.toastService.showMessage('Matrícula inválida', 'Insira uma matrícula válida');
+    if(this.matriculaBusca.length < 10 && this.matriculaBusca != ''){
       return;
     }
     if(this.matriculaBusca.length == 0){
