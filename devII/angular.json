@@ -70,10 +70,6 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-              "options": {
-              "host": "200.132.12.218",
-              "port": 80
-                      },
           "ssl": false,
           "configurations": {
             "production": {
