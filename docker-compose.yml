@@ -1,0 +1,15 @@
+services:
+  frontend:
+    build:
+      context: ./devII
+      dockerfile: Dockerfile
+    ports:
+      - "${FRONTEND_PORT:-80}:${FRONTEND_PORT:-80}"
+    environment:
+      - PORT=${FRONTEND_PORT:-80}
+    networks:
+      - programa-de-estagios-ifrs_default
+
+networks:
+  programa-de-estagios-ifrs_default:
+    external: true
