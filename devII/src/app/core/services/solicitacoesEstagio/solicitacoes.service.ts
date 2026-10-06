@@ -4,7 +4,7 @@ import { Observable, map } from 'rxjs';
 import { DocFile } from 'src/app/shared/interfaces/doc';
 import { SolicitacaoIndeferir } from 'src/app/shared/interfaces/solicitacao-indeferir';
 import { Solicitacoes } from 'src/app/shared/interfaces/solicitacoes';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',

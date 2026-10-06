@@ -67,7 +67,10 @@ export class TelaSolicitacaoComponent {
       this.verificarDadosPerfil(data);
       this.userData = data;
       this.solicitacao.alunoId = this.userData.id;
-      this.solicitacao.cursoId = this.userData.curso.id;
+      this.solicitacao.cursoId = this.userData.curso?.id ?? '';
+      if (this.perfilIncompleto) {
+        this.redirecionarPerfil();
+      }
     });
   }
 

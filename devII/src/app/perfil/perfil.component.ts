@@ -24,14 +24,14 @@ export class PerfilComponent {
 
   ngOnInit() {
     this.userService.getUserData().subscribe((data: any) => {
-      this.aluno.usuarioSistema.email = data.usuarioSistema.email
-      this.aluno.nomeCompleto = data.nomeCompleto
-      this.aluno.turno = data.turno
-      this.aluno.curso = data.curso.id
-      this.aluno.matricula = data.matricula
+      this.aluno.usuarioSistema.email = data.usuarioSistema?.email ?? ''
+      this.aluno.nomeCompleto = data.nomeCompleto ?? ''
+      this.aluno.turno = data.turno ?? ''
+      this.aluno.curso = data.curso?.id ?? ''
+      this.aluno.matricula = data.matricula ?? ''
+      this.checarAlunoNovo();
     });
-    
-    this.checarAlunoNovo();
+
     this.cursos = this.pegarCursos();
   }
 

@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { Observable, catchError, map } from 'rxjs';
 
 
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 import { Usuario, Authorization, Role } from 'src/app/shared/interfaces/usuario';
 
 @Injectable({

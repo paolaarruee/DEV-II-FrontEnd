@@ -572,8 +572,8 @@ export class AnaliseDocsComponent implements OnInit {
         this.toastService.showMessage('Deferimento enviado com sucesso!');
         this.isRequestSent = false;
       },
-      error: () => {
-        this.toastService.showMessage('Erro ao enviar o deferimento.');
+      error: (error) => {
+        this.toastService.showMessageTimer(this.mensagemDeErroDeferimento(error), 6000);
         this.isRequestSent = false;
       },
     });
@@ -598,8 +598,8 @@ export class AnaliseDocsComponent implements OnInit {
       next: () => {
         this.toastService.showMessage('Deferimento enviado com sucesso!');
       },
-      error: () => {
-        this.toastService.showMessage('Erro ao enviar o deferimento.');
+      error: (error) => {
+        this.toastService.showMessageTimer(this.mensagemDeErroDeferimento(error), 6000);
       },
     });
   }
@@ -668,11 +668,24 @@ export class AnaliseDocsComponent implements OnInit {
         this.toastService.showMessage('Deferimento enviado com sucesso!');
         this.isRequestSent = false;
       },
-      error: () => {
-        this.toastService.showMessage('Erro ao enviar o deferimento.');
+      error: (error) => {
+        this.toastService.showMessageTimer(this.mensagemDeErroDeferimento(error), 6000);
         this.isRequestSent = false;
       },
     });
+  }
+
+  /**
+   * O backend devolve uma mensagem textual quando o deferimento falha
+   * (ex.: pasta do Drive não configurada, autorização Google pendente, erro no Drive).
+   * Sem ela o usuário só vê "Erro ao enviar o deferimento.".
+   */
+  private mensagemDeErroDeferimento(error: any): string {
+    const corpo = typeof error?.error === 'string' ? error.error.trim() : '';
+    if (!corpo) {
+      return 'Erro ao enviar o deferimento.';
+    }
+    return corpo.length > 220 ? corpo.slice(0, 220) + '...' : corpo;
   }
 
   dados: SolicitacaoIndeferir = {

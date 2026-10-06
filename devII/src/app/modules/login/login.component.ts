@@ -5,7 +5,7 @@ import { AuthenticationService } from '../../core/services/authentication/authen
 import { Authorization, Usuario } from '../../shared/interfaces/usuario';
 import { ToastService } from '../../core/services/toast/toast.service';
 import { NgZone } from '@angular/core';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 import { jwtDecode } from 'jwt-decode';
 
 declare var google: any;
