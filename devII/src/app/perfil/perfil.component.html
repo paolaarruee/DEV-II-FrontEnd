@@ -50,7 +50,9 @@
             [(ngModel)]="aluno.matricula"
             placeholder="Matrícula"
             [maxlength]="10"
-            [disabled]="true"
+            [disabled]="false"
+            [autocomplete]="false"
+            autofill="off"
           />
         </li>
       </ul>
